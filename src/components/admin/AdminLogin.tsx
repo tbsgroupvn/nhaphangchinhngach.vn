@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useAdmin } from './AdminProvider'
 import Image from 'next/image'
 

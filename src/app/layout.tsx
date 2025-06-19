@@ -4,7 +4,7 @@ import './globals.css'
 import ZaloQR from '@/components/ZaloQR'
 import MiniChatbot from '@/components/MiniChatbot'
 import AnalyticsScripts from '@/components/AnalyticsScripts'
-import { Suspense } from 'react'
+import React, { Suspense } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
