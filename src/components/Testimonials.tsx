@@ -144,9 +144,9 @@ export default function Testimonials() {
                     
                     <div className="mb-6">
                       <p className="text-gray-700 leading-relaxed text-lg italic relative">
-                        <span className="text-4xl text-primary-300 absolute -top-2 -left-2">"</span>
+                        <span className="text-4xl text-primary-300 absolute -top-2 -left-2">&ldquo;</span>
                         <span className="relative z-10">{testimonial.feedback}</span>
-                        <span className="text-4xl text-primary-300 absolute -bottom-4 -right-2">"</span>
+                        <span className="text-4xl text-primary-300 absolute -bottom-4 -right-2">&rdquo;</span>
                       </p>
                     </div>
                     
@@ -203,22 +203,22 @@ export default function Testimonials() {
         <div className="mt-12 relative overflow-hidden bg-gradient-to-r from-primary-600 to-blue-600 rounded-2xl py-4">
           <div className="animate-scroll whitespace-nowrap">
             <span className="text-white font-medium text-lg mx-8">
-              ⭐ Nguyễn Văn An: "Dịch vụ tuyệt vời, tôi rất hài lòng!" 
+              ⭐ Nguyễn Văn An: &quot;Dịch vụ tuyệt vời, tôi rất hài lòng!&quot; 
             </span>
             <span className="text-white font-medium text-lg mx-8">
-              ⭐ Trần Thị Bình: "Quy trình minh bạch, an tâm hoàn toàn!"
+              ⭐ Trần Thị Bình: &quot;Quy trình minh bạch, an tâm hoàn toàn!&quot;
             </span>
             <span className="text-white font-medium text-lg mx-8">
-              ⭐ Lê Văn Cường: "TBS đã giúp kinh doanh của tôi phát triển!"
+              ⭐ Lê Văn Cường: &quot;TBS đã giúp kinh doanh của tôi phát triển!&quot;
             </span>
             <span className="text-white font-medium text-lg mx-8">
-              ⭐ Phạm Thị Diệu: "Tiết kiệm chi phí, chất lượng cao!"
+              ⭐ Phạm Thị Diệu: &quot;Tiết kiệm chi phí, chất lượng cao!&quot;
             </span>
             <span className="text-white font-medium text-lg mx-8">
-              ⭐ Hoàng Minh Tuấn: "Đóng gói cẩn thận, vận chuyển an toàn!"
+              ⭐ Hoàng Minh Tuấn: &quot;Đóng gói cẩn thận, vận chuyển an toàn!&quot;
             </span>
             <span className="text-white font-medium text-lg mx-8">
-              ⭐ Ngô Thị Thu Hà: "Tìm nhà cung cấp uy tín, giá tốt nhất!"
+              ⭐ Ngô Thị Thu Hà: &quot;Tìm nhà cung cấp uy tín, giá tốt nhất!&quot;
             </span>
           </div>
         </div>

@@ -61,7 +61,7 @@ export default function ServicesPage() {
             
             <div className="bg-gradient-to-r from-primary-600 to-blue-600 text-white p-6 rounded-2xl mb-8 shadow-xl">
               <h2 className="text-2xl font-bold mb-2">
-                "Chúng tôi không chỉ vận chuyển hàng hóa, mà bảo vệ toàn bộ lợi ích của bạn"
+                &quot;Chúng tôi không chỉ vận chuyển hàng hóa, mà bảo vệ toàn bộ lợi ích của bạn&quot;
               </h2>
               <p className="text-primary-100 text-lg">
                 Từ khâu tìm nhà cung cấp đến khi hàng về tay - TBS chịu trách nhiệm hoàn toàn

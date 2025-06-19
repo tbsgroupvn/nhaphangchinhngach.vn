@@ -133,7 +133,8 @@ export default function AnalyticsDashboard() {
     }
 
     fetchAnalytics()
-  }, [timeRange])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeRange]) // mockData is a constant object that doesn't change, so excluding it is safe
 
   if (loading) {
     return (
