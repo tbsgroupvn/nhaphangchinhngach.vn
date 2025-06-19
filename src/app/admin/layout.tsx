@@ -1,6 +1,6 @@
 import React from 'react'
 import { Metadata } from 'next'
-import AdminProvider from '@/components/admin/AdminProvider'
+import AdminProvider from '../../components/admin/AdminProvider'
 
 export const metadata: Metadata = {
   title: 'TBS GROUP CMS - Hệ thống quản trị nội dung',

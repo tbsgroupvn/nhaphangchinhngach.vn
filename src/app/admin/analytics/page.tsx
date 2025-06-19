@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useAdmin } from '@/components/admin/AdminProvider'
-import AdminHeader from '@/components/admin/AdminHeader'
+import { useAdmin } from '../../../components/admin/AdminProvider'
+import AdminHeader from '../../../components/admin/AdminHeader'
 
 export default function AnalyticsPage() {
   const { user } = useAdmin()
