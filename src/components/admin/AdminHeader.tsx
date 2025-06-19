@@ -1,3 +1,5 @@
+import React from 'react'
+
 interface AdminHeaderProps {
   title: string
   subtitle?: string
