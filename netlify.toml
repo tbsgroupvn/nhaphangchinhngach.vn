@@ -1,7 +1,13 @@
-# Netlify Build Configuration
+# Netlify Build Configuration for Next.js Static Export
 [build]
-  command = "npm run build && npm run export"
+  command = "npm run build"
   publish = "out"
+
+# Environment variables
+[context.production.environment]
+  NODE_ENV = "production"
+  NEXT_PUBLIC_GA_ID = "G-HQYS776HWJ"
+  NEXT_PUBLIC_ENABLE_ANALYTICS = "true"
 
 # Headers for security and CMS functionality
 [[headers]]
@@ -31,12 +37,7 @@
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/*.js"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/*.css"
+  for = "/_next/static/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
@@ -46,13 +47,19 @@
   to = "/admin/"
   status = 301
 
-# Identity settings for CMS authentication
-[context.production.environment]
-  NODE_ENV = "production"
+# Handle client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
 
-# Development settings
+# Development context
 [context.dev]
   command = "npm run dev"
+
+# Branch deploy context
+[context.branch-deploy]
+  command = "npm run build"
 
 # Git LFS for large files
 [build.environment]

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next export",
+    "export": "next build",
     "analyze": "cross-env ANALYZE=true next build",
     "sitemap": "next build && next start",
     "lighthouse": "lighthouse http://localhost:3000 --output-path=./lighthouse-report.html --output=html",

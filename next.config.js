@@ -1,8 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable static export for Netlify
+  output: 'export',
+  trailingSlash: true,
+  images: {
+    unoptimized: true
+  },
+  
   experimental: {
     optimizePackageImports: ['@heroicons/react']
   },
+  
   async rewrites() {
     return [
       {
@@ -11,6 +19,7 @@ const nextConfig = {
       }
     ]
   },
+  
   async headers() {
     return [
       {
