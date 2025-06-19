@@ -1,0 +1,24 @@
+{
+  "siteName": "TBS GROUP",
+  "siteDescription": "Công ty xuất nhập khẩu hàng đầu Việt Nam - Chuyên cung cấp dịch vụ xuất nhập khẩu, logistics và thông quan hải quan chuyên nghiệp.",
+  "siteUrl": "https://tbs-group.netlify.app",
+  "logo": "/images/tbs-logo.png",
+  "favicon": "/favicon.ico",
+  "primaryColor": "#dc2626",
+  "secondaryColor": "#2563eb",
+  "seo": {
+    "metaTitle": "TBS GROUP - Công ty Xuất Nhập Khẩu Hàng Đầu Việt Nam",
+    "metaDescription": "TBS GROUP chuyên cung cấp dịch vụ xuất nhập khẩu, logistics, thông quan hải quan với hơn 8000+ khách hàng tin tưởng. Tiết kiệm 30% chi phí, nhanh hơn 50% thời gian.",
+    "keywords": [
+      "xuất nhập khẩu",
+      "nhập khẩu Trung Quốc",
+      "thông quan hải quan",
+      "logistics",
+      "vận chuyển quốc tế",
+      "TBS GROUP",
+      "dịch vụ xuất khẩu",
+      "order hàng Trung Quốc"
+    ],
+    "ogImage": "/images/tbs-logo.png"
+  }
+} 
