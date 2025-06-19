@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { sendWelcomeEmail } from '../../../services/emailService'
+import { sendWelcomeEmail } from '@/services/emailService'
 
 const LARKSUITE_CONFIG = {
   appId: 'cli_a571bcd64b78d02f',

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import AdminHeader from '../../../components/admin/AdminHeader'
+import AdminHeader from '@/components/admin/AdminHeader'
 
 interface ContentTemplate {
   type: 'service' | 'news' | 'policy' | 'popup'

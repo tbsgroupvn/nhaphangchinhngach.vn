@@ -2,7 +2,7 @@
 
 import Script from 'next/script'
 import { useEffect } from 'react'
-import { GA_TRACKING_ID, CLARITY_PROJECT_ID, gtag, hasConsent } from '../lib/analytics'
+import { GA_TRACKING_ID, CLARITY_PROJECT_ID, gtag, hasConsent } from '@/lib/analytics'
 
 export default function AnalyticsScripts() {
   useEffect(() => {

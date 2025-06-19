@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { XMarkIcon, CogIcon, CheckIcon } from '@heroicons/react/24/outline'
-import { grantConsent, revokeConsent, hasConsent } from '../lib/analytics'
+import { grantConsent, revokeConsent, hasConsent } from '@/lib/analytics'
 
 export default function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false)

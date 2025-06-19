@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useAdmin } from '../../components/admin/AdminProvider'
-import AdminHeader from '../../components/admin/AdminHeader'
-import StatsCard from '../../components/admin/StatsCard'
-import RecentActivity from '../../components/admin/RecentActivity'
-import QuickActions from '../../components/admin/QuickActions'
+import { useAdmin } from '@/components/admin/AdminProvider'
+import AdminHeader from '@/components/admin/AdminHeader'
+import StatsCard from '@/components/admin/StatsCard'
+import RecentActivity from '@/components/admin/RecentActivity'
+import QuickActions from '@/components/admin/QuickActions'
 
 export default function AdminDashboard() {
   const { user } = useAdmin()

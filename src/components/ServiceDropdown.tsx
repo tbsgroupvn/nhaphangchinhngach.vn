@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { services } from '../data/services'
+import { services } from '@/data/services'
 
 interface ServiceDropdownProps {
   isOpen: boolean;
