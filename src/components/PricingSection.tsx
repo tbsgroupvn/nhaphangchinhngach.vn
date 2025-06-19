@@ -116,7 +116,7 @@ export default function PricingSection() {
               </h3>
               <ul className="text-sm text-yellow-700 space-y-1">
                 <li>• <strong>Giá trên chưa bao gồm:</strong> Thuế hàng hóa (tùy theo loại hàng)</li>
-                <li>• <strong>Phí ủy thác:</strong> 1.5% trên tổng giá trị hàng hóa</li>
+                                    <li>• <strong>Phí ủy thác:</strong> 1.5% - 3% (tùy giá trị lô hàng)</li>
                 <li>• <strong>Cam kết:</strong> Minh bạch mọi khoản phí, không có chi phí phát sinh</li>
                 <li>• <strong>Thanh toán:</strong> Linh hoạt theo từng đợt hàng</li>
               </ul>

@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { fullName, phone, email, industry, productDetails } = body
+    const { fullName, phone, email, industry, service, productDetails } = body
 
     // Validate required fields
-    if (!fullName || !phone || !email || !industry || !productDetails) {
+    if (!fullName || !phone || !industry || !service) {
       return NextResponse.json(
-        { error: 'Vui lòng điền đầy đủ thông tin' },
+        { error: 'Vui lòng điền đầy đủ thông tin bắt buộc' },
         { status: 400 }
       )
     }
@@ -22,9 +22,10 @@ export async function POST(request: NextRequest) {
     console.log('New contact form submission:', {
       fullName,
       phone,
-      email,
+      email: email || 'Không cung cấp',
       industry,
-      productDetails,
+      service,
+      productDetails: productDetails || 'Không cung cấp',
       timestamp: new Date().toISOString(),
     })
 
@@ -35,9 +36,10 @@ export async function POST(request: NextRequest) {
     //   body: `
     //     Họ tên: ${fullName}
     //     Điện thoại: ${phone}
-    //     Email: ${email}
+    //     Email: ${email || 'Không cung cấp'}
     //     Ngành hàng: ${industry}
-    //     Chi tiết hàng hóa: ${productDetails}
+    //     Dịch vụ quan tâm: ${service}
+    //     Chi tiết hàng hóa: ${productDetails || 'Không cung cấp'}
     //   `
     // })
 

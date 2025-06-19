@@ -1,216 +1,69 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
-import { services, serviceCategories } from '@/data/services'
+import { services } from '@/data/services'
 
 interface ServiceDropdownProps {
-  isActive: (path: string) => string
+  isOpen: boolean;
 }
 
-export default function ServiceDropdown({ isActive }: ServiceDropdownProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-  const timeoutRef = useRef<NodeJS.Timeout>()
+export default function ServiceDropdown({ isOpen }: ServiceDropdownProps) {
+  if (!isOpen) return null;
 
-  const handleMouseEnter = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
-    }
-    setIsOpen(true)
-  }
-
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setIsOpen(false)
-    }, 200)
-  }
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
-      }
-    }
-  }, [])
-
-  // Group services by category
-  const servicesByCategory = services.reduce((acc, service) => {
-    if (!acc[service.category]) {
-      acc[service.category] = []
-    }
-    acc[service.category].push(service)
-    return acc
-  }, {} as Record<string, typeof services>)
+  // Chỉ hiển thị 6 dịch vụ nổi bật nhất
+  const featuredServices = services.slice(0, 6)
 
   return (
-    <div 
-      className="relative"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      ref={dropdownRef}
-    >
-      {/* Desktop Dropdown Button */}
-      <div className="hidden md:block">
-        <Link 
-          href="/dich-vu" 
-          className={`flex items-center transition-colors group ${isActive('/dich-vu')}`}
-        >
-          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-          </svg>
-          <span>Dịch vụ</span>
-          <svg 
-            className={`w-4 h-4 ml-1 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </Link>
-
-        {/* Dropdown Menu */}
-        {isOpen && (
-          <div className="absolute top-full left-0 w-[800px] bg-white shadow-2xl rounded-xl border border-gray-100 py-6 px-8 z-50 mt-2">
-            <div className="grid grid-cols-2 gap-8">
-              {/* Left Column - Categories */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                  🏢 Dịch vụ theo danh mục
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {Object.entries(serviceCategories).map(([key, category]) => (
-                    <Link
-                      key={key}
-                      href={`/dich-vu?category=${key}`}
-                      className="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors group"
-                    >
-                      <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
-                        {category.icon}
-                      </span>
-                      <div>
-                        <div className="font-medium text-gray-900 group-hover:text-primary-600">
-                          {category.name}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {servicesByCategory[key]?.length || 0} dịch vụ
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right Column - Popular Services */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                  ⭐ Dịch vụ nổi bật
-                </h3>
-                <div className="space-y-2">
-                  {services.slice(0, 6).map((service) => (
-                    <Link
-                      key={service.id}
-                      href={`/dich-vu/${service.slug}`}
-                      className="flex items-center p-2 rounded-lg hover:bg-gray-50 transition-colors group"
-                    >
-                      <span className="text-xl mr-3 group-hover:scale-110 transition-transform">
-                        {service.icon}
-                      </span>
-                      <div className="flex-1">
-                        <div className="font-medium text-gray-900 group-hover:text-primary-600 text-sm">
-                          {service.title}
-                        </div>
-                        <div className="text-xs text-gray-500 line-clamp-1">
-                          {service.shortDescription}
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-
-                {/* View All Services */}
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <Link
-                    href="/dich-vu"
-                    className="flex items-center justify-center w-full p-3 bg-primary-50 text-primary-600 rounded-lg hover:bg-primary-100 transition-colors font-medium"
-                  >
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                    Xem tất cả dịch vụ
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Mobile Menu Item */}
-      <div className="md:hidden">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className={`flex items-center justify-between w-full px-3 py-2 transition-colors ${isActive('/dich-vu')}`}
-        >
-          <div className="flex items-center">
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-            </svg>
-            Dịch vụ
-          </div>
-          <svg 
-            className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-
-        {/* Mobile Dropdown */}
-        {isOpen && (
-          <div className="ml-4 mt-2 space-y-1">
+    <div className="absolute top-full left-0 mt-3 w-80 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 animate-in slide-in-from-top-5 duration-300">
+      <div className="p-3">
+        <div className="space-y-1">
+          {featuredServices.map((service, index) => (
             <Link
-              href="/dich-vu"
-              className="flex items-center px-3 py-2 text-sm text-gray-600 hover:text-primary-600 transition-colors"
+              key={service.slug}
+              href={`/dich-vu/${service.slug}`}
+              className="flex items-center p-4 rounded-xl hover:bg-primary-50 hover:text-primary-700 transition-all duration-300 group hover:scale-[1.02] min-h-[64px] cursor-pointer"
+              style={{
+                animationDelay: `${index * 30}ms`
+              }}
             >
-              <span className="mr-2">📋</span>
-              Tất cả dịch vụ
-            </Link>
-            
-            {/* Categories */}
-            {Object.entries(serviceCategories).map(([key, category]) => (
-              <Link
-                key={key}
-                href={`/dich-vu?category=${key}`}
-                className="flex items-center px-3 py-2 text-sm text-gray-600 hover:text-primary-600 transition-colors"
-              >
-                <span className="mr-2">{category.icon}</span>
-                {category.name}
-              </Link>
-            ))}
-
-            {/* Popular Services */}
-            <div className="border-t border-gray-100 pt-2 mt-2">
-              <div className="px-3 py-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Dịch vụ nổi bật
+              <div className="flex-shrink-0 mr-4">
+                <div className="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center group-hover:bg-primary-200 transition-colors duration-300 group-hover:scale-110">
+                  <span className="text-lg group-hover:animate-bounce">{service.icon}</span>
+                </div>
               </div>
-              {services.slice(0, 5).map((service) => (
-                <Link
-                  key={service.id}
-                  href={`/dich-vu/${service.slug}`}
-                  className="flex items-center px-3 py-2 text-sm text-gray-600 hover:text-primary-600 transition-colors"
-                >
-                  <span className="mr-2">{service.icon}</span>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-base font-semibold text-gray-900 group-hover:text-primary-700 transition-colors duration-300 truncate leading-tight">
                   {service.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+                </h4>
+                <div className="flex items-center mt-1">
+                  <span className="text-sm text-primary-600 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Xem chi tiết
+                  </span>
+                  <svg className="w-4 h-4 ml-1 transform translate-x-0 group-hover:translate-x-1 transition-transform duration-300 opacity-0 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+        
+        {/* View All Services */}
+        <div className="mt-4 pt-4 border-t border-gray-100">
+          <Link
+            href="/dich-vu"
+            className="flex items-center justify-center w-full px-4 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all duration-300 group hover:scale-[1.02] min-h-[48px]"
+          >
+            <svg className="w-5 h-5 mr-3 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            <span className="text-base font-semibold">Xem tất cả 11 dịch vụ</span>
+          </Link>
+        </div>
       </div>
+      
+      {/* Decorative elements */}
+      <div className="absolute -top-2 left-6 w-4 h-4 bg-white border-l border-t border-gray-200 transform rotate-45"></div>
     </div>
   )
 } 

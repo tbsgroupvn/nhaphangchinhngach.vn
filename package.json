@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export",
+    "analyze": "cross-env ANALYZE=true next build",
+    "sitemap": "next build && next start",
+    "lighthouse": "lighthouse http://localhost:3000 --output-path=./lighthouse-report.html --output=html",
+    "test:analytics": "node scripts/test-analytics.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

@@ -7,7 +7,7 @@ Website chính thức của **TBS GROUP** - Đơn vị hàng đầu trong lĩnh 
 TBS GROUP chuyên cung cấp dịch vụ nhập khẩu hàng hóa từ Trung Quốc chính ngạch với hơn 8 năm kinh nghiệm. Chúng tôi cam kết mang đến cho khách hàng:
 
 - ✅ **Dịch vụ chính ngạch 100%** - An toàn pháp lý
-- ✅ **Phí ủy thác chỉ 1.5%** - Minh bạch, cạnh tranh
+- ✅ **Phí ủy thác 1.5% - 3%** - Minh bạch, cạnh tranh
 - ✅ **8000+ khách hàng** tin tưởng
 - ✅ **200K+ đơn hàng** thành công
 - ✅ **Hỗ trợ 24/7** - Tư vấn miễn phí

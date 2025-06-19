@@ -1,0 +1,243 @@
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: 'Tạo mới {{collection}} "{{slug}}"'
+    update: 'Cập nhật {{collection}} "{{slug}}"'
+    delete: 'Xóa {{collection}} "{{slug}}"'
+    uploadMedia: 'Upload "{{path}}"'
+    deleteMedia: 'Xóa "{{path}}"'
+    openAuthoring: '{{message}}'
+
+# Cấu hình local backend cho development
+local_backend: true
+
+media_folder: "public/images"
+public_folder: "/images"
+
+# Cấu hình hiển thị
+display_url: https://tbs-group.netlify.app
+logo_url: https://tbs-group.netlify.app/images/tbs-logo.png
+
+# Cấu hình ngôn ngữ
+locale: 'vi'
+
+collections:
+  # Quản lý dịch vụ
+  - name: "services"
+    label: "Dịch vụ"
+    folder: "content/services"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Tiêu đề", name: "title", widget: "string"}
+      - {label: "Mô tả ngắn", name: "description", widget: "text"}
+      - {label: "Hình ảnh", name: "image", widget: "image"}
+      - {label: "Icon", name: "icon", widget: "string", hint: "Tên icon từ Heroicons"}
+      - {label: "Giá từ", name: "priceFrom", widget: "string"}
+      - {label: "Thời gian", name: "duration", widget: "string"}
+      - {label: "Slug", name: "slug", widget: "string"}
+      - {label: "Danh mục", name: "category", widget: "select", options: ["import", "export", "logistics", "customs"]}
+      - {label: "Trạng thái", name: "status", widget: "select", options: ["active", "inactive"], default: "active"}
+      - {label: "Thứ tự", name: "order", widget: "number", default: 0}
+      - {label: "Nội dung", name: "body", widget: "markdown"}
+      - label: "Thông tin chi tiết"
+        name: "details"
+        widget: "object"
+        fields:
+          - {label: "Ưu điểm", name: "benefits", widget: "list"}
+          - {label: "Quy trình", name: "process", widget: "list"}
+          - {label: "Yêu cầu", name: "requirements", widget: "list"}
+          - {label: "Lưu ý", name: "notes", widget: "text", required: false}
+
+  # Quản lý tin tức
+  - name: "news"
+    label: "Tin tức"
+    folder: "content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Tiêu đề", name: "title", widget: "string"}
+      - {label: "Mô tả", name: "description", widget: "text"}
+      - {label: "Hình ảnh", name: "image", widget: "image"}
+      - {label: "Ngày đăng", name: "date", widget: "datetime"}
+      - {label: "Tác giả", name: "author", widget: "string", default: "TBS GROUP"}
+      - {label: "Danh mục", name: "category", widget: "select", options: ["cam-nang-xnk", "nganh", "tuyen-dung", "hoat-dong-cong-ty"]}
+      - {label: "Tags", name: "tags", widget: "list", default: []}
+      - {label: "Nổi bật", name: "featured", widget: "boolean", default: false}
+      - {label: "Trạng thái", name: "status", widget: "select", options: ["published", "draft"], default: "draft"}
+      - {label: "Lượt xem", name: "views", widget: "number", default: 0}
+      - {label: "Nội dung", name: "body", widget: "markdown"}
+
+  # Quản lý tuyển dụng
+  - name: "jobs"
+    label: "Tuyển dụng"
+    folder: "content/jobs"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Vị trí", name: "title", widget: "string"}
+      - {label: "Mô tả công việc", name: "description", widget: "text"}
+      - {label: "Địa điểm", name: "location", widget: "string"}
+      - {label: "Loại hình", name: "type", widget: "select", options: ["full-time", "part-time", "contract", "internship"]}
+      - {label: "Mức lương", name: "salary", widget: "string"}
+      - {label: "Hạn nộp", name: "deadline", widget: "datetime"}
+      - {label: "Kinh nghiệm", name: "experience", widget: "string"}
+      - {label: "Bằng cấp", name: "education", widget: "string"}
+      - {label: "Số lượng", name: "positions", widget: "number", default: 1}
+      - {label: "Trạng thái", name: "status", widget: "select", options: ["open", "closed"], default: "open"}
+      - {label: "Yêu cầu công việc", name: "requirements", widget: "markdown"}
+      - {label: "Quyền lợi", name: "benefits", widget: "markdown"}
+
+  # Quản lý câu chuyện khách hàng
+  - name: "customer-stories"
+    label: "Câu chuyện khách hàng"
+    folder: "content/customer-stories"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Tiêu đề", name: "title", widget: "string"}
+      - {label: "Tên khách hàng", name: "customerName", widget: "string"}
+      - {label: "Công ty", name: "company", widget: "string"}
+      - {label: "Avatar", name: "avatar", widget: "image"}
+      - {label: "Hình ảnh", name: "image", widget: "image"}
+      - {label: "Ngày", name: "date", widget: "datetime"}
+      - {label: "Dịch vụ sử dụng", name: "service", widget: "string"}
+      - {label: "Đánh giá", name: "rating", widget: "number", min: 1, max: 5, default: 5}
+      - {label: "Trạng thái", name: "status", widget: "select", options: ["published", "draft"], default: "draft"}
+      - {label: "Nội dung", name: "body", widget: "markdown"}
+
+  # Cấu hình chính sách
+  - name: "policies"
+    label: "Chính sách"
+    folder: "content/policies"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Tiêu đề", name: "title", widget: "string"}
+      - {label: "Mô tả", name: "description", widget: "text"}
+      - {label: "Ngày cập nhật", name: "lastUpdated", widget: "datetime"}
+      - {label: "Loại chính sách", name: "type", widget: "select", options: ["privacy", "terms", "shipping", "return"]}
+      - {label: "Trạng thái", name: "status", widget: "select", options: ["active", "inactive"], default: "active"}
+      - {label: "Nội dung", name: "body", widget: "markdown"}
+
+  # Cấu hình trang
+  - name: "pages"
+    label: "Trang"
+    files:
+      - label: "Trang chủ"
+        name: "homepage"
+        file: "content/pages/homepage.md"
+        fields:
+          - {label: "Tiêu đề", name: "title", widget: "string"}
+          - {label: "Mô tả", name: "description", widget: "text"}
+          - label: "Hero Section"
+            name: "hero"
+            widget: "object"
+            fields:
+              - {label: "Tiêu đề chính", name: "title", widget: "string"}
+              - {label: "Phụ đề", name: "subtitle", widget: "text"}
+              - {label: "Nút CTA", name: "ctaText", widget: "string"}
+              - {label: "Link CTA", name: "ctaLink", widget: "string"}
+              - {label: "Hình ảnh nền", name: "backgroundImage", widget: "image"}
+          - label: "Thống kê"
+            name: "stats"
+            widget: "list"
+            fields:
+              - {label: "Số", name: "number", widget: "string"}
+              - {label: "Nhãn", name: "label", widget: "string"}
+              - {label: "Mô tả", name: "description", widget: "string"}
+
+      - label: "Giới thiệu"
+        name: "about"
+        file: "content/pages/about.md"
+        fields:
+          - {label: "Tiêu đề", name: "title", widget: "string"}
+          - {label: "Mô tả", name: "description", widget: "text"}
+          - {label: "Nội dung", name: "body", widget: "markdown"}
+          - label: "Đội ngũ"
+            name: "team"
+            widget: "list"
+            fields:
+              - {label: "Tên", name: "name", widget: "string"}
+              - {label: "Chức vụ", name: "position", widget: "string"}
+              - {label: "Avatar", name: "avatar", widget: "image"}
+              - {label: "Mô tả", name: "description", widget: "text"}
+
+      - label: "Liên hệ"
+        name: "contact"
+        file: "content/pages/contact.md"
+        fields:
+          - {label: "Tiêu đề", name: "title", widget: "string"}
+          - {label: "Mô tả", name: "description", widget: "text"}
+          - label: "Thông tin liên hệ"
+            name: "contactInfo"
+            widget: "object"
+            fields:
+              - {label: "Địa chỉ", name: "address", widget: "text"}
+              - {label: "Điện thoại", name: "phone", widget: "string"}
+              - {label: "Email", name: "email", widget: "string"}
+              - {label: "Giờ làm việc", name: "workingHours", widget: "text"}
+
+  # Cấu hình site
+  - name: "settings"
+    label: "Cài đặt"
+    files:
+      - label: "Cài đặt chung"
+        name: "general"
+        file: "content/settings/general.json"
+        fields:
+          - {label: "Tên site", name: "siteName", widget: "string"}
+          - {label: "Mô tả site", name: "siteDescription", widget: "text"}
+          - {label: "URL", name: "siteUrl", widget: "string"}
+          - {label: "Logo", name: "logo", widget: "image"}
+          - {label: "Favicon", name: "favicon", widget: "image"}
+          - {label: "Màu chủ đạo", name: "primaryColor", widget: "string"}
+          - {label: "Màu phụ", name: "secondaryColor", widget: "string"}
+          - label: "SEO"
+            name: "seo"
+            widget: "object"
+            fields:
+              - {label: "Meta title", name: "metaTitle", widget: "string"}
+              - {label: "Meta description", name: "metaDescription", widget: "text"}
+              - {label: "Keywords", name: "keywords", widget: "list"}
+              - {label: "OG Image", name: "ogImage", widget: "image"}
+
+      - label: "Menu"
+        name: "navigation"
+        file: "content/settings/navigation.json"
+        fields:
+          - label: "Menu chính"
+            name: "mainMenu"
+            widget: "list"
+            fields:
+              - {label: "Nhãn", name: "label", widget: "string"}
+              - {label: "Link", name: "link", widget: "string"}
+              - {label: "Icon", name: "icon", widget: "string", required: false}
+              - label: "Menu con"
+                name: "children"
+                widget: "list"
+                required: false
+                fields:
+                  - {label: "Nhãn", name: "label", widget: "string"}
+                  - {label: "Link", name: "link", widget: "string"}
+
+      - label: "Footer"
+        name: "footer"
+        file: "content/settings/footer.json"
+        fields:
+          - {label: "Mô tả công ty", name: "description", widget: "text"}
+          - {label: "Copyright", name: "copyright", widget: "string"}
+          - label: "Liên kết nhanh"
+            name: "quickLinks"
+            widget: "list"
+            fields:
+              - {label: "Nhãn", name: "label", widget: "string"}
+              - {label: "Link", name: "link", widget: "string"}
+          - label: "Mạng xã hội"
+            name: "socialMedia"
+            widget: "list"
+            fields:
+              - {label: "Tên", name: "name", widget: "string"}
+              - {label: "Icon", name: "icon", widget: "string"}
+              - {label: "URL", name: "url", widget: "string"} 

@@ -55,7 +55,7 @@ async function generateEnhancedResponse(userMessage: string, history: any[]): Pr
 • Thuận tiện cho tái xuất khẩu
 
 💰 **Chi phí minh bạch:**
-• Phí ủy thác: 1.5% giá trị CIF
+• Phí ủy thác: 1.5% - 3% tùy giá trị lô hàng
 • Không phát sinh chi phí ẩn
 • Báo giá chi tiết từng khoản
 
@@ -76,9 +76,9 @@ async function generateEnhancedResponse(userMessage: string, history: any[]): Pr
 
 • **Thuế NK (18%):** 39.78 triệu VND
 • **VAT (10%):** 26.08 triệu VND  
-• **Phí ủy thác (1.5%):** 3.31 triệu VND
+• **Phí ủy thác (2.5%):** 5.53 triệu VND
 
-🎯 **Tổng cuối:** 290.17 triệu VND
+🎯 **Tổng cuối:** 292.39 triệu VND
 
 📱 **Báo giá chi tiết cho hàng của bạn:**
 📞 Hotline: 0976 005 335
@@ -146,7 +146,7 @@ async function generateEnhancedResponse(userMessage: string, history: any[]): Pr
 
 2️⃣ **Ký hợp đồng & đặt cọc**  
 • Hợp đồng song ngữ rõ ràng
-• Đặt cọc 30-50% để bắt đầu
+• Đặt cọc 70-80% giá trị hợp đồng để bắt đầu
 
 3️⃣ **TBS đặt hàng & theo dõi**
 • Đàm phán giá, kiểm tra chất lượng
@@ -273,7 +273,7 @@ Hãy hỏi tôi một câu hỏi cụ thể về nhập khẩu nhé! 😊`
 • ✅ **8 năm** kinh nghiệm vững vàng
 • ✅ **8000+** khách hàng tin tưởng  
 • ✅ **200000** đơn hàng chính ngạch thành công
-• ✅ **Phí ủy thác 1.5%** - minh bạch tuyệt đối
+• ✅ **Phí ủy thác 1.5% - 3%** - minh bạch tuyệt đối
 
 🤖 **Tôi có thể hỗ trợ bạn:**
 • Tính toán chi phí nhập khẩu chính xác
@@ -308,7 +308,7 @@ Hãy hỏi tôi một câu hỏi cụ thể về nhập khẩu nhé! 😊`
 • "Mã HS của máy móc sản xuất?"
 
 🎁 **Ưu đại đặc biệt:**
-• **Phí ủy thác chỉ 1.5%** - thấp nhất thị trường
+• **Phí ủy thác 1.5% - 3%** - cạnh tranh nhất thị trường
 • **Tư vấn miễn phí 24/7**
 • **Bảo hiểm toàn bộ hàng hóa**
 

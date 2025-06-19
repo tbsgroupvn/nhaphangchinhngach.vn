@@ -322,7 +322,7 @@ export default function TransportRoutes() {
                   <h5 className="font-semibold text-gray-800 mb-2">📋 Bao gồm trong giá:</h5>
                   <ul className="space-y-1 text-gray-700">
                     <li>• Vận chuyển từ kho TQ đến kho VN</li>
-                    <li>• Phí ủy thác 1.5% (trên giá trị CIF)</li>
+                    <li>• Phí ủy thác 1.5% - 3% (tùy giá trị lô hàng)</li>
                     <li>• Khai báo hải quan cơ bản</li>
                     <li>• Bảo hiểm hàng hóa</li>
                   </ul>

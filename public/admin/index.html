@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TBS GROUP - Quản trị nội dung</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      color: white;
+    }
+    
+    .logo {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top: 4px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .cms-container {
+      display: none;
+    }
+    
+    .cms-container.loaded {
+      display: block;
+    }
+    
+    /* Custom CSS cho Netlify CMS */
+    .nc-app-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+    
+    .nc-app-header h1 {
+      color: white !important;
+    }
+    
+    .nc-entryEditor-editor {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="logo">TBS GROUP</div>
+    <div class="subtitle">Đang tải hệ thống quản trị...</div>
+    <div class="spinner"></div>
+  </div>
+  
+  <div class="cms-container" id="cmsContainer">
+    <!-- Netlify CMS sẽ render ở đây -->
+  </div>
+  
+  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  
+  <script>
+    // Cấu hình ngôn ngữ tiếng Việt
+    CMS.registerLocale('vi', {
+      app: {
+        header: {
+          content: 'Nội dung',
+          workflow: 'Quy trình',
+          media: 'Thư viện',
+          quickAdd: 'Thêm nhanh'
+        }
+      },
+      collection: {
+        sidebar: {
+          collections: 'Bộ sưu tập',
+          searchAll: 'Tìm kiếm tất cả'
+        }
+      },
+      editor: {
+        editorControl: {
+          field: {
+            optional: 'tùy chọn'
+          }
+        },
+        editorControlPane: {
+          widget: {
+            headingOneTitle: 'Tiêu đề 1',
+            headingTwoTitle: 'Tiêu đề 2',
+            headingThreeTitle: 'Tiêu đề 3',
+            headingFourTitle: 'Tiêu đề 4',
+            headingFiveTitle: 'Tiêu đề 5',
+            headingSixTitle: 'Tiêu đề 6',
+            bold: 'Đậm',
+            italic: 'Nghiêng',
+            code: 'Mã',
+            link: 'Liên kết',
+            linkPrompt: 'Nhập URL liên kết',
+            linkTooltip: 'Thêm liên kết',
+            bullist: 'Danh sách có dấu đầu dòng',
+            numlist: 'Danh sách có số',
+            addComponent: 'Thêm thành phần',
+            richText: 'Văn bản phong phú',
+            markdown: 'Markdown'
+          }
+        }
+      }
+    });
+    
+    // Khởi tạo CMS
+    CMS.init({
+      config: {
+        load_config_file: true,
+        local_backend: window.location.hostname === 'localhost'
+      }
+    });
+    
+    // Xử lý loading screen
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        document.getElementById('loadingScreen').style.display = 'none';
+        document.getElementById('cmsContainer').classList.add('loaded');
+      }, 2000);
+    });
+    
+    // Netlify Identity
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html> 

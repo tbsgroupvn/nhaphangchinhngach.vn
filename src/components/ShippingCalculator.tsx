@@ -40,10 +40,25 @@ export default function ShippingCalculator() {
     'Đồ gia dụng nhựa',
     'Gia dụng điện',
     'Văn phòng phẩm',
-    'Nội thất',
+    'Nội thất gỗ',
     'Đồ điện tử',
-    'Máy móc',
-    'Nguyên vật liệu',
+    'Linh kiện điện tử', 
+    'Máy móc công nghiệp',
+    'Dệt may & Thời trang',
+    'Giày dép & Phụ kiện',
+    'Đồ chơi trẻ em',
+    'Mỹ phẩm & Làm đẹp',
+    'Thiết bị y tế',
+    'Đồ thể thao',
+    'Túi xách & Balo',
+    'Đồ trang sức',
+    'Nguyên vật liệu nhựa',
+    'Nguyên vật liệu kim loại',
+    'Hóa chất công nghiệp',
+    'Thực phẩm chế biến',
+    'Đồ gia dụng inox',
+    'Đèn LED & Chiếu sáng',
+    'Thiết bị điện gia dụng',
     'Khác'
   ]
 
@@ -65,20 +80,41 @@ export default function ShippingCalculator() {
     const volumeCost = data.volume * selectedRoute.pricePerM3 * selectedTransport.multiplier
     const shippingCost = Math.max(weightCost, volumeCost) // Lấy giá cao hơn
 
-    // Phí ủy thác 1.5%
-    const commissionFee = data.value * 0.015
+    // Phí ủy thác 1.5% - 3% tùy giá trị lô hàng
+    const getCommissionRate = (value: number) => {
+      if (value >= 2000000000) return 0.015 // >= 2 tỷ: 1.5%
+      if (value >= 1000000000) return 0.02  // >= 1 tỷ: 2.0%
+      if (value >= 500000000) return 0.025  // >= 500M: 2.5%
+      return 0.03 // < 500M: 3.0%
+    }
+    const commissionFee = data.value * getCommissionRate(data.value)
 
     // Ước tính thuế (VAT + thuế nhập khẩu tùy ngành)
     const getTaxRate = (industry: string) => {
       switch (industry) {
-        case 'Đồ gia dụng nhựa': return 0.18 // 5% thuế NK + 10% VAT + 3% phí khác
-        case 'Gia dụng điện': return 0.22 // 10% thuế NK + 10% VAT + 2% phí khác
-        case 'Văn phòng phẩm': return 0.15 // 3% thuế NK + 10% VAT + 2% phí khác
-        case 'Nội thất': return 0.20 // 8% thuế NK + 10% VAT + 2% phí khác
-        case 'Đồ điện tử': return 0.28 // 15% thuế NK + 10% VAT + 3% phí khác
-        case 'Máy móc': return 0.12 // 0% thuế NK + 10% VAT + 2% phí khác
-        case 'Nguyên vật liệu': return 0.15 // 3% thuế NK + 10% VAT + 2% phí khác
-        default: return 0.18 // Mặc định
+        case 'Đồ gia dụng nhựa': return 0.18
+        case 'Gia dụng điện': return 0.22
+        case 'Văn phòng phẩm': return 0.15
+        case 'Nội thất gỗ': return 0.20
+        case 'Đồ điện tử': return 0.28
+        case 'Linh kiện điện tử': return 0.25
+        case 'Máy móc công nghiệp': return 0.12
+        case 'Dệt may & Thời trang': return 0.25
+        case 'Giày dép & Phụ kiện': return 0.30
+        case 'Đồ chơi trẻ em': return 0.20
+        case 'Mỹ phẩm & Làm đẹp': return 0.35
+        case 'Thiết bị y tế': return 0.15
+        case 'Đồ thể thao': return 0.28
+        case 'Túi xách & Balo': return 0.32
+        case 'Đồ trang sức': return 0.40
+        case 'Nguyên vật liệu nhựa': return 0.15
+        case 'Nguyên vật liệu kim loại': return 0.12
+        case 'Hóa chất công nghiệp': return 0.18
+        case 'Thực phẩm chế biến': return 0.22
+        case 'Đồ gia dụng inox': return 0.20
+        case 'Đèn LED & Chiếu sáng': return 0.24
+        case 'Thiết bị điện gia dụng': return 0.26
+        default: return 0.18
       }
     }
     const estimatedTax = data.value * getTaxRate(data.industry)
@@ -119,22 +155,22 @@ Vui lòng liên hệ để xác nhận giá chính xác.`
   return (
     <section className="section-padding bg-gradient-to-br from-blue-50 to-indigo-50">
       <div className="container-max">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-responsive-4xl font-bold text-gray-900 mb-4">
             🧮 Tính cước vận chuyển & Thuế tự động
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-responsive-xl text-gray-600">
             Nhập thông tin hàng hóa để nhận ước tính chi phí minh bạch
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
           {/* Form */}
-          <div className="card">
-            <h3 className="text-xl font-semibold mb-6">Thông tin hàng hóa</h3>
+          <div className="card-mobile">
+            <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Thông tin hàng hóa</h3>
             
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Trọng lượng (kg) *
@@ -241,13 +277,13 @@ Vui lòng liên hệ để xác nhận giá chính xác.`
           </div>
 
           {/* Results */}
-          <div className="card">
-            <h3 className="text-xl font-semibold mb-6">Kết quả ước tính</h3>
+          <div className="card-mobile">
+            <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Kết quả ước tính</h3>
             
             {result ? (
-              <div className="space-y-6">
-                <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6">
-                  <h4 className="font-semibold text-gray-900 mb-4">Thông tin vận chuyển</h4>
+              <div className="space-y-4 sm:space-y-6">
+                <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4 sm:p-6">
+                  <h4 className="font-semibold text-gray-900 mb-3 sm:mb-4">Thông tin vận chuyển</h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span>Tuyến:</span>
@@ -275,28 +311,40 @@ Vui lòng liên hệ để xác nhận giá chính xác.`
                           {result.details.selectedBy}
                         </div>
                       </div>
-                      <span className="font-semibold text-indigo-600">
+                      <span className="font-semibold text-indigo-600 text-sm sm:text-base">
                         {formatCurrency(result.shippingCost)}
                       </span>
                     </div>
 
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                      <span className="text-sm text-gray-600">Phí ủy thác (1.5%)</span>
-                      <span className="font-semibold text-blue-600">
+                      <div>
+                        <span className="text-sm text-gray-600">Phí ủy thác</span>
+                        <div className="text-xs text-gray-500">
+                          {(() => {
+                            const value = watch('value');
+                            if (!value) return '1.5% - 3% tùy giá trị';
+                            if (value >= 2000000000) return '1.5% (>= 2 tỷ)';
+                            if (value >= 1000000000) return '2.0% (>= 1 tỷ)';
+                            if (value >= 500000000) return '2.5% (>= 500M)';
+                            return '3.0% (< 500M)';
+                          })()}
+                        </div>
+                      </div>
+                      <span className="font-semibold text-blue-600 text-sm sm:text-base">
                         {formatCurrency(result.commissionFee)}
                       </span>
                     </div>
 
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                       <span className="text-sm text-gray-600">Ước tính thuế</span>
-                      <span className="font-semibold text-orange-600">
+                      <span className="font-semibold text-orange-600 text-sm sm:text-base">
                         {formatCurrency(result.estimatedTax)}
                       </span>
                     </div>
 
                     <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border-2 border-green-200">
                       <span className="font-semibold text-gray-900">Tổng ước tính:</span>
-                      <span className="text-xl font-bold text-green-600">
+                      <span className="text-lg sm:text-xl font-bold text-green-600">
                         {formatCurrency(result.total)}
                       </span>
                     </div>
@@ -318,14 +366,14 @@ Vui lòng liên hệ để xác nhận giá chính xác.`
                     <li>• Đây chỉ là ước tính, giá chính xác được báo sau khi thẩm định hàng</li>
                     <li>• Thuế phụ thuộc vào mã HS và chính sách hiện hành</li>
                     <li>• Phí có thể thay đổi theo biến động tỷ giá và giá nhiên liệu</li>
-                    <li>• Liên hệ <span className="font-semibold text-indigo-600">0976 005 335</span> để được tư vấn chi tiết</li>
+                    <li>• Liên hệ <a href="tel:0976005335" className="font-semibold text-indigo-600 hover:text-indigo-800">0976 005 335</a> để được tư vấn chi tiết</li>
                   </ul>
                 </div>
               </div>
             ) : (
-              <div className="text-center py-12">
-                <div className="text-4xl mb-4">🧮</div>
-                <p className="text-gray-500">
+              <div className="text-center py-8 sm:py-12">
+                <div className="text-3xl sm:text-4xl mb-4">🧮</div>
+                <p className="text-gray-500 text-sm sm:text-base">
                   Nhập thông tin hàng hóa để nhận kết quả ước tính chi phí
                 </p>
               </div>
