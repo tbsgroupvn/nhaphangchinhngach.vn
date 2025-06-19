@@ -1,10 +1,10 @@
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import BackToTop from '@/components/BackToTop'
-import MessengerButton from '@/components/MessengerButton'
+import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
+import BackToTop from '../../components/BackToTop'
+import MessengerButton from '../../components/MessengerButton'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { services, serviceCategories } from '@/data/services'
+import { services, serviceCategories } from '../../data/services'
 
 export const metadata: Metadata = {
   title: 'Dịch vụ TBS GROUP - 11 Dịch vụ nhập khẩu Trung Quốc chuyên nghiệp',
