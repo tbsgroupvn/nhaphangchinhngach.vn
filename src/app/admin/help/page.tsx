@@ -1,6 +1,6 @@
 'use client'
 
-import AdminHeader from '@/components/admin/AdminHeader'
+import AdminHeader from '../../../components/admin/AdminHeader'
 
 export default function AdminHelp() {
   const guides = [

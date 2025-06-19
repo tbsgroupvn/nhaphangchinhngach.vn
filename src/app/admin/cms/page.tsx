@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useAdmin } from '@/components/admin/AdminProvider'
+import { useAdmin } from '../../../components/admin/AdminProvider'
 
 export default function NetlifyCMSPage() {
   const { user, logout } = useAdmin()
