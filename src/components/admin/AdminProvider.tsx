@@ -2,8 +2,10 @@
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import AdminSidebar from './AdminSidebar'
-import AdminLogin from './AdminLogin'
+import dynamic from 'next/dynamic'
+
+const AdminSidebar = dynamic(() => import('./AdminSidebar'), { ssr: false })
+const AdminLogin = dynamic(() => import('./AdminLogin'), { ssr: false })
 
 interface User {
   id: string
