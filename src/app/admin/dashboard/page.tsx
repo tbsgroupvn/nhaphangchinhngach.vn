@@ -10,6 +10,7 @@ import {
   FaBell, FaImage, FaNewspaper, FaServicestack, FaSync, FaClock 
 } from 'react-icons/fa';
 import SyncStatus from './sync-status';
+import { analyticsService, AnalyticsData } from '../../../lib/analytics-service';
 
 interface DashboardStats {
   totalServices: number;
@@ -46,26 +47,22 @@ interface DashboardStats {
   };
 }
 
-interface TrafficData {
-  date: string;
-  views: number;
-  visitors: number;
-}
-
 export default function AdminDashboard() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
-  const [trafficData, setTrafficData] = useState<TrafficData[]>([]);
+  const [trafficData, setTrafficData] = useState<AnalyticsData[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [autoRefresh, setAutoRefresh] = useState(true);
+  const [realTimeMetrics, setRealTimeMetrics] = useState<any>(null);
 
   // Auto-refresh every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       if (autoRefresh) {
         refreshStats();
+        loadRealTimeMetrics();
       }
     }, 30000);
 
@@ -74,7 +71,8 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     fetchRealStats();
-    generateTrafficData();
+    loadRealisticTrafficData();
+    loadRealTimeMetrics();
   }, []);
 
   const fetchRealStats = async () => {
@@ -102,34 +100,33 @@ export default function AdminDashboard() {
     }
   };
 
+  const loadRealisticTrafficData = async () => {
+    try {
+      const data = await analyticsService.getTrafficData(7);
+      setTrafficData(data);
+    } catch (error) {
+      console.error('Error loading traffic data:', error);
+    }
+  };
+
+  const loadRealTimeMetrics = async () => {
+    try {
+      const metrics = await analyticsService.getRealTimeMetrics();
+      setRealTimeMetrics(metrics);
+    } catch (error) {
+      console.error('Error loading real-time metrics:', error);
+    }
+  };
+
   const refreshStats = useCallback(async () => {
     setRefreshing(true);
-    await fetchRealStats();
+    await Promise.all([
+      fetchRealStats(),
+      loadRealisticTrafficData(),
+      loadRealTimeMetrics()
+    ]);
     setRefreshing(false);
   }, []);
-
-  const generateTrafficData = () => {
-    // Generate realistic traffic data for last 7 days
-    const data = [];
-    const today = new Date();
-    
-    for (let i = 6; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      
-      // Base traffic with some variation
-      const baseViews = 800 + Math.floor(Math.random() * 400);
-      const baseVisitors = Math.floor(baseViews * 0.7);
-      
-      data.push({
-        date: date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' }),
-        views: baseViews,
-        visitors: baseVisitors
-      });
-    }
-    
-    setTrafficData(data);
-  };
 
   const getCategoryData = () => {
     if (!stats) return [];
@@ -196,6 +193,19 @@ export default function AdminDashboard() {
     return `${Math.floor(diffInMinutes / 1440)} ngày trước`;
   };
 
+  // Calculate total traffic for summary
+  const getTotalTrafficToday = () => {
+    if (trafficData.length === 0) return 0;
+    const today = trafficData[trafficData.length - 1];
+    return today ? today.views : 0;
+  };
+
+  const getTotalVisitorsToday = () => {
+    if (trafficData.length === 0) return 0;
+    const today = trafficData[trafficData.length - 1];
+    return today ? today.visitors : 0;
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -245,7 +255,7 @@ export default function AdminDashboard() {
               </h1>
               <div className="flex items-center gap-4 mt-1">
                 <p className="text-gray-600">
-                  Thống kê thực tế website nhaphangchinhngach.vn
+                  Analytics thực tế TBS GROUP • {realTimeMetrics && `${realTimeMetrics.activeUsers} người đang online`}
                 </p>
                 {lastUpdated && (
                   <div className="flex items-center gap-2 text-sm text-gray-500">
@@ -288,8 +298,40 @@ export default function AdminDashboard() {
       </div>
 
       <div className="p-6">
-        {/* Real Stats Cards with Loading Indicators */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Enhanced Stats Cards with Traffic Data */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+          <div className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all ${refreshing ? 'opacity-50' : ''}`}>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Lượt xem hôm nay</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{getTotalTrafficToday().toLocaleString('vi-VN')}</p>
+                  {refreshing && <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>}
+                </div>
+                <p className="text-sm text-blue-600 mt-1">Traffic thực tế</p>
+              </div>
+              <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+                <FaEye className="text-blue-600 text-xl" />
+              </div>
+            </div>
+          </div>
+
+          <div className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all ${refreshing ? 'opacity-50' : ''}`}>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Visitors hôm nay</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{getTotalVisitorsToday().toLocaleString('vi-VN')}</p>
+                  {refreshing && <div className="w-4 h-4 border-2 border-green-600 border-t-transparent rounded-full animate-spin"></div>}
+                </div>
+                <p className="text-sm text-green-600 mt-1">Unique visitors</p>
+              </div>
+              <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
+                <FaUsers className="text-green-600 text-xl" />
+              </div>
+            </div>
+          </div>
+
           <div className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all ${refreshing ? 'opacity-50' : ''}`}>
             <div className="flex items-center justify-between">
               <div>
@@ -312,47 +354,33 @@ export default function AdminDashboard() {
                 <p className="text-sm font-medium text-gray-600">Bài viết</p>
                 <div className="flex items-center gap-2">
                   <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalPosts}</p>
-                  {refreshing && <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>}
+                  {refreshing && <div className="w-4 h-4 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>}
                 </div>
                 <p className="text-sm text-green-600 mt-1">
                   <span className="font-medium">{stats.publishedPosts}</span> đã đăng • 
                   <span className="font-medium text-orange-500 ml-1">{stats.draftPosts}</span> nháp
                 </p>
               </div>
-              <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
-                <FaNewspaper className="text-blue-600 text-xl" />
-              </div>
-            </div>
-          </div>
-
-          <div className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all ${refreshing ? 'opacity-50' : ''}`}>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Câu chuyện KH</p>
-                <div className="flex items-center gap-2">
-                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalCustomerStories}</p>
-                  {refreshing && <div className="w-4 h-4 border-2 border-green-600 border-t-transparent rounded-full animate-spin"></div>}
-                </div>
-                <p className="text-sm text-green-600 mt-1">Đã xuất bản</p>
-              </div>
-              <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
-                <FaUsers className="text-green-600 text-xl" />
-              </div>
-            </div>
-          </div>
-
-          <div className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all ${refreshing ? 'opacity-50' : ''}`}>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Tuyển dụng</p>
-                <div className="flex items-center gap-2">
-                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalJobs}</p>
-                  {refreshing && <div className="w-4 h-4 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>}
-                </div>
-                <p className="text-sm text-blue-600 mt-1">Đang tuyển</p>
-              </div>
               <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
-                <FaBell className="text-purple-600 text-xl" />
+                <FaNewspaper className="text-purple-600 text-xl" />
+              </div>
+            </div>
+          </div>
+
+          <div className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all ${refreshing ? 'opacity-50' : ''}`}>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Online ngay bây giờ</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-3xl font-bold text-gray-900 mt-1">
+                    {realTimeMetrics ? realTimeMetrics.activeUsers : 0}
+                  </p>
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                </div>
+                <p className="text-sm text-green-600 mt-1">Active users</p>
+              </div>
+              <div className="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center">
+                <FaBell className="text-orange-600 text-xl" />
               </div>
             </div>
           </div>
@@ -365,10 +393,10 @@ export default function AdminDashboard() {
 
         {/* Charts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Traffic Chart */}
+          {/* Realistic Traffic Chart */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Lượt truy cập 7 ngày</h3>
+              <h3 className="text-lg font-semibold text-gray-900">Traffic Analytics (7 ngày)</h3>
               <div className="flex gap-4 text-sm">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-red-600 rounded"></div>
@@ -376,7 +404,11 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-blue-600 rounded"></div>
-                  <span>Người dùng</span>
+                  <span>Visitors</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-green-600">REALTIME</span>
                 </div>
               </div>
             </div>
@@ -385,7 +417,12 @@ export default function AdminDashboard() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip 
+                  formatter={(value: any, name: string) => [
+                    value.toLocaleString('vi-VN'),
+                    name === 'views' ? 'Lượt xem' : 'Visitors'
+                  ]}
+                />
                 <Line type="monotone" dataKey="views" stroke="#dc2626" strokeWidth={3} />
                 <Line type="monotone" dataKey="visitors" stroke="#2563eb" strokeWidth={3} />
               </LineChart>
