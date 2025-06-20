@@ -10,12 +10,15 @@ backend:
     openAuthoring: '{{message}}'
 
 # Auth0 Extension Configuration
-# Extension sẽ tự động inject các environment variables
+# Tenant: dev-7o7uj1p4qibr6c58
+# Domain: dev-7o7uj1p4qibr6c58.auth0.com
+# App ID: Nhtya0JcKofGeMz5Rj3jdtEqbuDTuC1I
 auth:
   providers:
     - name: auth0
-      # Variables sẽ được tự động set bởi Auth0 extension:
-      # AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_AUDIENCE, AUTH0_ISSUER
+      domain: dev-7o7uj1p4qibr6c58.auth0.com
+      client_id: Nhtya0JcKofGeMz5Rj3jdtEqbuDTuC1I
+      # Extension sẽ tự động inject các environment variables
 
 # Cấu hình local backend chỉ cho development
 # local_backend: true
