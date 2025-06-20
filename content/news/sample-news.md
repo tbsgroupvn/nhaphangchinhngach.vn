@@ -1,14 +1,20 @@
 ---
-title: "Quy định mới về thuế nhập khẩu năm 2025"
-description: "Chính phủ ban hành quy định mới về thuế nhập khẩu, tác động tích cực đến các doanh nghiệp xuất nhập khẩu"
-image: "/images/tax-news.jpg"
-date: 2024-12-01T10:00:00Z
-author: "TBS GROUP"
-category: "cam-nang-xnk"
-tags: ["thuế nhập khẩu", "quy định mới", "2025"]
+title: Quy định mới về thuế nhập khẩu năm 2025
+description: >-
+  Chính phủ ban hành quy định mới về thuế nhập khẩu, tác động tích cực đến các
+  doanh nghiệp xuất nhập khẩu
+image: /images/tax-news.jpg
+date: 2024-12-01T10:00:00.000Z
+author: TBS GROUP
+category: cam-nang-xnk
+tags:
+  - thuế nhập khẩu
+  - quy định mới
+  - '2025'
 featured: true
-status: "published"
+status: published
 views: 1247
+updated: '2025-06-20T13:24:02.995Z'
 ---
 
 # Quy định mới về thuế nhập khẩu năm 2025

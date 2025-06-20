@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { 
   FaSync, FaCheckCircle, FaExclamationTriangle, FaSpinner,
-  FaDatabase, FaNewspaper, FaCog, FaCloudUploadAlt
+  FaDatabase, FaNewspaper, FaCog, FaCloudUploadAlt, 
+  FaInfoCircle, FaGithub, FaCode, FaLock
 } from 'react-icons/fa'
 
 interface SyncStatus {
@@ -21,9 +22,12 @@ export default function SyncStatus() {
   const [loading, setLoading] = useState(true)
   const [syncing, setSyncing] = useState(false)
   const [syncType, setSyncType] = useState<'all' | 'services' | 'posts'>('all')
+  const [isProduction, setIsProduction] = useState(false)
+  const [environmentInfo, setEnvironmentInfo] = useState<any>(null)
 
   useEffect(() => {
     fetchSyncStatus()
+    checkEnvironment()
     // Refresh every 30 seconds
     const interval = setInterval(fetchSyncStatus, 30000)
     return () => clearInterval(interval)
@@ -41,6 +45,25 @@ export default function SyncStatus() {
       console.error('Error fetching sync status:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const checkEnvironment = async () => {
+    try {
+      // Check if we're in production by detecting Netlify or other production indicators
+      const isNetlify = typeof window !== 'undefined' && window.location.hostname.includes('netlify.app')
+      const isProd = typeof window !== 'undefined' && window.location.hostname === 'nhaphangchinhngach.vn'
+      
+      setIsProduction(isNetlify || isProd)
+      
+      // Get environment info from content manager if available
+      const envResponse = await fetch('/api/admin/sync')
+      if (envResponse.ok) {
+        const envData = await envResponse.json()
+        setEnvironmentInfo(envData.environmentInfo)
+      }
+    } catch (error) {
+      console.error('Error checking environment:', error)
     }
   }
 
@@ -62,11 +85,13 @@ export default function SyncStatus() {
         alert(`✅ ${type} sync completed successfully!`)
         await fetchSyncStatus() // Refresh status
       } else {
-        alert(`❌ Sync failed: ${result.errors?.join(', ') || 'Unknown error'}`)
+        // Show detailed error information
+        const errorMessage = result.errors?.join('\n') || 'Unknown error'
+        alert(`❌ Sync failed:\n\n${errorMessage}`)
       }
     } catch (error) {
       console.error('Sync error:', error)
-      alert('❌ Sync operation failed')
+      alert('❌ Sync operation failed due to network error')
     } finally {
       setSyncing(false)
     }
@@ -131,6 +156,29 @@ export default function SyncStatus() {
         </div>
       </div>
 
+      {/* Production Environment Warning */}
+      {isProduction && (
+        <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+          <div className="flex items-start gap-3">
+            <FaLock className="text-amber-600 text-lg mt-0.5" />
+            <div>
+              <h4 className="font-semibold text-amber-800 mb-2">🚨 Môi trường Production - Chỉ đọc</h4>
+              <p className="text-sm text-amber-700 mb-3">
+                Sync operations bị tắt trong production do Netlify file system chỉ đọc.
+              </p>
+              <div className="text-sm text-amber-700">
+                <p className="font-medium mb-1">Để cập nhật nội dung:</p>
+                <ol className="list-decimal list-inside space-y-1 ml-2">
+                  <li>Chỉnh sửa trong development environment</li>
+                  <li>Push changes lên GitHub repository</li>
+                  <li>Netlify sẽ tự động deploy cập nhật</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Content Health Status */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {syncStatus?.contentHealth.map(item => (
@@ -170,11 +218,16 @@ export default function SyncStatus() {
           className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
             syncing && syncType === 'all'
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : isProduction 
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
               : 'bg-red-600 text-white hover:bg-red-700'
           }`}
+          title={isProduction ? 'Sync bị tắt trong production environment' : 'Đồng bộ tất cả content'}
         >
           {syncing && syncType === 'all' ? (
             <FaSpinner className="animate-spin" />
+          ) : isProduction ? (
+            <FaLock />
           ) : (
             <FaSync />
           )}
@@ -187,11 +240,16 @@ export default function SyncStatus() {
           className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
             syncing && syncType === 'services'
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : isProduction
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
               : 'bg-blue-600 text-white hover:bg-blue-700'
           }`}
+          title={isProduction ? 'Sync bị tắt trong production environment' : 'Sync dịch vụ'}
         >
           {syncing && syncType === 'services' ? (
             <FaSpinner className="animate-spin" />
+          ) : isProduction ? (
+            <FaLock />
           ) : (
             <FaDatabase />
           )}
@@ -204,11 +262,16 @@ export default function SyncStatus() {
           className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
             syncing && syncType === 'posts'
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : isProduction
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
               : 'bg-purple-600 text-white hover:bg-purple-700'
           }`}
+          title={isProduction ? 'Sync bị tắt trong production environment' : 'Sync bài viết'}
         >
           {syncing && syncType === 'posts' ? (
             <FaSpinner className="animate-spin" />
+          ) : isProduction ? (
+            <FaLock />
           ) : (
             <FaNewspaper />
           )}
@@ -224,6 +287,32 @@ export default function SyncStatus() {
           Refresh
         </button>
       </div>
+
+      {/* Development Instructions */}
+      {isProduction && (
+        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="flex items-start gap-3">
+            <FaGithub className="text-blue-600 text-lg mt-0.5" />
+            <div>
+              <h4 className="font-semibold text-blue-800 mb-2">💡 Hướng dẫn cập nhật content</h4>
+              <div className="text-sm text-blue-700 space-y-2">
+                <p><strong>Option 1: Development Environment</strong></p>
+                <div className="bg-white p-3 rounded border border-blue-200 font-mono text-xs">
+                  <div>git clone https://github.com/tbsgroupvn/nhaphangchinhngach.vn.git</div>
+                  <div>npm install</div>
+                  <div>npm run dev</div>
+                  <div># Truy cập http://localhost:3000/admin/dashboard</div>
+                </div>
+                
+                <p><strong>Option 2: Direct GitHub Edit</strong></p>
+                <p>Chỉnh sửa trực tiếp files trong <code>content/</code> folder trên GitHub</p>
+                
+                <p><strong>Auto Deploy:</strong> Mọi thay đổi push lên GitHub sẽ tự động deploy lên production</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Integration Status */}
       <div className="mt-6 pt-6 border-t border-gray-200">
@@ -245,6 +334,14 @@ export default function SyncStatus() {
             <FaCheckCircle className="text-green-500" />
             <span>Content Manager</span>
           </div>
+        </div>
+        
+        {/* Environment Info */}
+        <div className="mt-4 text-xs text-gray-500">
+          <span>Environment: </span>
+          <span className={`font-medium ${isProduction ? 'text-orange-600' : 'text-green-600'}`}>
+            {isProduction ? 'Production (Read-only)' : 'Development (Full access)'}
+          </span>
         </div>
       </div>
     </div>

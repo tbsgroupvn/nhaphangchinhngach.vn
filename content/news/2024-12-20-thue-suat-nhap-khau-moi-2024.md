@@ -1,19 +1,23 @@
 ---
-title: "Thuế suất nhập khẩu mới 2024 - Giảm 5-15% cho hàng điện tử"
-description: "Chính phủ chính thức ban hành nghị định mới về thuế nhập khẩu ưu đãi cho các mặt hàng điện tử, gia dụng từ ASEAN và Trung Quốc. Tìm hiểu chi tiết các thay đổi và cách tận dụng ưu đãi."
-image: "/images/news/thue-nhap-khau-2024.jpg"
-date: "2024-12-20T10:00:00Z"
-author: "TBS GROUP"
-category: "chinh-sach-moi"
-tags: 
-  - "thuế nhập khẩu"
-  - "chính sách 2024"
-  - "hàng điện tử"
-  - "ưu đãi thuế"
-  - "ASEAN"
+title: Thuế suất nhập khẩu mới 2024 - Giảm 5-15% cho hàng điện tử
+description: >-
+  Chính phủ chính thức ban hành nghị định mới về thuế nhập khẩu ưu đãi cho các
+  mặt hàng điện tử, gia dụng từ ASEAN và Trung Quốc. Tìm hiểu chi tiết các thay
+  đổi và cách tận dụng ưu đãi.
+image: /images/news/thue-nhap-khau-2024.jpg
+date: '2024-12-20T10:00:00Z'
+author: TBS GROUP
+category: chinh-sach-moi
+tags:
+  - thuế nhập khẩu
+  - chính sách 2024
+  - hàng điện tử
+  - ưu đãi thuế
+  - ASEAN
 featured: true
-status: "published"
+status: published
 views: 2450
+updated: '2025-06-20T13:24:02.990Z'
 ---
 
 ## Tóm tắt chính sách mới

@@ -6,6 +6,9 @@ export async function POST(request: NextRequest) {
   try {
     const { syncType } = await request.json()
     
+    // Get environment info
+    const envInfo = contentManager.getEnvironmentInfo()
+    
     let result
     
     switch (syncType) {
@@ -13,12 +16,20 @@ export async function POST(request: NextRequest) {
         result = await contentManager.syncAll()
         break
       case 'services':
-        await contentManager.getServices()
-        result = { success: true, errors: [] }
+        try {
+          await contentManager.getServices()
+          result = { success: true, errors: [] }
+        } catch (error) {
+          result = { success: false, errors: [`Services sync failed: ${error}`] }
+        }
         break
       case 'posts':
-        await contentManager.getPosts()
-        result = { success: true, errors: [] }
+        try {
+          await contentManager.getPosts()
+          result = { success: true, errors: [] }
+        } catch (error) {
+          result = { success: false, errors: [`Posts sync failed: ${error}`] }
+        }
         break
       default:
         return NextResponse.json(
@@ -27,25 +38,35 @@ export async function POST(request: NextRequest) {
         )
     }
     
+    // Include environment info in response
+    const response = {
+      success: result.success,
+      message: result.success 
+        ? `${syncType} sync completed successfully`
+        : `${syncType} sync completed with errors`,
+      errors: result.errors,
+      environmentInfo: envInfo,
+      timestamp: new Date().toISOString()
+    }
+    
     if (result.success) {
-      return NextResponse.json({ 
-        success: true, 
-        message: `${syncType} sync completed successfully`,
-        errors: result.errors 
-      })
+      return NextResponse.json(response)
     } else {
-      return NextResponse.json({ 
-        success: false, 
-        message: `${syncType} sync completed with errors`,
-        errors: result.errors 
-      }, { status: 207 }) // Multi-status
+      return NextResponse.json(response, { status: 207 }) // Multi-status
     }
   } catch (error) {
     console.error('Error during sync:', error)
-    return NextResponse.json(
-      { success: false, error: 'Sync operation failed' },
-      { status: 500 }
-    )
+    
+    // Get environment info for error response
+    const envInfo = contentManager.getEnvironmentInfo()
+    
+    return NextResponse.json({
+      success: false, 
+      error: 'Sync operation failed',
+      details: error instanceof Error ? error.message : 'Unknown error',
+      environmentInfo: envInfo,
+      timestamp: new Date().toISOString()
+    }, { status: 500 })
   }
 }
 
@@ -58,19 +79,38 @@ export async function GET() {
       contentManager.getSettings().then(() => ({ type: 'settings', status: 'ok' })).catch(() => ({ type: 'settings', status: 'error' }))
     ])
     
-    return NextResponse.json({ 
+    // Get environment information
+    const environmentInfo = contentManager.getEnvironmentInfo()
+    
+    const response = {
       success: true, 
       data: {
         lastSync: new Date().toISOString(),
         contentHealth: [services, posts, settings],
-        overallStatus: [services, posts, settings].every(item => item.status === 'ok') ? 'healthy' : 'needs_attention'
-      }
-    })
+        overallStatus: [services, posts, settings].every(item => item.status === 'ok') ? 'healthy' : 'needs_attention',
+        environmentInfo
+      },
+      timestamp: new Date().toISOString()
+    }
+    
+    return NextResponse.json(response)
   } catch (error) {
     console.error('Error checking sync status:', error)
-    return NextResponse.json(
-      { success: false, error: 'Failed to check sync status' },
-      { status: 500 }
-    )
+    
+    // Still try to get environment info even on error
+    let environmentInfo
+    try {
+      environmentInfo = contentManager.getEnvironmentInfo()
+    } catch (envError) {
+      environmentInfo = { error: 'Could not determine environment' }
+    }
+    
+    return NextResponse.json({
+      success: false, 
+      error: 'Failed to check sync status',
+      details: error instanceof Error ? error.message : 'Unknown error',
+      environmentInfo,
+      timestamp: new Date().toISOString()
+    }, { status: 500 })
   }
 } 

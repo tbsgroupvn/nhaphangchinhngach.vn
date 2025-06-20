@@ -50,6 +50,24 @@ export interface SiteSettings {
 export class ContentManager {
   private contentDir = path.join(process.cwd(), 'content')
   private dataDir = path.join(process.cwd(), 'src/data')
+  private isProduction = process.env.NODE_ENV === 'production' || process.env.NETLIFY === 'true'
+  private isReadOnly = this.isProduction // Production environments are typically read-only
+
+  // Check if write operations are allowed
+  private canWrite(): boolean {
+    return !this.isReadOnly
+  }
+
+  // Get environment info
+  getEnvironmentInfo() {
+    return {
+      isProduction: this.isProduction,
+      isReadOnly: this.isReadOnly,
+      nodeEnv: process.env.NODE_ENV,
+      netlify: process.env.NETLIFY,
+      platform: process.platform
+    }
+  }
 
   // SERVICES MANAGEMENT
   async getServices(): Promise<ServiceData[]> {
@@ -71,6 +89,10 @@ export class ContentManager {
   }
 
   async updateService(id: string, serviceData: Partial<ServiceData>): Promise<void> {
+    if (!this.canWrite()) {
+      throw new Error('Write operations are disabled in production environment. Please use development environment or GitHub for content updates.')
+    }
+
     try {
       // Update TypeScript data file
       await this.updateServicesTypeScript(id, serviceData)
@@ -84,6 +106,10 @@ export class ContentManager {
   }
 
   private async updateServicesTypeScript(id: string, serviceData: Partial<ServiceData>): Promise<void> {
+    if (!this.canWrite()) {
+      throw new Error('Write operations disabled in production')
+    }
+
     const servicesPath = path.join(this.dataDir, 'services.ts')
     let content = await fs.readFile(servicesPath, 'utf-8')
     
@@ -95,6 +121,10 @@ export class ContentManager {
   }
 
   private async updateServiceMarkdown(id: string, serviceData: Partial<ServiceData>): Promise<void> {
+    if (!this.canWrite()) {
+      throw new Error('Write operations disabled in production')
+    }
+
     if (!serviceData.slug) return
     
     const servicePath = path.join(this.contentDir, 'services', `${serviceData.slug}.md`)
@@ -120,6 +150,10 @@ export class ContentManager {
   }
 
   private async createServiceMarkdown(serviceData: ServiceData): Promise<void> {
+    if (!this.canWrite()) {
+      throw new Error('Write operations disabled in production')
+    }
+
     const frontmatter = {
       title: serviceData.title,
       description: serviceData.description,
@@ -202,6 +236,10 @@ ${serviceData.features.map(feature => `- ${feature}`).join('\n')}
     excerpt?: string
     tags?: string[]
   }): Promise<void> {
+    if (!this.canWrite()) {
+      throw new Error('Write operations are disabled in production environment. Please use development environment or push changes via GitHub.')
+    }
+
     const frontmatter = {
       title: postData.title,
       slug: postData.slug,
@@ -221,6 +259,10 @@ ${serviceData.features.map(feature => `- ${feature}`).join('\n')}
   }
 
   async updatePost(id: string, postData: Partial<ContentFile>): Promise<void> {
+    if (!this.canWrite()) {
+      throw new Error('Write operations are disabled in production environment. Please use development environment or push changes via GitHub.')
+    }
+
     try {
       const posts = await this.getPosts()
       const post = posts.find(p => p.id === id)
@@ -245,6 +287,10 @@ ${serviceData.features.map(feature => `- ${feature}`).join('\n')}
   }
 
   async deletePost(id: string): Promise<void> {
+    if (!this.canWrite()) {
+      throw new Error('Write operations are disabled in production environment. Please use development environment or push changes via GitHub.')
+    }
+
     const posts = await this.getPosts()
     const post = posts.find(p => p.id === id)
     if (post) {
@@ -280,6 +326,10 @@ ${serviceData.features.map(feature => `- ${feature}`).join('\n')}
   }
 
   async updateSettings(settings: Partial<SiteSettings>): Promise<void> {
+    if (!this.canWrite()) {
+      throw new Error('Write operations are disabled in production environment. Please use development environment or push changes via GitHub.')
+    }
+
     try {
       const currentSettings = await this.getSettings()
       const updatedSettings = { ...currentSettings, ...settings }
@@ -305,6 +355,10 @@ ${serviceData.features.map(feature => `- ${feature}`).join('\n')}
   }
 
   async updateNavigation(navigation: any): Promise<void> {
+    if (!this.canWrite()) {
+      throw new Error('Write operations are disabled in production environment. Please use development environment or push changes via GitHub.')
+    }
+
     const navPath = path.join(this.contentDir, 'settings', 'navigation.json')
     await fs.writeFile(navPath, JSON.stringify(navigation, null, 2))
   }
@@ -364,6 +418,20 @@ ${serviceData.features.map(feature => `- ${feature}`).join('\n')}
   async syncAll(): Promise<{success: boolean, errors: string[]}> {
     const errors: string[] = []
     
+    // Check environment first
+    if (!this.canWrite()) {
+      errors.push('Sync operations are disabled in production environment (read-only file system)')
+      errors.push('For content updates in production, please:')
+      errors.push('1. Make changes in development environment')
+      errors.push('2. Push changes to GitHub repository')
+      errors.push('3. Netlify will automatically deploy the updates')
+      
+      return {
+        success: false,
+        errors
+      }
+    }
+    
     try {
       // Sync services data
       await this.syncServices()
@@ -385,6 +453,10 @@ ${serviceData.features.map(feature => `- ${feature}`).join('\n')}
   }
 
   private async syncServices(): Promise<void> {
+    if (!this.canWrite()) {
+      throw new Error('Write operations disabled in production environment')
+    }
+
     // Sync between TypeScript data and markdown files
     const services = await this.getServices()
     
@@ -394,6 +466,10 @@ ${serviceData.features.map(feature => `- ${feature}`).join('\n')}
   }
 
   private async syncPosts(): Promise<void> {
+    if (!this.canWrite()) {
+      throw new Error('Write operations disabled in production environment')
+    }
+
     // Sync posts metadata and content
     const posts = await this.getPosts()
     
