@@ -9,6 +9,7 @@ import {
   FaFileAlt, FaCog, FaUsers, FaEye, FaChartLine, 
   FaBell, FaImage, FaNewspaper, FaServicestack 
 } from 'react-icons/fa';
+import SyncStatus from './sync-status';
 
 interface DashboardStats {
   totalPosts: number;
@@ -178,6 +179,11 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Sync Status Component */}
+        <div className="mb-8">
+          <SyncStatus />
         </div>
 
         {/* Charts Row */}
