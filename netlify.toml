@@ -22,6 +22,8 @@
   NEXT_RUNTIME = "nodejs18.x"
   NPM_FLAGS = "--production=false"
   NODE_OPTIONS = "--max-old-space-size=4096"
+  # Secrets scanning configuration - omit certain paths
+  SECRETS_SCAN_OMIT_PATHS = "content/,public/admin/config.yml,.next/"
 
 # Functions configuration
 [functions]
