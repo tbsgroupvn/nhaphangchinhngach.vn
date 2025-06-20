@@ -6,6 +6,25 @@ const nextConfig = {
     unoptimized: true
   },
   
+  // Improved module resolution
+  webpack: (config, { isServer }) => {
+    // Improve module resolution for Netlify
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+    }
+    
+    // Handle case-sensitive imports
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': require('path').resolve(__dirname, './src'),
+    }
+    
+    return config
+  },
+  
   experimental: {
     optimizePackageImports: ['@heroicons/react']
   },

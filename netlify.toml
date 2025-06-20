@@ -12,11 +12,20 @@
   NODE_ENV = "production"
   NEXT_PUBLIC_GA_ID = "G-HQYS776HWJ"
   NEXT_PUBLIC_ENABLE_ANALYTICS = "true"
+  # Netlify build specific variables
+  SKIP_ENV_VALIDATION = "true"
+  NODE_OPTIONS = "--max-old-space-size=4096"
 
 # Build environment
 [build.environment]
   NODE_VERSION = "18"
   NEXT_RUNTIME = "nodejs18.x"
+  NPM_FLAGS = "--prefer-offline"
+  NODE_OPTIONS = "--max-old-space-size=4096"
+
+# Functions configuration
+[functions]
+  node_bundler = "esbuild"
 
 # Headers for security and CMS functionality
 [[headers]]
