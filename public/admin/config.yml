@@ -9,13 +9,13 @@ backend:
     deleteMedia: 'Xóa "{{path}}"'
     openAuthoring: '{{message}}'
 
-# Alternative backend for Auth0 (if needed)
-# backend:
-#   name: github
-#   repo: [your-username]/[your-repo-name]
-#   branch: main
-#   base_url: https://api.netlify.com
-#   auth_endpoint: auth
+# Auth0 Extension Configuration
+# Extension sẽ tự động inject các environment variables
+auth:
+  providers:
+    - name: auth0
+      # Variables sẽ được tự động set bởi Auth0 extension:
+      # AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_AUDIENCE, AUTH0_ISSUER
 
 # Cấu hình local backend chỉ cho development
 # local_backend: true
@@ -37,7 +37,7 @@ editor:
 # Debugging - show backend status
 show_preview_links: true
 
-# Auth configuration for custom domain
+# Site URL for Auth0 extension
 site_url: https://nhaphangchinhngach.vn
 
 collections:

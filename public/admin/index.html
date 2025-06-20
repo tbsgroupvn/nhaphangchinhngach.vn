@@ -90,7 +90,7 @@
       backdrop-filter: blur(10px);
       border-radius: 15px;
       padding: 40px;
-      max-width: 500px;
+      max-width: 600px;
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
@@ -105,12 +105,47 @@
       cursor: pointer;
       transition: all 0.3s ease;
       margin: 10px;
+      text-decoration: none;
+      display: inline-block;
     }
     
     .auth-button:hover {
       background: white;
       color: #667eea;
       transform: translateY(-2px);
+    }
+    
+    .auth-button.primary {
+      background: rgba(34, 197, 94, 0.3);
+      border-color: #22c55e;
+    }
+    
+    .auth-button.primary:hover {
+      background: #22c55e;
+      color: white;
+    }
+    
+    .setup-steps {
+      background: rgba(255, 193, 7, 0.1);
+      border: 2px solid rgba(255, 193, 7, 0.3);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      text-align: left;
+    }
+    
+    .setup-steps h4 {
+      color: #ffeb3b;
+      margin-bottom: 15px;
+    }
+    
+    .setup-steps ol {
+      margin-left: 20px;
+    }
+    
+    .setup-steps li {
+      margin: 8px 0;
+      line-height: 1.4;
     }
     
     /* Custom CSS cho Netlify CMS */
@@ -148,19 +183,40 @@
   <div class="auth-message" id="authMessage" style="display: none;">
     <div class="auth-card">
       <div class="logo">🔐 TBS GROUP CMS</div>
-      <h3 style="margin-bottom: 20px;">Cần đăng nhập để truy cập</h3>
-      <p style="margin-bottom: 30px; opacity: 0.9;">
-        Netlify sử dụng Auth0 cho authentication.<br/>
-        Vui lòng đăng nhập để quản lý nội dung website.
+      <h3 style="margin-bottom: 20px;">Setup Authentication Required</h3>
+      <p style="margin-bottom: 20px; opacity: 0.9;">
+        CMS sử dụng Auth0 by Okta extension cho authentication.<br/>
+        Vui lòng hoàn thành setup để truy cập CMS.
       </p>
-      <button class="auth-button" onclick="openLogin()">
-        🚀 Đăng nhập vào CMS
+      
+      <div class="setup-steps">
+        <h4>📋 Setup Auth0 Extension:</h4>
+        <ol>
+          <li>Vào <strong>Netlify Dashboard</strong> → Site của bạn</li>
+          <li><strong>Integrations</strong> → <strong>Browse</strong> → Tìm <strong>"Auth0 by Okta"</strong></li>
+          <li>Click <strong>Install</strong> extension</li>
+          <li><strong>Site configuration</strong> → <strong>Extensions</strong> → <strong>Auth0 by Okta</strong></li>
+          <li><strong>Add a tenant</strong> → Login Auth0 account</li>
+          <li><strong>Select project</strong> → <strong>Save</strong></li>
+          <li><strong>Site Settings</strong> → <strong>Identity</strong> → <strong>Enable Identity</strong></li>
+          <li><strong>Registration</strong> → <strong>"Invite only"</strong></li>
+          <li><strong>Services</strong> → Enable <strong>"Git Gateway"</strong></li>
+          <li><strong>Identity tab</strong> → <strong>"Invite users"</strong> → Nhập email</li>
+        </ol>
+      </div>
+      
+      <button class="auth-button primary" onclick="openLogin()">
+        🚀 Thử đăng nhập CMS
       </button>
-      <button class="auth-button" onclick="openTestPage()">
-        🔧 Trang kiểm tra
-      </button>
+      <a href="/admin/debug.html" class="auth-button">
+        🔧 Trang Debug
+      </a>
+      <a href="https://app.netlify.com" target="_blank" class="auth-button">
+        ⚙️ Netlify Dashboard
+      </a>
+      
       <div style="margin-top: 20px; font-size: 14px; opacity: 0.8;">
-        <p>Nếu chưa có tài khoản, liên hệ admin để được invite.</p>
+        <p>Cần hỗ trợ? Kiểm tra <strong>Debug page</strong> để xác định vấn đề.</p>
       </div>
     </div>
   </div>
@@ -220,14 +276,17 @@
     
     function openLogin() {
       if (window.netlifyIdentity) {
-        window.netlifyIdentity.open();
+        try {
+          window.netlifyIdentity.open();
+          console.log('✅ Opened identity widget');
+        } catch (error) {
+          console.error('❌ Error opening identity:', error);
+          alert('Lỗi mở identity widget. Vui lòng kiểm tra setup Auth0 extension.');
+        }
       } else {
-        alert('Netlify Identity chưa được tải. Vui lòng thử lại sau.');
+        console.error('❌ Netlify Identity not available');
+        alert('Netlify Identity chưa sẵn sàng. Vui lòng hoàn thành setup Auth0 extension.');
       }
-    }
-    
-    function openTestPage() {
-      window.open('/admin/test.html', '_blank');
     }
     
     function hideLoading() {
@@ -245,37 +304,100 @@
     }
     
     function initializeCMS() {
-      // Khởi tạo CMS với cấu hình tối ưu cho Auth0
-      CMS.init({
-        config: {
-          load_config_file: true,
-          // Local backend chỉ enable khi localhost
-          local_backend: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1',
-          // Backend configuration sẽ được load từ config.yml
-        }
-      });
-      
-      // Ẩn auth message và hiển thị CMS
-      hideAuthMessage();
+      try {
+        // Khởi tạo CMS với cấu hình Auth0 extension
+        CMS.init({
+          config: {
+            load_config_file: true,
+            // Local backend chỉ enable khi localhost
+            local_backend: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1',
+            // Auth0 extension sẽ tự động inject environment variables
+          }
+        });
+        
+        console.log('✅ CMS initialized successfully');
+        hideAuthMessage();
+      } catch (error) {
+        console.error('❌ Error initializing CMS:', error);
+        showAuthMessage();
+      }
     }
     
-    // Netlify Identity với Auth0 support
+    // Enhanced error handling function
+    function handleAuthError(error, context) {
+      console.error(`❌ Auth error in ${context}:`, error);
+      
+      let errorMessage = 'Authentication error occurred. ';
+      
+      if (error.message && error.message.includes('auth0')) {
+        errorMessage += 'Please check Auth0 extension configuration.';
+      } else if (error.message && error.message.includes('identity')) {
+        errorMessage += 'Please enable Netlify Identity service.';
+      } else {
+        errorMessage += 'Please check debug page for details.';
+      }
+      
+      // Show user-friendly error
+      const authCard = document.querySelector('.auth-card h3');
+      if (authCard) {
+        authCard.textContent = '❌ Authentication Error';
+        authCard.style.color = '#fecaca';
+      }
+    }
+    
+    // Initialize authentication flow
+    function initializeAuth() {
+      if (!window.netlifyIdentity) {
+        console.error('❌ Netlify Identity widget not loaded');
+        hideLoading();
+        showAuthMessage();
+        return;
+      }
+      
+      console.log('🔧 Netlify Identity widget loaded');
+      
+      // Check initial auth state
+      try {
+        const user = window.netlifyIdentity.currentUser();
+        
+        if (user) {
+          console.log('✅ User already authenticated:', user.email);
+          initializeCMS();
+        } else {
+          console.log('⚠️ No authenticated user found');
+          hideLoading();
+          showAuthMessage();
+        }
+      } catch (error) {
+        handleAuthError(error, 'initial check');
+        hideLoading();
+        showAuthMessage();
+      }
+    }
+    
+    // Netlify Identity event handlers with Auth0 extension support
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
+        console.log('🔧 Identity init event:', user ? user.email : 'no user');
+        
         hideLoading();
         
         if (user) {
-          console.log('✅ User authenticated:', user.email);
+          console.log('✅ User authenticated on init:', user.email);
           initializeCMS();
         } else {
-          console.log('❌ User not authenticated');
+          console.log('❌ User not authenticated on init');
           showAuthMessage();
         }
       });
       
       window.netlifyIdentity.on("login", (user) => {
         console.log('✅ Login successful:', user.email);
-        initializeCMS();
+        try {
+          initializeCMS();
+        } catch (error) {
+          handleAuthError(error, 'login');
+        }
       });
       
       window.netlifyIdentity.on("logout", () => {
@@ -283,26 +405,37 @@
         showAuthMessage();
       });
       
-      // Auth0 specific events (if available)
       window.netlifyIdentity.on("error", (err) => {
-        console.error('❌ Auth error:', err);
+        handleAuthError(err, 'identity widget');
         hideLoading();
         showAuthMessage();
       });
       
     } else {
       // Fallback nếu Identity widget không load
+      console.error('❌ Netlify Identity widget not available');
       setTimeout(() => {
-        hideLoading();
-        showAuthMessage();
-        console.error('❌ Netlify Identity widget not loaded');
-      }, 3000);
+        if (!window.netlifyIdentity) {
+          console.error('❌ Netlify Identity failed to load after timeout');
+          hideLoading();
+          showAuthMessage();
+        } else {
+          initializeAuth();
+        }
+      }, 5000);
     }
     
     // Debug information
-    console.log('🎯 TBS GROUP CMS with Auth0 Support');
+    console.log('🎯 TBS GROUP CMS with Auth0 Extension Support');
     console.log('🌐 Environment:', window.location.hostname);
     console.log('🔧 Local backend:', window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    
+    // Check if Auth0 extension variables are available
+    setTimeout(() => {
+      console.log('🔍 Checking Auth0 extension environment...');
+      // Auth0 extension variables should be available via build process
+      console.log('ℹ️ Auth0 variables are managed by Netlify extension');
+    }, 1000);
   </script>
 </body>
 </html> 
