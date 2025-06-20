@@ -6,11 +6,11 @@
   <meta name="robots" content="noindex" />
   <title>🎯 TBS GROUP - Hệ thống quản lý nội dung</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* 🎨 Custom TBS GROUP CMS Styling */
+    /* 🎨 TBS GROUP CMS Custom Styling - High Specificity */
     
-    /* Base Styling */
     :root {
       --tbs-primary: #dc2626;
       --tbs-primary-dark: #b91c1c;
@@ -29,40 +29,39 @@
       --tbs-radius-sm: 8px;
     }
 
-    /* Global Overrides */
-    * {
+    /* Force override all NetlifyCMS styles */
+    html body * {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
 
-    body {
+    html body {
       background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
-      min-height: 100vh;
+      min-height: 100vh !important;
     }
 
-    /* 🎯 Header Styling */
-    [data-testid="app-header"] {
+    /* Header override with highest specificity */
+    html body div[class*="AppHeader"] {
       background: linear-gradient(135deg, var(--tbs-primary) 0%, var(--tbs-primary-dark) 100%) !important;
       box-shadow: var(--tbs-shadow-lg) !important;
       border-bottom: none !important;
       padding: 1rem 2rem !important;
     }
 
-    [data-testid="app-header"] h1 {
+    html body div[class*="AppHeader"] h1,
+    html body div[class*="AppHeader"] * {
       color: white !important;
       font-weight: 700 !important;
       font-size: 1.5rem !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 0.75rem !important;
     }
 
-    [data-testid="app-header"] h1::before {
-      content: "🎯";
+    html body div[class*="AppHeader"] h1::before {
+      content: "🎯 ";
       font-size: 1.75rem;
     }
 
     /* Navigation Links */
-    [data-testid="app-header"] nav a {
+    html body div[class*="AppHeader"] nav a,
+    html body div[class*="AppHeader"] a {
       color: rgba(255, 255, 255, 0.9) !important;
       font-weight: 500 !important;
       padding: 0.5rem 1rem !important;
@@ -71,26 +70,25 @@
       text-decoration: none !important;
     }
 
-    [data-testid="app-header"] nav a:hover {
+    html body div[class*="AppHeader"] nav a:hover,
+    html body div[class*="AppHeader"] a:hover {
       background: rgba(255, 255, 255, 0.15) !important;
       color: white !important;
-      transform: translateY(-1px);
+      transform: translateY(-1px) !important;
     }
 
-    [data-testid="app-header"] nav a.active {
-      background: rgba(255, 255, 255, 0.2) !important;
-      color: white !important;
-    }
-
-    /* 📱 Sidebar Styling */
-    [data-testid="sidebar"] {
+    /* Sidebar override */
+    html body div[class*="SidebarContainer"],
+    html body div[class*="Sidebar"],
+    html body aside {
       background: var(--tbs-surface) !important;
       border-right: 1px solid var(--tbs-border) !important;
       box-shadow: var(--tbs-shadow) !important;
       width: 280px !important;
     }
 
-    [data-testid="sidebar"] h2 {
+    html body div[class*="SidebarContainer"] h2,
+    html body div[class*="Sidebar"] h2 {
       color: var(--tbs-text) !important;
       font-weight: 600 !important;
       padding: 1.5rem 1.5rem 1rem !important;
@@ -101,20 +99,27 @@
       gap: 0.5rem !important;
     }
 
-    [data-testid="sidebar"] h2::before {
-      content: "📚";
+    html body div[class*="SidebarContainer"] h2::before,
+    html body div[class*="Sidebar"] h2::before {
+      content: "📚 ";
     }
 
     /* Collection Links */
-    [data-testid="sidebar"] ul {
+    html body div[class*="SidebarContainer"] ul,
+    html body div[class*="Sidebar"] ul {
       padding: 1rem 0 !important;
+      list-style: none !important;
     }
 
-    [data-testid="sidebar"] li {
+    html body div[class*="SidebarContainer"] li,
+    html body div[class*="Sidebar"] li {
       margin: 0.25rem 0 !important;
     }
 
-    [data-testid="sidebar"] a {
+    html body div[class*="SidebarContainer"] a,
+    html body div[class*="Sidebar"] a,
+    html body div[class*="SidebarContainer"] button,
+    html body div[class*="Sidebar"] button {
       display: flex !important;
       align-items: center !important;
       padding: 0.75rem 1.5rem !important;
@@ -124,21 +129,32 @@
       transition: all 0.2s ease !important;
       border-radius: 0 !important;
       position: relative !important;
+      border: none !important;
+      background: transparent !important;
+      width: 100% !important;
+      text-align: left !important;
     }
 
-    [data-testid="sidebar"] a:hover {
+    html body div[class*="SidebarContainer"] a:hover,
+    html body div[class*="Sidebar"] a:hover,
+    html body div[class*="SidebarContainer"] button:hover,
+    html body div[class*="Sidebar"] button:hover {
       background: linear-gradient(90deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%) !important;
       color: var(--tbs-primary) !important;
       padding-left: 2rem !important;
     }
 
-    [data-testid="sidebar"] a.active {
+    html body div[class*="SidebarContainer"] a[class*="active"],
+    html body div[class*="Sidebar"] a[class*="active"],
+    html body div[class*="SidebarContainer"] button[class*="active"],
+    html body div[class*="Sidebar"] button[class*="active"] {
       background: linear-gradient(90deg, var(--tbs-primary) 0%, var(--tbs-primary-dark) 100%) !important;
       color: white !important;
       font-weight: 600 !important;
     }
 
-    [data-testid="sidebar"] a.active::before {
+    html body div[class*="SidebarContainer"] a[class*="active"]::before,
+    html body div[class*="Sidebar"] a[class*="active"]::before {
       content: '';
       position: absolute;
       left: 0;
@@ -149,15 +165,17 @@
       border-radius: 0 4px 4px 0;
     }
 
-    /* 📄 Main Content Area */
-    [data-testid="main-content"] {
+    /* Main Content Area */
+    html body div[class*="MainContent"],
+    html body main {
       background: var(--tbs-background) !important;
       padding: 2rem !important;
       min-height: calc(100vh - 80px) !important;
     }
 
     /* Collection Header */
-    .collection-header {
+    html body div[class*="CollectionTop"],
+    html body div[class*="collection-top"] {
       background: var(--tbs-surface) !important;
       padding: 2rem !important;
       border-radius: var(--tbs-radius) !important;
@@ -166,7 +184,8 @@
       border: 1px solid var(--tbs-border) !important;
     }
 
-    .collection-header h1 {
+    html body div[class*="CollectionTop"] h1,
+    html body div[class*="collection-top"] h1 {
       color: var(--tbs-text) !important;
       font-weight: 700 !important;
       font-size: 2rem !important;
@@ -176,14 +195,12 @@
       gap: 1rem !important;
     }
 
-    .collection-header p {
-      color: var(--tbs-text-secondary) !important;
-      font-size: 1.1rem !important;
-      margin: 0 !important;
-    }
-
     /* Buttons */
-    button, .btn, [role="button"] {
+    html body button:not([class*="Sidebar"]):not([class*="SidebarContainer"]),
+    html body .btn,
+    html body [role="button"]:not([class*="Sidebar"]):not([class*="SidebarContainer"]),
+    html body input[type="submit"],
+    html body div[class*="Button"] {
       background: linear-gradient(135deg, var(--tbs-primary) 0%, var(--tbs-primary-dark) 100%) !important;
       color: white !important;
       border: none !important;
@@ -197,25 +214,17 @@
       gap: 0.5rem !important;
     }
 
-    button:hover, .btn:hover, [role="button"]:hover {
+    html body button:not([class*="Sidebar"]):not([class*="SidebarContainer"]):hover,
+    html body .btn:hover,
+    html body [role="button"]:not([class*="Sidebar"]):not([class*="SidebarContainer"]):hover {
       transform: translateY(-2px) !important;
       box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3) !important;
     }
 
-    /* Secondary Button */
-    .btn-secondary {
-      background: var(--tbs-surface) !important;
-      color: var(--tbs-text) !important;
-      border: 1px solid var(--tbs-border) !important;
-    }
-
-    .btn-secondary:hover {
-      background: var(--tbs-background) !important;
-      box-shadow: var(--tbs-shadow) !important;
-    }
-
     /* Cards */
-    .card, [data-testid="card"] {
+    html body div[class*="Card"],
+    html body div[class*="card"],
+    html body div[class*="EntryCard"] {
       background: var(--tbs-surface) !important;
       border-radius: var(--tbs-radius) !important;
       box-shadow: var(--tbs-shadow) !important;
@@ -225,13 +234,17 @@
       transition: all 0.2s ease !important;
     }
 
-    .card:hover, [data-testid="card"]:hover {
-      transform: translateY(-2px);
+    html body div[class*="Card"]:hover,
+    html body div[class*="card"]:hover,
+    html body div[class*="EntryCard"]:hover {
+      transform: translateY(-2px) !important;
       box-shadow: var(--tbs-shadow-lg) !important;
     }
 
     /* Forms */
-    input, textarea, select {
+    html body input:not([type="submit"]),
+    html body textarea,
+    html body select {
       border: 1px solid var(--tbs-border) !important;
       border-radius: var(--tbs-radius-sm) !important;
       padding: 0.75rem !important;
@@ -240,98 +253,53 @@
       background: var(--tbs-surface) !important;
     }
 
-    input:focus, textarea:focus, select:focus {
+    html body input:not([type="submit"]):focus,
+    html body textarea:focus,
+    html body select:focus {
       outline: none !important;
       border-color: var(--tbs-primary) !important;
       box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
     }
 
     /* Labels */
-    label {
+    html body label {
       color: var(--tbs-text) !important;
       font-weight: 600 !important;
       margin-bottom: 0.5rem !important;
       display: block !important;
     }
 
-    /* Status Badges */
-    .status-badge {
-      padding: 0.25rem 0.75rem !important;
-      border-radius: 9999px !important;
-      font-size: 0.875rem !important;
-      font-weight: 600 !important;
-    }
-
-    .status-published {
-      background: rgba(22, 163, 74, 0.1) !important;
-      color: var(--tbs-success) !important;
-    }
-
-    .status-draft {
-      background: rgba(245, 158, 11, 0.1) !important;
-      color: var(--tbs-warning) !important;
-    }
-
-    /* Loading States */
-    .loading {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      padding: 3rem !important;
-      color: var(--tbs-text-secondary) !important;
-    }
-
-    .loading::before {
-      content: "⏳";
-      margin-right: 0.5rem;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
     /* Welcome Message */
-    .welcome-banner {
-      background: linear-gradient(135deg, var(--tbs-primary) 0%, var(--tbs-secondary) 100%) !important;
+    .tbs-welcome-banner {
+      background: linear-gradient(135deg, var(--tbs-info) 0%, var(--tbs-secondary) 100%) !important;
       color: white !important;
       padding: 2rem !important;
       border-radius: var(--tbs-radius) !important;
-      text-align: center !important;
       margin-bottom: 2rem !important;
+      text-align: center !important;
       box-shadow: var(--tbs-shadow-lg) !important;
     }
 
-    .welcome-banner h2 {
+    .tbs-welcome-banner h2 {
       font-size: 1.75rem !important;
       font-weight: 700 !important;
       margin-bottom: 0.5rem !important;
     }
 
-    .welcome-banner p {
+    .tbs-welcome-banner p {
       font-size: 1.1rem !important;
       opacity: 0.9 !important;
       margin: 0 !important;
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      [data-testid="sidebar"] {
-        width: 100% !important;
-        position: fixed !important;
-        z-index: 1000 !important;
-        transform: translateX(-100%) !important;
-        transition: transform 0.3s ease !important;
-      }
-
-      [data-testid="sidebar"].open {
-        transform: translateX(0) !important;
-      }
-
-      [data-testid="main-content"] {
-        padding: 1rem !important;
-      }
+    /* Loading States */
+    html body div[class*="Loading"],
+    html body div[class*="loading"] {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 3rem !important;
+      color: var(--tbs-text-secondary) !important;
     }
 
     /* Animations */
@@ -341,31 +309,48 @@
     }
 
     .fade-in {
-      animation: fadeIn 0.5s ease forwards;
+      animation: fadeIn 0.5s ease forwards !important;
     }
 
     /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
+    html body *::-webkit-scrollbar {
+      width: 8px !important;
     }
 
-    ::-webkit-scrollbar-track {
-      background: var(--tbs-background);
+    html body *::-webkit-scrollbar-track {
+      background: var(--tbs-background) !important;
     }
 
-    ::-webkit-scrollbar-thumb {
-      background: var(--tbs-border);
-      border-radius: 4px;
+    html body *::-webkit-scrollbar-thumb {
+      background: var(--tbs-border) !important;
+      border-radius: 4px !important;
     }
 
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--tbs-text-secondary);
+    html body *::-webkit-scrollbar-thumb:hover {
+      background: var(--tbs-text-secondary) !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      html body div[class*="SidebarContainer"],
+      html body div[class*="Sidebar"] {
+        width: 100% !important;
+        position: fixed !important;
+        z-index: 1000 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.3s ease !important;
+      }
+
+      html body div[class*="MainContent"],
+      html body main {
+        padding: 1rem !important;
+      }
     }
   </style>
 </head>
 <body>
   <!-- Welcome Banner -->
-  <div id="welcome-banner" class="welcome-banner" style="display: none;">
+  <div id="tbs-welcome-banner" class="tbs-welcome-banner" style="display: none;">
     <h2>🎯 Chào mừng đến với TBS GROUP CMS</h2>
     <p>Hệ thống quản lý nội dung chuyên nghiệp cho dịch vụ xuất nhập khẩu</p>
   </div>
@@ -374,27 +359,56 @@
   <div id="nc-root"></div>
   
   <script>
-    // 🎯 Custom TBS GROUP CMS Configuration
+    // 🎯 TBS GROUP CMS Configuration
     
     // Show welcome banner on first load
-    if (localStorage.getItem('tbs-cms-welcome') !== 'seen') {
-      document.getElementById('welcome-banner').style.display = 'block';
-      setTimeout(() => {
-        document.getElementById('welcome-banner').style.display = 'none';
-        localStorage.setItem('tbs-cms-welcome', 'seen');
-      }, 5000);
-    }
+    setTimeout(() => {
+      if (localStorage.getItem('tbs-cms-welcome') !== 'seen') {
+        const banner = document.getElementById('tbs-welcome-banner');
+        if (banner) {
+          banner.style.display = 'block';
+          setTimeout(() => {
+            banner.style.display = 'none';
+            localStorage.setItem('tbs-cms-welcome', 'seen');
+          }, 5000);
+        }
+      }
+    }, 1000);
 
-    // 🌟 Enhanced Animations
-    document.addEventListener('DOMContentLoaded', function() {
-      // Add fade-in animation to elements
-      const elements = document.querySelectorAll('.card, [data-testid="card"], button, .btn');
-      elements.forEach((el, index) => {
-        setTimeout(() => {
-          el.classList.add('fade-in');
-        }, index * 100);
-      });
-    });
+    // Wait for CMS to load, then apply custom styling
+    setTimeout(() => {
+      // Add custom classes to main elements
+      const appHeader = document.querySelector('[class*="AppHeader"]');
+      if (appHeader) {
+        appHeader.style.cssText = `
+          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+          border-bottom: none !important;
+          padding: 1rem 2rem !important;
+        `;
+      }
+
+      // Apply to sidebar
+      const sidebar = document.querySelector('[class*="SidebarContainer"], [class*="Sidebar"]');
+      if (sidebar) {
+        sidebar.style.cssText = `
+          background: white !important;
+          border-right: 1px solid #e5e7eb !important;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+        `;
+      }
+
+      // Apply to main content
+      const mainContent = document.querySelector('[class*="MainContent"], main');
+      if (mainContent) {
+        mainContent.style.cssText = `
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+          padding: 2rem !important;
+        `;
+      }
+
+      console.log('🎯 TBS GROUP custom styling applied');
+    }, 2000);
 
     // Cấu hình ngôn ngữ tiếng Việt toàn diện
     CMS.registerLocale('vi', {
