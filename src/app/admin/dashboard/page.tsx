@@ -7,10 +7,10 @@ import {
 } from 'recharts';
 import { 
   FaFileAlt, FaCog, FaUsers, FaEye, FaChartLine, 
-  FaBell, FaImage, FaNewspaper, FaServicestack, FaSync, FaClock 
+  FaBell, FaImage, FaNewspaper, FaServicestack, FaSync, FaClock, FaCheckCircle, FaExclamationTriangle 
 } from 'react-icons/fa';
 import SyncStatus from './sync-status';
-import { analyticsService, AnalyticsData } from '../../../lib/analytics-service';
+import { analyticsService, AnalyticsData, RealTimeMetrics } from '../../../lib/analytics-service';
 
 interface DashboardStats {
   totalServices: number;
@@ -55,7 +55,8 @@ export default function AdminDashboard() {
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [autoRefresh, setAutoRefresh] = useState(true);
-  const [realTimeMetrics, setRealTimeMetrics] = useState<any>(null);
+  const [realTimeMetrics, setRealTimeMetrics] = useState<RealTimeMetrics | null>(null);
+  const [dataSource, setDataSource] = useState<{ isRealData: boolean; message: string } | null>(null);
 
   // Auto-refresh every 30 seconds
   useEffect(() => {
@@ -73,6 +74,7 @@ export default function AdminDashboard() {
     fetchRealStats();
     loadRealisticTrafficData();
     loadRealTimeMetrics();
+    checkDataSource();
   }, []);
 
   const fetchRealStats = async () => {
@@ -102,8 +104,10 @@ export default function AdminDashboard() {
 
   const loadRealisticTrafficData = async () => {
     try {
+      console.log('🔄 Loading traffic data...');
       const data = await analyticsService.getTrafficData(7);
       setTrafficData(data);
+      console.log('✅ Traffic data loaded:', data.length, 'days');
     } catch (error) {
       console.error('Error loading traffic data:', error);
     }
@@ -111,10 +115,22 @@ export default function AdminDashboard() {
 
   const loadRealTimeMetrics = async () => {
     try {
+      console.log('🔄 Loading real-time metrics...');
       const metrics = await analyticsService.getRealTimeMetrics();
       setRealTimeMetrics(metrics);
+      console.log('✅ Real-time metrics loaded. Active users:', metrics.activeUsers);
     } catch (error) {
       console.error('Error loading real-time metrics:', error);
+    }
+  };
+
+  const checkDataSource = async () => {
+    try {
+      const source = await analyticsService.checkDataSource();
+      setDataSource(source);
+      console.log('📊 Data source:', source.message);
+    } catch (error) {
+      console.error('Error checking data source:', error);
     }
   };
 
@@ -123,7 +139,8 @@ export default function AdminDashboard() {
     await Promise.all([
       fetchRealStats(),
       loadRealisticTrafficData(),
-      loadRealTimeMetrics()
+      loadRealTimeMetrics(),
+      checkDataSource()
     ]);
     setRefreshing(false);
   }, []);
@@ -211,7 +228,7 @@ export default function AdminDashboard() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Đang tải thống kê realtime...</p>
+          <p className="text-gray-600">Đang tải thống kê Google Analytics...</p>
         </div>
       </div>
     );
@@ -247,15 +264,15 @@ export default function AdminDashboard() {
                 <div className="w-10 h-10 bg-gradient-to-r from-red-600 to-red-700 rounded-lg flex items-center justify-center">
                   <FaChartLine className="text-white text-lg" />
                 </div>
-                Dashboard Realtime
+                Google Analytics Dashboard
                 <div className="flex items-center gap-2 ml-4">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-sm text-green-600 font-medium">LIVE</span>
+                  <span className="text-sm text-green-600 font-medium">REALTIME</span>
                 </div>
               </h1>
               <div className="flex items-center gap-4 mt-1">
                 <p className="text-gray-600">
-                  Analytics thực tế TBS GROUP • {realTimeMetrics && `${realTimeMetrics.activeUsers} người đang online`}
+                  TBS GROUP Analytics • {realTimeMetrics && `${realTimeMetrics.activeUsers} người đang online`}
                 </p>
                 {lastUpdated && (
                   <div className="flex items-center gap-2 text-sm text-gray-500">
@@ -298,7 +315,34 @@ export default function AdminDashboard() {
       </div>
 
       <div className="p-6">
-        {/* Enhanced Stats Cards with Traffic Data */}
+        {/* Google Analytics Status */}
+        {dataSource && (
+          <div className={`mb-6 p-4 rounded-lg border ${
+            dataSource.isRealData 
+              ? 'bg-green-50 border-green-200' 
+              : 'bg-yellow-50 border-yellow-200'
+          }`}>
+            <div className="flex items-center gap-2">
+              {dataSource.isRealData ? (
+                <FaCheckCircle className="w-5 h-5 text-green-600" />
+              ) : (
+                <FaExclamationTriangle className="w-5 h-5 text-yellow-600" />
+              )}
+              <span className={`font-medium ${
+                dataSource.isRealData ? 'text-green-800' : 'text-yellow-800'
+              }`}>
+                {dataSource.message}
+              </span>
+              {realTimeMetrics?.isRealData && (
+                <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                  LIVE DATA
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Enhanced Stats Cards with Real GA Data */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           <div className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all ${refreshing ? 'opacity-50' : ''}`}>
             <div className="flex items-center justify-between">
@@ -308,7 +352,9 @@ export default function AdminDashboard() {
                   <p className="text-3xl font-bold text-gray-900 mt-1">{getTotalTrafficToday().toLocaleString('vi-VN')}</p>
                   {refreshing && <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>}
                 </div>
-                <p className="text-sm text-blue-600 mt-1">Traffic thực tế</p>
+                <p className="text-sm text-blue-600 mt-1">
+                  {dataSource?.isRealData ? 'Google Analytics' : 'Dữ liệu mô phỏng'}
+                </p>
               </div>
               <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
                 <FaEye className="text-blue-600 text-xl" />
@@ -377,7 +423,9 @@ export default function AdminDashboard() {
                   </p>
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 </div>
-                <p className="text-sm text-green-600 mt-1">Active users</p>
+                <p className="text-sm text-green-600 mt-1">
+                  {realTimeMetrics?.isRealData ? 'Real-time GA' : 'Mô phỏng'}
+                </p>
               </div>
               <div className="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center">
                 <FaBell className="text-orange-600 text-xl" />
@@ -393,10 +441,12 @@ export default function AdminDashboard() {
 
         {/* Charts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Realistic Traffic Chart */}
+          {/* Real Google Analytics Traffic Chart */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Traffic Analytics (7 ngày)</h3>
+              <h3 className="text-lg font-semibold text-gray-900">
+                Google Analytics Traffic (7 ngày)
+              </h3>
               <div className="flex gap-4 text-sm">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-red-600 rounded"></div>
@@ -408,7 +458,9 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-green-600">REALTIME</span>
+                  <span className="text-xs text-green-600">
+                    {dataSource?.isRealData ? 'REAL GA DATA' : 'SIMULATION'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -435,7 +487,7 @@ export default function AdminDashboard() {
               <h3 className="text-lg font-semibold text-gray-900">Phân bố nội dung</h3>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-xs text-green-600">REALTIME</span>
+                <span className="text-xs text-green-600">CONTENT DATA</span>
               </div>
             </div>
             <ResponsiveContainer width="100%" height={300}>
@@ -479,7 +531,7 @@ export default function AdminDashboard() {
               <h3 className="text-lg font-semibold text-gray-900">Nội dung nổi bật</h3>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                <span className="text-xs text-blue-600">LIVE DATA</span>
+                <span className="text-xs text-blue-600">CONTENT STATS</span>
               </div>
             </div>
             <div className="space-y-4">
@@ -535,13 +587,13 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Website Health Summary with Real-time Indicators */}
+        {/* Website Health Summary */}
         <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-gray-900">Tình trạng website</h3>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm text-green-600">Realtime Health Check</span>
+              <span className="text-sm text-green-600">Health Monitor</span>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

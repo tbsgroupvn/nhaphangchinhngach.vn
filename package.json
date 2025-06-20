@@ -20,6 +20,7 @@
     "netlify:build": "netlify build"
   },
   "dependencies": {
+    "@google-analytics/data": "^5.1.0",
     "@google/generative-ai": "^0.24.1",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
@@ -28,13 +29,13 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-
     "autoprefixer": "^10.0.1",
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.16",
     "framer-motion": "^10.18.0",
+    "googleapis": "^150.0.1",
     "gray-matter": "^4.0.3",
     "next": "14.2.16",
     "nodemailer": "^7.0.3",
