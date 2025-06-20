@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { 
   FaPlus, FaEdit, FaTrash, FaEye, FaEyeSlash, FaBell, 
   FaCalendar, FaUsers, FaChartLine, FaPause, FaPlay,
-  FaClock, FaTarget, FaMobile, FaDesktop, FaFilter
+  FaClock, FaBullseye, FaMobile, FaDesktop, FaFilter
 } from 'react-icons/fa';
 
 interface Popup {
@@ -398,7 +398,7 @@ export default function PopupsPage() {
               </p>
             </div>
             <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-              <FaTarget className="text-purple-600" />
+              <FaBullseye className="text-purple-600" />
             </div>
           </div>
         </div>

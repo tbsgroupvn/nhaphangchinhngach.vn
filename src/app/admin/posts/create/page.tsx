@@ -68,7 +68,7 @@ export default function CreatePostPage() {
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
-      .trim('-');
+      .replace(/^-+|-+$/g, '');
   };
 
   const handleTitleChange = (title: string) => {

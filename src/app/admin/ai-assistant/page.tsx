@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { 
   FaRobot, FaPaperPlane, FaMagic, FaImage, FaSearch, FaEdit,
-  FaCopy, FaDownload, FaSave, FaHistory, FaTrash, FaBulb,
+  FaCopy, FaDownload, FaSave, FaHistory, FaTrash, FaLightbulb,
   FaNewspaper, FaTags, FaGlobe, FaChartLine, FaMicrophone
 } from 'react-icons/fa'
 import AdminHeader from '../../../components/admin/AdminHeader'
@@ -341,10 +341,10 @@ Một số ví dụ bạn có thể thử:
                     {selectedTemplate.fields.map((field, index) => (
                       <button
                         key={index}
-                        onClick={() => setInputValue(field.prompt)}
+                        onClick={() => setInputValue(`Nhập ${field.label.toLowerCase()}: `)}
                         className="block w-full text-left text-sm text-primary-600 hover:text-primary-700 p-2 rounded hover:bg-primary-50 transition-colors"
                       >
-                        • {field.prompt}
+                        • Nhập {field.label.toLowerCase()}
                       </button>
                     ))}
                   </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { 
-  FaSave, FaCog, FaGlobe, FaShare, FaShield, FaEnvelope,
+  FaSave, FaCog, FaGlobe, FaShare, FaShieldAlt, FaEnvelope,
   FaSearch, FaPalette, FaBell, FaDatabase, FaCode, FaUsers,
   FaImage, FaPhone, FaMapMarkerAlt, FaFacebook, FaInstagram,
   FaYoutube, FaLinkedin, FaTimes, FaCheck, FaExclamationTriangle
@@ -151,7 +151,7 @@ export default function SettingsPage() {
     { id: 'seo', label: 'SEO', icon: FaSearch },
     { id: 'social', label: 'Mạng xã hội', icon: FaShare },
     { id: 'email', label: 'Email', icon: FaEnvelope },
-    { id: 'security', label: 'Bảo mật', icon: FaShield },
+    { id: 'security', label: 'Bảo mật', icon: FaShieldAlt },
     { id: 'appearance', label: 'Giao diện', icon: FaPalette },
     { id: 'notifications', label: 'Thông báo', icon: FaBell }
   ];
@@ -614,7 +614,7 @@ export default function SettingsPage() {
 
           {activeTab === 'security' && (
             <div className="text-center py-8">
-              <FaShield className="mx-auto text-gray-400 text-4xl mb-4" />
+              <FaShieldAlt className="mx-auto text-gray-400 text-4xl mb-4" />
               <p className="text-gray-500">Cài đặt Bảo mật đang được phát triển...</p>
             </div>
           )}
