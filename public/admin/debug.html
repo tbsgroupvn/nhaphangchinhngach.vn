@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBS GROUP - Debug CMS Login</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .debug-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
+        .status.success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+        
+        .status.error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+        
+        .status.warning {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+        
+        .status.info {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background: white;
+            color: #dc2626;
+            transform: translateY(-2px);
+        }
+        
+        .btn.success {
+            background: rgba(34, 197, 94, 0.3);
+            border-color: #22c55e;
+        }
+        
+        .btn.success:hover {
+            background: #22c55e;
+            color: white;
+        }
+        
+        .btn.danger {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+        }
+        
+        .btn.danger:hover {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .checklist li:before {
+            content: "❌";
+            position: absolute;
+            left: 0;
+            font-size: 16px;
+        }
+        
+        .checklist li.completed:before {
+            content: "✅";
+        }
+        
+        .alert {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid rgba(239, 68, 68, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .alert h3 {
+            color: #fecaca;
+            margin-bottom: 15px;
+        }
+        
+        .instructions {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions h3 {
+            color: #93c5fd;
+            margin-bottom: 15px;
+        }
+        
+        .step {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .step strong {
+            color: #93c5fd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🔧 TBS GROUP</div>
+            <div class="subtitle">Debug CMS Login Issues</div>
+        </div>
+
+        <!-- Status Overview -->
+        <div class="debug-card">
+            <h3>🚦 Overall Status</h3>
+            <div id="overallStatus"></div>
+        </div>
+
+        <div class="grid">
+            <!-- Netlify Identity Status -->
+            <div class="debug-card">
+                <h3>🔐 Netlify Identity Status</h3>
+                <div id="identityStatus"></div>
+                <div id="userInfo"></div>
+                <button class="btn success" onclick="testLogin()">🔓 Test Login</button>
+                <button class="btn" onclick="openIdentity()">🚪 Open Identity</button>
+            </div>
+
+            <!-- CMS Configuration -->
+            <div class="debug-card">
+                <h3>📋 CMS Configuration</h3>
+                <div id="cmsStatus"></div>
+                <button class="btn" onclick="testCMSConfig()">🧪 Test Config</button>
+            </div>
+
+            <!-- Domain & Network -->
+            <div class="debug-card">
+                <h3>🌐 Domain & Environment</h3>
+                <div class="code">
+                    <strong>Current Domain:</strong> <span id="currentDomain"></span><br>
+                    <strong>Expected:</strong> nhaphangchinhngach.vn<br>
+                    <strong>Environment:</strong> <span id="environment"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Debug Info -->
+        <div class="debug-card">
+            <h3>🐛 Debug Information</h3>
+            <div class="code" id="debugInfo"></div>
+            <button class="btn" onclick="refreshDebug()">🔄 Refresh</button>
+        </div>
+
+        <!-- Common Issues & Solutions -->
+        <div class="debug-card">
+            <h3>❗ Common Issues & Solutions</h3>
+            <div id="commonIssues"></div>
+        </div>
+
+        <!-- Setup Checklist -->
+        <div class="debug-card">
+            <h3>📝 Setup Checklist</h3>
+            <div class="instructions">
+                <h3>🎯 Bước cần thực hiện trong Netlify Dashboard:</h3>
+                <div class="step">
+                    <strong>Bước 1:</strong> Vào <a href="https://app.netlify.com" target="_blank" style="color: #93c5fd;">Netlify Dashboard</a>
+                </div>
+                <div class="step">
+                    <strong>Bước 2:</strong> Chọn site → <strong>Site settings</strong> → <strong>Identity</strong>
+                </div>
+                <div class="step">
+                    <strong>Bước 3:</strong> Click <strong>"Enable Identity"</strong>
+                </div>
+                <div class="step">
+                    <strong>Bước 4:</strong> Registration preferences → <strong>"Invite only"</strong>
+                </div>
+                <div class="step">
+                    <strong>Bước 5:</strong> Services → Enable <strong>"Git Gateway"</strong>
+                </div>
+                <div class="step">
+                    <strong>Bước 6:</strong> Site URL → <strong>https://nhaphangchinhngach.vn</strong>
+                </div>
+                <div class="step">
+                    <strong>Bước 7:</strong> Identity tab → <strong>"Invite users"</strong> → Nhập email của bạn
+                </div>
+                <div class="step">
+                    <strong>Bước 8:</strong> Kiểm tra email và accept invitation
+                </div>
+            </div>
+            
+            <ul class="checklist" id="setupChecklist">
+                <li id="check-identity">Identity service enabled</li>
+                <li id="check-registration">Registration set to "Invite only"</li>
+                <li id="check-gateway">Git Gateway enabled</li>
+                <li id="check-site-url">Site URL matches domain</li>
+                <li id="check-user-invited">User invited via email</li>
+                <li id="check-email-confirmed">Email invitation accepted</li>
+            </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="debug-card" style="text-align: center;">
+            <h3>🚀 Actions</h3>
+            <a href="/admin/" class="btn success">📊 Try CMS</a>
+            <a href="/admin/test.html" class="btn">🔧 Advanced Test</a>
+            <a href="https://app.netlify.com" target="_blank" class="btn">⚙️ Netlify Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        let debugLog = [];
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toISOString();
+            debugLog.push({timestamp, message, type});
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+        
+        function updateStatus() {
+            updateOverallStatus();
+            updateIdentityStatus();
+            updateDomainInfo();
+            refreshDebug();
+        }
+        
+        function updateOverallStatus() {
+            const el = document.getElementById('overallStatus');
+            const hasIdentity = !!window.netlifyIdentity;
+            const hasUser = hasIdentity && window.netlifyIdentity.currentUser();
+            
+            if (hasUser) {
+                el.innerHTML = '<div class="status success">✅ Ready - User authenticated</div>';
+            } else if (hasIdentity) {
+                el.innerHTML = '<div class="status warning">⚠️ Identity loaded - Need login</div>';
+            } else {
+                el.innerHTML = '<div class="status error">❌ Identity not available</div>';
+            }
+        }
+        
+        function updateIdentityStatus() {
+            const statusEl = document.getElementById('identityStatus');
+            const userEl = document.getElementById('userInfo');
+            
+            if (!window.netlifyIdentity) {
+                statusEl.innerHTML = '<div class="status error">❌ Netlify Identity không load được</div>';
+                userEl.innerHTML = `
+                    <div class="code">
+                        Có thể do:<br>
+                        - Identity chưa enable trong Netlify<br>
+                        - Vấn đề network<br>
+                        - Script bị block
+                    </div>
+                `;
+                return;
+            }
+            
+            const user = window.netlifyIdentity.currentUser();
+            if (user) {
+                statusEl.innerHTML = '<div class="status success">✅ User đã đăng nhập</div>';
+                userEl.innerHTML = `
+                    <div class="code">
+                        Email: ${user.email}<br>
+                        ID: ${user.id}<br>
+                        Confirmed: ${user.email_confirmed_at ? 'Yes' : 'No'}<br>
+                        Created: ${new Date(user.created_at).toLocaleString()}
+                    </div>
+                `;
+            } else {
+                statusEl.innerHTML = '<div class="status warning">⚠️ Identity loaded nhưng chưa login</div>';
+                userEl.innerHTML = '<div class="code">Cần đăng nhập hoặc được invite</div>';
+            }
+        }
+        
+        function updateDomainInfo() {
+            const domain = window.location.hostname;
+            const env = domain.includes('localhost') ? 'Local' : 
+                       domain.includes('netlify.app') ? 'Netlify Subdomain' : 
+                       domain === 'nhaphangchinhngach.vn' ? 'Production' : 'Unknown';
+            
+            document.getElementById('currentDomain').textContent = domain;
+            document.getElementById('environment').textContent = env;
+        }
+        
+        function testLogin() {
+            if (!window.netlifyIdentity) {
+                alert('❌ Netlify Identity không available');
+                return;
+            }
+            
+            try {
+                window.netlifyIdentity.open('login');
+            } catch (error) {
+                alert(`❌ Lỗi mở login: ${error.message}`);
+            }
+        }
+        
+        function openIdentity() {
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.open();
+            } else {
+                alert('❌ Netlify Identity không available');
+            }
+        }
+        
+        function testCMSConfig() {
+            const statusEl = document.getElementById('cmsStatus');
+            statusEl.innerHTML = '<div class="status info">🔄 Đang test CMS config...</div>';
+            
+            fetch('/admin/config.yml')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(config => {
+                    if (config.includes('backend:') && config.includes('collections:')) {
+                        statusEl.innerHTML = '<div class="status success">✅ CMS config OK</div>';
+                        
+                        const hasGitGateway = config.includes('name: git-gateway');
+                        const hasSiteUrl = config.includes('site_url: https://nhaphangchinhngach.vn');
+                        
+                        statusEl.innerHTML += `
+                            <div class="code">
+                                Backend: ${hasGitGateway ? 'Git Gateway ✅' : 'Unknown ❌'}<br>
+                                Site URL: ${hasSiteUrl ? 'Correct ✅' : 'May be wrong ⚠️'}
+                            </div>
+                        `;
+                    } else {
+                        statusEl.innerHTML = '<div class="status error">❌ CMS config invalid</div>';
+                    }
+                })
+                .catch(error => {
+                    statusEl.innerHTML = `<div class="status error">❌ Config load failed: ${error.message}</div>`;
+                });
+        }
+        
+        function refreshDebug() {
+            const debugEl = document.getElementById('debugInfo');
+            const user = window.netlifyIdentity ? window.netlifyIdentity.currentUser() : null;
+            
+            const info = {
+                timestamp: new Date().toISOString(),
+                url: window.location.href,
+                domain: window.location.hostname,
+                netlifyIdentity: {
+                    loaded: !!window.netlifyIdentity,
+                    user: user ? { email: user.email, id: user.id } : null
+                },
+                localStorage: Object.keys(localStorage),
+                userAgent: navigator.userAgent.substring(0, 80) + '...'
+            };
+            
+            debugEl.textContent = JSON.stringify(info, null, 2);
+        }
+        
+        function updateCommonIssues() {
+            const issuesEl = document.getElementById('commonIssues');
+            const user = window.netlifyIdentity ? window.netlifyIdentity.currentUser() : null;
+            const hasIdentity = !!window.netlifyIdentity;
+            
+            let issues = [];
+            
+            if (!hasIdentity) {
+                issues.push({
+                    title: "Netlify Identity không load",
+                    description: "Identity service chưa được enable trong Netlify Dashboard",
+                    solution: "Vào Netlify Dashboard → Site Settings → Identity → Enable Identity"
+                });
+            }
+            
+            if (hasIdentity && !user) {
+                issues.push({
+                    title: "Chưa có user account",
+                    description: "Chưa được invite hoặc chưa accept invitation",
+                    solution: "Admin cần invite email của bạn trong Netlify Dashboard → Identity → Invite users"
+                });
+            }
+            
+            if (window.location.hostname.includes('netlify.app')) {
+                issues.push({
+                    title: "Sử dụng subdomain Netlify",
+                    description: "Identity site URL có thể chưa match với domain",
+                    solution: "Update Identity Site URL thành https://nhaphangchinhngach.vn"
+                });
+            }
+            
+            if (issues.length === 0) {
+                issuesEl.innerHTML = '<div class="status success">✅ No common issues detected</div>';
+            } else {
+                let html = '';
+                issues.forEach((issue, index) => {
+                    html += `
+                        <div class="alert">
+                            <h3>${index + 1}. ${issue.title}</h3>
+                            <p><strong>Vấn đề:</strong> ${issue.description}</p>
+                            <p><strong>Giải pháp:</strong> ${issue.solution}</p>
+                        </div>
+                    `;
+                });
+                issuesEl.innerHTML = html;
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            log('TBS GROUP CMS Debug page loaded', 'info');
+            
+            // Initial status update
+            updateStatus();
+            
+            if (window.netlifyIdentity) {
+                // Listen for events
+                window.netlifyIdentity.on('init', user => {
+                    log(`Identity init: ${user ? user.email : 'no user'}`, 'info');
+                    updateStatus();
+                });
+                
+                window.netlifyIdentity.on('login', user => {
+                    log(`Login: ${user.email}`, 'success');
+                    updateStatus();
+                });
+                
+                window.netlifyIdentity.on('logout', () => {
+                    log('Logout', 'info');
+                    updateStatus();
+                });
+                
+                window.netlifyIdentity.on('error', error => {
+                    log(`Identity error: ${error.message}`, 'error');
+                    updateStatus();
+                });
+            } else {
+                // Wait for Identity to load
+                setTimeout(() => {
+                    if (window.netlifyIdentity) {
+                        updateStatus();
+                    } else {
+                        log('Netlify Identity failed to load after timeout', 'error');
+                        updateCommonIssues();
+                    }
+                }, 3000);
+            }
+            
+            // Auto-run diagnostic after page load
+            setTimeout(() => {
+                testCMSConfig();
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 
