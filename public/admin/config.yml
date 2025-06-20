@@ -16,9 +16,13 @@ backend:
 
 # Auth0 Extension Configuration (Environment Variables)
 # Netlify Auth0 Extension will auto-inject these values
+# If extension is not working, fallback to git-gateway
 auth:
   providers:
+    - name: git-gateway
     - name: auth0
+      domain: dev-7o7uj1p4qibr6c58.auth0.com
+      client_id: "{{AUTH0_CLIENT_ID}}"
 
 media_folder: "public/images"
 public_folder: "/images"

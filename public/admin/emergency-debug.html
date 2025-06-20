@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 TBS CMS - Emergency Debug</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .status-box {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .error { color: #ff4444; }
+        .success { color: #44ff44; }
+        .warning { color: #ffaa44; }
+        .info { color: #4444ff; }
+        pre {
+            background: #0a0a0a;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        button {
+            background: #333;
+            color: #fff;
+            border: 1px solid #666;
+            border-radius: 4px;
+            padding: 8px 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #444;
+        }
+        .log {
+            height: 200px;
+            overflow-y: auto;
+            background: #0a0a0a;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 TBS CMS - Emergency Debug Center</h1>
+        
+        <div class="status-box">
+            <h3 class="info">🔍 System Status Check</h3>
+            <div id="status-log"></div>
+        </div>
+
+        <div class="status-box">
+            <h3 class="warning">⚙️ Configuration Check</h3>
+            <div id="config-log"></div>
+        </div>
+
+        <div class="status-box">
+            <h3 class="error">🐛 Error Log</h3>
+            <div id="error-log" class="log"></div>
+        </div>
+
+        <div class="status-box">
+            <h3 class="info">🔧 Actions</h3>
+            <button onclick="testCMSLoad()">Test CMS Load</button>
+            <button onclick="testAuth0()">Test Auth0</button>
+            <button onclick="checkDependencies()">Check Dependencies</button>
+            <button onclick="clearCache()">Clear Browser Cache</button>
+            <button onclick="goToMainCMS()">Go to Main CMS</button>
+        </div>
+
+        <div class="status-box">
+            <h3 class="success">📋 Debug Information</h3>
+            <pre id="debug-info"></pre>
+        </div>
+    </div>
+
+    <script>
+        let statusLog = document.getElementById('status-log');
+        let configLog = document.getElementById('config-log');
+        let errorLog = document.getElementById('error-log');
+        let debugInfo = document.getElementById('debug-info');
+
+        function log(element, message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type;
+            element.innerHTML += `<div class="${className}">[${timestamp}] ${message}</div>`;
+            element.scrollTop = element.scrollHeight;
+        }
+
+        function testCMSLoad() {
+            log(statusLog, '🔄 Testing CMS load...', 'info');
+            
+            try {
+                // Test if NetlifyCMS script loads
+                if (typeof CMS !== 'undefined') {
+                    log(statusLog, '✅ NetlifyCMS script loaded successfully', 'success');
+                } else {
+                    log(statusLog, '❌ NetlifyCMS script not loaded', 'error');
+                    log(errorLog, 'NetlifyCMS script missing - check script tag in index.html', 'error');
+                }
+
+                // Test config.yml accessibility
+                fetch('/admin/config.yml')
+                    .then(response => {
+                        if (response.ok) {
+                            log(statusLog, '✅ config.yml accessible', 'success');
+                            return response.text();
+                        } else {
+                            throw new Error(`HTTP ${response.status}`);
+                        }
+                    })
+                    .then(text => {
+                        log(configLog, 'Config file content preview:', 'info');
+                        log(configLog, text.substring(0, 500) + '...', 'info');
+                    })
+                    .catch(error => {
+                        log(statusLog, `❌ config.yml not accessible: ${error}`, 'error');
+                        log(errorLog, `Config file error: ${error}`, 'error');
+                    });
+
+            } catch (error) {
+                log(errorLog, `CMS Load Test Error: ${error}`, 'error');
+            }
+        }
+
+        function testAuth0() {
+            log(statusLog, '🔄 Testing Auth0 configuration...', 'info');
+            
+            try {
+                // Check if Auth0 extension environment variables are available
+                const currentUrl = window.location.origin;
+                log(configLog, `Current domain: ${currentUrl}`, 'info');
+                
+                // Test Netlify Identity widget
+                if (typeof netlifyIdentity !== 'undefined') {
+                    log(statusLog, '✅ Netlify Identity widget loaded', 'success');
+                } else {
+                    log(statusLog, '❌ Netlify Identity widget not loaded', 'error');
+                }
+
+                // Check for Auth0 in config
+                fetch('/admin/config.yml')
+                    .then(response => response.text())
+                    .then(text => {
+                        if (text.includes('auth0')) {
+                            log(configLog, '✅ Auth0 configuration found', 'success');
+                        } else {
+                            log(configLog, '❌ Auth0 configuration missing', 'error');
+                        }
+                        
+                        if (text.includes('client_id:') && !text.includes('{{')) {
+                            log(configLog, '⚠️ Hardcoded client_id detected', 'warning');
+                        } else {
+                            log(configLog, '✅ No hardcoded credentials', 'success');
+                        }
+                    })
+                    .catch(error => {
+                        log(errorLog, `Auth0 config check error: ${error}`, 'error');
+                    });
+
+            } catch (error) {
+                log(errorLog, `Auth0 Test Error: ${error}`, 'error');
+            }
+        }
+
+        function checkDependencies() {
+            log(statusLog, '🔄 Checking dependencies...', 'info');
+            
+            const checks = [
+                { name: 'NetlifyCMS', check: () => typeof CMS !== 'undefined' },
+                { name: 'Netlify Identity', check: () => typeof netlifyIdentity !== 'undefined' },
+                { name: 'jQuery', check: () => typeof $ !== 'undefined' },
+                { name: 'React', check: () => typeof React !== 'undefined' }
+            ];
+
+            checks.forEach(item => {
+                try {
+                    if (item.check()) {
+                        log(statusLog, `✅ ${item.name} loaded`, 'success');
+                    } else {
+                        log(statusLog, `❌ ${item.name} not loaded`, 'error');
+                    }
+                } catch (error) {
+                    log(statusLog, `❌ ${item.name} check failed: ${error}`, 'error');
+                }
+            });
+        }
+
+        function clearCache() {
+            log(statusLog, '🔄 Attempting to clear cache...', 'info');
+            
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => {
+                        caches.delete(name);
+                    });
+                    log(statusLog, '✅ Browser cache cleared', 'success');
+                });
+            }
+
+            // Clear localStorage
+            localStorage.clear();
+            sessionStorage.clear();
+            log(statusLog, '✅ Local storage cleared', 'success');
+
+            // Recommend hard refresh
+            log(statusLog, '💡 Please do Ctrl+Shift+R for hard refresh', 'warning');
+        }
+
+        function goToMainCMS() {
+            log(statusLog, '🔄 Redirecting to main CMS...', 'info');
+            setTimeout(() => {
+                window.location.href = '/admin/index.html';
+            }, 1000);
+        }
+
+        function captureErrors() {
+            window.addEventListener('error', function(e) {
+                log(errorLog, `JS Error: ${e.message} at ${e.filename}:${e.lineno}`, 'error');
+            });
+
+            window.addEventListener('unhandledrejection', function(e) {
+                log(errorLog, `Promise Rejection: ${e.reason}`, 'error');
+            });
+        }
+
+        function gatherDebugInfo() {
+            const info = {
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                url: window.location.href,
+                referrer: document.referrer,
+                cookiesEnabled: navigator.cookieEnabled,
+                localStorage: !!window.localStorage,
+                sessionStorage: !!window.sessionStorage,
+                serviceWorker: 'serviceWorker' in navigator,
+                networkStatus: navigator.onLine ? 'online' : 'offline'
+            };
+
+            debugInfo.textContent = JSON.stringify(info, null, 2);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            log(statusLog, '🚀 Emergency Debug Center initialized', 'success');
+            captureErrors();
+            gatherDebugInfo();
+            
+            // Auto-run basic checks
+            setTimeout(() => {
+                testCMSLoad();
+                checkDependencies();
+                testAuth0();
+            }, 1000);
+        });
+
+        // Console welcome message
+        console.log('🚨 TBS CMS Emergency Debug Center Active');
+        console.log('Use the buttons on the page to run diagnostic tests');
+    </script>
+</body>
+</html> 
