@@ -3,231 +3,399 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TBS GROUP - Quản trị nội dung</title>
+  <meta name="robots" content="noindex" />
+  <title>🎯 TBS GROUP - Hệ thống quản lý nội dung</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* 🎨 Custom TBS GROUP CMS Styling */
     
+    /* Base Styling */
+    :root {
+      --tbs-primary: #dc2626;
+      --tbs-primary-dark: #b91c1c;
+      --tbs-secondary: #2563eb;
+      --tbs-success: #16a34a;
+      --tbs-warning: #f59e0b;
+      --tbs-info: #0ea5e9;
+      --tbs-background: #fafafa;
+      --tbs-surface: #ffffff;
+      --tbs-text: #1f2937;
+      --tbs-text-secondary: #6b7280;
+      --tbs-border: #e5e7eb;
+      --tbs-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --tbs-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --tbs-radius: 12px;
+      --tbs-radius-sm: 8px;
+    }
+
+    /* Global Overrides */
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
       min-height: 100vh;
     }
-    
-    .loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      color: white;
+
+    /* 🎯 Header Styling */
+    [data-testid="app-header"] {
+      background: linear-gradient(135deg, var(--tbs-primary) 0%, var(--tbs-primary-dark) 100%) !important;
+      box-shadow: var(--tbs-shadow-lg) !important;
+      border-bottom: none !important;
+      padding: 1rem 2rem !important;
     }
-    
-    .logo {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+
+    [data-testid="app-header"] h1 {
+      color: white !important;
+      font-weight: 700 !important;
+      font-size: 1.5rem !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.75rem !important;
     }
-    
-    .subtitle {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
+
+    [data-testid="app-header"] h1::before {
+      content: "🎯";
+      font-size: 1.75rem;
     }
-    
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid rgba(255,255,255,0.3);
-      border-top: 4px solid white;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
+
+    /* Navigation Links */
+    [data-testid="app-header"] nav a {
+      color: rgba(255, 255, 255, 0.9) !important;
+      font-weight: 500 !important;
+      padding: 0.5rem 1rem !important;
+      border-radius: var(--tbs-radius-sm) !important;
+      transition: all 0.2s ease !important;
+      text-decoration: none !important;
     }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+
+    [data-testid="app-header"] nav a:hover {
+      background: rgba(255, 255, 255, 0.15) !important;
+      color: white !important;
+      transform: translateY(-1px);
     }
-    
-    .cms-container {
-      display: none;
-    }
-    
-    .cms-container.loaded {
-      display: block;
-    }
-    
-    .auth-message {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    
-    .auth-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 40px;
-      max-width: 600px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    .auth-button {
-      background: rgba(255, 255, 255, 0.2);
-      border: 2px solid white;
-      color: white;
-      padding: 15px 30px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin: 10px;
-      text-decoration: none;
-      display: inline-block;
-    }
-    
-    .auth-button:hover {
-      background: white;
-      color: #667eea;
-      transform: translateY(-2px);
-    }
-    
-    .auth-button.primary {
-      background: rgba(34, 197, 94, 0.3);
-      border-color: #22c55e;
-    }
-    
-    .auth-button.primary:hover {
-      background: #22c55e;
-      color: white;
-    }
-    
-    .setup-steps {
-      background: rgba(255, 193, 7, 0.1);
-      border: 2px solid rgba(255, 193, 7, 0.3);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px 0;
-      text-align: left;
-    }
-    
-    .setup-steps h4 {
-      color: #ffeb3b;
-      margin-bottom: 15px;
-    }
-    
-    .setup-steps ol {
-      margin-left: 20px;
-    }
-    
-    .setup-steps li {
-      margin: 8px 0;
-      line-height: 1.4;
-    }
-    
-    /* Custom CSS cho Netlify CMS */
-    .nc-app-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    }
-    
-    .nc-app-header h1 {
+
+    [data-testid="app-header"] nav a.active {
+      background: rgba(255, 255, 255, 0.2) !important;
       color: white !important;
     }
-    
-    .nc-entryEditor-editor {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+
+    /* 📱 Sidebar Styling */
+    [data-testid="sidebar"] {
+      background: var(--tbs-surface) !important;
+      border-right: 1px solid var(--tbs-border) !important;
+      box-shadow: var(--tbs-shadow) !important;
+      width: 280px !important;
     }
-    
-    /* Identity widget custom styling */
-    .netlify-identity-button {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
+
+    [data-testid="sidebar"] h2 {
+      color: var(--tbs-text) !important;
+      font-weight: 600 !important;
+      padding: 1.5rem 1.5rem 1rem !important;
+      margin: 0 !important;
+      border-bottom: 1px solid var(--tbs-border) !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.5rem !important;
+    }
+
+    [data-testid="sidebar"] h2::before {
+      content: "📚";
+    }
+
+    /* Collection Links */
+    [data-testid="sidebar"] ul {
+      padding: 1rem 0 !important;
+    }
+
+    [data-testid="sidebar"] li {
+      margin: 0.25rem 0 !important;
+    }
+
+    [data-testid="sidebar"] a {
+      display: flex !important;
+      align-items: center !important;
+      padding: 0.75rem 1.5rem !important;
+      color: var(--tbs-text-secondary) !important;
+      text-decoration: none !important;
+      font-weight: 500 !important;
+      transition: all 0.2s ease !important;
+      border-radius: 0 !important;
+      position: relative !important;
+    }
+
+    [data-testid="sidebar"] a:hover {
+      background: linear-gradient(90deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%) !important;
+      color: var(--tbs-primary) !important;
+      padding-left: 2rem !important;
+    }
+
+    [data-testid="sidebar"] a.active {
+      background: linear-gradient(90deg, var(--tbs-primary) 0%, var(--tbs-primary-dark) 100%) !important;
+      color: white !important;
+      font-weight: 600 !important;
+    }
+
+    [data-testid="sidebar"] a.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: white;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* 📄 Main Content Area */
+    [data-testid="main-content"] {
+      background: var(--tbs-background) !important;
+      padding: 2rem !important;
+      min-height: calc(100vh - 80px) !important;
+    }
+
+    /* Collection Header */
+    .collection-header {
+      background: var(--tbs-surface) !important;
+      padding: 2rem !important;
+      border-radius: var(--tbs-radius) !important;
+      box-shadow: var(--tbs-shadow) !important;
+      margin-bottom: 2rem !important;
+      border: 1px solid var(--tbs-border) !important;
+    }
+
+    .collection-header h1 {
+      color: var(--tbs-text) !important;
+      font-weight: 700 !important;
+      font-size: 2rem !important;
+      margin-bottom: 0.5rem !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 1rem !important;
+    }
+
+    .collection-header p {
+      color: var(--tbs-text-secondary) !important;
+      font-size: 1.1rem !important;
+      margin: 0 !important;
+    }
+
+    /* Buttons */
+    button, .btn, [role="button"] {
+      background: linear-gradient(135deg, var(--tbs-primary) 0%, var(--tbs-primary-dark) 100%) !important;
+      color: white !important;
+      border: none !important;
+      padding: 0.75rem 1.5rem !important;
+      border-radius: var(--tbs-radius-sm) !important;
+      font-weight: 600 !important;
+      transition: all 0.2s ease !important;
+      cursor: pointer !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.5rem !important;
+    }
+
+    button:hover, .btn:hover, [role="button"]:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3) !important;
+    }
+
+    /* Secondary Button */
+    .btn-secondary {
+      background: var(--tbs-surface) !important;
+      color: var(--tbs-text) !important;
+      border: 1px solid var(--tbs-border) !important;
+    }
+
+    .btn-secondary:hover {
+      background: var(--tbs-background) !important;
+      box-shadow: var(--tbs-shadow) !important;
+    }
+
+    /* Cards */
+    .card, [data-testid="card"] {
+      background: var(--tbs-surface) !important;
+      border-radius: var(--tbs-radius) !important;
+      box-shadow: var(--tbs-shadow) !important;
+      border: 1px solid var(--tbs-border) !important;
+      padding: 1.5rem !important;
+      margin-bottom: 1rem !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .card:hover, [data-testid="card"]:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--tbs-shadow-lg) !important;
+    }
+
+    /* Forms */
+    input, textarea, select {
+      border: 1px solid var(--tbs-border) !important;
+      border-radius: var(--tbs-radius-sm) !important;
+      padding: 0.75rem !important;
+      font-size: 1rem !important;
+      transition: all 0.2s ease !important;
+      background: var(--tbs-surface) !important;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none !important;
+      border-color: var(--tbs-primary) !important;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+    }
+
+    /* Labels */
+    label {
+      color: var(--tbs-text) !important;
+      font-weight: 600 !important;
+      margin-bottom: 0.5rem !important;
+      display: block !important;
+    }
+
+    /* Status Badges */
+    .status-badge {
+      padding: 0.25rem 0.75rem !important;
+      border-radius: 9999px !important;
+      font-size: 0.875rem !important;
+      font-weight: 600 !important;
+    }
+
+    .status-published {
+      background: rgba(22, 163, 74, 0.1) !important;
+      color: var(--tbs-success) !important;
+    }
+
+    .status-draft {
+      background: rgba(245, 158, 11, 0.1) !important;
+      color: var(--tbs-warning) !important;
+    }
+
+    /* Loading States */
+    .loading {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 3rem !important;
+      color: var(--tbs-text-secondary) !important;
+    }
+
+    .loading::before {
+      content: "⏳";
+      margin-right: 0.5rem;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Welcome Message */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--tbs-primary) 0%, var(--tbs-secondary) 100%) !important;
+      color: white !important;
+      padding: 2rem !important;
+      border-radius: var(--tbs-radius) !important;
+      text-align: center !important;
+      margin-bottom: 2rem !important;
+      box-shadow: var(--tbs-shadow-lg) !important;
+    }
+
+    .welcome-banner h2 {
+      font-size: 1.75rem !important;
+      font-weight: 700 !important;
+      margin-bottom: 0.5rem !important;
+    }
+
+    .welcome-banner p {
+      font-size: 1.1rem !important;
+      opacity: 0.9 !important;
+      margin: 0 !important;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      [data-testid="sidebar"] {
+        width: 100% !important;
+        position: fixed !important;
+        z-index: 1000 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.3s ease !important;
+      }
+
+      [data-testid="sidebar"].open {
+        transform: translateX(0) !important;
+      }
+
+      [data-testid="main-content"] {
+        padding: 1rem !important;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--tbs-background);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--tbs-border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--tbs-text-secondary);
     }
   </style>
 </head>
 <body>
-  <div class="loading-screen" id="loadingScreen">
-    <div class="logo">TBS GROUP</div>
-    <div class="subtitle">Đang tải hệ thống quản trị...</div>
-    <div class="spinner"></div>
+  <!-- Welcome Banner -->
+  <div id="welcome-banner" class="welcome-banner" style="display: none;">
+    <h2>🎯 Chào mừng đến với TBS GROUP CMS</h2>
+    <p>Hệ thống quản lý nội dung chuyên nghiệp cho dịch vụ xuất nhập khẩu</p>
   </div>
-  
-  <div class="auth-message" id="authMessage" style="display: none;">
-    <div class="auth-card">
-      <div class="logo">🔐 TBS GROUP CMS</div>
-      <h3 style="margin-bottom: 20px;">Setup Authentication Required</h3>
-      <p style="margin-bottom: 20px; opacity: 0.9;">
-        CMS sử dụng Auth0 by Okta extension cho authentication.<br/>
-        Vui lòng hoàn thành setup để truy cập CMS.
-      </p>
-      
-      <div class="setup-steps">
-        <h4>📋 Setup Auth0 Extension:</h4>
-        <ol>
-          <li>Vào <strong>Netlify Dashboard</strong> → Site của bạn</li>
-          <li><strong>Integrations</strong> → <strong>Browse</strong> → Tìm <strong>"Auth0 by Okta"</strong></li>
-          <li>Click <strong>Install</strong> extension</li>
-          <li><strong>Site configuration</strong> → <strong>Extensions</strong> → <strong>Auth0 by Okta</strong></li>
-          <li><strong>Add a tenant</strong> → Login Auth0 account</li>
-          <li><strong>Select project</strong> → <strong>Save</strong></li>
-          <li><strong>Site Settings</strong> → <strong>Identity</strong> → <strong>Enable Identity</strong></li>
-          <li><strong>Registration</strong> → <strong>"Invite only"</strong></li>
-          <li><strong>Services</strong> → Enable <strong>"Git Gateway"</strong></li>
-          <li><strong>Identity tab</strong> → <strong>"Invite users"</strong> → Nhập email</li>
-        </ol>
-      </div>
-      
-      <button class="auth-button primary" onclick="openLogin()">
-        🚀 Thử đăng nhập CMS
-      </button>
-      <a href="/admin/debug.html" class="auth-button">
-        🔧 Trang Debug
-      </a>
-      <a href="https://app.netlify.com" target="_blank" class="auth-button">
-        ⚙️ Netlify Dashboard
-      </a>
-      
-      <div style="margin-top: 20px; font-size: 14px; opacity: 0.8;">
-        <p>Cần hỗ trợ? Kiểm tra <strong>Debug page</strong> để xác định vấn đề.</p>
-      </div>
-    </div>
-  </div>
-  
-  <div class="cms-container" id="cmsContainer">
-    <!-- Netlify CMS sẽ render ở đây -->
-  </div>
-  
-  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+
+  <!-- NetlifyCMS App -->
+  <div id="nc-root"></div>
   
   <script>
+    // 🎯 Custom TBS GROUP CMS Configuration
+    
+    // Show welcome banner on first load
+    if (localStorage.getItem('tbs-cms-welcome') !== 'seen') {
+      document.getElementById('welcome-banner').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('welcome-banner').style.display = 'none';
+        localStorage.setItem('tbs-cms-welcome', 'seen');
+      }, 5000);
+    }
+
+    // 🌟 Enhanced Animations
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add fade-in animation to elements
+      const elements = document.querySelectorAll('.card, [data-testid="card"], button, .btn');
+      elements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('fade-in');
+        }, index * 100);
+      });
+    });
+
     // Cấu hình ngôn ngữ tiếng Việt toàn diện
     CMS.registerLocale('vi', {
       app: {
@@ -504,169 +672,9 @@
         }
       }
     });
-    
-    function openLogin() {
-      if (window.netlifyIdentity) {
-        try {
-          window.netlifyIdentity.open();
-          console.log('✅ Opened identity widget');
-        } catch (error) {
-          console.error('❌ Error opening identity:', error);
-          alert('Lỗi mở identity widget. Vui lòng kiểm tra setup Auth0 extension.');
-        }
-      } else {
-        console.error('❌ Netlify Identity not available');
-        alert('Netlify Identity chưa sẵn sàng. Vui lòng hoàn thành setup Auth0 extension.');
-      }
-    }
-    
-    function hideLoading() {
-      document.getElementById('loadingScreen').style.display = 'none';
-    }
-    
-    function showAuthMessage() {
-      hideLoading();
-      document.getElementById('authMessage').style.display = 'flex';
-    }
-    
-    function hideAuthMessage() {
-      document.getElementById('authMessage').style.display = 'none';
-      document.getElementById('cmsContainer').classList.add('loaded');
-    }
-    
-    function initializeCMS() {
-      try {
-        // Khởi tạo CMS với cấu hình Auth0 extension
-        CMS.init({
-          config: {
-            load_config_file: true,
-            // Local backend chỉ enable khi localhost
-            local_backend: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1',
-            // Auth0 extension sẽ tự động inject environment variables
-          }
-        });
-        
-        console.log('✅ CMS initialized successfully');
-        hideAuthMessage();
-      } catch (error) {
-        console.error('❌ Error initializing CMS:', error);
-        showAuthMessage();
-      }
-    }
-    
-    // Enhanced error handling function
-    function handleAuthError(error, context) {
-      console.error(`❌ Auth error in ${context}:`, error);
-      
-      let errorMessage = 'Authentication error occurred. ';
-      
-      if (error.message && error.message.includes('auth0')) {
-        errorMessage += 'Please check Auth0 extension configuration.';
-      } else if (error.message && error.message.includes('identity')) {
-        errorMessage += 'Please enable Netlify Identity service.';
-      } else {
-        errorMessage += 'Please check debug page for details.';
-      }
-      
-      // Show user-friendly error
-      const authCard = document.querySelector('.auth-card h3');
-      if (authCard) {
-        authCard.textContent = '❌ Authentication Error';
-        authCard.style.color = '#fecaca';
-      }
-    }
-    
-    // Initialize authentication flow
-    function initializeAuth() {
-      if (!window.netlifyIdentity) {
-        console.error('❌ Netlify Identity widget not loaded');
-        hideLoading();
-        showAuthMessage();
-        return;
-      }
-      
-      console.log('🔧 Netlify Identity widget loaded');
-      
-      // Check initial auth state
-      try {
-        const user = window.netlifyIdentity.currentUser();
-        
-        if (user) {
-          console.log('✅ User already authenticated:', user.email);
-          initializeCMS();
-        } else {
-          console.log('⚠️ No authenticated user found');
-          hideLoading();
-          showAuthMessage();
-        }
-      } catch (error) {
-        handleAuthError(error, 'initial check');
-        hideLoading();
-        showAuthMessage();
-      }
-    }
-    
-    // Netlify Identity event handlers with Auth0 extension support
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        console.log('🔧 Identity init event:', user ? user.email : 'no user');
-        
-        hideLoading();
-        
-        if (user) {
-          console.log('✅ User authenticated on init:', user.email);
-          initializeCMS();
-        } else {
-          console.log('❌ User not authenticated on init');
-          showAuthMessage();
-        }
-      });
-      
-      window.netlifyIdentity.on("login", (user) => {
-        console.log('✅ Login successful:', user.email);
-        try {
-          initializeCMS();
-        } catch (error) {
-          handleAuthError(error, 'login');
-        }
-      });
-      
-      window.netlifyIdentity.on("logout", () => {
-        console.log('ℹ️ User logged out');
-        showAuthMessage();
-      });
-      
-      window.netlifyIdentity.on("error", (err) => {
-        handleAuthError(err, 'identity widget');
-        hideLoading();
-        showAuthMessage();
-      });
-      
-    } else {
-      // Fallback nếu Identity widget không load
-      console.error('❌ Netlify Identity widget not available');
-      setTimeout(() => {
-        if (!window.netlifyIdentity) {
-          console.error('❌ Netlify Identity failed to load after timeout');
-          hideLoading();
-          showAuthMessage();
-        } else {
-          initializeAuth();
-        }
-      }, 5000);
-    }
-    
-    // Debug information
-    console.log('🎯 TBS GROUP CMS with Auth0 Extension Support');
-    console.log('🌐 Environment:', window.location.hostname);
-    console.log('🔧 Local backend:', window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-    
-    // Check if Auth0 extension variables are available
-    setTimeout(() => {
-      console.log('🔍 Checking Auth0 extension environment...');
-      // Auth0 extension variables should be available via build process
-      console.log('ℹ️ Auth0 variables are managed by Netlify extension');
-    }, 1000);
+
+    // 🚀 Initialize CMS
+    CMS.init();
   </script>
 </body>
 </html> 

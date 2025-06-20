@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Dashboard - TBS GROUP CMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --tbs-primary: #dc2626;
+            --tbs-primary-dark: #b91c1c;
+            --tbs-secondary: #2563eb;
+            --tbs-success: #16a34a;
+            --tbs-warning: #f59e0b;
+            --tbs-info: #0ea5e9;
+            --tbs-background: #fafafa;
+            --tbs-surface: #ffffff;
+            --tbs-text: #1f2937;
+            --tbs-text-secondary: #6b7280;
+            --tbs-border: #e5e7eb;
+            --tbs-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --tbs-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --tbs-radius: 12px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--tbs-text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--tbs-primary) 0%, var(--tbs-primary-dark) 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: var(--tbs-shadow-lg);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--tbs-radius);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--tbs-primary);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #f3f4f6;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--tbs-surface);
+            padding: 2rem;
+            border-radius: var(--tbs-radius);
+            box-shadow: var(--tbs-shadow);
+            border: 1px solid var(--tbs-border);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--card-color, var(--tbs-primary)) 0%, transparent 100%);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--tbs-shadow-lg);
+        }
+
+        .stat-card.primary { --card-color: var(--tbs-primary); }
+        .stat-card.success { --card-color: var(--tbs-success); }
+        .stat-card.warning { --card-color: var(--tbs-warning); }
+        .stat-card.info { --card-color: var(--tbs-info); }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            opacity: 0.8;
+        }
+
+        .stat-trend {
+            font-size: 0.875rem;
+            color: var(--tbs-success);
+            font-weight: 600;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--card-color, var(--tbs-primary));
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--tbs-text-secondary);
+            font-weight: 500;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .main-panel {
+            background: var(--tbs-surface);
+            border-radius: var(--tbs-radius);
+            box-shadow: var(--tbs-shadow);
+            border: 1px solid var(--tbs-border);
+        }
+
+        .panel-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--tbs-border);
+        }
+
+        .panel-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--tbs-text);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .panel-header p {
+            color: var(--tbs-text-secondary);
+        }
+
+        .panel-content {
+            padding: 2rem;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-card {
+            background: var(--tbs-background);
+            padding: 1.5rem;
+            border-radius: var(--tbs-radius);
+            text-decoration: none;
+            color: var(--tbs-text);
+            transition: all 0.3s ease;
+            border: 1px solid var(--tbs-border);
+            text-align: center;
+        }
+
+        .action-card:hover {
+            background: var(--tbs-surface);
+            transform: translateY(-3px);
+            box-shadow: var(--tbs-shadow);
+        }
+
+        .action-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .action-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--tbs-primary);
+        }
+
+        .action-desc {
+            font-size: 0.875rem;
+            color: var(--tbs-text-secondary);
+        }
+
+        .recent-list {
+            list-style: none;
+        }
+
+        .recent-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--tbs-border);
+        }
+
+        .recent-item:last-child {
+            border-bottom: none;
+        }
+
+        .recent-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            width: 40px;
+            text-align: center;
+        }
+
+        .recent-content {
+            flex: 1;
+        }
+
+        .recent-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .recent-meta {
+            font-size: 0.875rem;
+            color: var(--tbs-text-secondary);
+        }
+
+        .recent-time {
+            font-size: 0.875rem;
+            color: var(--tbs-text-secondary);
+        }
+
+        .progress-bar {
+            background: var(--tbs-background);
+            border-radius: 9999px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--tbs-primary) 0%, var(--tbs-primary-dark) 100%);
+            border-radius: 9999px;
+            transition: width 1s ease;
+        }
+
+        .welcome-message {
+            background: linear-gradient(135deg, var(--tbs-info) 0%, var(--tbs-secondary) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--tbs-radius);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .welcome-message h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                padding: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        .animate-count {
+            animation: countUp 2s ease-out;
+        }
+
+        @keyframes countUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>📊 Dashboard TBS GROUP</h1>
+            <div class="header-actions">
+                <a href="/admin/huong-dan.html" class="btn">📚 Hướng dẫn</a>
+                <a href="/admin/" class="btn btn-primary">🎯 Vào CMS</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="welcome-message fade-in">
+            <h2>🎯 Chào mừng đến với TBS GROUP CMS Dashboard</h2>
+            <p>Tổng quan hoạt động và quản lý nội dung website xuất nhập khẩu hàng đầu Việt Nam</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card primary fade-in">
+                <div class="stat-header">
+                    <span class="stat-icon">📄</span>
+                    <span class="stat-trend">↗ +12%</span>
+                </div>
+                <div class="stat-number animate-count" data-count="156">0</div>
+                <div class="stat-label">Tổng bài viết</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 78%"></div>
+                </div>
+            </div>
+
+            <div class="stat-card success fade-in">
+                <div class="stat-header">
+                    <span class="stat-icon">🚚</span>
+                    <span class="stat-trend">↗ +8%</span>
+                </div>
+                <div class="stat-number animate-count" data-count="24">0</div>
+                <div class="stat-label">Dịch vụ hoạt động</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 92%"></div>
+                </div>
+            </div>
+
+            <div class="stat-card warning fade-in">
+                <div class="stat-header">
+                    <span class="stat-icon">👁️</span>
+                    <span class="stat-trend">↗ +25%</span>
+                </div>
+                <div class="stat-number animate-count" data-count="8420">0</div>
+                <div class="stat-label">Lượt xem tháng này</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85%"></div>
+                </div>
+            </div>
+
+            <div class="stat-card info fade-in">
+                <div class="stat-header">
+                    <span class="stat-icon">💼</span>
+                    <span class="stat-trend">↗ +5%</span>
+                </div>
+                <div class="stat-number animate-count" data-count="12">0</div>
+                <div class="stat-label">Vị trí tuyển dụng</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 67%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="main-panel fade-in">
+                <div class="panel-header">
+                    <h2>🚀 Thao tác nhanh</h2>
+                    <p>Truy cập nhanh các chức năng quản lý chính</p>
+                </div>
+                <div class="panel-content">
+                    <div class="quick-actions">
+                        <a href="/admin/collections/news" class="action-card">
+                            <span class="action-icon">📰</span>
+                            <div class="action-title">Viết tin tức</div>
+                            <div class="action-desc">Tạo bài viết mới cho website</div>
+                        </a>
+                        <a href="/admin/collections/services" class="action-card">
+                            <span class="action-icon">🚚</span>
+                            <div class="action-title">Thêm dịch vụ</div>
+                            <div class="action-desc">Cập nhật dịch vụ mới</div>
+                        </a>
+                        <a href="/admin/collections/jobs" class="action-card">
+                            <span class="action-icon">💼</span>
+                            <div class="action-title">Đăng tuyển dụng</div>
+                            <div class="action-desc">Thông báo tuyển dụng</div>
+                        </a>
+                        <a href="/admin/collections/customer-stories" class="action-card">
+                            <span class="action-icon">💬</span>
+                            <div class="action-title">Câu chuyện KH</div>
+                            <div class="action-desc">Chia sẻ feedback khách hàng</div>
+                        </a>
+                        <a href="/admin/collections/pages" class="action-card">
+                            <span class="action-icon">🏠</span>
+                            <div class="action-title">Sửa trang chính</div>
+                            <div class="action-desc">Cập nhật nội dung trang</div>
+                        </a>
+                        <a href="/admin/collections/settings" class="action-card">
+                            <span class="action-icon">⚙️</span>
+                            <div class="action-title">Cài đặt</div>
+                            <div class="action-desc">Cấu hình website</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-panel fade-in">
+                <div class="panel-header">
+                    <h2>📈 Hoạt động gần đây</h2>
+                    <p>Các thay đổi và cập nhật mới nhất</p>
+                </div>
+                <div class="panel-content">
+                    <ul class="recent-list">
+                        <li class="recent-item">
+                            <span class="recent-icon">📰</span>
+                            <div class="recent-content">
+                                <div class="recent-title">Thuế suất nhập khẩu mới 2024</div>
+                                <div class="recent-meta">Tin tức • Đã xuất bản</div>
+                            </div>
+                            <div class="recent-time">2 giờ trước</div>
+                        </li>
+                        <li class="recent-item">
+                            <span class="recent-icon">🚚</span>
+                            <div class="recent-content">
+                                <div class="recent-title">Dịch vụ nhập khẩu chính ngạch</div>
+                                <div class="recent-meta">Dịch vụ • Đã cập nhật</div>
+                            </div>
+                            <div class="recent-time">5 giờ trước</div>
+                        </li>
+                        <li class="recent-item">
+                            <span class="recent-icon">💼</span>
+                            <div class="recent-content">
+                                <div class="recent-title">Nhân viên Logistics</div>
+                                <div class="recent-meta">Tuyển dụng • Đang tuyển</div>
+                            </div>
+                            <div class="recent-time">1 ngày trước</div>
+                        </li>
+                        <li class="recent-item">
+                            <span class="recent-icon">💬</span>
+                            <div class="recent-content">
+                                <div class="recent-title">Anh Minh - ABC Company</div>
+                                <div class="recent-meta">Đánh giá 5⭐ • Đã xuất bản</div>
+                            </div>
+                            <div class="recent-time">2 ngày trước</div>
+                        </li>
+                        <li class="recent-item">
+                            <span class="recent-icon">📄</span>
+                            <div class="recent-content">
+                                <div class="recent-title">Chính sách bảo mật</div>
+                                <div class="recent-meta">Chính sách • Đã cập nhật</div>
+                            </div>
+                            <div class="recent-time">3 ngày trước</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-panel fade-in">
+            <div class="panel-header">
+                <h2>🎯 Thống kê hiệu suất</h2>
+                <p>Hiệu suất website và tương tác người dùng</p>
+            </div>
+            <div class="panel-content">
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-header">
+                            <span class="stat-icon">📊</span>
+                            <span class="stat-trend">Tháng này</span>
+                        </div>
+                        <div class="stat-number animate-count" data-count="95">0</div>
+                        <div class="stat-label">Điểm SEO trung bình</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-header">
+                            <span class="stat-icon">⚡</span>
+                            <span class="stat-trend">Tốc độ tải</span>
+                        </div>
+                        <div class="stat-number animate-count" data-count="2.3">0</div>
+                        <div class="stat-label">Giây (Rất tốt)</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-header">
+                            <span class="stat-icon">📱</span>
+                            <span class="stat-trend">Mobile</span>
+                        </div>
+                        <div class="stat-number animate-count" data-count="78">0</div>
+                        <div class="stat-label">% truy cập từ mobile</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 78%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-header">
+                            <span class="stat-icon">🔄</span>
+                            <span class="stat-trend">Bounce Rate</span>
+                        </div>
+                        <div class="stat-number animate-count" data-count="32">0</div>
+                        <div class="stat-label">% (Rất tốt)</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 68%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animate counting numbers
+        function animateCount(element) {
+            const target = parseInt(element.getAttribute('data-count'));
+            const duration = 2000;
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // Initialize animations when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate counting numbers
+            const countElements = document.querySelectorAll('.animate-count');
+            setTimeout(() => {
+                countElements.forEach(animateCount);
+            }, 500);
+
+            // Add stagger effect to fade-in elements
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((element, index) => {
+                element.style.animationDelay = `${index * 0.1}s`;
+            });
+
+            // Update time display
+            updateTimeDisplay();
+            setInterval(updateTimeDisplay, 1000);
+        });
+
+        function updateTimeDisplay() {
+            const now = new Date();
+            const timeString = now.toLocaleString('vi-VN', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            // If there's a time display element, update it
+            const timeDisplay = document.getElementById('current-time');
+            if (timeDisplay) {
+                timeDisplay.textContent = timeString;
+            }
+        }
+
+        // Add some interactivity
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html> 
