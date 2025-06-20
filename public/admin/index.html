@@ -68,6 +68,51 @@
       display: block;
     }
     
+    .auth-message {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .auth-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 40px;
+      max-width: 500px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .auth-button {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid white;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 10px;
+    }
+    
+    .auth-button:hover {
+      background: white;
+      color: #667eea;
+      transform: translateY(-2px);
+    }
+    
     /* Custom CSS cho Netlify CMS */
     .nc-app-header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
@@ -98,6 +143,26 @@
     <div class="logo">TBS GROUP</div>
     <div class="subtitle">Đang tải hệ thống quản trị...</div>
     <div class="spinner"></div>
+  </div>
+  
+  <div class="auth-message" id="authMessage" style="display: none;">
+    <div class="auth-card">
+      <div class="logo">🔐 TBS GROUP CMS</div>
+      <h3 style="margin-bottom: 20px;">Cần đăng nhập để truy cập</h3>
+      <p style="margin-bottom: 30px; opacity: 0.9;">
+        Netlify sử dụng Auth0 cho authentication.<br/>
+        Vui lòng đăng nhập để quản lý nội dung website.
+      </p>
+      <button class="auth-button" onclick="openLogin()">
+        🚀 Đăng nhập vào CMS
+      </button>
+      <button class="auth-button" onclick="openTestPage()">
+        🔧 Trang kiểm tra
+      </button>
+      <div style="margin-top: 20px; font-size: 14px; opacity: 0.8;">
+        <p>Nếu chưa có tài khoản, liên hệ admin để được invite.</p>
+      </div>
+    </div>
   </div>
   
   <div class="cms-container" id="cmsContainer">
@@ -153,51 +218,89 @@
       }
     });
     
-    // Khởi tạo CMS với cấu hình đúng
-    CMS.init({
-      config: {
-        load_config_file: true,
-        // Local backend chỉ enable khi localhost
-        local_backend: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1',
-        // Cấu hình Git Gateway cho production
-        backend: {
-          name: 'git-gateway',
-          branch: 'main'
-        }
+    function openLogin() {
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.open();
+      } else {
+        alert('Netlify Identity chưa được tải. Vui lòng thử lại sau.');
       }
-    });
+    }
     
-    // Xử lý loading screen
-    document.addEventListener('DOMContentLoaded', function() {
-      // Ẩn loading screen sau khi CMS init
-      setTimeout(function() {
-        document.getElementById('loadingScreen').style.display = 'none';
-        document.getElementById('cmsContainer').classList.add('loaded');
-      }, 2000);
-    });
+    function openTestPage() {
+      window.open('/admin/test.html', '_blank');
+    }
     
-    // Netlify Identity authentication
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
+    function hideLoading() {
+      document.getElementById('loadingScreen').style.display = 'none';
+    }
+    
+    function showAuthMessage() {
+      hideLoading();
+      document.getElementById('authMessage').style.display = 'flex';
+    }
+    
+    function hideAuthMessage() {
+      document.getElementById('authMessage').style.display = 'none';
+      document.getElementById('cmsContainer').classList.add('loaded');
+    }
+    
+    function initializeCMS() {
+      // Khởi tạo CMS với cấu hình tối ưu cho Auth0
+      CMS.init({
+        config: {
+          load_config_file: true,
+          // Local backend chỉ enable khi localhost
+          local_backend: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1',
+          // Backend configuration sẽ được load từ config.yml
         }
       });
       
-      // Auto-open identity widget on first visit
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          console.log('No user found, opening identity widget');
-        } else {
-          console.log('User authenticated:', user.user_metadata.full_name);
-        }
-      });
+      // Ẩn auth message và hiển thị CMS
+      hideAuthMessage();
     }
     
-    // Debug log
-    console.log('🎯 TBS GROUP CMS Initialized');
+    // Netlify Identity với Auth0 support
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        hideLoading();
+        
+        if (user) {
+          console.log('✅ User authenticated:', user.email);
+          initializeCMS();
+        } else {
+          console.log('❌ User not authenticated');
+          showAuthMessage();
+        }
+      });
+      
+      window.netlifyIdentity.on("login", (user) => {
+        console.log('✅ Login successful:', user.email);
+        initializeCMS();
+      });
+      
+      window.netlifyIdentity.on("logout", () => {
+        console.log('ℹ️ User logged out');
+        showAuthMessage();
+      });
+      
+      // Auth0 specific events (if available)
+      window.netlifyIdentity.on("error", (err) => {
+        console.error('❌ Auth error:', err);
+        hideLoading();
+        showAuthMessage();
+      });
+      
+    } else {
+      // Fallback nếu Identity widget không load
+      setTimeout(() => {
+        hideLoading();
+        showAuthMessage();
+        console.error('❌ Netlify Identity widget not loaded');
+      }, 3000);
+    }
+    
+    // Debug information
+    console.log('🎯 TBS GROUP CMS with Auth0 Support');
     console.log('🌐 Environment:', window.location.hostname);
     console.log('🔧 Local backend:', window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
   </script>

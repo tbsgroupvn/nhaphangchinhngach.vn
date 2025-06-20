@@ -9,6 +9,14 @@ backend:
     deleteMedia: 'Xóa "{{path}}"'
     openAuthoring: '{{message}}'
 
+# Alternative backend for Auth0 (if needed)
+# backend:
+#   name: github
+#   repo: [your-username]/[your-repo-name]
+#   branch: main
+#   base_url: https://api.netlify.com
+#   auth_endpoint: auth
+
 # Cấu hình local backend chỉ cho development
 # local_backend: true
 
@@ -28,6 +36,9 @@ editor:
 
 # Debugging - show backend status
 show_preview_links: true
+
+# Auth configuration for modern Netlify
+site_url: https://nhaphangchinhngach.vn
 
 collections:
   # Quản lý dịch vụ
