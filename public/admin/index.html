@@ -1,1053 +1,293 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex" />
-  <title>🎯 TBS GROUP - Hệ thống quản lý nội dung</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script src="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
-  <script>
-    // Backup CDN in case primary fails
-    if (typeof CMS === 'undefined') {
-      console.log('🚨 Primary CDN failed, loading backup...');
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/netlify-cms@2.10.192/dist/netlify-cms.js';
-      script.onload = () => {
-        console.log('✅ Backup CDN loaded successfully');
-        if (typeof initTBSGroupCMS === 'function') {
-          initTBSGroupCMS();
-        }
-      };
-      document.head.appendChild(script);
-    }
-  </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* 🎨 TBS GROUP CMS Custom Styling - High Specificity */
-    
-    :root {
-      --tbs-primary: #dc2626;
-      --tbs-primary-dark: #b91c1c;
-      --tbs-secondary: #2563eb;
-      --tbs-success: #16a34a;
-      --tbs-warning: #f59e0b;
-      --tbs-info: #0ea5e9;
-      --tbs-background: #fafafa;
-      --tbs-surface: #ffffff;
-      --tbs-text: #1f2937;
-      --tbs-text-secondary: #6b7280;
-      --tbs-border: #e5e7eb;
-      --tbs-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      --tbs-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
-      --tbs-radius: 12px;
-      --tbs-radius-sm: 8px;
-    }
-
-    /* Force override all NetlifyCMS styles */
-    html body * {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-    }
-
-    html body {
-      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
-      min-height: 100vh !important;
-    }
-
-    /* Header override with highest specificity */
-    html body div[class*="AppHeader"] {
-      background: linear-gradient(135deg, var(--tbs-primary) 0%, var(--tbs-primary-dark) 100%) !important;
-      box-shadow: var(--tbs-shadow-lg) !important;
-      border-bottom: none !important;
-      padding: 1rem 2rem !important;
-    }
-
-    html body div[class*="AppHeader"] h1,
-    html body div[class*="AppHeader"] * {
-      color: white !important;
-      font-weight: 700 !important;
-      font-size: 1.5rem !important;
-    }
-
-    html body div[class*="AppHeader"] h1::before {
-      content: "🎯 ";
-      font-size: 1.75rem;
-    }
-
-    /* Navigation Links */
-    html body div[class*="AppHeader"] nav a,
-    html body div[class*="AppHeader"] a {
-      color: rgba(255, 255, 255, 0.9) !important;
-      font-weight: 500 !important;
-      padding: 0.5rem 1rem !important;
-      border-radius: var(--tbs-radius-sm) !important;
-      transition: all 0.2s ease !important;
-      text-decoration: none !important;
-    }
-
-    html body div[class*="AppHeader"] nav a:hover,
-    html body div[class*="AppHeader"] a:hover {
-      background: rgba(255, 255, 255, 0.15) !important;
-      color: white !important;
-      transform: translateY(-1px) !important;
-    }
-
-    /* Sidebar override */
-    html body div[class*="SidebarContainer"],
-    html body div[class*="Sidebar"],
-    html body aside {
-      background: var(--tbs-surface) !important;
-      border-right: 1px solid var(--tbs-border) !important;
-      box-shadow: var(--tbs-shadow) !important;
-      width: 280px !important;
-    }
-
-    html body div[class*="SidebarContainer"] h2,
-    html body div[class*="Sidebar"] h2 {
-      color: var(--tbs-text) !important;
-      font-weight: 600 !important;
-      padding: 1.5rem 1.5rem 1rem !important;
-      margin: 0 !important;
-      border-bottom: 1px solid var(--tbs-border) !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 0.5rem !important;
-    }
-
-    html body div[class*="SidebarContainer"] h2::before,
-    html body div[class*="Sidebar"] h2::before {
-      content: "📚 ";
-    }
-
-    /* Collection Links */
-    html body div[class*="SidebarContainer"] ul,
-    html body div[class*="Sidebar"] ul {
-      padding: 1rem 0 !important;
-      list-style: none !important;
-    }
-
-    html body div[class*="SidebarContainer"] li,
-    html body div[class*="Sidebar"] li {
-      margin: 0.25rem 0 !important;
-    }
-
-    html body div[class*="SidebarContainer"] a,
-    html body div[class*="Sidebar"] a,
-    html body div[class*="SidebarContainer"] button,
-    html body div[class*="Sidebar"] button {
-      display: flex !important;
-      align-items: center !important;
-      padding: 0.75rem 1.5rem !important;
-      color: var(--tbs-text-secondary) !important;
-      text-decoration: none !important;
-      font-weight: 500 !important;
-      transition: all 0.2s ease !important;
-      border-radius: 0 !important;
-      position: relative !important;
-      border: none !important;
-      background: transparent !important;
-      width: 100% !important;
-      text-align: left !important;
-    }
-
-    html body div[class*="SidebarContainer"] a:hover,
-    html body div[class*="Sidebar"] a:hover,
-    html body div[class*="SidebarContainer"] button:hover,
-    html body div[class*="Sidebar"] button:hover {
-      background: linear-gradient(90deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%) !important;
-      color: var(--tbs-primary) !important;
-      padding-left: 2rem !important;
-    }
-
-    html body div[class*="SidebarContainer"] a[class*="active"],
-    html body div[class*="Sidebar"] a[class*="active"],
-    html body div[class*="SidebarContainer"] button[class*="active"],
-    html body div[class*="Sidebar"] button[class*="active"] {
-      background: linear-gradient(90deg, var(--tbs-primary) 0%, var(--tbs-primary-dark) 100%) !important;
-      color: white !important;
-      font-weight: 600 !important;
-    }
-
-    html body div[class*="SidebarContainer"] a[class*="active"]::before,
-    html body div[class*="Sidebar"] a[class*="active"]::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: white;
-      border-radius: 0 4px 4px 0;
-    }
-
-    /* Main Content Area */
-    html body div[class*="MainContent"],
-    html body main {
-      background: var(--tbs-background) !important;
-      padding: 2rem !important;
-      min-height: calc(100vh - 80px) !important;
-    }
-
-    /* Collection Header */
-    html body div[class*="CollectionTop"],
-    html body div[class*="collection-top"] {
-      background: var(--tbs-surface) !important;
-      padding: 2rem !important;
-      border-radius: var(--tbs-radius) !important;
-      box-shadow: var(--tbs-shadow) !important;
-      margin-bottom: 2rem !important;
-      border: 1px solid var(--tbs-border) !important;
-    }
-
-    html body div[class*="CollectionTop"] h1,
-    html body div[class*="collection-top"] h1 {
-      color: var(--tbs-text) !important;
-      font-weight: 700 !important;
-      font-size: 2rem !important;
-      margin-bottom: 0.5rem !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 1rem !important;
-    }
-
-    /* Buttons */
-    html body button:not([class*="Sidebar"]):not([class*="SidebarContainer"]),
-    html body .btn,
-    html body [role="button"]:not([class*="Sidebar"]):not([class*="SidebarContainer"]),
-    html body input[type="submit"],
-    html body div[class*="Button"] {
-      background: linear-gradient(135deg, var(--tbs-primary) 0%, var(--tbs-primary-dark) 100%) !important;
-      color: white !important;
-      border: none !important;
-      padding: 0.75rem 1.5rem !important;
-      border-radius: var(--tbs-radius-sm) !important;
-      font-weight: 600 !important;
-      transition: all 0.2s ease !important;
-      cursor: pointer !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 0.5rem !important;
-    }
-
-    html body button:not([class*="Sidebar"]):not([class*="SidebarContainer"]):hover,
-    html body .btn:hover,
-    html body [role="button"]:not([class*="Sidebar"]):not([class*="SidebarContainer"]):hover {
-      transform: translateY(-2px) !important;
-      box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3) !important;
-    }
-
-    /* Cards */
-    html body div[class*="Card"],
-    html body div[class*="card"],
-    html body div[class*="EntryCard"] {
-      background: var(--tbs-surface) !important;
-      border-radius: var(--tbs-radius) !important;
-      box-shadow: var(--tbs-shadow) !important;
-      border: 1px solid var(--tbs-border) !important;
-      padding: 1.5rem !important;
-      margin-bottom: 1rem !important;
-      transition: all 0.2s ease !important;
-    }
-
-    html body div[class*="Card"]:hover,
-    html body div[class*="card"]:hover,
-    html body div[class*="EntryCard"]:hover {
-      transform: translateY(-2px) !important;
-      box-shadow: var(--tbs-shadow-lg) !important;
-    }
-
-    /* Forms */
-    html body input:not([type="submit"]),
-    html body textarea,
-    html body select {
-      border: 1px solid var(--tbs-border) !important;
-      border-radius: var(--tbs-radius-sm) !important;
-      padding: 0.75rem !important;
-      font-size: 1rem !important;
-      transition: all 0.2s ease !important;
-      background: var(--tbs-surface) !important;
-    }
-
-    html body input:not([type="submit"]):focus,
-    html body textarea:focus,
-    html body select:focus {
-      outline: none !important;
-      border-color: var(--tbs-primary) !important;
-      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
-    }
-
-    /* Labels */
-    html body label {
-      color: var(--tbs-text) !important;
-      font-weight: 600 !important;
-      margin-bottom: 0.5rem !important;
-      display: block !important;
-    }
-
-    /* Welcome Message */
-    .tbs-welcome-banner {
-      background: linear-gradient(135deg, var(--tbs-info) 0%, var(--tbs-secondary) 100%) !important;
-      color: white !important;
-      padding: 2rem !important;
-      border-radius: var(--tbs-radius) !important;
-      margin-bottom: 2rem !important;
-      text-align: center !important;
-      box-shadow: var(--tbs-shadow-lg) !important;
-    }
-
-    .tbs-welcome-banner h2 {
-      font-size: 1.75rem !important;
-      font-weight: 700 !important;
-      margin-bottom: 0.5rem !important;
-    }
-
-    .tbs-welcome-banner p {
-      font-size: 1.1rem !important;
-      opacity: 0.9 !important;
-      margin: 0 !important;
-    }
-
-    /* Loading States */
-    html body div[class*="Loading"],
-    html body div[class*="loading"] {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      padding: 3rem !important;
-      color: var(--tbs-text-secondary) !important;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .fade-in {
-      animation: fadeIn 0.5s ease forwards !important;
-    }
-
-    /* Custom Scrollbar */
-    html body *::-webkit-scrollbar {
-      width: 8px !important;
-    }
-
-    html body *::-webkit-scrollbar-track {
-      background: var(--tbs-background) !important;
-    }
-
-    html body *::-webkit-scrollbar-thumb {
-      background: var(--tbs-border) !important;
-      border-radius: 4px !important;
-    }
-
-    html body *::-webkit-scrollbar-thumb:hover {
-      background: var(--tbs-text-secondary) !important;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      html body div[class*="SidebarContainer"],
-      html body div[class*="Sidebar"] {
-        width: 100% !important;
-        position: fixed !important;
-        z-index: 1000 !important;
-        transform: translateX(-100%) !important;
-        transition: transform 0.3s ease !important;
-      }
-
-      html body div[class*="MainContent"],
-      html body main {
-        padding: 1rem !important;
-      }
-    }
-  </style>
-</head>
-<body>
-  <!-- Welcome Banner -->
-  <div id="tbs-welcome-banner" class="tbs-welcome-banner" style="display: none;">
-    <h2>🎯 Chào mừng đến với TBS GROUP CMS</h2>
-    <p>Hệ thống quản lý nội dung chuyên nghiệp cho dịch vụ xuất nhập khẩu</p>
-  </div>
-  
-  <!-- NetlifyCMS App -->
-  <div id="nc-root"></div>
-  
-  <script>
-    // 🎯 TBS GROUP CMS - Aggressive Custom Styling Injection
-    
-    function injectTBSGroupStyling() {
-      // Remove any existing custom styles
-      const existingStyle = document.getElementById('tbs-custom-styles');
-      if (existingStyle) {
-        existingStyle.remove();
-      }
-
-      // Create new style element
-      const style = document.createElement('style');
-      style.id = 'tbs-custom-styles';
-      style.innerHTML = `
-        /* 🎨 TBS GROUP Custom Styling - Aggressive Override */
-        
-        :root {
-          --tbs-primary: #dc2626 !important;
-          --tbs-primary-dark: #b91c1c !important;
-          --tbs-secondary: #2563eb !important;
-          --tbs-success: #16a34a !important;
-          --tbs-warning: #f59e0b !important;
-          --tbs-info: #0ea5e9 !important;
-          --tbs-background: #fafafa !important;
-          --tbs-surface: #ffffff !important;
-          --tbs-text: #1f2937 !important;
-          --tbs-text-secondary: #6b7280 !important;
-          --tbs-border: #e5e7eb !important;
-          --tbs-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-          --tbs-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
-          --tbs-radius: 12px !important;
-          --tbs-radius-sm: 8px !important;
-        }
-
-        /* Force font family on everything */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>🎯 TBS GROUP - Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
         * {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* Body override */
         body {
-          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
-          min-height: 100vh !important;
-          margin: 0 !important;
-          padding: 0 !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        /* Welcome message */
-        .tbs-welcome {
-          position: fixed !important;
-          top: 20px !important;
-          right: 20px !important;
-          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
-          color: white !important;
-          padding: 1rem 2rem !important;
-          border-radius: 12px !important;
-          box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3) !important;
-          z-index: 9999 !important;
-          font-weight: 600 !important;
-          animation: slideIn 0.5s ease !important;
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes slideIn {
-          from { transform: translateX(100%); opacity: 0; }
-          to { transform: translateX(0); opacity: 1; }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #dc2626, #f59e0b, #16a34a, #2563eb);
         }
 
-        /* Hide default welcome and replace with ours */
-        .tbs-welcome::before {
-          content: "🎯 ";
-          font-size: 1.2em;
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
         }
-      `;
 
-      // Inject into head with highest priority
-      document.head.appendChild(style);
-      console.log('🎯 TBS GROUP base styles injected');
-    }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
 
-    function applyAdvancedStyling() {
-      console.log('🎨 Starting advanced styling application...');
-      
-      // Apply to all possible header selectors
-      const headerSelectors = [
-        '[class*="AppHeader"]',
-        '[class*="app-header"]', 
-        'header',
-        '.cms-app-header',
-        '#cms-app-header'
-      ];
+        h1 {
+            color: #1f2937;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
 
-      headerSelectors.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(element => {
-          if (element) {
-            element.style.cssText = `
-              background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
-              color: white !important;
-              padding: 1rem 2rem !important;
-              box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
-              border-bottom: none !important;
-              position: relative !important;
-              z-index: 100 !important;
-            `;
-            
-            // Add logo/icon
-            const h1 = element.querySelector('h1');
-            if (h1 && !h1.querySelector('.tbs-icon')) {
-              const icon = document.createElement('span');
-              icon.className = 'tbs-icon';
-              icon.innerHTML = '🎯 ';
-              icon.style.cssText = 'font-size: 1.5em; margin-right: 0.5rem;';
-              h1.insertBefore(icon, h1.firstChild);
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .redirect-info {
+            background: #f3f4f6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #dc2626;
+        }
+
+        .redirect-info h3 {
+            color: #dc2626;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .redirect-info p {
+            color: #4b5563;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #dc2626, #b91c1c);
+            border-radius: 3px;
+            animation: progress 3s ease-out forwards;
+        }
+
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        .countdown {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .features {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .features h4 {
+            color: #1f2937;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .feature-list {
+            display: grid;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-item::before {
+            content: '✅';
+            font-size: 0.8rem;
+        }
+
+        .loading-dots {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .loading-dots span {
+            width: 6px;
+            height: 6px;
+            background: #dc2626;
+            border-radius: 50%;
+            animation: loading 1.4s infinite ease-in-out;
+        }
+
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes loading {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 2rem 1.5rem;
             }
             
-            console.log('✅ Header styled:', selector);
-          }
-        });
-      });
-
-      // Apply to sidebar
-      const sidebarSelectors = [
-        '[class*="Sidebar"]',
-        '[class*="sidebar"]',
-        'aside',
-        'nav[class*="sidebar"]'
-      ];
-
-      sidebarSelectors.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(element => {
-          if (element) {
-            element.style.cssText = `
-              background: white !important;
-              border-right: 1px solid #e5e7eb !important;
-              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-              width: 280px !important;
-            `;
-
-            // Style sidebar links
-            const links = element.querySelectorAll('a, button');
-            links.forEach(link => {
-              link.style.cssText = `
-                color: #6b7280 !important;
-                padding: 0.75rem 1.5rem !important;
-                transition: all 0.2s ease !important;
-                border-radius: 0 !important;
-                text-decoration: none !important;
-                border: none !important;
-                background: transparent !important;
-                width: 100% !important;
-                text-align: left !important;
-                display: flex !important;
-                align-items: center !important;
-              `;
-
-              link.addEventListener('mouseenter', () => {
-                link.style.cssText += `
-                  background: linear-gradient(90deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%) !important;
-                  color: #dc2626 !important;
-                  padding-left: 2rem !important;
-                `;
-              });
-
-              link.addEventListener('mouseleave', () => {
-                link.style.paddingLeft = '1.5rem !important';
-                if (!link.classList.contains('active')) {
-                  link.style.background = 'transparent !important';
-                  link.style.color = '#6b7280 !important';
-                }
-              });
-            });
-
-            console.log('✅ Sidebar styled:', selector);
-          }
-        });
-      });
-
-      // Apply to main content
-      const mainSelectors = [
-        '[class*="MainContent"]',
-        '[class*="main-content"]',
-        'main',
-        '.main'
-      ];
-
-      mainSelectors.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(element => {
-          if (element) {
-            element.style.cssText = `
-              background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
-              padding: 2rem !important;
-              min-height: calc(100vh - 80px) !important;
-            `;
-            console.log('✅ Main content styled:', selector);
-          }
-        });
-      });
-
-      // Style buttons
-      const buttons = document.querySelectorAll('button:not([class*="sidebar"]):not([class*="Sidebar"])');
-      buttons.forEach(button => {
-        // Skip sidebar buttons
-        const isInSidebar = button.closest('[class*="sidebar"], [class*="Sidebar"], aside');
-        if (!isInSidebar && !button.classList.contains('tbs-styled')) {
-          button.classList.add('tbs-styled');
-          button.style.cssText = `
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
-            color: white !important;
-            border: none !important;
-            padding: 0.75rem 1.5rem !important;
-            border-radius: 8px !important;
-            font-weight: 600 !important;
-            cursor: pointer !important;
-            transition: all 0.2s ease !important;
-          `;
-
-          button.addEventListener('mouseenter', () => {
-            button.style.transform = 'translateY(-2px) !important';
-            button.style.boxShadow = '0 8px 25px rgba(220, 38, 38, 0.3) !important';
-          });
-
-          button.addEventListener('mouseleave', () => {
-            button.style.transform = 'translateY(0) !important';
-            button.style.boxShadow = 'none !important';
-          });
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .logo {
+                font-size: 3rem;
+            }
         }
-      });
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🎯</div>
+        <h1>TBS GROUP Admin Panel</h1>
+        <p class="subtitle">
+            Chào mừng đến với hệ thống quản lý nội dung mới!<br>
+            <strong>NetlifyCMS đã được thay thế bằng Admin Panel tùy chỉnh</strong>
+        </p>
 
-      console.log('🎯 Advanced styling completed');
-    }
+        <div class="redirect-info">
+            <h3>🚀 Đang chuyển hướng</h3>
+            <p>Bạn đang được chuyển đến giao diện quản trị mới với nhiều tính năng hiện đại và thân thiện hơn.</p>
+        </div>
 
-    function showWelcomeMessage() {
-      // Remove existing welcome
-      const existing = document.querySelector('.tbs-welcome');
-      if (existing) existing.remove();
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
 
-      // Create welcome message
-      const welcome = document.createElement('div');
-      welcome.className = 'tbs-welcome';
-      welcome.innerHTML = 'TBS GROUP CMS Ready!';
-      document.body.appendChild(welcome);
-
-      // Remove after 3 seconds
-      setTimeout(() => {
-        if (welcome.parentNode) {
-          welcome.remove();
-        }
-      }, 3000);
-    }
-
-    // Multi-stage initialization
-    function initTBSGroupCMS() {
-      console.log('🚀 Initializing TBS GROUP CMS...');
-      
-      // Stage 1: Inject base styles immediately
-      injectTBSGroupStyling();
-      
-      // Stage 2: Wait for CMS to start loading
-      setTimeout(() => {
-        applyAdvancedStyling();
-        showWelcomeMessage();
-      }, 1000);
-
-      // Stage 3: Re-apply after CMS fully loads
-      setTimeout(() => {
-        applyAdvancedStyling();
-        console.log('🎯 Final styling pass completed');
-      }, 3000);
-
-      // Stage 4: Continuous monitoring
-      const observer = new MutationObserver(() => {
-        applyAdvancedStyling();
-      });
-
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-
-      // Stop observing after 10 seconds
-      setTimeout(() => {
-        observer.disconnect();
-        console.log('🎯 Styling observer stopped');
-      }, 10000);
-    }
-
-    // Vietnamese localization - will be called when CMS is ready
-    function registerVietnameseLocale() {
-      if (typeof CMS === 'undefined') {
-        console.log('⚠️ CMS not available for locale registration');
-        return false;
-      }
-      
-    CMS.registerLocale('vi', {
-      app: {
-        header: {
-          content: 'Nội dung',
-          workflow: 'Quy trình duyệt',
-          media: 'Thư viện ảnh',
-          quickAdd: 'Thêm nhanh',
-          settings: 'Cài đặt',
-          search: 'Tìm kiếm'
-        }
-      },
-      collection: {
-        sidebar: {
-          collections: 'Danh mục quản lý',
-          allCollections: 'Tất cả danh mục',
-          searchAll: 'Tìm kiếm toàn bộ',
-          searchResults: 'Kết quả tìm kiếm'
-        },
-        collectionTop: {
-          sortBy: 'Sắp xếp theo',
-          viewAs: 'Xem dạng',
-          newButton: 'Tạo {{collectionLabel}}',
-          ascending: 'Tăng dần',
-          descending: 'Giảm dần',
-          searchResults: 'Kết quả tìm "{{searchTerm}}"',
-          searchResultsInCollection: 'Kết quả tìm "{{searchTerm}}" trong {{collection}}'
-        },
-        entries: {
-          loadingEntries: 'Đang tải nội dung...',
-          cachingEntries: 'Đang lưu cache...',
-          longerLoading: 'Quá trình này có thể mất vài phút',
-          noEntries: 'Chưa có nội dung nào'
-        }
-      },
-      editor: {
-        editorControl: {
-          field: {
-            optional: 'không bắt buộc'
-          }
-        },
-        editorControlPane: {
-          widget: {
-            headingOneTitle: 'Tiêu đề 1',
-            headingTwoTitle: 'Tiêu đề 2',
-            headingThreeTitle: 'Tiêu đề 3',
-            headingFourTitle: 'Tiêu đề 4',
-            headingFiveTitle: 'Tiêu đề 5',
-            headingSixTitle: 'Tiêu đề 6',
-            bold: 'In đậm',
-            italic: 'In nghiêng',
-            strikethrough: 'Gạch ngang',
-            code: 'Mã code',
-            link: 'Chèn liên kết',
-            linkPrompt: 'Nhập URL của liên kết',
-            linkTooltip: 'Thêm liên kết',
-            bullist: 'Danh sách dấu đầu dòng',
-            numlist: 'Danh sách đánh số',
-            addComponent: 'Thêm thành phần',
-            richText: 'Soạn thảo văn bản',
-            markdown: 'Markdown',
-            quote: 'Trích dẫn',
-            image: 'Chèn ảnh',
-            table: 'Tạo bảng'
-          }
-        },
-        editor: {
-          onLeavePage: 'Bạn có chắc muốn rời khỏi trang này?',
-          onUpdatingWithUnsavedChanges: 'Bạn có thay đổi chưa lưu, vui lòng lưu trước khi cập nhật trạng thái.',
-          onPublishingNotReady: 'Vui lòng giải quyết các vấn đề trước khi xuất bản.',
-          onPublishingWithUnsavedChanges: 'Bạn có thay đổi chưa lưu, vui lòng lưu trước khi xuất bản.',
-          onPublishing: 'Bạn có chắc muốn xuất bản?',
-          onUnpublishing: 'Bạn có chắc muốn hủy xuất bản?',
-          onDeleteWithUnsavedChanges: 'Bạn có chắc muốn xóa mục này cùng với các thay đổi chưa lưu?',
-          onDeletePublishedEntry: 'Bạn có chắc muốn xóa mục đã xuất bản này?',
-          onDeleteUnpublishedChangesWithUnsavedChanges: 'Điều này sẽ xóa tất cả thay đổi chưa xuất bản của mục này, cũng như các thay đổi chưa lưu hiện tại. Bạn vẫn muốn xóa?',
-          onDeleteUnpublishedChanges: 'Tất cả thay đổi chưa xuất bản của mục này sẽ bị xóa. Bạn vẫn muốn xóa?',
-          loadingEntry: 'Đang tải...',
-          confirmLoadBackup: 'Phát hiện bản backup cho mục này, bạn có muốn sử dụng không?'
-        },
-        editorInterface: {
-          toggleI18n: 'Chuyển đổi ngôn ngữ',
-          togglePreview: 'Xem trước',
-          toggleScrollSync: 'Đồng bộ cuộn trang'
-        },
-        editorToolbar: {
-          publishing: 'Đang xuất bản...',
-          publish: 'Xuất bản',
-          published: 'Đã xuất bản',
-          unpublish: 'Hủy xuất bản',
-          duplicate: 'Nhân bản',
-          unpublishing: 'Đang hủy xuất bản...',
-          publishAndCreateNew: 'Xuất bản và tạo mới',
-          deleteUnpublishedChanges: 'Xóa thay đổi chưa xuất bản',
-          deleteUnpublishedEntry: 'Xóa mục chưa xuất bản',
-          deletePublishedEntry: 'Xóa mục đã xuất bản',
-          deleteEntry: 'Xóa',
-          saving: 'Đang lưu...',
-          save: 'Lưu',
-          deleting: 'Đang xóa...',
-          updating: 'Đang cập nhật...',
-          status: 'Trạng thái: {{status}}',
-          backCollection: '← Quay lại {{collectionLabel}}',
-          unsavedChanges: 'Thay đổi chưa lưu',
-          changesSaved: 'Đã lưu thay đổi',
-          draft: 'Bản nháp',
-          inReview: 'Đang review',
-          ready: 'Sẵn sàng',
-          publishNow: 'Xuất bản ngay',
-          deployPreviewPending: 'Đang chuẩn bị xem trước',
-          deployPreviewReady: 'Xem trước sẵn sàng',
-          deployButtonLabel: 'Xem trực tiếp'
-        },
-        editorWidgets: {
-          markdown: {
-            bold: 'In đậm',
-            italic: 'In nghiêng',
-            code: 'Code',
-            link: 'Liên kết',
-            linkPrompt: 'Nhập URL',
-            headings: 'Tiêu đề',
-            quote: 'Trích dẫn',
-            bullist: 'Danh sách',
-            numlist: 'Danh sách số',
-            addComponent: 'Thêm thành phần'
-          },
-          image: {
-            choose: 'Chọn ảnh',
-            chooseUrl: 'Chèn từ URL',
-            replaceUrl: 'Thay thế bằng URL',
-            promptUrl: 'Nhập URL của ảnh',
-            chooseDifferent: 'Chọn ảnh khác',
-            remove: 'Xóa ảnh'
-          },
-          file: {
-            choose: 'Chọn file',
-            chooseUrl: 'Chèn từ URL',
-            replaceUrl: 'Thay thế bằng URL',
-            promptUrl: 'Nhập URL của file',
-            chooseDifferent: 'Chọn file khác',
-            remove: 'Xóa file'
-          },
-          unknownControl: {
-            noControl: "Không có control cho widget '{{widget}}'."
-          },
-          unknownPreview: {
-            noPreview: "Không có preview cho widget '{{widget}}'."
-          },
-          headingOptions: {
-            headingOne: 'Tiêu đề 1',
-            headingTwo: 'Tiêu đề 2',
-            headingThree: 'Tiêu đề 3',
-            headingFour: 'Tiêu đề 4',
-            headingFive: 'Tiêu đề 5',
-            headingSix: 'Tiêu đề 6'
-          },
-          datetime: {
-            now: 'Bây giờ',
-            invalidDateTitle: 'Ngày không hợp lệ',
-            invalidDateBody: 'Ngày bạn nhập không hợp lệ.'
-          },
-          list: {
-            add: '+ Thêm {{item}}',
-            addType: '+ Thêm {{item}}',
-            noValue: 'Chưa có giá trị nào'
-          },
-          keyvalue: {
-            uniqueKeys: 'Keys phải là duy nhất'
-          },
-          code: {
-            language: 'Ngôn ngữ',
-            selectLanguage: 'Chọn ngôn ngữ'
-          }
-        }
-      },
-      mediaLibrary: {
-        mediaLibraryCard: {
-          draft: 'Bản nháp',
-          copy: 'Sao chép',
-          copyUrl: 'Sao chép URL',
-          copyPath: 'Sao chép đường dẫn',
-          copyName: 'Sao chép tên',
-          copied: 'Đã sao chép'
-        },
-        mediaLibrary: {
-          onDelete: 'Bạn có chắc muốn xóa media đã chọn?',
-          fileTooLarge: 'File quá lớn.\nCấu hình không cho phép file lớn hơn {{size}} kB.',
-          alreadyExists: 'File đã tồn tại. Bạn có muốn thay thế không?'
-        },
-        mediaLibraryModal: {
-          loading: 'Đang tải...',
-          noResults: 'Không có kết quả.',
-          noAssetsFound: 'Không tìm thấy media nào.',
-          noImagesFound: 'Không tìm thấy ảnh nào.',
-          images: 'Ảnh',
-          mediaAssets: 'Media',
-          search: 'Tìm kiếm...',
-          uploading: 'Đang tải lên...',
-          upload: 'Tải lên',
-          download: 'Tải xuống',
-          deleting: 'Đang xóa...',
-          deleteSelected: 'Xóa đã chọn',
-          chooseSelected: 'Chọn đã chọn'
-        }
-      },
-      ui: {
-        default: {
-          goBackToSite: 'Quay lại website',
-          errorHeader: 'Lỗi khi tải CMS',
-          errorDetails: 'Đã xảy ra lỗi - vui lòng kiểm tra console để biết chi tiết.',
-          errorBoundaryHeader: 'Lỗi CMS',
-          errorBoundaryDetails: 'Đã xảy ra lỗi - vui lòng '
-        },
-        errorBoundary: {
-          title: 'Lỗi',
-          details: 'Đã xảy ra lỗi - vui lòng ',
-          reportIt: 'báo cáo trên GitHub.',
-          detailsHeading: 'Chi tiết',
-          privacyWarning: 'Mở issue sẽ tự động điền thông tin lỗi và debug.\nVui lòng xác minh thông tin là chính xác và xóa dữ liệu nhạy cảm nếu có.',
-          recoveredEntry: {
-            heading: 'Tài liệu đã khôi phục',
-            warning: 'Vui lòng copy/paste nội dung này ở nơi khác trước khi điều hướng đi!',
-            copyButtonLabel: 'Sao chép vào clipboard'
-          }
-        },
-        settingsDropdown: {
-          logOut: 'Đăng xuất'
-        },
-        toast: {
-          onFailToLoadEntries: 'Không thể tải mục: {{details}}',
-          onFailToLoadDeployPreview: 'Không thể tải preview: {{details}}',
-          onFailToPersist: 'Không thể lưu mục: {{details}}',
-          onFailToDelete: 'Không thể xóa mục: {{details}}',
-          onFailToUpdateStatus: 'Không thể cập nhật trạng thái: {{details}}',
-          missingRequiredField: 'Bạn đã bỏ qua trường bắt buộc. Vui lòng điền đầy đủ trước khi lưu.',
-          entrySaved: 'Đã lưu mục',
-          entryPublished: 'Đã xuất bản mục',
-          entryUnpublished: 'Đã hủy xuất bản mục',
-          onFailToPublishEntry: 'Không thể xuất bản: {{details}}',
-          onFailToUnpublishEntry: 'Không thể hủy xuất bản: {{details}}',
-          entryUpdated: 'Đã cập nhật trạng thái mục',
-          onDeleteUnpublishedChanges: 'Đã xóa thay đổi chưa xuất bản',
-          onFailToAuth: 'Lỗi xác thực: {{details}}',
-          onLoggedOut: 'Bạn đã đăng xuất, vui lòng backup dữ liệu và đăng nhập lại',
-          onBackendDown: 'Backend đang gặp sự cố. Xem {{details}} để biết thêm thông tin'
-        }
-      },
-      workflow: {
-        workflow: {
-          loading: 'Đang tải mục Editorial Workflow',
-          workflowHeading: 'Editorial Workflow',
-          newPost: 'Bài viết mới',
-          description: 'Số lượng mục đang chờ review.',
-          dateFormat: 'MMMM D',
-          dateFormatCardHeader: 'MMM D'
-        },
-        workflowCard: {
-          lastChange: 'Thay đổi cuối {{date}} bởi {{author}}',
-          lastChangeNoAuthor: 'Thay đổi cuối {{date}}',
-          lastChangeNoDate: 'Thay đổi cuối bởi {{author}}',
-          deleteChanges: 'Xóa thay đổi',
-          deleteNewEntry: 'Xóa mục mới',
-          publishChanges: 'Xuất bản thay đổi',
-          publishNewEntry: 'Xuất bản mục mới'
-        },
-        workflowList: {
-          onDeleteEntry: 'Bạn có chắc muốn xóa mục này?',
-          onPublishingNotReadyEntry: 'Chỉ có thể xuất bản mục có trạng thái "Sẵn sàng". Vui lòng kéo thẻ vào cột "Sẵn sàng" để enable xuất bản.',
-          onPublishEntry: 'Bạn có chắc muốn xuất bản mục này?',
-          draftHeader: 'Bản nháp',
-          inReviewHeader: 'Đang Review',
-          readyHeader: 'Sẵn sàng',
-          currentEntries: '{{smart_count}} mục |||| {{smart_count}} mục'
-        }
-      }
-    });
-    
-    return true;
-  }
-
-  // Safe CMS Initialization
-  function initializeCMS() {
-    if (typeof CMS === 'undefined') {
-      console.log('❌ CMS not loaded, cannot initialize');
-      return false;
-    }
-    
-    console.log('✅ CMS available, initializing...');
-    
-    // Register Vietnamese locale
-    if (registerVietnameseLocale()) {
-      console.log('✅ Vietnamese locale registered');
-    }
-    
-    // Initialize CMS
-    try {
-      CMS.init();
-      console.log('✅ CMS initialized successfully');
-      return true;
-    } catch (error) {
-      console.error('❌ CMS initialization failed:', error);
-      return false;
-    }
-  }
-
-  // Wait for CMS to be available and then initialize
-  function waitForCMSAndInit() {
-    let attempts = 0;
-    const maxAttempts = 10;
-    
-    const checkCMS = () => {
-      attempts++;
-      console.log(`🔄 Checking CMS availability (attempt ${attempts}/${maxAttempts})`);
-      
-      if (typeof CMS !== 'undefined') {
-        console.log('✅ CMS detected, initializing...');
-        if (initializeCMS()) {
-          // Apply custom styling after CMS is ready
-          setTimeout(initTBSGroupCMS, 1000);
-        }
-      } else if (attempts < maxAttempts) {
-        console.log('⏳ CMS not ready, retrying in 500ms...');
-        setTimeout(checkCMS, 500);
-      } else {
-        console.error('❌ CMS failed to load after maximum attempts');
-        // Show error message to user
-        document.body.innerHTML = `
-          <div style="
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            background: #f8fafc; 
-            font-family: system-ui, sans-serif;
-            text-align: center;
-            padding: 2rem;
-          ">
-            <div style="
-              background: white; 
-              padding: 2rem; 
-              border-radius: 12px; 
-              box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-              max-width: 500px;
-            ">
-              <h2 style="color: #dc2626; margin-bottom: 1rem;">🚨 CMS Loading Failed</h2>
-              <p style="color: #6b7280; margin-bottom: 2rem;">
-                NetlifyCMS failed to load. This might be due to network issues or CDN problems.
-              </p>
-              <button onclick="location.reload()" style="
-                background: #dc2626; 
-                color: white; 
-                border: none; 
-                padding: 0.75rem 1.5rem; 
-                border-radius: 8px; 
-                cursor: pointer;
-                font-weight: 600;
-              ">
-                🔄 Reload Page
-              </button>
-              <br><br>
-              <a href="/admin/emergency-debug.html" style="
-                color: #2563eb; 
-                text-decoration: none;
-                font-weight: 500;
-              ">
-                🔧 Go to Debug Center
-              </a>
+        <div class="countdown">
+            Chuyển hướng sau <span id="countdown">3</span> giây
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-          </div>
-        `;
-      }
-    };
-    
-    checkCMS();
-  }
+        </div>
 
-  // Start the initialization process
-  document.addEventListener('DOMContentLoaded', waitForCMSAndInit);
-  
-  // Also try after a short delay in case DOMContentLoaded already fired
-  setTimeout(waitForCMSAndInit, 100);
-  </script>
+        <a href="/admin/dashboard" class="btn" id="redirect-btn">
+            ⚡ Truy cập ngay Admin Panel mới
+        </a>
+
+        <div class="features">
+            <h4>🎉 Tính năng mới</h4>
+            <div class="feature-list">
+                <div class="feature-item">Giao diện Vietnamese hoàn toàn</div>
+                <div class="feature-item">Dashboard thống kê real-time</div>
+                <div class="feature-item">AI Assistant tạo nội dung</div>
+                <div class="feature-item">Quản lý media drag & drop</div>
+                <div class="feature-item">Popup marketing thông minh</div>
+                <div class="feature-item">Mobile responsive design</div>
+                <div class="feature-item">TBS GROUP branding</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto redirect after 3 seconds
+        let countdown = 3;
+        const countdownElement = document.getElementById('countdown');
+        
+        const timer = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.location.href = '/admin/dashboard';
+            }
+        }, 1000);
+
+        // Immediate redirect if user clicks button
+        document.getElementById('redirect-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            clearInterval(timer);
+            window.location.href = '/admin/dashboard';
+        });
+
+        // Auto redirect if user doesn't interact
+        setTimeout(() => {
+            window.location.href = '/admin/dashboard';
+        }, 3000);
+
+        // Add some visual effects
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🎯 TBS GROUP Admin - NetlifyCMS được thay thế bởi Custom Admin Panel');
+            console.log('🚀 Redirecting to /admin/dashboard...');
+        });
+    </script>
 </body>
 </html> 
