@@ -1,6 +1,6 @@
 # Netlify Build Configuration for Next.js
 [build]
-  command = "npm run build"
+  command = "npm ci && npm run build"
   publish = ".next"
 
 # Netlify Next.js plugin
@@ -20,7 +20,7 @@
 [build.environment]
   NODE_VERSION = "18"
   NEXT_RUNTIME = "nodejs18.x"
-  NPM_FLAGS = "--prefer-offline"
+  NPM_FLAGS = "--production=false"
   NODE_OPTIONS = "--max-old-space-size=4096"
 
 # Functions configuration
@@ -77,4 +77,4 @@
 
 # Branch deploy context
 [context.branch-deploy]
-  command = "npm run build" 
+  command = "npm ci && npm run build" 
