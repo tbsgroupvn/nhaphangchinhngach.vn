@@ -12,12 +12,38 @@ import {
 import SyncStatus from './sync-status';
 
 interface DashboardStats {
+  totalServices: number;
   totalPosts: number;
   publishedPosts: number;
   draftPosts: number;
-  totalServices: number;
-  totalViews: number;
-  activePopups: number;
+  totalCustomerStories: number;
+  totalJobs: number;
+  totalPages: number;
+  totalContent: number;
+  contentByCategory: {
+    services: number;
+    news: number;
+    guides: number;
+    customerStories: number;
+    jobs: number;
+    pages: number;
+  };
+  recentActivity: Array<{
+    title: string;
+    date: string;
+    type: string;
+  }>;
+  popularContent: Array<{
+    title: string;
+    type: string;
+    slug: string;
+    views: number;
+  }>;
+  websiteHealth: {
+    totalFiles: number;
+    lastUpdated: string;
+    contentStatus: string;
+  };
 }
 
 interface TrafficData {
@@ -26,78 +52,142 @@ interface TrafficData {
   visitors: number;
 }
 
-interface PopularContent {
-  title: string;
-  views: number;
-  type: 'service' | 'news' | 'guide';
-}
-
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<DashboardStats>({
-    totalPosts: 0,
-    publishedPosts: 0,
-    draftPosts: 0,
-    totalServices: 0,
-    totalViews: 0,
-    activePopups: 0
-  });
-
+  const [stats, setStats] = useState<DashboardStats | null>(null);
   const [trafficData, setTrafficData] = useState<TrafficData[]>([]);
-  const [popularContent, setPopularContent] = useState<PopularContent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock data - Replace with real API calls
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setStats({
-        totalPosts: 156,
-        publishedPosts: 142,
-        draftPosts: 14,
-        totalServices: 8,
-        totalViews: 25847,
-        activePopups: 2
-      });
-
-      setTrafficData([
-        { date: '20/12', views: 1240, visitors: 980 },
-        { date: '21/12', views: 1380, visitors: 1100 },
-        { date: '22/12', views: 1180, visitors: 920 },
-        { date: '23/12', views: 1520, visitors: 1200 },
-        { date: '24/12', views: 1680, visitors: 1350 },
-        { date: '25/12', views: 1420, visitors: 1180 },
-        { date: '26/12', views: 1750, visitors: 1420 }
-      ]);
-
-      setPopularContent([
-        { title: 'Dịch vụ nhập khẩu chính ngạch từ Trung Quốc', views: 2840, type: 'service' },
-        { title: 'Thuế suất nhập khẩu mới 2024', views: 2156, type: 'news' },
-        { title: 'Cẩm nang xuất nhập khẩu cho người mới', views: 1890, type: 'guide' },
-        { title: 'Vận chuyển đường biển tiết kiệm', views: 1654, type: 'service' },
-        { title: 'Thủ tục hải quan nhanh chóng', views: 1432, type: 'guide' }
-      ]);
-
-      setLoading(false);
-    }, 1000);
+    fetchRealStats();
+    generateTrafficData(); // Keep mock traffic data for now
   }, []);
 
-  const categoryData = [
-    { name: 'Dịch vụ', value: 45, color: '#dc2626' },
-    { name: 'Tin tức', value: 30, color: '#2563eb' },
-    { name: 'Cẩm nang', value: 20, color: '#16a34a' },
-    { name: 'Khách hàng', value: 15, color: '#f59e0b' }
-  ];
+  const fetchRealStats = async () => {
+    try {
+      const response = await fetch('/api/admin/stats');
+      const result = await response.json();
+      
+      if (result.success) {
+        setStats(result.data);
+      } else {
+        setError('Failed to fetch statistics');
+      }
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+      setError('Error loading dashboard data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const generateTrafficData = () => {
+    // Generate realistic traffic data for last 7 days
+    const data = [];
+    const today = new Date();
+    
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      
+      // Base traffic with some variation
+      const baseViews = 800 + Math.floor(Math.random() * 400);
+      const baseVisitors = Math.floor(baseViews * 0.7);
+      
+      data.push({
+        date: date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' }),
+        views: baseViews,
+        visitors: baseVisitors
+      });
+    }
+    
+    setTrafficData(data);
+  };
+
+  const getCategoryData = () => {
+    if (!stats) return [];
+    
+    return [
+      { 
+        name: 'Dịch vụ', 
+        value: stats.contentByCategory.services,
+        color: '#dc2626',
+        count: stats.contentByCategory.services
+      },
+      { 
+        name: 'Tin tức', 
+        value: stats.contentByCategory.news,
+        color: '#2563eb',
+        count: stats.contentByCategory.news
+      },
+      { 
+        name: 'Khách hàng', 
+        value: stats.contentByCategory.customerStories,
+        color: '#16a34a',
+        count: stats.contentByCategory.customerStories
+      },
+      { 
+        name: 'Tuyển dụng', 
+        value: stats.contentByCategory.jobs,
+        color: '#f59e0b',
+        count: stats.contentByCategory.jobs
+      },
+      { 
+        name: 'Trang tĩnh', 
+        value: stats.contentByCategory.pages,
+        color: '#8b5cf6',
+        count: stats.contentByCategory.pages
+      }
+    ].filter(item => item.count > 0); // Only show categories with content
+  };
+
+  const getContentTypeIcon = (type: string) => {
+    switch (type) {
+      case 'service': return <FaServicestack className="text-red-600" />;
+      case 'post': return <FaNewspaper className="text-blue-600" />;
+      case 'story': return <FaUsers className="text-green-600" />;
+      default: return <FaFileAlt className="text-gray-600" />;
+    }
+  };
+
+  const getContentTypeLabel = (type: string) => {
+    switch (type) {
+      case 'service': return 'Dịch vụ';
+      case 'post': return 'Bài viết';
+      case 'story': return 'Câu chuyện KH';
+      default: return 'Nội dung';
+    }
+  };
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Đang tải dashboard...</p>
+          <p className="text-gray-600">Đang tải thống kê thực tế...</p>
         </div>
       </div>
     );
   }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-600 text-4xl mb-4">⚠️</div>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button 
+            onClick={fetchRealStats}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+          >
+            Thử lại
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!stats) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -112,35 +202,21 @@ export default function AdminDashboard() {
                 </div>
                 Tổng quan Dashboard
               </h1>
-              <p className="text-gray-600 mt-1">Chào mừng trở lại! Đây là tổng quan hoạt động website của bạn.</p>
+              <p className="text-gray-600 mt-1">
+                Thống kê thực tế website nhaphangchinhngach.vn • Cập nhật: {new Date(stats.websiteHealth.lastUpdated).toLocaleString('vi-VN')}
+              </p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-gray-500">Cập nhật lần cuối</p>
-              <p className="text-sm font-medium text-gray-900">{new Date().toLocaleString('vi-VN')}</p>
+              <p className="text-sm text-gray-500">Tổng nội dung</p>
+              <p className="text-2xl font-bold text-red-600">{stats.totalContent}</p>
             </div>
           </div>
         </div>
       </div>
 
       <div className="p-6">
-        {/* Stats Cards */}
+        {/* Real Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Tổng bài viết</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalPosts}</p>
-                <p className="text-sm text-green-600 mt-1">
-                  <span className="font-medium">{stats.publishedPosts}</span> đã đăng • 
-                  <span className="font-medium text-orange-500 ml-1">{stats.draftPosts}</span> nháp
-                </p>
-              </div>
-              <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
-                <FaFileAlt className="text-blue-600 text-xl" />
-              </div>
-            </div>
-          </div>
-
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -148,8 +224,8 @@ export default function AdminDashboard() {
                 <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalServices}</p>
                 <p className="text-sm text-green-600 mt-1">Đang hoạt động</p>
               </div>
-              <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
-                <FaServicestack className="text-green-600 text-xl" />
+              <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
+                <FaServicestack className="text-red-600 text-xl" />
               </div>
             </div>
           </div>
@@ -157,25 +233,41 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Lượt xem</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalViews.toLocaleString()}</p>
-                <p className="text-sm text-green-600 mt-1">+12% so với tuần trước</p>
+                <p className="text-sm font-medium text-gray-600">Bài viết</p>
+                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalPosts}</p>
+                <p className="text-sm text-green-600 mt-1">
+                  <span className="font-medium">{stats.publishedPosts}</span> đã đăng • 
+                  <span className="font-medium text-orange-500 ml-1">{stats.draftPosts}</span> nháp
+                </p>
+              </div>
+              <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+                <FaNewspaper className="text-blue-600 text-xl" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Câu chuyện KH</p>
+                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalCustomerStories}</p>
+                <p className="text-sm text-green-600 mt-1">Đã xuất bản</p>
+              </div>
+              <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
+                <FaUsers className="text-green-600 text-xl" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Tuyển dụng</p>
+                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalJobs}</p>
+                <p className="text-sm text-blue-600 mt-1">Đang tuyển</p>
               </div>
               <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
-                <FaEye className="text-purple-600 text-xl" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Popup/Thông báo</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.activePopups}</p>
-                <p className="text-sm text-red-600 mt-1">Đang hiển thị</p>
-              </div>
-              <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
-                <FaBell className="text-red-600 text-xl" />
+                <FaBell className="text-purple-600 text-xl" />
               </div>
             </div>
           </div>
@@ -215,13 +307,13 @@ export default function AdminDashboard() {
             </ResponsiveContainer>
           </div>
 
-          {/* Category Distribution */}
+          {/* Real Category Distribution */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Phân bố nội dung theo chuyên mục</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Phân bố nội dung thực tế</h3>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
-                  data={categoryData}
+                  data={getCategoryData()}
                   cx="50%"
                   cy="50%"
                   innerRadius={60}
@@ -229,7 +321,7 @@ export default function AdminDashboard() {
                   paddingAngle={5}
                   dataKey="value"
                 >
-                  {categoryData.map((entry, index) => (
+                  {getCategoryData().map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
@@ -237,14 +329,14 @@ export default function AdminDashboard() {
               </PieChart>
             </ResponsiveContainer>
             <div className="grid grid-cols-2 gap-4 mt-6">
-              {categoryData.map((item, index) => (
+              {getCategoryData().map((item, index) => (
                 <div key={index} className="flex items-center gap-3">
                   <div 
                     className="w-4 h-4 rounded"
                     style={{ backgroundColor: item.color }}
                   ></div>
                   <span className="text-sm text-gray-600">{item.name}</span>
-                  <span className="text-sm font-medium text-gray-900 ml-auto">{item.value}%</span>
+                  <span className="text-sm font-medium text-gray-900 ml-auto">{item.count}</span>
                 </div>
               ))}
             </div>
@@ -253,27 +345,19 @@ export default function AdminDashboard() {
 
         {/* Popular Content & Quick Actions */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Popular Content */}
+          {/* Real Popular Content */}
           <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Nội dung nổi bật</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Nội dung nổi bật (Thực tế)</h3>
             <div className="space-y-4">
-              {popularContent.map((item, index) => (
+              {stats.popularContent.map((item, index) => (
                 <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center gap-4">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                      item.type === 'service' ? 'bg-red-100 text-red-600' :
-                      item.type === 'news' ? 'bg-blue-100 text-blue-600' :
-                      'bg-green-100 text-green-600'
-                    }`}>
-                      {item.type === 'service' ? <FaServicestack /> :
-                       item.type === 'news' ? <FaNewspaper /> : <FaFileAlt />}
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white">
+                      {getContentTypeIcon(item.type)}
                     </div>
                     <div>
                       <p className="font-medium text-gray-900">{item.title}</p>
-                      <p className="text-sm text-gray-500 capitalize">{
-                        item.type === 'service' ? 'Dịch vụ' :
-                        item.type === 'news' ? 'Tin tức' : 'Cẩm nang'
-                      }</p>
+                      <p className="text-sm text-gray-500">{getContentTypeLabel(item.type)}</p>
                     </div>
                   </div>
                   <div className="text-right">
@@ -300,19 +384,42 @@ export default function AdminDashboard() {
               </button>
               
               <button className="w-full p-4 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 transition-all flex items-center gap-3">
-                <FaBell />
-                <span>Tạo popup/thông báo</span>
+                <FaUsers />
+                <span>Thêm câu chuyện KH</span>
               </button>
               
               <button className="w-full p-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all flex items-center gap-3">
-                <FaImage />
-                <span>Quản lý tài nguyên</span>
+                <FaBell />
+                <span>Đăng tin tuyển dụng</span>
               </button>
               
               <button className="w-full p-4 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg hover:from-gray-700 hover:to-gray-800 transition-all flex items-center gap-3">
                 <FaCog />
                 <span>Cài đặt website</span>
               </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Website Health Summary */}
+        <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Tình trạng website</h3>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="text-center p-4 bg-green-50 rounded-lg">
+              <div className="text-2xl font-bold text-green-600">{stats.websiteHealth.totalFiles}</div>
+              <div className="text-sm text-green-800">Tổng file nội dung</div>
+            </div>
+            <div className="text-center p-4 bg-blue-50 rounded-lg">
+              <div className="text-2xl font-bold text-blue-600">{stats.totalServices}</div>
+              <div className="text-sm text-blue-800">Dịch vụ hoạt động</div>
+            </div>
+            <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <div className="text-2xl font-bold text-purple-600">{stats.publishedPosts}</div>
+              <div className="text-sm text-purple-800">Bài viết đã đăng</div>
+            </div>
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <div className="text-2xl font-bold text-gray-600">{stats.websiteHealth.contentStatus}</div>
+              <div className="text-sm text-gray-800">Trạng thái hệ thống</div>
             </div>
           </div>
         </div>
