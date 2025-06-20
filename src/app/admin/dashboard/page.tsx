@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { 
   BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, 
   Tooltip, ResponsiveContainer, PieChart, Pie, Cell 
 } from 'recharts';
 import { 
   FaFileAlt, FaCog, FaUsers, FaEye, FaChartLine, 
-  FaBell, FaImage, FaNewspaper, FaServicestack 
+  FaBell, FaImage, FaNewspaper, FaServicestack, FaSync, FaClock 
 } from 'react-icons/fa';
 import SyncStatus from './sync-status';
 
@@ -56,20 +56,41 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [trafficData, setTrafficData] = useState<TrafficData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [autoRefresh, setAutoRefresh] = useState(true);
+
+  // Auto-refresh every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (autoRefresh) {
+        refreshStats();
+      }
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [autoRefresh]);
 
   useEffect(() => {
     fetchRealStats();
-    generateTrafficData(); // Keep mock traffic data for now
+    generateTrafficData();
   }, []);
 
   const fetchRealStats = async () => {
     try {
-      const response = await fetch('/api/admin/stats');
+      setError(null);
+      const response = await fetch('/api/admin/stats', {
+        cache: 'no-cache',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
       const result = await response.json();
       
       if (result.success) {
         setStats(result.data);
+        setLastUpdated(new Date(result.timestamp));
       } else {
         setError('Failed to fetch statistics');
       }
@@ -80,6 +101,12 @@ export default function AdminDashboard() {
       setLoading(false);
     }
   };
+
+  const refreshStats = useCallback(async () => {
+    setRefreshing(true);
+    await fetchRealStats();
+    setRefreshing(false);
+  }, []);
 
   const generateTrafficData = () => {
     // Generate realistic traffic data for last 7 days
@@ -138,7 +165,7 @@ export default function AdminDashboard() {
         color: '#8b5cf6',
         count: stats.contentByCategory.pages
       }
-    ].filter(item => item.count > 0); // Only show categories with content
+    ].filter(item => item.count > 0);
   };
 
   const getContentTypeIcon = (type: string) => {
@@ -159,12 +186,22 @@ export default function AdminDashboard() {
     }
   };
 
+  const formatTimeAgo = (date: Date) => {
+    const now = new Date();
+    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
+    
+    if (diffInMinutes < 1) return 'Vừa xong';
+    if (diffInMinutes < 60) return `${diffInMinutes} phút trước`;
+    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)} giờ trước`;
+    return `${Math.floor(diffInMinutes / 1440)} ngày trước`;
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Đang tải thống kê thực tế...</p>
+          <p className="text-gray-600">Đang tải thống kê realtime...</p>
         </div>
       </div>
     );
@@ -177,7 +214,7 @@ export default function AdminDashboard() {
           <div className="text-red-600 text-4xl mb-4">⚠️</div>
           <p className="text-gray-600 mb-4">{error}</p>
           <button 
-            onClick={fetchRealStats}
+            onClick={refreshStats}
             className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
           >
             Thử lại
@@ -191,7 +228,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+      {/* Header with Real-time Indicators */}
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between">
@@ -200,28 +237,67 @@ export default function AdminDashboard() {
                 <div className="w-10 h-10 bg-gradient-to-r from-red-600 to-red-700 rounded-lg flex items-center justify-center">
                   <FaChartLine className="text-white text-lg" />
                 </div>
-                Tổng quan Dashboard
+                Dashboard Realtime
+                <div className="flex items-center gap-2 ml-4">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-sm text-green-600 font-medium">LIVE</span>
+                </div>
               </h1>
-              <p className="text-gray-600 mt-1">
-                Thống kê thực tế website nhaphangchinhngach.vn • Cập nhật: {new Date(stats.websiteHealth.lastUpdated).toLocaleString('vi-VN')}
-              </p>
+              <div className="flex items-center gap-4 mt-1">
+                <p className="text-gray-600">
+                  Thống kê thực tế website nhaphangchinhngach.vn
+                </p>
+                {lastUpdated && (
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <FaClock className="w-3 h-3" />
+                    <span>Cập nhật: {formatTimeAgo(lastUpdated)}</span>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500">Tổng nội dung</p>
-              <p className="text-2xl font-bold text-red-600">{stats.totalContent}</p>
+            <div className="flex items-center gap-4">
+              {/* Auto-refresh Toggle */}
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={autoRefresh}
+                  onChange={(e) => setAutoRefresh(e.target.checked)}
+                  className="rounded border-gray-300"
+                />
+                <span className="text-sm text-gray-600">Auto-refresh</span>
+              </label>
+              
+              {/* Manual Refresh Button */}
+              <button
+                onClick={refreshStats}
+                disabled={refreshing}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50"
+              >
+                <FaSync className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
+                <span>Refresh</span>
+              </button>
+              
+              {/* Total Content Counter */}
+              <div className="text-right">
+                <p className="text-sm text-gray-500">Tổng nội dung</p>
+                <p className="text-2xl font-bold text-red-600">{stats.totalContent}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div className="p-6">
-        {/* Real Stats Cards */}
+        {/* Real Stats Cards with Loading Indicators */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all ${refreshing ? 'opacity-50' : ''}`}>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Dịch vụ</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalServices}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalServices}</p>
+                  {refreshing && <div className="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></div>}
+                </div>
                 <p className="text-sm text-green-600 mt-1">Đang hoạt động</p>
               </div>
               <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
@@ -230,11 +306,14 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all ${refreshing ? 'opacity-50' : ''}`}>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Bài viết</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalPosts}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalPosts}</p>
+                  {refreshing && <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>}
+                </div>
                 <p className="text-sm text-green-600 mt-1">
                   <span className="font-medium">{stats.publishedPosts}</span> đã đăng • 
                   <span className="font-medium text-orange-500 ml-1">{stats.draftPosts}</span> nháp
@@ -246,11 +325,14 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all ${refreshing ? 'opacity-50' : ''}`}>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Câu chuyện KH</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalCustomerStories}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalCustomerStories}</p>
+                  {refreshing && <div className="w-4 h-4 border-2 border-green-600 border-t-transparent rounded-full animate-spin"></div>}
+                </div>
                 <p className="text-sm text-green-600 mt-1">Đã xuất bản</p>
               </div>
               <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
@@ -259,11 +341,14 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all ${refreshing ? 'opacity-50' : ''}`}>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Tuyển dụng</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalJobs}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalJobs}</p>
+                  {refreshing && <div className="w-4 h-4 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>}
+                </div>
                 <p className="text-sm text-blue-600 mt-1">Đang tuyển</p>
               </div>
               <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
@@ -309,7 +394,13 @@ export default function AdminDashboard() {
 
           {/* Real Category Distribution */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Phân bố nội dung thực tế</h3>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Phân bố nội dung</h3>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-xs text-green-600">REALTIME</span>
+              </div>
+            </div>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -347,10 +438,16 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Real Popular Content */}
           <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Nội dung nổi bật (Thực tế)</h3>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Nội dung nổi bật</h3>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <span className="text-xs text-blue-600">LIVE DATA</span>
+              </div>
+            </div>
             <div className="space-y-4">
               {stats.popularContent.map((item, index) => (
-                <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                   <div className="flex items-center gap-4">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white">
                       {getContentTypeIcon(item.type)}
@@ -401,9 +498,15 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Website Health Summary */}
+        {/* Website Health Summary with Real-time Indicators */}
         <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Tình trạng website</h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">Tình trạng website</h3>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm text-green-600">Realtime Health Check</span>
+            </div>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="text-center p-4 bg-green-50 rounded-lg">
               <div className="text-2xl font-bold text-green-600">{stats.websiteHealth.totalFiles}</div>
