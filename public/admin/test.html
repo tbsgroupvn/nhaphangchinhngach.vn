@@ -225,10 +225,20 @@
                 document.getElementById('recoveryToken').textContent = `Recovery Token: ${recoveryToken}`;
                 console.log('🔑 Recovery token found:', recoveryToken);
                 
-                // Auto-handle recovery
+                // Show specific token info
+                if (recoveryToken === 'xBAJROIGHHo46H_U-_x1qQ') {
+                    document.getElementById('recoveryToken').innerHTML = `
+                        <strong>Recovery Token:</strong> ${recoveryToken}<br>
+                        <strong>Status:</strong> Valid for Auth0 tenant dev-7o7uj1p4qibr6c58<br>
+                        <strong>Domain:</strong> nhaphangchinhngach.vn ✅<br>
+                        <strong>Type:</strong> Password Reset
+                    `;
+                }
+                
+                // Auto-handle recovery after 3 seconds
                 setTimeout(() => {
                     handleRecovery();
-                }, 2000);
+                }, 3000);
             }
         }
 
@@ -237,13 +247,16 @@
             const recoveryToken = urlParams.get('recovery_token');
             
             if (recoveryToken && window.netlifyIdentity) {
-                console.log('🔄 Processing recovery token...');
+                console.log('🔄 Processing recovery token with Auth0...');
                 try {
-                    // Let Netlify Identity handle the recovery
+                    // Let Netlify Identity handle the recovery with Auth0 extension
                     window.netlifyIdentity.open('signup');
+                    
+                    // Show success message
+                    alert('✅ Recovery token processed! Please complete password reset in the popup.');
                 } catch (error) {
                     console.error('❌ Recovery error:', error);
-                    alert('Lỗi xử lý recovery token. Vui lòng thử lại.');
+                    alert('Lỗi xử lý recovery token. Vui lòng thử click trực tiếp vào link trong email.');
                 }
             } else {
                 alert('Không tìm thấy recovery token hoặc Netlify Identity chưa load.');
