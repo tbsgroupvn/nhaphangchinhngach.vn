@@ -228,48 +228,279 @@
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
   
   <script>
-    // Cấu hình ngôn ngữ tiếng Việt
+    // Cấu hình ngôn ngữ tiếng Việt toàn diện
     CMS.registerLocale('vi', {
       app: {
         header: {
           content: 'Nội dung',
-          workflow: 'Quy trình',
-          media: 'Thư viện',
-          quickAdd: 'Thêm nhanh'
+          workflow: 'Quy trình duyệt',
+          media: 'Thư viện ảnh',
+          quickAdd: 'Thêm nhanh',
+          settings: 'Cài đặt',
+          search: 'Tìm kiếm'
         }
       },
       collection: {
         sidebar: {
-          collections: 'Bộ sưu tập',
-          searchAll: 'Tìm kiếm tất cả'
+          collections: 'Danh mục quản lý',
+          allCollections: 'Tất cả danh mục',
+          searchAll: 'Tìm kiếm toàn bộ',
+          searchResults: 'Kết quả tìm kiếm'
+        },
+        collectionTop: {
+          sortBy: 'Sắp xếp theo',
+          viewAs: 'Xem dạng',
+          newButton: 'Tạo {{collectionLabel}}',
+          ascending: 'Tăng dần',
+          descending: 'Giảm dần',
+          searchResults: 'Kết quả tìm "{{searchTerm}}"',
+          searchResultsInCollection: 'Kết quả tìm "{{searchTerm}}" trong {{collection}}'
+        },
+        entries: {
+          loadingEntries: 'Đang tải nội dung...',
+          cachingEntries: 'Đang lưu cache...',
+          longerLoading: 'Quá trình này có thể mất vài phút',
+          noEntries: 'Chưa có nội dung nào'
         }
       },
       editor: {
         editorControl: {
           field: {
-            optional: 'tùy chọn'
+            optional: 'không bắt buộc'
           }
         },
         editorControlPane: {
           widget: {
             headingOneTitle: 'Tiêu đề 1',
-            headingTwoTitle: 'Tiêu đề 2',
+            headingTwoTitle: 'Tiêu đề 2', 
             headingThreeTitle: 'Tiêu đề 3',
             headingFourTitle: 'Tiêu đề 4',
             headingFiveTitle: 'Tiêu đề 5',
             headingSixTitle: 'Tiêu đề 6',
-            bold: 'Đậm',
-            italic: 'Nghiêng',
-            code: 'Mã',
-            link: 'Liên kết',
-            linkPrompt: 'Nhập URL liên kết',
+            bold: 'In đậm',
+            italic: 'In nghiêng',
+            strikethrough: 'Gạch ngang',
+            code: 'Mã code',
+            link: 'Chèn liên kết',
+            linkPrompt: 'Nhập URL của liên kết',
             linkTooltip: 'Thêm liên kết',
-            bullist: 'Danh sách có dấu đầu dòng',
-            numlist: 'Danh sách có số',
+            bullist: 'Danh sách dấu đầu dòng',
+            numlist: 'Danh sách đánh số',
             addComponent: 'Thêm thành phần',
-            richText: 'Văn bản phong phú',
-            markdown: 'Markdown'
+            richText: 'Soạn thảo văn bản',
+            markdown: 'Markdown',
+            quote: 'Trích dẫn',
+            image: 'Chèn ảnh',
+            table: 'Tạo bảng'
           }
+        },
+        editor: {
+          onLeavePage: 'Bạn có chắc muốn rời khỏi trang này?',
+          onUpdatingWithUnsavedChanges: 'Bạn có thay đổi chưa lưu, vui lòng lưu trước khi cập nhật trạng thái.',
+          onPublishingNotReady: 'Vui lòng giải quyết các vấn đề trước khi xuất bản.',
+          onPublishingWithUnsavedChanges: 'Bạn có thay đổi chưa lưu, vui lòng lưu trước khi xuất bản.',
+          onPublishing: 'Bạn có chắc muốn xuất bản?',
+          onUnpublishing: 'Bạn có chắc muốn hủy xuất bản?',
+          onDeleteWithUnsavedChanges: 'Bạn có chắc muốn xóa mục này cùng với các thay đổi chưa lưu?',
+          onDeletePublishedEntry: 'Bạn có chắc muốn xóa mục đã xuất bản này?',
+          onDeleteUnpublishedChangesWithUnsavedChanges: 'Điều này sẽ xóa tất cả thay đổi chưa xuất bản của mục này, cũng như các thay đổi chưa lưu hiện tại. Bạn vẫn muốn xóa?',
+          onDeleteUnpublishedChanges: 'Tất cả thay đổi chưa xuất bản của mục này sẽ bị xóa. Bạn vẫn muốn xóa?',
+          loadingEntry: 'Đang tải...',
+          confirmLoadBackup: 'Phát hiện bản backup cho mục này, bạn có muốn sử dụng không?'
+        },
+        editorInterface: {
+          toggleI18n: 'Chuyển đổi ngôn ngữ',
+          togglePreview: 'Xem trước',
+          toggleScrollSync: 'Đồng bộ cuộn trang'
+        },
+        editorToolbar: {
+          publishing: 'Đang xuất bản...',
+          publish: 'Xuất bản',
+          published: 'Đã xuất bản',
+          unpublish: 'Hủy xuất bản',
+          duplicate: 'Nhân bản',
+          unpublishing: 'Đang hủy xuất bản...',
+          publishAndCreateNew: 'Xuất bản và tạo mới',
+          deleteUnpublishedChanges: 'Xóa thay đổi chưa xuất bản',
+          deleteUnpublishedEntry: 'Xóa mục chưa xuất bản',
+          deletePublishedEntry: 'Xóa mục đã xuất bản',
+          deleteEntry: 'Xóa',
+          saving: 'Đang lưu...',
+          save: 'Lưu',
+          deleting: 'Đang xóa...',
+          updating: 'Đang cập nhật...',
+          status: 'Trạng thái: {{status}}',
+          backCollection: '← Quay lại {{collectionLabel}}',
+          unsavedChanges: 'Thay đổi chưa lưu',
+          changesSaved: 'Đã lưu thay đổi',
+          draft: 'Bản nháp',
+          inReview: 'Đang review',
+          ready: 'Sẵn sàng',
+          publishNow: 'Xuất bản ngay',
+          deployPreviewPending: 'Đang chuẩn bị xem trước',
+          deployPreviewReady: 'Xem trước sẵn sàng',
+          deployButtonLabel: 'Xem trực tiếp'
+        },
+        editorWidgets: {
+          markdown: {
+            bold: 'In đậm',
+            italic: 'In nghiêng',
+            code: 'Code',
+            link: 'Liên kết',
+            linkPrompt: 'Nhập URL',
+            headings: 'Tiêu đề',
+            quote: 'Trích dẫn',
+            bullist: 'Danh sách',
+            numlist: 'Danh sách số',
+            addComponent: 'Thêm thành phần'
+          },
+          image: {
+            choose: 'Chọn ảnh',
+            chooseUrl: 'Chèn từ URL',
+            replaceUrl: 'Thay thế bằng URL',
+            promptUrl: 'Nhập URL của ảnh',
+            chooseDifferent: 'Chọn ảnh khác',
+            remove: 'Xóa ảnh'
+          },
+          file: {
+            choose: 'Chọn file',
+            chooseUrl: 'Chèn từ URL',
+            replaceUrl: 'Thay thế bằng URL',
+            promptUrl: 'Nhập URL của file',
+            chooseDifferent: 'Chọn file khác',
+            remove: 'Xóa file'
+          },
+          unknownControl: {
+            noControl: "Không có control cho widget '{{widget}}'."
+          },
+          unknownPreview: {
+            noPreview: "Không có preview cho widget '{{widget}}'."
+          },
+          headingOptions: {
+            headingOne: 'Tiêu đề 1',
+            headingTwo: 'Tiêu đề 2',
+            headingThree: 'Tiêu đề 3',
+            headingFour: 'Tiêu đề 4',
+            headingFive: 'Tiêu đề 5',
+            headingSix: 'Tiêu đề 6'
+          },
+          datetime: {
+            now: 'Bây giờ',
+            invalidDateTitle: 'Ngày không hợp lệ',
+            invalidDateBody: 'Ngày bạn nhập không hợp lệ.'
+          },
+          list: {
+            add: '+ Thêm {{item}}',
+            addType: '+ Thêm {{item}}',
+            noValue: 'Chưa có giá trị nào'
+          },
+          keyvalue: {
+            uniqueKeys: 'Keys phải là duy nhất'
+          },
+          code: {
+            language: 'Ngôn ngữ',
+            selectLanguage: 'Chọn ngôn ngữ'
+          }
+        }
+      },
+      mediaLibrary: {
+        mediaLibraryCard: {
+          draft: 'Bản nháp',
+          copy: 'Sao chép',
+          copyUrl: 'Sao chép URL',
+          copyPath: 'Sao chép đường dẫn',
+          copyName: 'Sao chép tên',
+          copied: 'Đã sao chép'
+        },
+        mediaLibrary: {
+          onDelete: 'Bạn có chắc muốn xóa media đã chọn?',
+          fileTooLarge: 'File quá lớn.\nCấu hình không cho phép file lớn hơn {{size}} kB.',
+          alreadyExists: 'File đã tồn tại. Bạn có muốn thay thế không?'
+        },
+        mediaLibraryModal: {
+          loading: 'Đang tải...',
+          noResults: 'Không có kết quả.',
+          noAssetsFound: 'Không tìm thấy media nào.',
+          noImagesFound: 'Không tìm thấy ảnh nào.',
+          images: 'Ảnh',
+          mediaAssets: 'Media',
+          search: 'Tìm kiếm...',
+          uploading: 'Đang tải lên...',
+          upload: 'Tải lên',
+          download: 'Tải xuống',
+          deleting: 'Đang xóa...',
+          deleteSelected: 'Xóa đã chọn',
+          chooseSelected: 'Chọn đã chọn'
+        }
+      },
+      ui: {
+        default: {
+          goBackToSite: 'Quay lại website',
+          errorHeader: 'Lỗi khi tải CMS',
+          errorDetails: 'Đã xảy ra lỗi - vui lòng kiểm tra console để biết chi tiết.',
+          errorBoundaryHeader: 'Lỗi CMS',
+          errorBoundaryDetails: 'Đã xảy ra lỗi - vui lòng '
+        },
+        errorBoundary: {
+          title: 'Lỗi',
+          details: 'Đã xảy ra lỗi - vui lòng ',
+          reportIt: 'báo cáo trên GitHub.',
+          detailsHeading: 'Chi tiết',
+          privacyWarning: 'Mở issue sẽ tự động điền thông tin lỗi và debug.\nVui lòng xác minh thông tin là chính xác và xóa dữ liệu nhạy cảm nếu có.',
+          recoveredEntry: {
+            heading: 'Tài liệu đã khôi phục',
+            warning: 'Vui lòng copy/paste nội dung này ở nơi khác trước khi điều hướng đi!',
+            copyButtonLabel: 'Sao chép vào clipboard'
+          }
+        },
+        settingsDropdown: {
+          logOut: 'Đăng xuất'
+        },
+        toast: {
+          onFailToLoadEntries: 'Không thể tải mục: {{details}}',
+          onFailToLoadDeployPreview: 'Không thể tải preview: {{details}}',
+          onFailToPersist: 'Không thể lưu mục: {{details}}',
+          onFailToDelete: 'Không thể xóa mục: {{details}}',
+          onFailToUpdateStatus: 'Không thể cập nhật trạng thái: {{details}}',
+          missingRequiredField: 'Bạn đã bỏ qua trường bắt buộc. Vui lòng điền đầy đủ trước khi lưu.',
+          entrySaved: 'Đã lưu mục',
+          entryPublished: 'Đã xuất bản mục',
+          entryUnpublished: 'Đã hủy xuất bản mục',
+          onFailToPublishEntry: 'Không thể xuất bản: {{details}}',
+          onFailToUnpublishEntry: 'Không thể hủy xuất bản: {{details}}',
+          entryUpdated: 'Đã cập nhật trạng thái mục',
+          onDeleteUnpublishedChanges: 'Đã xóa thay đổi chưa xuất bản',
+          onFailToAuth: 'Lỗi xác thực: {{details}}',
+          onLoggedOut: 'Bạn đã đăng xuất, vui lòng backup dữ liệu và đăng nhập lại',
+          onBackendDown: 'Backend đang gặp sự cố. Xem {{details}} để biết thêm thông tin'
+        }
+      },
+      workflow: {
+        workflow: {
+          loading: 'Đang tải mục Editorial Workflow',
+          workflowHeading: 'Editorial Workflow',
+          newPost: 'Bài viết mới',
+          description: 'Số lượng mục đang chờ review.',
+          dateFormat: 'MMMM D',
+          dateFormatCardHeader: 'MMM D'
+        },
+        workflowCard: {
+          lastChange: 'Thay đổi cuối {{date}} bởi {{author}}',
+          lastChangeNoAuthor: 'Thay đổi cuối {{date}}',
+          lastChangeNoDate: 'Thay đổi cuối bởi {{author}}',
+          deleteChanges: 'Xóa thay đổi',
+          deleteNewEntry: 'Xóa mục mới',
+          publishChanges: 'Xuất bản thay đổi',
+          publishNewEntry: 'Xuất bản mục mới'
+        },
+        workflowList: {
+          onDeleteEntry: 'Bạn có chắc muốn xóa mục này?',
+          onPublishingNotReadyEntry: 'Chỉ có thể xuất bản mục có trạng thái "Sẵn sàng". Vui lòng kéo thẻ vào cột "Sẵn sàng" để enable xuất bản.',
+          onPublishEntry: 'Bạn có chắc muốn xuất bản mục này?',
+          draftHeader: 'Bản nháp',
+          inReviewHeader: 'Đang Review',
+          readyHeader: 'Sẵn sàng',
+          currentEntries: '{{smart_count}} mục |||| {{smart_count}} mục'
         }
       }
     });
