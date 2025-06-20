@@ -14,15 +14,11 @@ backend:
     deleteMedia: 'Xóa hình ảnh "{{path}}"'
     openAuthoring: '{{message}}'
 
-# Auth0 Extension Configuration
-# Tenant: dev-7o7uj1p4qibr6c58
-# Domain: dev-7o7uj1p4qibr6c58.auth0.com
-# App ID: Nhtya0JcKofGeMz5Rj3jdtEqbuDTuC1I
+# Auth0 Extension Configuration (Environment Variables)
+# Netlify Auth0 Extension will auto-inject these values
 auth:
   providers:
     - name: auth0
-      domain: dev-7o7uj1p4qibr6c58.auth0.com
-      client_id: Nhtya0JcKofGeMz5Rj3jdtEqbuDTuC1I
 
 media_folder: "public/images"
 public_folder: "/images"
