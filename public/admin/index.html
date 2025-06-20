@@ -6,7 +6,22 @@
   <meta name="robots" content="noindex" />
   <title>🎯 TBS GROUP - Hệ thống quản lý nội dung</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  <script src="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
+  <script>
+    // Backup CDN in case primary fails
+    if (typeof CMS === 'undefined') {
+      console.log('🚨 Primary CDN failed, loading backup...');
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/netlify-cms@2.10.192/dist/netlify-cms.js';
+      script.onload = () => {
+        console.log('✅ Backup CDN loaded successfully');
+        if (typeof initTBSGroupCMS === 'function') {
+          initTBSGroupCMS();
+        }
+      };
+      document.head.appendChild(script);
+    }
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* 🎨 TBS GROUP CMS Custom Styling - High Specificity */
@@ -646,8 +661,14 @@
       }, 10000);
     }
 
-    // Vietnamese localization
-    CMS.registerLocale('vi', {
+    // Vietnamese localization - will be called when CMS is ready
+    function registerVietnameseLocale() {
+      if (typeof CMS === 'undefined') {
+        console.log('⚠️ CMS not available for locale registration');
+        return false;
+      }
+      
+      CMS.registerLocale('vi', {
       app: {
         header: {
           content: 'Nội dung',
@@ -922,15 +943,111 @@
         }
       }
     });
-
-    // Initialize CMS first
-    CMS.init();
-
-    // Then apply our custom styling
-    document.addEventListener('DOMContentLoaded', initTBSGroupCMS);
     
-    // Also try after a short delay in case DOMContentLoaded already fired
-    setTimeout(initTBSGroupCMS, 100);
+    return true;
+  }
+
+  // Safe CMS Initialization
+  function initializeCMS() {
+    if (typeof CMS === 'undefined') {
+      console.log('❌ CMS not loaded, cannot initialize');
+      return false;
+    }
+    
+    console.log('✅ CMS available, initializing...');
+    
+    // Register Vietnamese locale
+    if (registerVietnameseLocale()) {
+      console.log('✅ Vietnamese locale registered');
+    }
+    
+    // Initialize CMS
+    try {
+      CMS.init();
+      console.log('✅ CMS initialized successfully');
+      return true;
+    } catch (error) {
+      console.error('❌ CMS initialization failed:', error);
+      return false;
+    }
+  }
+
+  // Wait for CMS to be available and then initialize
+  function waitForCMSAndInit() {
+    let attempts = 0;
+    const maxAttempts = 10;
+    
+    const checkCMS = () => {
+      attempts++;
+      console.log(`🔄 Checking CMS availability (attempt ${attempts}/${maxAttempts})`);
+      
+      if (typeof CMS !== 'undefined') {
+        console.log('✅ CMS detected, initializing...');
+        if (initializeCMS()) {
+          // Apply custom styling after CMS is ready
+          setTimeout(initTBSGroupCMS, 1000);
+        }
+      } else if (attempts < maxAttempts) {
+        console.log('⏳ CMS not ready, retrying in 500ms...');
+        setTimeout(checkCMS, 500);
+      } else {
+        console.error('❌ CMS failed to load after maximum attempts');
+        // Show error message to user
+        document.body.innerHTML = `
+          <div style="
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            background: #f8fafc; 
+            font-family: system-ui, sans-serif;
+            text-align: center;
+            padding: 2rem;
+          ">
+            <div style="
+              background: white; 
+              padding: 2rem; 
+              border-radius: 12px; 
+              box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+              max-width: 500px;
+            ">
+              <h2 style="color: #dc2626; margin-bottom: 1rem;">🚨 CMS Loading Failed</h2>
+              <p style="color: #6b7280; margin-bottom: 2rem;">
+                NetlifyCMS failed to load. This might be due to network issues or CDN problems.
+              </p>
+              <button onclick="location.reload()" style="
+                background: #dc2626; 
+                color: white; 
+                border: none; 
+                padding: 0.75rem 1.5rem; 
+                border-radius: 8px; 
+                cursor: pointer;
+                font-weight: 600;
+              ">
+                🔄 Reload Page
+              </button>
+              <br><br>
+              <a href="/admin/emergency-debug.html" style="
+                color: #2563eb; 
+                text-decoration: none;
+                font-weight: 500;
+              ">
+                🔧 Go to Debug Center
+              </a>
+            </div>
+          </div>
+        `;
+      }
+    };
+    
+    checkCMS();
+  }
+
+  // Start the initialization process
+  document.addEventListener('DOMContentLoaded', waitForCMSAndInit);
+  
+  // Also try after a short delay in case DOMContentLoaded already fired
+  setTimeout(waitForCMSAndInit, 100);
   </script>
 </body>
 </html> 
