@@ -35,8 +35,8 @@ export default function SEOHead({
   canonical
 }: SEOProps) {
   const router = useRouter()
-  const currentUrl = url || `${process.env.NEXT_PUBLIC_SITE_URL || 'https://tbs-group.netlify.app'}${router.asPath}`
-  const fullImageUrl = image.startsWith('http') ? image : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://tbs-group.netlify.app'}${image}`
+  const currentUrl = url || `${process.env.NEXT_PUBLIC_SITE_URL || 'https://nhaphangchinhngach.vn'}${router.asPath}`
+  const fullImageUrl = image.startsWith('http') ? image : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://nhaphangchinhngach.vn'}${image}`
 
   // Generate title with brand
   const fullTitle = title.includes('TBS GROUP') ? title : `${title} | TBS GROUP`
@@ -46,8 +46,8 @@ export default function SEOHead({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "TBS GROUP",
-    "url": "https://tbs-group.netlify.app",
-    "logo": "https://tbs-group.netlify.app/images/tbs-logo.png",
+    "url": "https://nhaphangchinhngach.vn",
+    "logo": "https://nhaphangchinhngach.vn/images/tbs-logo.png",
     "description": "Công ty xuất nhập khẩu hàng đầu Việt Nam",
     "address": {
       "@type": "PostalAddress",
@@ -146,7 +146,7 @@ export default function SEOHead({
       <meta name="business:contact_data:country_name" content="Vietnam" />
       <meta name="business:contact_data:email" content="info@tbs-group.vn" />
       <meta name="business:contact_data:phone_number" content="+84-363-212-333" />
-      <meta name="business:contact_data:website" content="https://tbs-group.netlify.app" />
+              <meta name="business:contact_data:website" content="https://nhaphangchinhngach.vn" />
 
       {/* Performance hints */}
       <link rel="preconnect" href="https://www.google-analytics.com" />
@@ -166,7 +166,7 @@ export const generateStructuredData = {
     "provider": {
       "@type": "Organization",
       "name": "TBS GROUP",
-      "url": "https://tbs-group.netlify.app"
+                "url": "https://nhaphangchinhngach.vn"
     },
     "category": service.category,
     "offers": {
@@ -192,7 +192,7 @@ export const generateStructuredData = {
       "name": "TBS GROUP",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://tbs-group.netlify.app/images/tbs-logo.png"
+                  "url": "https://nhaphangchinhngach.vn/images/tbs-logo.png"
       }
     },
     "datePublished": article.date,

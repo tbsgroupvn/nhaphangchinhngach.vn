@@ -37,7 +37,7 @@ editor:
 # Debugging - show backend status
 show_preview_links: true
 
-# Auth configuration for modern Netlify
+# Auth configuration for custom domain
 site_url: https://nhaphangchinhngach.vn
 
 collections:

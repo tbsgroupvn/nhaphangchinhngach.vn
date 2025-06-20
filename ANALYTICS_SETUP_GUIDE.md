@@ -21,7 +21,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 NEXT_PUBLIC_CLARITY_ID=your_clarity_project_id
 
 # Site Configuration
-NEXT_PUBLIC_SITE_URL=https://tbs-group.netlify.app
+NEXT_PUBLIC_SITE_URL=https://nhaphangchinhngach.vn
 NEXT_PUBLIC_ENABLE_ANALYTICS=true
 
 # Google Search Console
@@ -41,7 +41,7 @@ NEXT_PUBLIC_GSC_SITE_VERIFICATION=your_verification_code
 
 ### 2. Cấu hình Data Stream
 1. Chọn **Web** platform
-2. **Website URL**: https://tbs-group.netlify.app
+2. **Website URL**: https://nhaphangchinhngach.vn
 3. **Stream name**: TBS GROUP Main Website
 4. Copy **Measurement ID** (dạng G-XXXXXXXXXX)
 
@@ -69,7 +69,7 @@ Custom dimension 5: conversion_funnel
 2. Đăng nhập với Microsoft account
 3. Click **New Project**:
    - **Name**: TBS GROUP Website
-   - **Website**: https://tbs-group.netlify.app
+   - **Website**: https://nhaphangchinhngach.vn
    - **Category**: Business Services
 
 ### 2. Cấu hình Recording
@@ -92,7 +92,7 @@ Custom dimension 5: conversion_funnel
 ### 1. Add Property
 1. Vào [Google Search Console](https://search.google.com/console)
 2. **Add Property** → **URL prefix**
-3. URL: `https://tbs-group.netlify.app`
+3. URL: `https://nhaphangchinhngach.vn`
 
 ### 2. Verify Ownership
 **Method 1: HTML file**

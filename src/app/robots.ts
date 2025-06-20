@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://tbs-group.netlify.app'
+  const baseUrl = 'https://nhaphangchinhngach.vn'
   
   return {
     rules: [

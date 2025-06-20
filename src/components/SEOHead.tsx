@@ -16,20 +16,20 @@ export default function SEOHead({
   description = 'TBS GROUP chuyên cung cấp dịch vụ xuất nhập khẩu, logistics, thông quan hải quan với hơn 8000+ khách hàng tin tưởng.',
   keywords = ['xuất nhập khẩu', 'nhập khẩu Trung Quốc', 'logistics', 'TBS GROUP'],
   image = '/images/tbs-logo.png',
-  url = 'https://tbs-group.netlify.app',
+  url = 'https://nhaphangchinhngach.vn',
   type = 'website',
   structuredData,
   noIndex = false
 }: SEOProps) {
   const fullTitle = title.includes('TBS GROUP') ? title : `${title} | TBS GROUP`
-  const fullImageUrl = image.startsWith('http') ? image : `https://tbs-group.netlify.app${image}`
+  const fullImageUrl = image.startsWith('http') ? image : `https://nhaphangchinhngach.vn${image}`
 
   const defaultStructuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "TBS GROUP",
-    "url": "https://tbs-group.netlify.app",
-    "logo": "https://tbs-group.netlify.app/images/tbs-logo.png",
+    "url": "https://nhaphangchinhngach.vn",
+    "logo": "https://nhaphangchinhngach.vn/images/tbs-logo.png",
     "description": "Công ty xuất nhập khẩu hàng đầu Việt Nam"
   }
 
