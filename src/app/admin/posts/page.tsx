@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   FaPlus, FaEdit, FaTrash, FaEye, FaEyeSlash, FaSearch, 
   FaSort, FaSortUp, FaSortDown, FaImage, FaNewspaper,
@@ -530,7 +531,7 @@ export default function PostsPage() {
                 {/* Image */}
                 <div className="w-24 h-16 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
                   {post.image ? (
-                    <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                    <Image src={post.image} alt={post.title} width={96} height={64} className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
                       <FaImage className="text-gray-400" />

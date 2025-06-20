@@ -68,7 +68,7 @@ export default function AdminDashboard() {
     }, 30000);
 
     return () => clearInterval(interval);
-  }, [autoRefresh]);
+  }, [autoRefresh]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     fetchRealStats();

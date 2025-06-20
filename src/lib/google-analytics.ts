@@ -5,8 +5,8 @@ let BetaAnalyticsDataClient: any = null;
 async function importGAClient() {
   if (typeof window === 'undefined' && !BetaAnalyticsDataClient) {
     try {
-      const module = await import('@google-analytics/data');
-      BetaAnalyticsDataClient = module.BetaAnalyticsDataClient;
+      const gaModule = await import('@google-analytics/data');
+      BetaAnalyticsDataClient = gaModule.BetaAnalyticsDataClient;
     } catch (error) {
       console.warn('Google Analytics package not available:', error);
     }

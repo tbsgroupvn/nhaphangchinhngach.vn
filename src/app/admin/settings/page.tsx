@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { 
   FaSave, FaCog, FaGlobe, FaShare, FaShieldAlt, FaEnvelope,
   FaSearch, FaPalette, FaBell, FaDatabase, FaCode, FaUsers,
   FaImage, FaPhone, FaMapMarkerAlt, FaFacebook, FaInstagram,
-  FaYoutube, FaLinkedin, FaTimes, FaCheck, FaExclamationTriangle
+  FaYoutube, FaLinkedin, FaTimes, FaCheck, FaExclamationTriangle,
+  FaUndo, FaCheckCircle, FaTimesCircle
 } from 'react-icons/fa';
 
 interface Settings {
@@ -226,7 +228,7 @@ export default function SettingsPage() {
       {/* Save Status */}
       {saved && (
         <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
-          <FaCheck className="text-green-600" />
+          <FaCheckCircle className="text-green-600" />
           <span className="text-green-800">Đã lưu thành công!</span>
         </div>
       )}
@@ -353,7 +355,7 @@ export default function SettingsPage() {
                       Logo chính
                     </label>
                     <div className="flex items-center gap-4">
-                      <img src={settings.general.logo} alt="Logo" className="w-16 h-16 object-contain border rounded" />
+                      <Image src={settings.general.logo} alt="Logo" className="w-16 h-16 object-contain border rounded" width={64} height={64} />
                       <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
                         Đổi logo
                       </button>
@@ -365,7 +367,7 @@ export default function SettingsPage() {
                       Favicon
                     </label>
                     <div className="flex items-center gap-4">
-                      <img src={settings.general.favicon} alt="Favicon" className="w-8 h-8 object-contain border rounded" />
+                      <Image src={settings.general.favicon} alt="Favicon" className="w-8 h-8 object-contain border rounded" width={32} height={32} />
                       <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
                         Đổi favicon
                       </button>

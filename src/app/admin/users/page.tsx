@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { 
   FaPlus, FaEdit, FaTrash, FaEye, FaSearch, FaFilter, FaUser, FaUsers,
   FaShieldAlt, FaCrown, FaUserTie, FaUserCheck, FaUserTimes, FaClock,
@@ -533,7 +534,7 @@ export default function UsersPage() {
                               <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                                   {user.avatar ? (
-                                    <img src={user.avatar} alt={user.fullName} className="w-full h-full object-cover" />
+                                    <Image src={user.avatar} alt={user.fullName} width={40} height={40} className="w-full h-full object-cover" />
                                   ) : (
                                     <FaUser className="text-gray-500" />
                                   )}
