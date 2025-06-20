@@ -26,6 +26,9 @@ locale: 'vi'
 editor:
   preview: true
 
+# Debugging - show backend status
+show_preview_links: true
+
 collections:
   # Quản lý dịch vụ
   - name: "services"
