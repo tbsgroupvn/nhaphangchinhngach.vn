@@ -7,10 +7,6 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Enable Netlify Identity for CMS authentication
-[[plugins]]
-  package = "netlify-plugin-git-gateway"
-
 # Environment variables
 [context.production.environment]
   NODE_ENV = "production"
