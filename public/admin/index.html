@@ -359,58 +359,294 @@
   <div id="nc-root"></div>
   
   <script>
-    // 🎯 TBS GROUP CMS Configuration
+    // 🎯 TBS GROUP CMS - Aggressive Custom Styling Injection
     
-    // Show welcome banner on first load
-    setTimeout(() => {
-      if (localStorage.getItem('tbs-cms-welcome') !== 'seen') {
-        const banner = document.getElementById('tbs-welcome-banner');
-        if (banner) {
-          banner.style.display = 'block';
-          setTimeout(() => {
-            banner.style.display = 'none';
-            localStorage.setItem('tbs-cms-welcome', 'seen');
-          }, 5000);
-        }
+    function injectTBSGroupStyling() {
+      // Remove any existing custom styles
+      const existingStyle = document.getElementById('tbs-custom-styles');
+      if (existingStyle) {
+        existingStyle.remove();
       }
-    }, 1000);
 
-    // Wait for CMS to load, then apply custom styling
-    setTimeout(() => {
-      // Add custom classes to main elements
-      const appHeader = document.querySelector('[class*="AppHeader"]');
-      if (appHeader) {
-        appHeader.style.cssText = `
+      // Create new style element
+      const style = document.createElement('style');
+      style.id = 'tbs-custom-styles';
+      style.innerHTML = `
+        /* 🎨 TBS GROUP Custom Styling - Aggressive Override */
+        
+        :root {
+          --tbs-primary: #dc2626 !important;
+          --tbs-primary-dark: #b91c1c !important;
+          --tbs-secondary: #2563eb !important;
+          --tbs-success: #16a34a !important;
+          --tbs-warning: #f59e0b !important;
+          --tbs-info: #0ea5e9 !important;
+          --tbs-background: #fafafa !important;
+          --tbs-surface: #ffffff !important;
+          --tbs-text: #1f2937 !important;
+          --tbs-text-secondary: #6b7280 !important;
+          --tbs-border: #e5e7eb !important;
+          --tbs-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+          --tbs-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+          --tbs-radius: 12px !important;
+          --tbs-radius-sm: 8px !important;
+        }
+
+        /* Force font family on everything */
+        * {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        /* Body override */
+        body {
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+          min-height: 100vh !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        /* Welcome message */
+        .tbs-welcome {
+          position: fixed !important;
+          top: 20px !important;
+          right: 20px !important;
           background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
-          border-bottom: none !important;
+          color: white !important;
           padding: 1rem 2rem !important;
-        `;
-      }
+          border-radius: 12px !important;
+          box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3) !important;
+          z-index: 9999 !important;
+          font-weight: 600 !important;
+          animation: slideIn 0.5s ease !important;
+        }
+
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Hide default welcome and replace with ours */
+        .tbs-welcome::before {
+          content: "🎯 ";
+          font-size: 1.2em;
+        }
+      `;
+
+      // Inject into head with highest priority
+      document.head.appendChild(style);
+      console.log('🎯 TBS GROUP base styles injected');
+    }
+
+    function applyAdvancedStyling() {
+      console.log('🎨 Starting advanced styling application...');
+      
+      // Apply to all possible header selectors
+      const headerSelectors = [
+        '[class*="AppHeader"]',
+        '[class*="app-header"]', 
+        'header',
+        '.cms-app-header',
+        '#cms-app-header'
+      ];
+
+      headerSelectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+          if (element) {
+            element.style.cssText = `
+              background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+              color: white !important;
+              padding: 1rem 2rem !important;
+              box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+              border-bottom: none !important;
+              position: relative !important;
+              z-index: 100 !important;
+            `;
+            
+            // Add logo/icon
+            const h1 = element.querySelector('h1');
+            if (h1 && !h1.querySelector('.tbs-icon')) {
+              const icon = document.createElement('span');
+              icon.className = 'tbs-icon';
+              icon.innerHTML = '🎯 ';
+              icon.style.cssText = 'font-size: 1.5em; margin-right: 0.5rem;';
+              h1.insertBefore(icon, h1.firstChild);
+            }
+            
+            console.log('✅ Header styled:', selector);
+          }
+        });
+      });
 
       // Apply to sidebar
-      const sidebar = document.querySelector('[class*="SidebarContainer"], [class*="Sidebar"]');
-      if (sidebar) {
-        sidebar.style.cssText = `
-          background: white !important;
-          border-right: 1px solid #e5e7eb !important;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-        `;
-      }
+      const sidebarSelectors = [
+        '[class*="Sidebar"]',
+        '[class*="sidebar"]',
+        'aside',
+        'nav[class*="sidebar"]'
+      ];
+
+      sidebarSelectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+          if (element) {
+            element.style.cssText = `
+              background: white !important;
+              border-right: 1px solid #e5e7eb !important;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+              width: 280px !important;
+            `;
+
+            // Style sidebar links
+            const links = element.querySelectorAll('a, button');
+            links.forEach(link => {
+              link.style.cssText = `
+                color: #6b7280 !important;
+                padding: 0.75rem 1.5rem !important;
+                transition: all 0.2s ease !important;
+                border-radius: 0 !important;
+                text-decoration: none !important;
+                border: none !important;
+                background: transparent !important;
+                width: 100% !important;
+                text-align: left !important;
+                display: flex !important;
+                align-items: center !important;
+              `;
+
+              link.addEventListener('mouseenter', () => {
+                link.style.cssText += `
+                  background: linear-gradient(90deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%) !important;
+                  color: #dc2626 !important;
+                  padding-left: 2rem !important;
+                `;
+              });
+
+              link.addEventListener('mouseleave', () => {
+                link.style.paddingLeft = '1.5rem !important';
+                if (!link.classList.contains('active')) {
+                  link.style.background = 'transparent !important';
+                  link.style.color = '#6b7280 !important';
+                }
+              });
+            });
+
+            console.log('✅ Sidebar styled:', selector);
+          }
+        });
+      });
 
       // Apply to main content
-      const mainContent = document.querySelector('[class*="MainContent"], main');
-      if (mainContent) {
-        mainContent.style.cssText = `
-          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
-          padding: 2rem !important;
-        `;
-      }
+      const mainSelectors = [
+        '[class*="MainContent"]',
+        '[class*="main-content"]',
+        'main',
+        '.main'
+      ];
 
-      console.log('🎯 TBS GROUP custom styling applied');
-    }, 2000);
+      mainSelectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+          if (element) {
+            element.style.cssText = `
+              background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+              padding: 2rem !important;
+              min-height: calc(100vh - 80px) !important;
+            `;
+            console.log('✅ Main content styled:', selector);
+          }
+        });
+      });
 
-    // Cấu hình ngôn ngữ tiếng Việt toàn diện
+      // Style buttons
+      const buttons = document.querySelectorAll('button:not([class*="sidebar"]):not([class*="Sidebar"])');
+      buttons.forEach(button => {
+        // Skip sidebar buttons
+        const isInSidebar = button.closest('[class*="sidebar"], [class*="Sidebar"], aside');
+        if (!isInSidebar && !button.classList.contains('tbs-styled')) {
+          button.classList.add('tbs-styled');
+          button.style.cssText = `
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+            color: white !important;
+            border: none !important;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+          `;
+
+          button.addEventListener('mouseenter', () => {
+            button.style.transform = 'translateY(-2px) !important';
+            button.style.boxShadow = '0 8px 25px rgba(220, 38, 38, 0.3) !important';
+          });
+
+          button.addEventListener('mouseleave', () => {
+            button.style.transform = 'translateY(0) !important';
+            button.style.boxShadow = 'none !important';
+          });
+        }
+      });
+
+      console.log('🎯 Advanced styling completed');
+    }
+
+    function showWelcomeMessage() {
+      // Remove existing welcome
+      const existing = document.querySelector('.tbs-welcome');
+      if (existing) existing.remove();
+
+      // Create welcome message
+      const welcome = document.createElement('div');
+      welcome.className = 'tbs-welcome';
+      welcome.innerHTML = 'TBS GROUP CMS Ready!';
+      document.body.appendChild(welcome);
+
+      // Remove after 3 seconds
+      setTimeout(() => {
+        if (welcome.parentNode) {
+          welcome.remove();
+        }
+      }, 3000);
+    }
+
+    // Multi-stage initialization
+    function initTBSGroupCMS() {
+      console.log('🚀 Initializing TBS GROUP CMS...');
+      
+      // Stage 1: Inject base styles immediately
+      injectTBSGroupStyling();
+      
+      // Stage 2: Wait for CMS to start loading
+      setTimeout(() => {
+        applyAdvancedStyling();
+        showWelcomeMessage();
+      }, 1000);
+
+      // Stage 3: Re-apply after CMS fully loads
+      setTimeout(() => {
+        applyAdvancedStyling();
+        console.log('🎯 Final styling pass completed');
+      }, 3000);
+
+      // Stage 4: Continuous monitoring
+      const observer = new MutationObserver(() => {
+        applyAdvancedStyling();
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+
+      // Stop observing after 10 seconds
+      setTimeout(() => {
+        observer.disconnect();
+        console.log('🎯 Styling observer stopped');
+      }, 10000);
+    }
+
+    // Vietnamese localization
     CMS.registerLocale('vi', {
       app: {
         header: {
@@ -687,8 +923,14 @@
       }
     });
 
-    // 🚀 Initialize CMS
+    // Initialize CMS first
     CMS.init();
+
+    // Then apply our custom styling
+    document.addEventListener('DOMContentLoaded', initTBSGroupCMS);
+    
+    // Also try after a short delay in case DOMContentLoaded already fired
+    setTimeout(initTBSGroupCMS, 100);
   </script>
 </body>
 </html> 
