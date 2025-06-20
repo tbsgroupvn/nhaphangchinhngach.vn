@@ -45,6 +45,17 @@ async function verifyAuth(token: string) {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Skip middleware for API routes, static files, and other excluded paths
+  if (
+    pathname.startsWith('/api/') ||
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/favicon.ico') ||
+    pathname.startsWith('/images/') ||
+    pathname.startsWith('/public/')
+  ) {
+    return NextResponse.next();
+  }
+
   // Check if the path requires protection
   const isProtectedPath = protectedPaths.some(path => pathname.startsWith(path));
   const isAdminOnlyPath = adminOnlyPaths.some(path => pathname.startsWith(path));
@@ -112,14 +123,15 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
+    '/admin/dashboard/:path*',
+    '/admin/posts/:path*',
+    '/admin/services/:path*',
+    '/admin/media/:path*',
+    '/admin/users/:path*',
+    '/admin/roles/:path*',
+    '/admin/settings/:path*',
+    '/admin/analytics/:path*',
+    '/admin/ai-assistant/:path*',
+    '/admin/help/:path*'
   ],
 }; 

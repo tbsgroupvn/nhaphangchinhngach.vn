@@ -1,5 +1,17 @@
-// Google Analytics 4 API Integration
-import { BetaAnalyticsDataClient } from '@google-analytics/data';
+// Google Analytics 4 API Integration (Server-side only)
+let BetaAnalyticsDataClient: any = null;
+
+// Dynamically import GA client only on server-side
+async function importGAClient() {
+  if (typeof window === 'undefined' && !BetaAnalyticsDataClient) {
+    try {
+      const module = await import('@google-analytics/data');
+      BetaAnalyticsDataClient = module.BetaAnalyticsDataClient;
+    } catch (error) {
+      console.warn('Google Analytics package not available:', error);
+    }
+  }
+}
 
 export interface GATrafficData {
   date: string;
@@ -30,28 +42,41 @@ export interface GARealTimeData {
 }
 
 class GoogleAnalyticsService {
-  private client: BetaAnalyticsDataClient | null = null;
+  private client: any = null;
   private propertyId: string;
   private isEnabled: boolean;
+  private initialized: boolean = false;
 
   constructor() {
     this.propertyId = process.env.GA4_PROPERTY_ID || '';
     this.isEnabled = !!process.env.GOOGLE_APPLICATION_CREDENTIALS && !!this.propertyId;
-    
+  }
+
+  private async initializeClient() {
+    if (this.initialized || typeof window !== 'undefined') {
+      return;
+    }
+
     if (this.isEnabled) {
       try {
-        this.client = new BetaAnalyticsDataClient({
-          keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-        });
+        await importGAClient();
+        if (BetaAnalyticsDataClient) {
+          this.client = new BetaAnalyticsDataClient({
+            keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+          });
+        }
       } catch (error) {
         console.error('Failed to initialize GA client:', error);
         this.isEnabled = false;
       }
     }
+    this.initialized = true;
   }
 
   // Get traffic data for dashboard
   async getTrafficData(days: number = 7): Promise<GATrafficData[]> {
+    await this.initializeClient();
+    
     if (!this.isEnabled || !this.client) {
       console.warn('Google Analytics not configured, using fallback data');
       return this.getFallbackTrafficData(days);
@@ -87,7 +112,7 @@ class GoogleAnalyticsService {
 
       const data: GATrafficData[] = [];
       
-      response.rows?.forEach((row) => {
+      response.rows?.forEach((row: any) => {
         const date = row.dimensionValues?.[0]?.value || '';
         const views = parseInt(row.metricValues?.[0]?.value || '0');
         const visitors = parseInt(row.metricValues?.[1]?.value || '0');
@@ -117,6 +142,8 @@ class GoogleAnalyticsService {
 
   // Get real-time active users
   async getRealTimeData(): Promise<GARealTimeData> {
+    await this.initializeClient();
+    
     if (!this.isEnabled || !this.client) {
       return this.getFallbackRealTimeData();
     }
@@ -145,6 +172,8 @@ class GoogleAnalyticsService {
 
   // Get popular pages from GA
   async getPopularPages(limit: number = 5): Promise<GAPageData[]> {
+    await this.initializeClient();
+    
     if (!this.isEnabled || !this.client) {
       return this.getFallbackPopularPages();
     }
@@ -179,7 +208,7 @@ class GoogleAnalyticsService {
 
       const pages: GAPageData[] = [];
       
-      response.rows?.forEach((row) => {
+      response.rows?.forEach((row: any) => {
         const path = row.dimensionValues?.[0]?.value || '';
         const title = row.dimensionValues?.[1]?.value || '';
         const views = parseInt(row.metricValues?.[0]?.value || '0');
