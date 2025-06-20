@@ -1,13 +1,22 @@
-# Netlify Build Configuration for Next.js Static Export
+# Netlify Build Configuration for Next.js
 [build]
   command = "npm run build"
-  publish = "out"
+  publish = ".next"
+
+# Netlify Next.js plugin
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 # Environment variables
 [context.production.environment]
   NODE_ENV = "production"
   NEXT_PUBLIC_GA_ID = "G-HQYS776HWJ"
   NEXT_PUBLIC_ENABLE_ANALYTICS = "true"
+
+# Build environment
+[build.environment]
+  NODE_VERSION = "18"
+  NEXT_RUNTIME = "nodejs18.x"
 
 # Headers for security and CMS functionality
 [[headers]]
@@ -59,8 +68,4 @@
 
 # Branch deploy context
 [context.branch-deploy]
-  command = "npm run build"
-
-# Build environment
-[build.environment]
-  NODE_VERSION = "18" 
+  command = "npm run build" 

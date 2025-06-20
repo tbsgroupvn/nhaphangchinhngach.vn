@@ -9,6 +9,7 @@ import React, { Suspense } from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://nhaphangchinhngach.vn'),
   title: 'TBS GROUP - Dịch vụ nhập hàng Trung Quốc chính ngạch uy tín',
   description: 'TBS GROUP chuyên cung cấp dịch vụ nhập khẩu hàng hóa từ Trung Quốc chính ngạch. Minh bạch, uy tín, giá cước cạnh tranh. Hotline: 0976 005 335',
   keywords: 'nhập khẩu trung quốc, hàng chính ngạch, vận chuyển hàng hóa, TBS GROUP, xuất nhập khẩu',
@@ -89,9 +90,9 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "TBS GROUP",
-              "url": "https://tbs-group.netlify.app",
-              "logo": "https://tbs-group.netlify.app/images/tbs-logo.png",
-              "description": "Công ty xuất nhập khẩu hàng đầu Việt Nam",
+              "url": "https://nhaphangchinhngach.vn",
+              "logo": "https://nhaphangchinhngach.vn/images/tbs-logo.png",
+              "description": "Công ty xuất nhập khẩu hàng đầu Việt Nam chuyên dịch vụ nhập khẩu từ Trung Quốc chính ngạch",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "123 Đường ABC",
@@ -101,14 +102,15 @@ export default function RootLayout({
               },
               "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+84-363-212-333",
+                "telephone": "+84-976-005-335",
                 "contactType": "Customer Service",
                 "areaServed": "VN",
                 "availableLanguage": "Vietnamese"
               },
               "sameAs": [
                 "https://facebook.com/tbsgroup",
-                "https://linkedin.com/company/tbsgroup"
+                "https://linkedin.com/company/tbsgroup",
+                "https://zalo.me/0976005335"
               ]
             })
           }}
