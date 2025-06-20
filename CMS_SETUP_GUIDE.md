@@ -1,260 +1,180 @@
-# Hướng dẫn Netlify CMS - TBS GROUP Website
+# TBS GROUP - Hướng dẫn Setup Netlify CMS
 
-## 🎯 Tổng quan
+## ✅ Đã Fix và Hoàn thành
 
-Netlify CMS đã được tích hợp vào website TBS GROUP với giao diện tiếng Việt, giúp admin quản lý nội dung dễ dàng không cần biết code.
-
-## 📁 File Structure
-
+### 1. **Cấu trúc Content đã được tạo**
 ```
-tbs-group-website/
-├── public/admin/
-│   ├── index.html      # Giao diện Netlify CMS
-│   └── config.yml      # Cấu hình CMS
-├── content/            # Nội dung website
-├── src/app/admin/cms/  # Trang CMS tích hợp
-└── next.config.js      # Cấu hình rewrite
-```
-
-## 🚀 Cách truy cập CMS
-
-### Local Development
-```bash
-# Chạy dev server
-npm run dev
-
-# Truy cập CMS
-http://localhost:3000/admin/cms
-http://localhost:3000/admin/index.html
+content/
+├── customer-stories/     # Câu chuyện khách hàng
+├── jobs/                 # Tuyển dụng  
+├── news/                 # Tin tức
+├── pages/                # Trang tĩnh (Homepage, About, Contact)
+├── policies/             # Chính sách
+├── services/             # Dịch vụ
+└── settings/             # Cài đặt site
+    ├── general.json      # Cài đặt chung
+    ├── navigation.json   # Menu điều hướng
+    └── footer.json       # Footer
 ```
 
-### Production
+### 2. **Cấu hình CMS đã được tối ưu**
+- ✅ Fixed `config.yml` với collections đầy đủ
+- ✅ Cập nhật URLs cho domain mới
+- ✅ Disabled local_backend cho production
+- ✅ Cấu hình Git Gateway authentication
+- ✅ Thêm preview mode
+- ✅ Tối ưu field validations
+
+### 3. **Sample Content đã tạo**
+- ✅ Homepage content
+- ✅ About page  
+- ✅ Contact page
+- ✅ Sample service (Nhập khẩu chính ngạch)
+- ✅ Sample job posting
+- ✅ Navigation settings
+- ✅ Footer settings
+
+## 🚀 Bước Setup trên Netlify
+
+### Step 1: Enable Identity
+1. Vào Netlify Dashboard > Site settings
+2. Go to **Identity** tab
+3. Click **Enable Identity**
+4. Set **Registration preferences** to "Invite only" 
+5. Enable **Git Gateway**
+
+### Step 2: Configure Identity Settings
 ```
-https://tbs-group.netlify.app/admin/
+Registration: Invite only
+External providers: GitHub (optional)
+Git Gateway: Enabled
+Roles: admin, editor
 ```
 
-## 🧪 Test CMS Local
+### Step 3: Invite Users
+1. Go to Identity tab
+2. Click **Invite users**
+3. Add email addresses for admin users
+4. Users will receive invitation emails
 
-### Cách 1: Development Server
-```bash
-npm run dev
-# Vào: http://localhost:3000/admin/cms
-```
+### Step 4: Access CMS
+- CMS URL: `https://nhaphangchinhngach.vn/admin`
+- Login with invited user credentials
+- Start managing content!
 
-### Cách 2: Static Build + Live Server
-```bash
-# Build static
-npm run build
-npm run export
+## 📋 CMS Collections Available
 
-# Chạy live-server
-npx live-server out
-# Vào: http://127.0.0.1:8080/admin/
-```
+### 📝 **Content Collections**
+1. **Dịch vụ** (`/content/services/`)
+   - Quản lý các dịch vụ xuất nhập khẩu
+   - Fields: title, description, image, pricing, etc.
 
-### Cách 3: Static Build + Python Server
-```bash
-npm run build && npm run export
-cd out
-python -m http.server 8000
-# Vào: http://localhost:8000/admin/
-```
+2. **Tin tức** (`/content/news/`)
+   - Quản lý bài viết tin tức
+   - Categories: cam-nang-xnk, nganh, tuyen-dung, hoat-dong-cong-ty
+
+3. **Tuyển dụng** (`/content/jobs/`)
+   - Đăng tin tuyển dụng
+   - Fields: position, salary, requirements, benefits
+
+4. **Câu chuyện khách hàng** (`/content/customer-stories/`)
+   - Case studies và testimonials
+   - Fields: customer info, rating, story content
+
+5. **Chính sách** (`/content/policies/`)
+   - Các chính sách công ty
+   - Types: privacy, terms, shipping, return
+
+### 🛠️ **Site Settings**
+1. **Trang** (Pages)
+   - Homepage settings
+   - About page content
+   - Contact information
+
+2. **Cài đặt chung** (General Settings)
+   - Site name, description, URLs
+   - SEO settings
+   - Brand colors
+
+3. **Menu điều hướng** (Navigation)
+   - Main menu configuration
+   - Dropdown submenus
+
+4. **Footer**
+   - Footer content and links
+   - Social media links
+
+## 🎯 Các tính năng CMS
+
+### ✅ **Editor Features**
+- Rich text editor với Markdown
+- Image upload và management
+- Live preview
+- Draft/Published status
+- SEO fields tích hợp
+
+### ✅ **Media Management**
+- Upload images to `/public/images/`
+- Automatic optimization
+- Organized folder structure
+
+### ✅ **Workflow**
+- Draft → Review → Publish
+- Version control với Git
+- Automatic backups
+
+### ✅ **Vietnamese Interface**
+- Hoàn toàn bằng tiếng Việt
+- Custom field labels
+- Intuitive navigation
 
 ## 🔧 Troubleshooting
 
-### ❌ Lỗi 404 khi vào /admin/
-
-**Nguyên nhân**: File static không được serve đúng
-
-**Giải pháp**:
-1. Kiểm tra file exists:
-   ```bash
-   ls -la public/admin/
-   ```
-
-2. Test truy cập trực tiếp:
-   ```
-   http://localhost:3000/admin/index.html
-   ```
-
-3. Kiểm tra cấu hình Next.js:
-   ```javascript
-   // next.config.js
-   async rewrites() {
-     return [
-       {
-         source: '/admin/cms',
-         destination: '/admin/index.html'
-       }
-     ]
-   }
-   ```
-
-### ❌ CMS không load
-
-**Nguyên nhân**: 
-- Config file lỗi syntax
-- Network issue
-- CSP headers
-
-**Giải pháp**:
-1. Validate config YAML:
-   ```bash
-   cat public/admin/config.yml
-   ```
-
-2. Check browser console errors
-
-3. Try direct access: `/admin/index.html`
-
-### ❌ Iframe không hiển thị
-
-**Nguyên nhân**: X-Frame-Options header
-
-**Giải pháp**:
-1. Cập nhật next.config.js:
-   ```javascript
-   async headers() {
-     return [
-       {
-         source: '/admin/(.*)',
-         headers: [
-           {
-             key: 'X-Frame-Options',
-             value: 'SAMEORIGIN'
-           }
-         ]
-       }
-     ]
-   }
-   ```
-
-2. Thử mở tab mới: `/admin/index.html`
-
-## 🎛️ Tính năng CMS
-
-### 1. Quản lý Dịch vụ
-- ✅ Tạo/sửa/xóa dịch vụ
-- ✅ Upload hình ảnh
-- ✅ Phân loại danh mục
-- ✅ Cấu hình giá/thời gian
-
-### 2. Quản lý Tin tức
-- ✅ Viết bài markdown
-- ✅ Phân loại category
-- ✅ Quản lý tags
-- ✅ Lập lịch publish
-
-### 3. Quản lý Tuyển dụng
-- ✅ Đăng tin tuyển dụng
-- ✅ Thiết lập deadline
-- ✅ Quản lý salary/requirements
-
-### 4. Cài đặt Website
-- ✅ Thông tin chung
-- ✅ Menu navigation
-- ✅ Footer settings
-- ✅ SEO config
-
-## 🌐 Deploy lên Netlify
-
-### 1. Netlify Identity Setup
+### Authentication Issues
 ```bash
-# Trong Netlify Dashboard:
-# 1. Site Settings > Identity
-# 2. Enable Identity service
-# 3. Set Registration > Invite only
-# 4. Enable Git Gateway
+# Check if Identity is enabled
+- Go to Netlify Dashboard > Identity
+- Ensure Git Gateway is enabled
+- Check user invitation status
 ```
 
-### 2. Build Settings
-```toml
-# netlify.toml
-[build]
-  command = "npm run build && npm run export"
-  publish = "out"
-
-[[headers]]
-  for = "/admin/*"
-  [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
-```
-
-### 3. Environment Variables
+### Content Not Showing
 ```bash
-# Netlify Dashboard > Site Settings > Environment Variables
-NETLIFY_SITE_ID = "your-site-id"
+# Verify file structure
+- Check content folders exist
+- Verify frontmatter format
+- Check file permissions
 ```
 
-## 🔐 Authentication
+### Local Development
+```bash
+# Run CMS locally
+npm run dev
+# Visit: http://localhost:3000/admin
+# Local backend will be enabled automatically
+```
 
-### Local (Development)
-- Không cần authentication
-- File được lưu trực tiếp
+## 📞 Support
 
-### Production (Netlify)
-- Cần setup Netlify Identity
-- Login qua GitHub OAuth
-- Content được commit vào Git
+### CMS Access
+- **URL**: https://nhaphangchinhngach.vn/admin
+- **Authentication**: Netlify Identity
+- **Backup**: Auto-saved to Git
 
-## 💡 Best Practices
+### Technical Support
+- Check Netlify logs for errors
+- Verify configuration in `public/admin/config.yml`
+- Test authentication flow
 
-### Content Management
-- ✅ Dùng slug SEO-friendly
-- ✅ Optimize images trước upload
-- ✅ Backup content thường xuyên
-- ✅ Preview trước khi publish
+## 🎉 Ready to Use!
 
-### Performance
-- ✅ Compress images < 1MB
-- ✅ Dùng WebP format
-- ✅ Tối ưu markdown content
-- ✅ Monitor loading speed
+TBS GROUP Netlify CMS is now fully configured with:
+- ✅ Complete content management
+- ✅ Vietnamese interface
+- ✅ Secure authentication
+- ✅ Media management
+- ✅ SEO optimization
+- ✅ Mobile responsive admin
+- ✅ Git-based workflow
 
-### Security
-- ✅ Limit user access
-- ✅ Regular backup
-- ✅ Monitor change logs
-- ✅ Secure credentials
-
-## 📝 Workflow
-
-### 1. Tạo nội dung mới
-1. Vào CMS: `/admin/cms`
-2. Chọn Collection
-3. Click "New [Item]"
-4. Điền form
-5. Save Draft/Publish
-
-### 2. Chỉnh sửa content
-1. Vào Collection
-2. Click item cần sửa
-3. Edit content
-4. Save changes
-
-### 3. Upload media
-1. Vào Media Library
-2. Upload files
-3. Copy URL
-4. Use in content
-
-## 🆘 Support
-
-### Documentation
-- [Netlify CMS Docs](https://www.netlifycms.org/docs/)
-- [Widget Reference](https://www.netlifycms.org/docs/widgets/)
-
-### TBS GROUP Support
-- 📧 Email: tech@tbs-group.vn
-- 📞 Phone: 0363 212 333
-- 🔗 Help: `/admin/help`
-
-### Common Issues
-- **404 Error**: Check file paths and rewrite config
-- **Config Error**: Validate YAML syntax
-- **Load Error**: Check network and console logs
-- **Auth Error**: Setup Netlify Identity properly
-
----
-
-**💡 Tip**: Luôn test local trước khi deploy production! 
+**Start managing your content at**: `/admin` 

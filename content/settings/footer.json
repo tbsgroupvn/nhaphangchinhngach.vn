@@ -1,0 +1,52 @@
+{
+  "description": "TBS GROUP - Đơn vị hàng đầu trong lĩnh vực dịch vụ xuất nhập khẩu, vận tải và logistics tại Việt Nam. Với nhiều năm kinh nghiệm, chúng tôi cam kết mang đến cho khách hàng dịch vụ chuyên nghiệp và uy tín.",
+  "copyright": "© 2025 TBS GROUP. All rights reserved.",
+  "quickLinks": [
+    {
+      "label": "Giới thiệu",
+      "link": "/gioi-thieu"
+    },
+    {
+      "label": "Dịch vụ",
+      "link": "/dich-vu"
+    },
+    {
+      "label": "Tin tức",
+      "link": "/tin-tuc"
+    },
+    {
+      "label": "Liên hệ",
+      "link": "/lien-he"
+    },
+    {
+      "label": "Chính sách bảo mật",
+      "link": "/chinh-sach/bao-mat"
+    },
+    {
+      "label": "Điều khoản sử dụng",
+      "link": "/chinh-sach/dieu-khoan"
+    }
+  ],
+  "socialMedia": [
+    {
+      "name": "Facebook",
+      "icon": "facebook",
+      "url": "https://facebook.com/tbsgroup"
+    },
+    {
+      "name": "Zalo",
+      "icon": "chat",
+      "url": "https://zalo.me/0976005335"
+    },
+    {
+      "name": "TikTok",
+      "icon": "video-camera",
+      "url": "https://tiktok.com/@tbslogistics"
+    },
+    {
+      "name": "LinkedIn",
+      "icon": "linkedin",
+      "url": "https://linkedin.com/company/tbsgroup"
+    }
+  ]
+} 

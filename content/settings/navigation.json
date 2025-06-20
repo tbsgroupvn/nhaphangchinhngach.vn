@@ -1,0 +1,43 @@
+{
+  "mainMenu": [
+    {
+      "label": "Trang chủ",
+      "link": "/",
+      "icon": "home"
+    },
+    {
+      "label": "Giới thiệu",
+      "link": "/gioi-thieu",
+      "icon": "information-circle"
+    },
+    {
+      "label": "Dịch vụ",
+      "link": "/dich-vu",
+      "icon": "briefcase",
+      "children": [
+        {
+          "label": "Nhập khẩu chính ngạch",
+          "link": "/dich-vu/nhap-khau-chinh-ngach"
+        },
+        {
+          "label": "Gom hàng lẻ",
+          "link": "/dich-vu/gom-hang-le-ghep-container"
+        },
+        {
+          "label": "Vận chuyển quốc tế",
+          "link": "/dich-vu/van-chuyen-quoc-te"
+        }
+      ]
+    },
+    {
+      "label": "Tin tức",
+      "link": "/tin-tuc",
+      "icon": "newspaper"
+    },
+    {
+      "label": "Liên hệ",
+      "link": "/lien-he",
+      "icon": "envelope"
+    }
+  ]
+} 

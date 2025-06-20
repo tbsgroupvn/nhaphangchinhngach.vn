@@ -80,6 +80,17 @@
     .nc-entryEditor-editor {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     }
+    
+    /* Identity widget custom styling */
+    .netlify-identity-button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -142,23 +153,30 @@
       }
     });
     
-    // Khởi tạo CMS
+    // Khởi tạo CMS với cấu hình đúng
     CMS.init({
       config: {
         load_config_file: true,
-        local_backend: window.location.hostname === 'localhost'
+        // Local backend chỉ enable khi localhost
+        local_backend: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1',
+        // Cấu hình Git Gateway cho production
+        backend: {
+          name: 'git-gateway',
+          branch: 'main'
+        }
       }
     });
     
     // Xử lý loading screen
     document.addEventListener('DOMContentLoaded', function() {
+      // Ẩn loading screen sau khi CMS init
       setTimeout(function() {
         document.getElementById('loadingScreen').style.display = 'none';
         document.getElementById('cmsContainer').classList.add('loaded');
       }, 2000);
     });
     
-    // Netlify Identity
+    // Netlify Identity authentication
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
         if (!user) {
@@ -167,7 +185,21 @@
           });
         }
       });
+      
+      // Auto-open identity widget on first visit
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          console.log('No user found, opening identity widget');
+        } else {
+          console.log('User authenticated:', user.user_metadata.full_name);
+        }
+      });
     }
+    
+    // Debug log
+    console.log('🎯 TBS GROUP CMS Initialized');
+    console.log('🌐 Environment:', window.location.hostname);
+    console.log('🔧 Local backend:', window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
   </script>
 </body>
 </html> 

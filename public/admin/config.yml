@@ -9,18 +9,22 @@ backend:
     deleteMedia: 'Xóa "{{path}}"'
     openAuthoring: '{{message}}'
 
-# Cấu hình local backend cho development
-local_backend: true
+# Cấu hình local backend chỉ cho development
+# local_backend: true
 
 media_folder: "public/images"
 public_folder: "/images"
 
 # Cấu hình hiển thị
-display_url: https://tbs-group.netlify.app
-logo_url: https://tbs-group.netlify.app/images/tbs-logo.png
+display_url: https://nhaphangchinhngach.vn
+logo_url: https://nhaphangchinhngach.vn/images/tbs-logo.png
 
 # Cấu hình ngôn ngữ
 locale: 'vi'
+
+# Cấu hình editor
+editor:
+  preview: true
 
 collections:
   # Quản lý dịch vụ
@@ -28,11 +32,11 @@ collections:
     label: "Dịch vụ"
     folder: "content/services"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     fields:
       - {label: "Tiêu đề", name: "title", widget: "string"}
       - {label: "Mô tả ngắn", name: "description", widget: "text"}
-      - {label: "Hình ảnh", name: "image", widget: "image"}
+      - {label: "Hình ảnh", name: "image", widget: "image", required: false}
       - {label: "Icon", name: "icon", widget: "string", hint: "Tên icon từ Heroicons"}
       - {label: "Giá từ", name: "priceFrom", widget: "string"}
       - {label: "Thời gian", name: "duration", widget: "string"}
@@ -45,9 +49,9 @@ collections:
         name: "details"
         widget: "object"
         fields:
-          - {label: "Ưu điểm", name: "benefits", widget: "list"}
-          - {label: "Quy trình", name: "process", widget: "list"}
-          - {label: "Yêu cầu", name: "requirements", widget: "list"}
+          - {label: "Ưu điểm", name: "benefits", widget: "list", required: false}
+          - {label: "Quy trình", name: "process", widget: "list", required: false}
+          - {label: "Yêu cầu", name: "requirements", widget: "list", required: false}
           - {label: "Lưu ý", name: "notes", widget: "text", required: false}
 
   # Quản lý tin tức
@@ -59,11 +63,11 @@ collections:
     fields:
       - {label: "Tiêu đề", name: "title", widget: "string"}
       - {label: "Mô tả", name: "description", widget: "text"}
-      - {label: "Hình ảnh", name: "image", widget: "image"}
+      - {label: "Hình ảnh", name: "image", widget: "image", required: false}
       - {label: "Ngày đăng", name: "date", widget: "datetime"}
       - {label: "Tác giả", name: "author", widget: "string", default: "TBS GROUP"}
       - {label: "Danh mục", name: "category", widget: "select", options: ["cam-nang-xnk", "nganh", "tuyen-dung", "hoat-dong-cong-ty"]}
-      - {label: "Tags", name: "tags", widget: "list", default: []}
+      - {label: "Tags", name: "tags", widget: "list", default: [], required: false}
       - {label: "Nổi bật", name: "featured", widget: "boolean", default: false}
       - {label: "Trạng thái", name: "status", widget: "select", options: ["published", "draft"], default: "draft"}
       - {label: "Lượt xem", name: "views", widget: "number", default: 0}
@@ -99,8 +103,8 @@ collections:
       - {label: "Tiêu đề", name: "title", widget: "string"}
       - {label: "Tên khách hàng", name: "customerName", widget: "string"}
       - {label: "Công ty", name: "company", widget: "string"}
-      - {label: "Avatar", name: "avatar", widget: "image"}
-      - {label: "Hình ảnh", name: "image", widget: "image"}
+      - {label: "Avatar", name: "avatar", widget: "image", required: false}
+      - {label: "Hình ảnh", name: "image", widget: "image", required: false}
       - {label: "Ngày", name: "date", widget: "datetime"}
       - {label: "Dịch vụ sử dụng", name: "service", widget: "string"}
       - {label: "Đánh giá", name: "rating", widget: "number", min: 1, max: 5, default: 5}
@@ -139,7 +143,7 @@ collections:
               - {label: "Phụ đề", name: "subtitle", widget: "text"}
               - {label: "Nút CTA", name: "ctaText", widget: "string"}
               - {label: "Link CTA", name: "ctaLink", widget: "string"}
-              - {label: "Hình ảnh nền", name: "backgroundImage", widget: "image"}
+              - {label: "Hình ảnh nền", name: "backgroundImage", widget: "image", required: false}
           - label: "Thống kê"
             name: "stats"
             widget: "list"
@@ -147,6 +151,7 @@ collections:
               - {label: "Số", name: "number", widget: "string"}
               - {label: "Nhãn", name: "label", widget: "string"}
               - {label: "Mô tả", name: "description", widget: "string"}
+          - {label: "Nội dung", name: "body", widget: "markdown"}
 
       - label: "Giới thiệu"
         name: "about"
@@ -154,15 +159,15 @@ collections:
         fields:
           - {label: "Tiêu đề", name: "title", widget: "string"}
           - {label: "Mô tả", name: "description", widget: "text"}
-          - {label: "Nội dung", name: "body", widget: "markdown"}
           - label: "Đội ngũ"
             name: "team"
             widget: "list"
             fields:
               - {label: "Tên", name: "name", widget: "string"}
               - {label: "Chức vụ", name: "position", widget: "string"}
-              - {label: "Avatar", name: "avatar", widget: "image"}
+              - {label: "Avatar", name: "avatar", widget: "image", required: false}
               - {label: "Mô tả", name: "description", widget: "text"}
+          - {label: "Nội dung", name: "body", widget: "markdown"}
 
       - label: "Liên hệ"
         name: "contact"
@@ -178,6 +183,7 @@ collections:
               - {label: "Điện thoại", name: "phone", widget: "string"}
               - {label: "Email", name: "email", widget: "string"}
               - {label: "Giờ làm việc", name: "workingHours", widget: "text"}
+          - {label: "Nội dung", name: "body", widget: "markdown"}
 
   # Cấu hình site
   - name: "settings"
@@ -190,8 +196,8 @@ collections:
           - {label: "Tên site", name: "siteName", widget: "string"}
           - {label: "Mô tả site", name: "siteDescription", widget: "text"}
           - {label: "URL", name: "siteUrl", widget: "string"}
-          - {label: "Logo", name: "logo", widget: "image"}
-          - {label: "Favicon", name: "favicon", widget: "image"}
+          - {label: "Logo", name: "logo", widget: "image", required: false}
+          - {label: "Favicon", name: "favicon", widget: "image", required: false}
           - {label: "Màu chủ đạo", name: "primaryColor", widget: "string"}
           - {label: "Màu phụ", name: "secondaryColor", widget: "string"}
           - label: "SEO"
@@ -201,7 +207,7 @@ collections:
               - {label: "Meta title", name: "metaTitle", widget: "string"}
               - {label: "Meta description", name: "metaDescription", widget: "text"}
               - {label: "Keywords", name: "keywords", widget: "list"}
-              - {label: "OG Image", name: "ogImage", widget: "image"}
+              - {label: "OG Image", name: "ogImage", widget: "image", required: false}
 
       - label: "Menu"
         name: "navigation"
