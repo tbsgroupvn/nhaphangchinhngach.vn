@@ -1,11 +1,13 @@
 'use client';
 
 import { useState, useCallback, useRef } from 'react'
+import Image from 'next/image'
 import { useDropzone } from 'react-dropzone'
 import { 
   FaUpload, FaFolder, FaImage, FaVideo, FaFileAlt, FaDownload,
   FaTrash, FaEye, FaCopy, FaEdit, FaSearch, FaFilter, FaSort,
-  FaList, FaTh, FaPlus, FaCloud, FaChartBar, FaShare
+  FaList, FaTh, FaPlus, FaCloud, FaChartBar, FaShare,
+  FaExclamationTriangle
 } from 'react-icons/fa'
 import AdminHeader from '../../../components/admin/AdminHeader'
 
@@ -95,8 +97,18 @@ export default function MediaPage() {
   const [showUploadModal, setShowUploadModal] = useState(false)
   const [newFolderName, setNewFolderName] = useState('')
   const [showNewFolderModal, setShowNewFolderModal] = useState(false)
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
 
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Handle image load errors
+  const handleImageError = (fileId: string) => {
+    setImageErrors(prev => {
+      const newSet = new Set(prev)
+      newSet.add(fileId)
+      return newSet
+    })
+  }
 
   // Drag & Drop upload
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -212,8 +224,11 @@ export default function MediaPage() {
   }
 
   const handleCopyUrl = (url: string) => {
-    navigator.clipboard.writeText(url)
-    alert('Đã copy URL vào clipboard!')
+    navigator.clipboard.writeText(url).then(() => {
+      alert('✅ Đã copy URL vào clipboard!')
+    }).catch(() => {
+      alert('❌ Không thể copy URL')
+    })
   }
 
   const totalSize = files.reduce((sum, file) => sum + file.size, 0)
@@ -227,6 +242,22 @@ export default function MediaPage() {
       />
       
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        {/* Production Warning */}
+        <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+          <div className="flex items-start gap-3">
+            <FaExclamationTriangle className="text-amber-600 text-lg mt-0.5" />
+            <div>
+              <h4 className="font-semibold text-amber-800 mb-2">💡 Thư viện Media - Demo Mode</h4>
+              <p className="text-sm text-amber-700 mb-2">
+                Hiện tại đang chạy với mock data. Trong production, cần tích hợp với cloud storage.
+              </p>
+              <div className="text-sm text-amber-700">
+                <p><strong>Khuyến nghị:</strong> Tích hợp với Cloudinary, AWS S3, hoặc Google Drive cho production.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white rounded-lg border border-gray-200 p-4">
@@ -278,6 +309,7 @@ export default function MediaPage() {
               <button
                 onClick={() => setShowNewFolderModal(true)}
                 className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
+                title="Tạo thư mục mới"
               >
                 <FaPlus />
               </button>
@@ -312,10 +344,13 @@ export default function MediaPage() {
               ))}
             </div>
 
-            {/* Google Drive Integration */}
+            {/* Cloud Integration */}
             <div className="mt-6 pt-6 border-t border-gray-200">
               <h4 className="font-medium text-gray-900 mb-3">Tích hợp cloud</h4>
-              <button className="w-full flex items-center gap-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50">
+              <button 
+                className="w-full flex items-center gap-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                title="Tính năng sẽ có trong phiên bản production"
+              >
                 <FaCloud className="text-blue-600" />
                 <span className="text-sm">Kết nối Google Drive</span>
               </button>
@@ -340,7 +375,7 @@ export default function MediaPage() {
                       </span>
                       <button
                         onClick={handleDeleteSelected}
-                        className="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700"
+                        className="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700 transition-colors"
                       >
                         <FaTrash className="inline mr-1" />
                         Xóa
@@ -352,7 +387,7 @@ export default function MediaPage() {
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setShowUploadModal(true)}
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center gap-2"
+                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center gap-2 transition-colors"
                   >
                     <FaUpload />
                     Upload file
@@ -361,13 +396,15 @@ export default function MediaPage() {
                   <div className="flex items-center border border-gray-300 rounded-lg">
                     <button
                       onClick={() => setViewMode('grid')}
-                      className={`p-2 ${viewMode === 'grid' ? 'bg-gray-100' : ''}`}
+                      className={`p-2 transition-colors ${viewMode === 'grid' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+                      title="Xem dạng lưới"
                     >
                       <FaTh />
                     </button>
                     <button
                       onClick={() => setViewMode('list')}
-                      className={`p-2 ${viewMode === 'list' ? 'bg-gray-100' : ''}`}
+                      className={`p-2 transition-colors ${viewMode === 'list' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+                      title="Xem dạng danh sách"
                     >
                       <FaList />
                     </button>
@@ -393,7 +430,7 @@ export default function MediaPage() {
                 <select
                   value={typeFilter}
                   onChange={(e) => setTypeFilter(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-lg"
+                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 >
                   <option value="all">Tất cả loại</option>
                   <option value="image">Hình ảnh</option>
@@ -409,7 +446,7 @@ export default function MediaPage() {
                     setSortBy(field as any)
                     setSortOrder(order as any)
                   }}
-                  className="px-3 py-2 border border-gray-300 rounded-lg"
+                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 >
                   <option value="uploadedAt-desc">Mới nhất</option>
                   <option value="uploadedAt-asc">Cũ nhất</option>
@@ -434,11 +471,16 @@ export default function MediaPage() {
                     onClick={() => handleSelectFile(file.id)}
                   >
                     <div className="aspect-square rounded-lg bg-gray-100 mb-3 flex items-center justify-center overflow-hidden">
-                      {file.thumbnail ? (
-                        <img 
+                      {file.thumbnail && !imageErrors.has(file.id) ? (
+                        <Image 
                           src={file.thumbnail} 
                           alt={file.name}
+                          width={200}
+                          height={200}
                           className="w-full h-full object-cover"
+                          onError={() => handleImageError(file.id)}
+                          placeholder="blur"
+                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                         />
                       ) : (
                         <div className="text-4xl">
@@ -447,7 +489,7 @@ export default function MediaPage() {
                       )}
                     </div>
                     
-                    <h4 className="font-medium text-gray-900 truncate mb-1">{file.name}</h4>
+                    <h4 className="font-medium text-gray-900 truncate mb-1" title={file.name}>{file.name}</h4>
                     <p className="text-sm text-gray-500">{formatFileSize(file.size)}</p>
                     <p className="text-xs text-gray-400">{file.downloads} lượt tải</p>
                     
@@ -457,7 +499,7 @@ export default function MediaPage() {
                           e.stopPropagation()
                           handleCopyUrl(file.url)
                         }}
-                        className="p-1 text-gray-600 hover:text-blue-600"
+                        className="p-1 text-gray-600 hover:text-blue-600 transition-colors"
                         title="Copy URL"
                       >
                         <FaCopy />
@@ -468,7 +510,7 @@ export default function MediaPage() {
                           e.stopPropagation()
                           window.open(file.url, '_blank')
                         }}
-                        className="p-1 text-gray-600 hover:text-green-600"
+                        className="p-1 text-gray-600 hover:text-green-600 transition-colors"
                         title="Xem"
                       >
                         <FaEye />
@@ -482,7 +524,7 @@ export default function MediaPage() {
                           link.download = file.name
                           link.click()
                         }}
-                        className="p-1 text-gray-600 hover:text-purple-600"
+                        className="p-1 text-gray-600 hover:text-purple-600 transition-colors"
                         title="Tải xuống"
                       >
                         <FaDownload />
@@ -500,7 +542,7 @@ export default function MediaPage() {
                         <th className="text-left p-4">
                           <input
                             type="checkbox"
-                            checked={selectedFiles.length === filteredFiles.length}
+                            checked={selectedFiles.length === filteredFiles.length && filteredFiles.length > 0}
                             onChange={(e) => {
                               if (e.target.checked) {
                                 setSelectedFiles(filteredFiles.map(f => f.id))
@@ -521,7 +563,7 @@ export default function MediaPage() {
                     </thead>
                     <tbody>
                       {filteredFiles.map(file => (
-                        <tr key={file.id} className="border-b border-gray-100 hover:bg-gray-50">
+                        <tr key={file.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                           <td className="p-4">
                             <input
                               type="checkbox"
@@ -532,15 +574,22 @@ export default function MediaPage() {
                           </td>
                           <td className="p-4">
                             <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded bg-gray-100 flex items-center justify-center">
-                                {file.thumbnail ? (
-                                  <img src={file.thumbnail} alt={file.name} className="w-8 h-8 object-cover rounded" />
+                              <div className="w-10 h-10 rounded bg-gray-100 flex items-center justify-center overflow-hidden">
+                                {file.thumbnail && !imageErrors.has(file.id) ? (
+                                  <Image 
+                                    src={file.thumbnail} 
+                                    alt={file.name} 
+                                    width={40}
+                                    height={40}
+                                    className="w-8 h-8 object-cover rounded"
+                                    onError={() => handleImageError(file.id)}
+                                  />
                                 ) : (
                                   getFileIcon(file.type)
                                 )}
                               </div>
                               <div>
-                                <p className="font-medium text-gray-900">{file.name}</p>
+                                <p className="font-medium text-gray-900" title={file.name}>{file.name}</p>
                                 <p className="text-sm text-gray-500">{file.description}</p>
                               </div>
                             </div>
@@ -553,26 +602,37 @@ export default function MediaPage() {
                             <div className="flex items-center gap-2">
                               <button
                                 onClick={() => handleCopyUrl(file.url)}
-                                className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
+                                className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
                                 title="Copy URL"
                               >
                                 <FaCopy />
                               </button>
                               <button
                                 onClick={() => window.open(file.url, '_blank')}
-                                className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded"
+                                className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded transition-colors"
                                 title="Xem"
                               >
                                 <FaEye />
                               </button>
                               <button
-                                className="p-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded"
+                                onClick={() => {
+                                  const link = document.createElement('a')
+                                  link.href = file.url
+                                  link.download = file.name
+                                  link.click()
+                                }}
+                                className="p-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded transition-colors"
                                 title="Tải xuống"
                               >
                                 <FaDownload />
                               </button>
                               <button
-                                className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded"
+                                onClick={() => {
+                                  if (confirm(`Bạn có chắc muốn xóa file "${file.name}"?`)) {
+                                    setFiles(prev => prev.filter(f => f.id !== file.id))
+                                  }
+                                }}
+                                className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
                                 title="Xóa"
                               >
                                 <FaTrash />
@@ -584,6 +644,20 @@ export default function MediaPage() {
                     </tbody>
                   </table>
                 </div>
+              </div>
+            )}
+
+            {/* No files found */}
+            {filteredFiles.length === 0 && (
+              <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
+                <FaFileAlt className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">Không tìm thấy file</h3>
+                <p className="text-gray-500">
+                  {searchQuery || typeFilter !== 'all' 
+                    ? 'Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm'
+                    : 'Upload file đầu tiên để bắt đầu quản lý media'
+                  }
+                </p>
               </div>
             )}
           </div>
@@ -614,13 +688,13 @@ export default function MediaPage() {
               <div className="flex justify-end gap-3 mt-6">
                 <button
                   onClick={() => setShowUploadModal(false)}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   Hủy
                 </button>
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                 >
                   Chọn file
                 </button>
@@ -650,13 +724,14 @@ export default function MediaPage() {
                     setShowNewFolderModal(false)
                     setNewFolderName('')
                   }}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   Hủy
                 </button>
                 <button
                   onClick={handleCreateFolder}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                  disabled={!newFolderName.trim()}
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Tạo thư mục
                 </button>
