@@ -20,13 +20,10 @@ details:
     - "Tiết kiệm 30% chi phí so với các đơn vị khác"
   
   process:
-    - "Tư vấn và báo giá chi tiết qua Zalo/điện thoại"
-    - "Ký hợp đồng với điều khoản rõ ràng, minh bạch"
-    - "Đặt cọc theo hợp đồng (thường 30-50%)"
-    - "Tiến hành order hàng tại Trung Quốc"
-    - "Kiểm tra chất lượng trước khi vận chuyển"
-    - "Vận chuyển về Việt Nam và làm thủ tục hải quan"
-    - "Giao hàng tận nơi và xuất hóa đơn đầy đủ"
+    - "Tư vấn thủ tục và phân tích rủi ro chi tiết"
+    - "Chuẩn bị hồ sơ và xác nhận hàng hóa"
+    - "Khai báo hải quan và kiểm tra chất lượng"
+    - "Thông quan và giao hàng tận nơi"
   
   requirements:
     - "Thông tin chi tiết về sản phẩm cần nhập khẩu"
@@ -44,25 +41,46 @@ details:
 
 Với **hơn 8 năm kinh nghiệm** và **200.000+ đơn hàng** thành công, chúng tôi cam kết mang đến giải pháp nhập khẩu tối ưu nhất cho khách hàng.
 
-## 🎯 Tại sao chọn dịch vụ của TBS GROUP?
+---
 
-### ✅ 100% Chính ngạch - Minh bạch
-- Đầy đủ **hóa đơn VAT** theo quy định
-- **Hợp đồng rõ ràng** - Không điều khoản ẩn
-- **Xuất xứ hàng hóa** được xác minh chính xác
-- **Thủ tục hải quan** đầy đủ, hợp lệ
+## 🤝 Khách hàng nói gì về TBS GROUP?
 
-### 🛡️ Bảo vệ quyền lợi khách hàng
-- **Bảo hiểm hàng hóa** từ kho TQ đến tay khách hàng
-- **Cam kết hoàn tiền 100%** nếu có sai sót từ phía chúng tôi
-- **Kiểm tra chất lượng** tại kho TQ trước khi vận chuyển
-- **Theo dõi đơn hàng** 24/7 qua app/website
+> **"Chúng tôi đã yên tâm giao hàng triệu USD cho TBS GROUP suốt 3 năm, hàng về nhanh, mọi giấy tờ chuẩn chỉnh, khai báo đúng quy định. Đội ngũ TBS luôn tư vấn tận tình từng khâu."**
+> 
+> *— Anh Nguyễn Minh Tuấn, Giám đốc Công ty TNHH Thương mại ABC*
 
-### 💰 Tiết kiệm tối đa chi phí
-- **Giá cước cạnh tranh** nhất thị trường
-- **Không phí ẩn** - Báo giá minh bạch từ đầu
-- **Ưu đãi khách hàng** thường xuyên và VIP
-- **Tư vấn tối ưu** tuyến vận chuyển để tiết kiệm
+> **"TBS GROUP đã giúp shop tôi tiết kiệm được 40% chi phí nhập khẩu so với đơn vị cũ. Quan trọng nhất là mọi thủ tục đều minh bạch, không bị phát sinh phí ẩn như trước."**
+> 
+> *— Chị Lê Thị Mai, Chủ shop thời trang online*
+
+---
+
+## 🏆 Vì sao chọn nhập khẩu chính ngạch với TBS GROUP?
+
+### 📊 So sánh: Chính ngạch vs Tiểu ngạch
+
+| **Tiêu chí** | **Chính ngạch (TBS GROUP)** | **Tiểu ngạch** |
+|--------------|----------------------------|----------------|
+| **🛡️ Bảo vệ pháp lý** | ✅ Đầy đủ thủ tục hải quan, không rủi ro truy thu | ❌ Có thể bị phạt, truy thu thuế |
+| **📋 Hóa đơn VAT** | ✅ Được xuất hóa đơn đầy đủ cho kế toán | ❌ Không có hóa đơn hợp lệ |
+| **💰 Chi phí ổn định** | ✅ Báo giá minh bạch, không phí ẩn | ⚠️ Có thể phát sinh chi phí |
+| **🎯 Tư vấn chuyên nghiệp** | ✅ Được tư vấn rõ ràng từng khâu | ❌ Ít hoặc không có tư vấn |
+
+### 🎯 Điểm khác biệt của TBS GROUP
+
+#### 📈 **Kinh nghiệm và uy tín**
+- ✅ **8+ năm** kinh nghiệm trong lĩnh vực
+- ✅ **99.8%** tỷ lệ thành công
+- ✅ **200,000+** đơn hàng hoàn thành
+- ✅ **8,000+** khách hàng tin tưởng
+
+#### 🔒 **An toàn và minh bạch**
+- ✅ **100% chính ngạch** với đầy đủ giấy tờ
+- ✅ **Bảo hiểm toàn trình** vận chuyển
+- ✅ **Cam kết hoàn tiền** nếu có sai sót
+- ✅ **Theo dõi 24/7** qua hệ thống
+
+---
 
 ## 🚛 Các tuyến vận chuyển chính
 
@@ -87,7 +105,65 @@ Với **hơn 8 năm kinh nghiệm** và **200.000+ đơn hàng** thành công, c
 - 📦 Phù hợp container nguyên chiếc
 - 🌊 Ổn định, ít rủi ro thất lạc
 
-## 📋 Các loại hàng nhập khẩu phổ biến
+---
+
+## 📋 Quy trình thực hiện chi tiết
+
+### **Bước 1: 🔍 Tư vấn thủ tục – phân tích rủi ro**
+- **Tư vấn miễn phí** về HS code, thuế suất và thủ tục
+- **Phân tích rủi ro** cho từng loại hàng hóa
+- **Báo giá chi tiết** các tuyến vận chuyển tối ưu
+- **Lập kế hoạch** thời gian nhập khẩu cụ thể
+
+### **Bước 2: 📄 Chuẩn bị hồ sơ, xác nhận hàng hóa**
+- **Thu thập đầy đủ** giấy tờ pháp lý cần thiết
+- **Xác minh thông tin** sản phẩm và nhà cung cấp
+- **Chuẩn bị hồ sơ** khai báo hải quan chính xác
+- **Kiểm tra chất lượng** tại kho Trung Quốc
+
+### **Bước 3: 🏛️ Khai báo hải quan – kiểm tra**
+- **Khai báo đầy đủ** thông tin hàng hóa với cơ quan hải quan
+- **Nộp thuế chính xác** theo quy định hiện hành
+- **Phối hợp kiểm tra** khi cơ quan chức năng yêu cầu
+- **Đảm bảo tuân thủ** các quy định về xuất xứ
+
+### **Bước 4: ✅ Thông quan – giao hàng tận nơi**
+- **Hoàn tất thủ tục** thông quan nhanh chóng
+- **Vận chuyển an toàn** đến địa chỉ khách hàng
+- **Xuất hóa đơn VAT** đầy đủ theo yêu cầu
+- **Hỗ trợ sau bán hàng** và giải quyết khiếu nại
+
+![Quy trình nhập khẩu chính ngạch TBS GROUP](https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80)
+
+---
+
+## 🌟 Tính năng nổi bật
+
+### 💎 **Dịch vụ chuyên sâu**
+
+#### 📊 **Báo trước sắc thuế, không phí ẩn**
+- **Tính toán chính xác** thuế nhập khẩu trước khi đặt hàng
+- **Cam kết không phát sinh** phí ẩn ngoài báo giá
+- **Hỗ trợ tối ưu** thuế suất hợp pháp
+
+#### 🆔 **Tư vấn kiểm tra HS code miễn phí**
+- **Miễn phí tư vấn** HS code cho khách hàng mới
+- **Đảm bảo khai báo đúng** mã số hàng hóa
+- **Tránh rủi ro** bị phạt do khai sai
+
+#### 🔐 **Bảo mật thông tin tuyệt đối**
+- **Cam kết bảo mật** thông tin khách hàng và nhà cung cấp
+- **Hệ thống quản lý** hiện đại và an toàn
+- **Tuân thủ quy định** về bảo vệ dữ liệu
+
+#### 📈 **Báo cáo chi tiết**
+- **Báo cáo hàng tháng** về tình hình nhập khẩu
+- **Phân tích xu hướng** giá cả và thị trường
+- **Tư vấn chiến lược** nhập khẩu hiệu quả
+
+---
+
+## 📦 Các loại hàng nhập khẩu phổ biến
 
 ### 🏠 Gia dụng & Nội thất
 - Đồ gia dụng nhựa, inox
@@ -113,6 +189,8 @@ Với **hơn 8 năm kinh nghiệm** và **200.000+ đơn hàng** thành công, c
 - Hóa chất công nghiệp
 - Thiết bị y tế
 
+---
+
 ## ⚠️ Hàng cấm & hạn chế nhập khẩu
 
 ### ❌ Hàng cấm tuyệt đối
@@ -129,6 +207,8 @@ Với **hơn 8 năm kinh nghiệm** và **200.000+ đơn hàng** thành công, c
 
 *TBS GROUP sẽ tư vấn chi tiết về thủ tục cho từng loại hàng có điều kiện.*
 
+---
+
 ## 💳 Bảng giá dịch vụ 2024
 
 | Tuyến vận chuyển | Thời gian | Giá cước | Phí thêm |
@@ -143,31 +223,7 @@ Với **hơn 8 năm kinh nghiệm** và **200.000+ đơn hàng** thành công, c
 - **Phí giao hàng tận nơi**: Theo khoảng cách
 - **Phí ủy thác XNK**: 2-3% giá trị hàng (đối với DN)
 
-## 📞 Quy trình đặt hàng
-
-### Bước 1: Tư vấn miễn phí
-📱 **Zalo/Hotline**: [0976 005 335](tel:0976005335)
-- Cung cấp thông tin sản phẩm cần nhập
-- Nhận báo giá chi tiết và tư vấn tuyến tối ưu
-- Được giải đáp mọi thắc mắc
-
-### Bước 2: Ký hợp đồng  
-📋 **Hợp đồng rõ ràng, minh bạch**
-- Thỏa thuận điều khoản dịch vụ
-- Xác định trách nhiệm hai bên
-- Cam kết về chất lượng và thời gian
-
-### Bước 3: Thanh toán đặt cọc
-💰 **Thanh toán linh hoạt**  
-- Chuyển khoản ngân hàng
-- Thanh toán qua Zalo Pay, MoMo
-- Thanh toán trực tiếp tại văn phòng
-
-### Bước 4: Theo dõi đơn hàng
-📱 **Cập nhật liên tục**
-- Nhận thông báo qua Zalo/SMS
-- Xem trạng thái trên website
-- Hỗ trợ 24/7 khi cần thiết
+---
 
 ## 🎁 Ưu đãi dành cho khách hàng
 
@@ -187,6 +243,8 @@ Với **hơn 8 năm kinh nghiệm** và **200.000+ đơn hàng** thành công, c
 - **Giảm 50%** phí dịch vụ đơn đầu tiên
 - **Bảo hiểm** miễn phí cho 3 đơn đầu
 
+---
+
 ## 📈 Cam kết chất lượng
 
 ### 🏆 Chỉ số thành công
@@ -201,7 +259,25 @@ Với **hơn 8 năm kinh nghiệm** và **200.000+ đơn hàng** thành công, c
 - **Hỗ trợ** xử lý khiếu nại trong 24h
 - **Cam kết** giao đúng hàng, đúng thời gian
 
+---
+
+## 🔗 Dịch vụ liên quan
+
+Để có trải nghiệm nhập khẩu hoàn hảo, bạn có thể tham khảo thêm:
+
+- 🚢 [**Dịch vụ vận chuyển đường biển**](/dich-vu/van-chuyen-duong-bien) - Tiết kiệm cho hàng khối lượng lớn
+- 📋 [**Thư viện mẫu hợp đồng XNK**](/tai-lieu/hop-dong-xnk) - Mẫu hợp đồng chuẩn
+- ❓ [**Câu hỏi thường gặp về nhập khẩu**](/faq/nhap-khau) - Giải đáp chi tiết
+- 📊 [**Bảng thuế suất nhập khẩu mới nhất**](/bang-thue-suat) - Cập nhật liên tục
+
+---
+
 ## 📞 Liên hệ tư vấn ngay
+
+### 🎯 **Cam kết mạnh mẽ của TBS GROUP:**
+**"100% khai báo đúng, hoàn thuế đúng quy định, miễn phí tư vấn lần đầu"**
+
+*Hãy để chúng tôi chứng minh sự khác biệt!*
 
 🎯 **Hotline**: [0976 005 335](tel:0976005335) (24/7)  
 🔥 **Khiếu nại**: [0363 212 334](tel:0363212334)  
