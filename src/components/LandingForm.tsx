@@ -189,10 +189,32 @@ export default function LandingForm() {
           </div>
         )}
 
+        {/* Response Guarantee */}
+        <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-xl p-6 mt-6">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <span className="text-2xl">⏰</span>
+              <h3 className="font-bold text-gray-900 text-lg">Bảo hiểm thời gian phản hồi</h3>
+            </div>
+            <div className="bg-white rounded-lg p-4 border border-yellow-300">
+              <p className="text-sm text-gray-800 font-medium mb-2">
+                <span className="text-red-600 font-bold">Nếu chúng tôi không liên hệ lại trong 15 phút giờ làm,</span>
+              </p>
+              <p className="text-lg font-bold text-green-700">
+                🎁 Bạn nhận mã giảm 10% phí dịch vụ
+              </p>
+              <div className="mt-3 bg-yellow-100 rounded-lg p-3">
+                <p className="text-xs text-gray-600 mb-1">Mã giảm giá: <span className="font-mono font-bold text-orange-600">FAST15</span></p>
+                <p className="text-xs text-gray-500">Giờ làm việc: 8:00 - 17:30 (T2-T6)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Trust Indicators */}
-        <div className="text-center text-sm opacity-80">
+        <div className="text-center text-sm opacity-80 mt-4">
           <p className="mb-2">🔒 Thông tin của bạn được bảo mật tuyệt đối</p>
-          <p>⚡ Cam kết phản hồi trong vòng 15 phút</p>
+          <p>⚡ Cam kết có đo được - không chỉ nói suông</p>
         </div>
       </form>
     </div>

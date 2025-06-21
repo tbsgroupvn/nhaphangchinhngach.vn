@@ -81,6 +81,34 @@
       "icon": "✅"
     }
   ],
+  "caseStudy": {
+    "title": "Case Study Thực Tế",
+    "company": "Công ty X - Ngành Điện Tử",
+    "problem": "Từng bị truy thu 120 triệu thuế do khai báo sai",
+    "solution": "Sau khi chuyển qua TBS, khai chuẩn HS Code",
+    "result": "Thuế chính ngạch chỉ 38 triệu - tiết kiệm 68%",
+    "savings": "82 triệu VNĐ",
+    "timeframe": "Trong vòng 3 tháng"
+  },
+  "mediaContent": {
+    "video": {
+      "url": "https://player.vimeo.com/video/placeholder",
+      "thumbnail": "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=600&h=400&fit=crop",
+      "alt": "Quy trình đóng container thực tế tại TBS GROUP",
+      "duration": "15 giây"
+    },
+    "realPhotos": [
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop"
+    ]
+  },
+  "responseGuarantee": {
+    "timeLimit": "15 phút",
+    "workingHours": "8:00 - 17:30 (T2-T6)",
+    "penalty": "Mã giảm 10% phí dịch vụ",
+    "code": "FAST15",
+    "message": "Nếu chúng tôi không liên hệ lại trong 15 phút giờ làm, bạn nhận mã giảm 10% phí dịch vụ."
+  },
   "guarantees": [
     {
       "title": "Đền bù nếu trễ do TBS",
