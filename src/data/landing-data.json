@@ -1,0 +1,98 @@
+{
+  "stats": [
+    {
+      "number": "8+",
+      "label": "Năm kinh nghiệm",
+      "icon": "📅"
+    },
+    {
+      "number": "8000+",
+      "label": "Khách hàng tin tưởng",
+      "icon": "👥"
+    },
+    {
+      "number": "200K+",
+      "label": "Đơn hàng thành công",
+      "icon": "📦"
+    },
+    {
+      "number": "24/7",
+      "label": "Hỗ trợ tận tâm",
+      "icon": "🕐"
+    }
+  ],
+  "benefits": [
+    {
+      "title": "Minh bạch chi phí",
+      "description": "Báo giá chi tiết không phí ẩn",
+      "icon": "💰",
+      "details": "Tất cả chi phí thuế, vận chuyển được tính toán minh bạch từ đầu"
+    },
+    {
+      "title": "Thời gian 10-18 ngày",
+      "description": "Nhanh chóng & đúng hạn",
+      "icon": "⚡",
+      "details": "Cam kết thời gian giao hàng cụ thể, đền bù nếu trễ do TBS"
+    },
+    {
+      "title": "Giải pháp trọn gói A-Z",
+      "description": "Từ đặt hàng đến giao tận tay",
+      "icon": "🎯",
+      "details": "Đảm nhận toàn bộ quy trình từ tìm nguồn, đặt hàng, vận chuyển đến thông quan"
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Chị Hương",
+      "company": "Shop Thời Trang Minh Hương",
+      "content": "Từ khi làm việc với TBS, tôi hoàn toàn yên tâm về việc nhập khẩu. Giá cả minh bạch, giao hàng đúng hạn.",
+      "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face"
+    },
+    {
+      "name": "Anh Minh",
+      "company": "Công ty TNHH Điện Tử Việt Nam",
+      "content": "TBS giúp chúng tôi chuyển từ tiểu ngạch sang chính ngạch rất suôn sẻ. Hóa đơn VAT đầy đủ, thuế rõ ràng.",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+    }
+  ],
+  "process": [
+    {
+      "step": 1,
+      "title": "Gửi yêu cầu",
+      "description": "Cung cấp thông tin sản phẩm và nhu cầu nhập khẩu",
+      "icon": "📝"
+    },
+    {
+      "step": 2,
+      "title": "Báo giá/Hợp đồng",
+      "description": "Nhận báo giá chi tiết và ký hợp đồng minh bạch",
+      "icon": "📋"
+    },
+    {
+      "step": 3,
+      "title": "Vận chuyển & Thông quan",
+      "description": "Theo dõi hàng hóa và xử lý thủ tục hải quan",
+      "icon": "🚛"
+    },
+    {
+      "step": 4,
+      "title": "Giao hàng & Hóa đơn",
+      "description": "Nhận hàng tại kho và hóa đơn VAT hoàn chỉnh",
+      "icon": "✅"
+    }
+  ],
+  "guarantees": [
+    {
+      "title": "Đền bù nếu trễ do TBS",
+      "description": "Cam kết thời gian giao hàng"
+    },
+    {
+      "title": "100% hóa đơn VAT",
+      "description": "Hóa đơn đầy đủ, hợp pháp"
+    },
+    {
+      "title": "Miễn phí kiểm tra HS lần đầu",
+      "description": "Tư vấn hồ sơ không tính phí"
+    }
+  ]
+} 
