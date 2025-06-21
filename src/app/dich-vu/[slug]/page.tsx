@@ -559,6 +559,331 @@ export default function ServiceDetailPage({ params }: Props) {
         </section>
       )}
 
+      {/* International Transport Features - Only for van-chuyen-quoc-te */}
+      {service.slug === 'van-chuyen-quoc-te' && (
+        <section className="section-padding bg-gray-50">
+          <div className="container-max">
+            <div className="max-w-6xl mx-auto space-y-12">
+              {/* International Partners */}
+              <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-8 rounded-3xl shadow-2xl border border-blue-100">
+                <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
+                  🤝 Đối tác vận chuyển quốc tế uy tín
+                </h2>
+                <p className="text-lg text-gray-600 text-center mb-8">
+                  TBS GROUP hợp tác với các hãng tàu, hãng bay hàng đầu thế giới
+                </p>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                  {/* Shipping Lines */}
+                  <div className="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-200 transition-colors">
+                      <span className="text-2xl font-bold text-blue-600">🚢</span>
+                    </div>
+                    <h4 className="font-bold text-sm text-gray-900">COSCO</h4>
+                    <p className="text-xs text-gray-600">Shipping Line</p>
+                  </div>
+                  
+                  <div className="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-200 transition-colors">
+                      <span className="text-2xl font-bold text-blue-600">⚓</span>
+                    </div>
+                    <h4 className="font-bold text-sm text-gray-900">Maersk</h4>
+                    <p className="text-xs text-gray-600">Global Carrier</p>
+                  </div>
+                  
+                  <div className="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-200 transition-colors">
+                      <span className="text-2xl font-bold text-blue-600">🌊</span>
+                    </div>
+                    <h4 className="font-bold text-sm text-gray-900">OOCL</h4>
+                    <p className="text-xs text-gray-600">Ocean Network</p>
+                  </div>
+                  
+                  {/* Airlines */}
+                  <div className="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group">
+                    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-red-200 transition-colors">
+                      <span className="text-2xl font-bold text-red-600">✈️</span>
+                    </div>
+                    <h4 className="font-bold text-sm text-gray-900">Air China</h4>
+                    <p className="text-xs text-gray-600">Cargo Airlines</p>
+                  </div>
+                  
+                  <div className="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group">
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-green-200 transition-colors">
+                      <span className="text-2xl font-bold text-green-600">🛩️</span>
+                    </div>
+                    <h4 className="font-bold text-sm text-gray-900">VietJet</h4>
+                    <p className="text-xs text-gray-600">Air Cargo</p>
+                  </div>
+                  
+                  <div className="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group">
+                    <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-purple-200 transition-colors">
+                      <span className="text-2xl font-bold text-purple-600">🚛</span>
+                    </div>
+                    <h4 className="font-bold text-sm text-gray-900">DHL</h4>
+                    <p className="text-xs text-gray-600">Express</p>
+                  </div>
+                </div>
+                
+                <div className="mt-8 text-center">
+                  <p className="text-gray-600 italic">
+                    &ldquo;Mạng lưới đối tác rộng khắp đảm bảo tuyến vận tối ưu cho mọi loại hàng hóa&rdquo;
+                  </p>
+                </div>
+              </div>
+
+              {/* USP Block */}
+              <div className="bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 p-8 rounded-3xl shadow-2xl text-white">
+                <h2 className="text-3xl font-bold mb-8 text-center">
+                  🌟 Vì sao chọn TBS GROUP cho vận chuyển quốc tế?
+                </h2>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300">
+                    <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mb-4 mx-auto">
+                      <span className="text-2xl">💰</span>
+                    </div>
+                    <h3 className="font-bold text-lg mb-3 text-center">Giá ổn định</h3>
+                    <p className="text-sm text-gray-300 text-center">
+                      Hợp đồng dài hạn với carriers lớn, không lo sốc giá mùa cao điểm
+                    </p>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mb-4 mx-auto">
+                      <span className="text-2xl">🌐</span>
+                    </div>
+                    <h3 className="font-bold text-lg mb-3 text-center">Đa ngôn ngữ</h3>
+                    <p className="text-sm text-gray-300 text-center">
+                      Đội ngũ Việt-Anh-Trung, giao tiếp trực tiếp với đối tác quốc tế
+                    </p>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300">
+                    <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center mb-4 mx-auto">
+                      <span className="text-2xl">🏢</span>
+                    </div>
+                    <h3 className="font-bold text-lg mb-3 text-center">Văn phòng đại diện</h3>
+                    <p className="text-sm text-gray-300 text-center">
+                      Có mặt tại TQ & VN, hỗ trợ trực tiếp 24/7 hai đầu tuyến
+                    </p>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300">
+                    <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center mb-4 mx-auto">
+                      <span className="text-2xl">🛡️</span>
+                    </div>
+                    <h3 className="font-bold text-lg mb-3 text-center">Bảo hiểm toàn diện</h3>
+                    <p className="text-sm text-gray-300 text-center">
+                      Đối tác bảo hiểm quốc tế, bồi thường nhanh trong 48h
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Multimodal Explanation */}
+              <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 p-8 rounded-3xl shadow-2xl border border-green-100">
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                    🔄 Vận chuyển đa phương thức (Multimodal)
+                  </h2>
+                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Kết hợp biển – bộ – hàng không để tối ưu thời gian, chi phí, đáp ứng mọi nhu cầu đặc thù
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                  <div className="text-center group">
+                    <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                      <span className="text-3xl text-white">🌊</span>
+                    </div>
+                    <h3 className="font-bold text-lg text-gray-900 mb-2">Đường biển</h3>
+                    <p className="text-sm text-gray-600">Chi phí thấp<br/>Hàng khối lượng lớn</p>
+                    <div className="mt-3 bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full inline-block">
+                      Sea Freight
+                    </div>
+                  </div>
+                  
+                  <div className="text-center group">
+                    <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                      <span className="text-3xl text-white">✈️</span>
+                    </div>
+                    <h3 className="font-bold text-lg text-gray-900 mb-2">Hàng không</h3>
+                    <p className="text-sm text-gray-600">Nhanh chóng<br/>Hàng urgent/cao cấp</p>
+                    <div className="mt-3 bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full inline-block">
+                      Air Freight
+                    </div>
+                  </div>
+                  
+                  <div className="text-center group">
+                    <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                      <span className="text-3xl text-white">🚚</span>
+                    </div>
+                    <h3 className="font-bold text-lg text-gray-900 mb-2">Đường bộ</h3>
+                    <p className="text-sm text-gray-600">Linh hoạt<br/>Cross-border</p>
+                    <div className="mt-3 bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full inline-block">
+                      Road Freight
+                    </div>
+                  </div>
+                  
+                  <div className="text-center group">
+                    <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                      <span className="text-3xl text-white">🔄</span>
+                    </div>
+                    <h3 className="font-bold text-lg text-gray-900 mb-2">Kết hợp</h3>
+                    <p className="text-sm text-gray-600">Tối ưu toàn diện<br/>Chi phí & thời gian</p>
+                    <div className="mt-3 bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full inline-block">
+                      Multimodal
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Quote Form */}
+              <div className="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-8 rounded-3xl shadow-2xl text-white">
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl font-bold mb-4">📋 Báo giá nhanh vận chuyển quốc tế</h2>
+                  <p className="text-lg text-gray-300">
+                    &ldquo;Gửi yêu cầu nhận báo giá chỉ trong 1 tiếng – miễn phí!&rdquo;
+                  </p>
+                </div>
+                
+                <div className="max-w-4xl mx-auto">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-300 mb-2">
+                        🚚 Phương thức vận chuyển
+                      </label>
+                      <select className="w-full p-3 rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200">
+                        <option value="" className="text-gray-900">Chọn phương thức</option>
+                        <option value="sea" className="text-gray-900">🌊 Đường biển (Sea)</option>
+                        <option value="air" className="text-gray-900">✈️ Hàng không (Air)</option>
+                        <option value="road" className="text-gray-900">🚚 Đường bộ (Road)</option>
+                        <option value="multimodal" className="text-gray-900">🔄 Đa phương thức</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-300 mb-2">
+                        📦 Loại hàng hóa
+                      </label>
+                      <input 
+                        type="text" 
+                        placeholder="VD: Container, pallet, kg..."
+                        className="w-full p-3 rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-300 mb-2">
+                        🌍 Tuyến vận chuyển
+                      </label>
+                      <input 
+                        type="text" 
+                        placeholder="VD: TQ → VN, US → VN..."
+                        className="w-full p-3 rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-300 mb-2">
+                        📱 Số điện thoại
+                      </label>
+                      <input 
+                        type="tel" 
+                        placeholder="Nhập SĐT nhận báo giá"
+                        className="w-full p-3 rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <button className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:from-orange-600 hover:via-red-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-orange-500/25 mb-4">
+                      <span className="flex items-center justify-center">
+                        ⚡ Nhận báo giá trong 1 tiếng (Miễn phí)
+                        <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </span>
+                    </button>
+                    <p className="text-sm text-gray-400">
+                      ✅ Chuyên gia vận chuyển quốc tế sẽ liên hệ ngay
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tooltips & Links */}
+              <div className="bg-gradient-to-r from-amber-50 via-orange-50 to-yellow-50 p-8 rounded-3xl shadow-2xl border border-amber-200">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                  💡 Thuật ngữ & Tài liệu hữu ích
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <h4 className="font-bold text-lg text-gray-900 mb-3">📚 Thuật ngữ quốc tế</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="font-medium text-gray-700">Bill of Lading:</span>
+                        <span className="text-gray-600">Vận đơn</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium text-gray-700">Multimodal:</span>
+                        <span className="text-gray-600">Đa phương thức</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium text-gray-700">Cross-border:</span>
+                        <span className="text-gray-600">Xuyên biên giới</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium text-gray-700">Freight:</span>
+                        <span className="text-gray-600">Cước vận chuyển</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <h4 className="font-bold text-lg text-gray-900 mb-3">🔗 Dịch vụ liên quan</h4>
+                    <div className="space-y-3 text-sm">
+                      <a href="/dich-vu/gom-hang-le-ghep-container" className="block text-blue-600 hover:text-blue-800 font-medium hover:underline">
+                        → Dịch vụ gom hàng lẻ
+                      </a>
+                      <a href="/dich-vu/thong-quan-chung-tu" className="block text-blue-600 hover:text-blue-800 font-medium hover:underline">
+                        → Thông quan & chứng từ
+                      </a>
+                      <a href="/dich-vu/dong-goi-bao-hiem-hang" className="block text-blue-600 hover:text-blue-800 font-medium hover:underline">
+                        → Đóng gói & bảo hiểm
+                      </a>
+                      <a href="/dich-vu/kho-bai-trung-viet" className="block text-blue-600 hover:text-blue-800 font-medium hover:underline">
+                        → Kho bãi Trung - Việt
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <h4 className="font-bold text-lg text-gray-900 mb-3">📄 Tài liệu tham khảo</h4>
+                    <div className="space-y-3 text-sm">
+                      <a href="#" className="block text-green-600 hover:text-green-800 font-medium hover:underline">
+                        📥 Quy trình book hàng quốc tế
+                      </a>
+                      <a href="#" className="block text-green-600 hover:text-green-800 font-medium hover:underline">
+                        📥 Cách chọn tuyến vận tối ưu
+                      </a>
+                      <a href="#" className="block text-green-600 hover:text-green-800 font-medium hover:underline">
+                        📥 Bảng giá vận chuyển 2024
+                      </a>
+                      <a href="#" className="block text-green-600 hover:text-green-800 font-medium hover:underline">
+                        📥 Hướng dẫn multimodal
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Features Section */}
       <section className="section-padding bg-white">
         <div className="container-max">

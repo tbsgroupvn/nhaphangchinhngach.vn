@@ -87,28 +87,33 @@ export const services: Service[] = [
     title: 'Vận chuyển quốc tế',
     slug: 'van-chuyen-quoc-te',
     icon: '🌍',
-    description: 'Dịch vụ vận chuyển quốc tế đa phương thức: đường biển, đường bộ, đường hàng không.',
-    shortDescription: 'Vận chuyển hàng hóa toàn cầu đa phương thức',
+    description: 'Dịch vụ vận chuyển quốc tế đa phương thức chuyên nghiệp với mạng lưới đối tác toàn cầu. TBS GROUP hợp tác với các hãng tàu, hãng bay hàng đầu thế giới, cam kết giá ổn định và dịch vụ tận tâm.',
+    shortDescription: 'Vận chuyển hàng hóa toàn cầu đa phương thức với đối tác quốc tế uy tín',
     benefits: [
-      'Mạng lưới vận chuyển toàn cầu',
-      'Đa dạng phương thức vận chuyển',
-      'Thời gian vận chuyển tối ưu',
-      'Chi phí cạnh tranh nhất thị trường'
+      '💰 Giá tuyến ổn định, không lo sốc giá mùa cao điểm - Hợp đồng dài hạn với các hãng tàu lớn đảm bảo giá cước ổn định',
+      '🌐 Đội ngũ tư vấn đa ngôn ngữ, kinh nghiệm quốc tế - Giao tiếp trực tiếp với đối tác nước ngoài, xử lý mọi vấn đề',
+      '🏢 Văn phòng đại diện tại Trung Quốc, Việt Nam - Hỗ trợ trực tiếp tại nguồn và đích, theo dõi hàng hóa 24/7',
+      '🛡️ Bảo hiểm hàng hóa toàn diện, xử lý sự cố cực nhanh - Đối tác bảo hiểm quốc tế, bồi thường nhanh trong 48h'
     ],
     process: [
-      'Tư vấn phương thức vận chuyển',
-      'Lên kế hoạch logistics',
-      'Thực hiện vận chuyển',
-      'Giao hàng và thanh lý'
+      'Tư vấn lựa chọn tuyến & phương thức tối ưu: Phân tích hàng hóa, ngân sách, thời gian để đề xuất phương thức vận chuyển phù hợp (biển, bộ, hàng không)',
+      'Báo giá trọn gói – lên kế hoạch logistics chi tiết: Báo giá minh bạch tất cả chi phí, lập timeline vận chuyển, chuẩn bị chứng từ cần thiết',
+      'Tiến hành vận chuyển – cập nhật tracking liên tục: Theo dõi hàng hóa real-time, thông báo tiến độ qua Zalo/Email, xử lý sự cố kịp thời',
+      'Giao hàng tận nơi, hỗ trợ kiểm tra chất lượng: Vận chuyển đến địa chỉ chỉ định, hỗ trợ kiểm tra hàng hóa, hoàn thiện thủ tục giao nhận'
     ],
     commitment: [
-      'Giao hàng đúng thời gian cam kết',
-      'Bảo đảm an toàn hàng hóa',
-      'Hỗ trợ khách hàng 24/7',
-      'Bồi thường theo quy định bảo hiểm'
+      '⏰ Giao hàng đúng thời gian cam kết - Hoàn tiền 100% nếu không giao hàng đúng hợp đồng',
+      '🛡️ Bảo đảm an toàn hàng hóa 100% - Bảo hiểm toàn diện với quy trình bồi thường nhanh chóng',
+      '📞 Hỗ trợ khách hàng 24/7 đa ngôn ngữ - Đội ngũ customer care Việt-Anh-Trung sẵn sàng hỗ trợ',
+      '📋 Hỗ trợ làm chứng từ quốc tế đầy đủ - Bill of lading, vận đơn, giấy tờ hải quan cho mọi tuyến vận chuyển'
     ],
-    features: ['Vận chuyển biển', 'Vận chuyển hàng không', 'Vận chuyển đường bộ', 'Vận chuyển multimodal'],
-    ctaText: 'Báo giá vận chuyển',
+    features: [
+      '🌊 Vận chuyển biển (Sea Freight) - Tối ưu chi phí cho hàng hóa khối lượng lớn, thời gian linh hoạt',
+      '✈️ Vận chuyển hàng không (Air Freight) - Nhanh chóng cho hàng urgent, hàng có giá trị cao',
+      '🚚 Vận chuyển đường bộ (Road Freight) - Linh hoạt cho các tuyến nội địa và cross-border',
+      '🔄 Vận chuyển đa phương thức (Multimodal) - Kết hợp biển-bộ-hàng không để tối ưu thời gian và chi phí'
+    ],
+    ctaText: 'Nhận báo giá chỉ trong 1 tiếng',
     category: 'logistics'
   },
   {
