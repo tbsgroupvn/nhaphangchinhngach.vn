@@ -53,28 +53,33 @@ export const services: Service[] = [
     title: 'Gom hàng lẻ, ghép container',
     slug: 'gom-hang-le-ghep-container',
     icon: '📦',
-    description: 'Dịch vụ gom hàng lẻ và ghép container giúp tối ưu chi phí vận chuyển cho khách hàng.',
-    shortDescription: 'Tối ưu chi phí vận chuyển bằng cách ghép hàng',
+    description: 'Giải pháp gom hàng lẻ thông minh cho doanh nghiệp nhỏ. Tiết kiệm 30-50% chi phí vận chuyển so với thuê nguyên container. Không cần tồn kho lớn, giảm rủi ro ứ đọng hàng hóa.',
+    shortDescription: 'Giải pháp thông minh cho hàng lẻ - Tiết kiệm 30-50% chi phí vận chuyển',
     benefits: [
-      'Giảm 30-50% chi phí vận chuyển',
-      'Vận chuyển hàng nhỏ lẻ dễ dàng',
-      'Đóng gói chuyên nghiệp',
-      'Theo dõi hàng hóa realtime'
+      '💰 Tiết kiệm 30-50% chi phí so với thuê nguyên container FCL - Tối ưu cho khách hàng nhỏ, đơn hàng không đủ lớn',
+      '🎯 Không bị ép mua dư - Chỉ vận chuyển đúng số lượng cần thiết, linh hoạt theo nhu cầu thực tế',
+      '📦 Không cần tồn kho lớn tại VN - Giảm rủi ro hàng ứ đọng, tiết kiệm chi phí thuê kho và bảo quản',
+      '🚀 Vận chuyển hàng nhỏ lẻ dễ dàng - Từ 1 thùng đến vài pallet đều được hỗ trợ tận tình'
     ],
     process: [
-      'Nhận thông tin hàng hóa',
-      'Báo giá và xác nhận',
-      'Thu gom hàng tại kho',
-      'Đóng gói và vận chuyển'
+      'Khách gửi thông tin hàng hóa: TBS kiểm tra & tư vấn lịch chạy gần nhất, thời gian dự kiến về VN',
+      'Báo giá trọn gói & xác nhận: Báo giá chi tiết từng khoản phí, xác nhận lịch xuất kho tại Trung Quốc',
+      'Thu gom & đóng kiện an toàn: Nhân viên TBS thu gom trực tiếp, đóng kiện chuyên nghiệp, gửi ảnh thực tế',
+      'Giao hàng tận nơi & thanh toán linh hoạt: Vận chuyển đến địa chỉ chỉ định, thanh toán COD hoặc chuyển khoản'
     ],
     commitment: [
-      'Bảo đảm hàng hóa nguyên vẹn',
-      'Giao hàng đúng thời gian cam kết',
-      'Bồi thường 100% nếu hư hỏng do lỗi đóng gói',
-      'Theo dõi 24/7'
+      '🛡️ Bảo đảm hàng hóa nguyên vẹn 100% - Đền bù toàn bộ nếu hàng hóa mất mát, hư hỏng do vận chuyển',
+      '⏰ Giao hàng đúng cam kết - Trễ hẹn hoàn lại 10% phí vận chuyển (cam kết mạnh mẽ)',
+      '📸 Kiểm tra video/ảnh thực tế - Khách hàng xem được quá trình đóng kiện trước khi xuất kho',
+      '🆓 Tư vấn miễn phí mọi thủ tục - Không dùng dịch vụ cũng không sao, tư vấn tận tình!'
     ],
-    features: ['Ghép container FCL/LCL', 'Gom hàng từ nhiều nhà cung cấp', 'Kho tập kết tại Trung Quốc', 'Bảo hiểm hàng hóa'],
-    ctaText: 'Tính chi phí gom hàng',
+    features: [
+      '📋 Ghép container FCL/LCL linh hoạt - FCL: Full Container Load | LCL: Less than Container Load (gom lẻ nhiều chủ hàng)',
+      '🏭 Kho tập kết tại TQ có kiểm đếm thực tế - Video/ảnh minh chứng quá trình đóng kiện, khách yên tâm 100%',
+      '🛡️ Bảo hiểm hàng hóa toàn diện - Đền 100% nếu hàng mất, hỏng do vận chuyển, quy trình bồi thường nhanh',
+      '📱 Theo dõi real-time qua Zalo/Email - Cập nhật liên tục tiến độ vận chuyển, hình ảnh hàng hóa'
+    ],
+    ctaText: 'Tính chi phí gom hàng ngay',
     category: 'logistics'
   },
   {

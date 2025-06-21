@@ -257,6 +257,81 @@ export default function ServiceDetailPage({ params }: Props) {
         </section>
       )}
 
+      {/* Cost Savings Comparison - Only for consolidation service */}
+      {service.slug === 'gom-hang-le-ghep-container' && (
+        <section className="section-padding bg-gradient-to-br from-green-50 via-white to-green-100">
+          <div className="container-max">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                  Gom hàng lẻ – thực tế giúp bạn tiết kiệm bao nhiêu?
+                </h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  Con số cụ thể về chi phí tiết kiệm khi sử dụng dịch vụ gom hàng lẻ
+                </p>
+              </div>
+              
+              {/* Savings Comparison */}
+              <div className="bg-white p-8 rounded-2xl shadow-xl mb-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl">📦</span>
+                    </div>
+                    <h3 className="font-bold text-gray-900 mb-2">Thuê nguyên container</h3>
+                    <p className="text-3xl font-bold text-red-600 mb-2">$2,500</p>
+                    <p className="text-gray-600 text-sm">Phải thuê cả container dù chỉ có 5m³ hàng</p>
+                  </div>
+                  
+                  <div className="flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </div>
+                      <p className="font-bold text-green-600">TIẾT KIỆM</p>
+                      <p className="text-4xl font-bold text-green-600">40%</p>
+                    </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl">🚛</span>
+                    </div>
+                    <h3 className="font-bold text-gray-900 mb-2">Gom hàng lẻ TBS</h3>
+                    <p className="text-3xl font-bold text-green-600 mb-2">$1,500</p>
+                    <p className="text-gray-600 text-sm">Chỉ trả cho không gian thực tế sử dụng</p>
+                  </div>
+                </div>
+                
+                <div className="mt-8 p-6 bg-yellow-50 rounded-xl">
+                  <h4 className="font-bold text-gray-900 mb-3">💡 Lợi ích đặc biệt:</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span>
+                      <span className="text-gray-700">Không cần tồn kho lớn tại VN</span>
+                    </div>
+                    <div className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span>
+                      <span className="text-gray-700">Giảm rủi ro hàng ứ đọng</span>
+                    </div>
+                    <div className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span>
+                      <span className="text-gray-700">Tối ưu cho đơn hàng nhỏ</span>
+                    </div>
+                    <div className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span>
+                      <span className="text-gray-700">Không bị ép mua dư</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Customer Testimonials - Only for import service */}
       {service.slug === 'nhap-khau-chinh-ngach' && (
         <section className="section-padding bg-gray-50">
@@ -324,6 +399,118 @@ export default function ServiceDetailPage({ params }: Props) {
                     ))}
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+              )}
+
+      {/* Customer Testimonials - Only for consolidation service */}
+      {service.slug === 'gom-hang-le-ghep-container' && (
+        <section className="section-padding bg-gray-50">
+          <div className="container-max">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                  Feedback thực tế từ khách hàng
+                </h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  Những trải nghiệm chân thật từ doanh nghiệp đã sử dụng dịch vụ gom hàng lẻ
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div className="bg-white p-6 rounded-2xl shadow-lg">
+                  <div className="flex items-start mb-4">
+                    <img 
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" 
+                      alt="Anh Tuấn - Chủ shop"
+                      className="w-12 h-12 rounded-full object-cover mr-4"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gray-900">Anh Tuấn Lê</h4>
+                      <p className="text-gray-600 text-sm">Chủ shop thời trang online</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 italic mb-4">
+                    "Lô hàng lẻ đầu tiên của tôi về đúng hạn, tiết kiệm được 30% phí so với trước, 
+                    cảm ơn TBS! Đặc biệt là được xem video đóng kiện, tôi yên tâm 100%."
+                  </p>
+                  <div className="flex text-yellow-400">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl shadow-lg">
+                  <div className="flex items-start mb-4">
+                    <img 
+                      src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face" 
+                      alt="Chị Hằng - Quản lý"
+                      className="w-12 h-12 rounded-full object-cover mr-4"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gray-900">Chị Hằng Nguyễn</h4>
+                      <p className="text-gray-600 text-sm">Quản lý cửa hàng mẹ và bé</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 italic mb-4">
+                    "Shop nhỏ như tôi không đủ tiền thuê nguyên container. 
+                    Nhờ TBS gom hàng lẻ, giờ nhập được đều đặn mà chi phí hợp lý. Ảnh thực tế rất chi tiết!"
+                  </p>
+                  <div className="flex text-yellow-400">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Real warehouse images */}
+              <div className="bg-white p-8 rounded-2xl shadow-lg">
+                <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">
+                  🏭 Hình ảnh thực tế kho TBS tại Trung Quốc
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="relative">
+                    <img 
+                      src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=400&h=250&fit=crop" 
+                      alt="Nhân viên đóng kiện"
+                      className="w-full h-48 object-cover rounded-xl"
+                    />
+                    <div className="absolute bottom-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                      Nhân viên đóng kiện
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <img 
+                      src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=400&h=250&fit=crop" 
+                      alt="Container thực tế"
+                      className="w-full h-48 object-cover rounded-xl"
+                    />
+                    <div className="absolute bottom-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                      Container thực tế
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <img 
+                      src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=250&fit=crop" 
+                      alt="Kho tại Trung Quốc"
+                      className="w-full h-48 object-cover rounded-xl"
+                    />
+                    <div className="absolute bottom-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                      Kho tại TQ
+                    </div>
+                  </div>
+                </div>
+                <p className="text-center text-gray-600 mt-4 italic">
+                  "Khách hàng luôn nhận được video/ảnh minh chứng quá trình đóng kiện hàng hóa"
+                </p>
               </div>
             </div>
           </div>
@@ -400,12 +587,118 @@ export default function ServiceDetailPage({ params }: Props) {
         <div className="container-max">
           <div className="max-w-5xl mx-auto text-center">
             <div className="bg-white p-8 lg:p-12 rounded-2xl shadow-xl">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                Sẵn sàng sử dụng dịch vụ này?
-              </h2>
-              <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-                Liên hệ ngay để được tư vấn chi tiết và nhận báo giá ưu đãi cho dịch vụ <strong>{service.title}</strong>
-              </p>
+              {service.slug === 'gom-hang-le-ghep-container' ? (
+                <>
+                  <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                    Đăng ký tư vấn gom hàng lẻ nhanh
+                  </h2>
+                  <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Chỉ cần để lại số điện thoại, chuyên viên sẽ gọi lại trong <strong>15 phút</strong>
+                  </p>
+                  
+                  {/* Quick Quote Form */}
+                  <div className="bg-gradient-to-r from-green-50 to-blue-50 p-8 rounded-2xl mb-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">📋 Báo giá nhanh gom hàng lẻ</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Loại hàng hóa <span className="text-red-500">*</span>
+                        </label>
+                        <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                          <option value="">Chọn loại hàng</option>
+                          <option value="thoi-trang">Thời trang</option>
+                          <option value="dien-tu">Điện tử</option>
+                          <option value="me-be">Mẹ và bé</option>
+                          <option value="gia-dung">Gia dụng</option>
+                          <option value="khac">Khác</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Số lượng kiện <span className="text-red-500">*</span>
+                        </label>
+                        <input 
+                          type="number" 
+                          placeholder="VD: 10 kiện"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Địa chỉ nhận hàng <span className="text-red-500">*</span>
+                        </label>
+                        <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                          <option value="">Chọn tỉnh/thành</option>
+                          <option value="hcm">TP. Hồ Chí Minh</option>
+                          <option value="hanoi">Hà Nội</option>
+                          <option value="danang">Đà Nẵng</option>
+                          <option value="khac">Tỉnh khác</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Họ tên <span className="text-red-500">*</span>
+                        </label>
+                        <input 
+                          type="text" 
+                          placeholder="Nhập họ tên của bạn"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Số điện thoại <span className="text-red-500">*</span>
+                        </label>
+                        <input 
+                          type="tel" 
+                          placeholder="VD: 0976005335"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        />
+                      </div>
+                    </div>
+                    <button className="btn-primary text-lg px-12 py-4 font-bold">
+                      🚀 Gửi báo giá nhanh (Miễn phí)
+                    </button>
+                    <p className="text-sm text-gray-600 mt-4">
+                      ⚡ Chuyên viên TBS sẽ gọi lại trong 15 phút để tư vấn chi tiết
+                    </p>
+                  </div>
+
+                  {/* Tooltips for terms */}
+                  <div className="bg-blue-50 p-6 rounded-xl mb-8">
+                    <h4 className="font-bold text-gray-900 mb-4">💡 Giải thích thuật ngữ:</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                      <div className="bg-white p-4 rounded-lg">
+                        <h5 className="font-semibold text-gray-900 mb-2">📦 FCL là gì?</h5>
+                        <p className="text-gray-600 text-sm">Full Container Load - Thuê nguyên container, phù hợp với đơn hàng lớn</p>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg">
+                        <h5 className="font-semibold text-gray-900 mb-2">🚛 LCL là gì?</h5>
+                        <p className="text-gray-600 text-sm">Less than Container Load - Gom hàng lẻ nhiều chủ, tiết kiệm cho đơn nhỏ</p>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg">
+                        <h5 className="font-semibold text-gray-900 mb-2">🛡️ Bảo hiểm hàng hóa</h5>
+                        <p className="text-gray-600 text-sm">Bảo vệ 100% giá trị hàng nếu mất mát, hư hỏng trong vận chuyển</p>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg">
+                        <h5 className="font-semibold text-gray-900 mb-2">📋 Gom hàng lẻ</h5>
+                        <p className="text-gray-600 text-sm">Thu gom hàng từ nhiều nhà cung cấp, ghép chung 1 container</p>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                    Sẵn sàng sử dụng dịch vụ này?
+                  </h2>
+                  <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Liên hệ ngay để được tư vấn chi tiết và nhận báo giá ưu đãi cho dịch vụ <strong>{service.title}</strong>
+                  </p>
+                </>
+              )}
               
               {/* Contact Options */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
