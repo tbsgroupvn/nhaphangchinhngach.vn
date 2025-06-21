@@ -273,57 +273,84 @@ export default function ServiceDetailPage({ params }: Props) {
               </div>
               
               {/* Savings Comparison */}
-              <div className="bg-white p-8 rounded-2xl shadow-xl mb-8">
+              <div className="bg-gradient-to-br from-white via-blue-50 to-green-50 p-8 rounded-3xl shadow-2xl mb-8 border border-gray-100">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl">📦</span>
+                  <div className="text-center group">
+                    <div className="relative w-24 h-24 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                      <span className="text-3xl">📦</span>
+                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">×</span>
+                      </div>
                     </div>
-                    <h3 className="font-bold text-gray-900 mb-2">Thuê nguyên container</h3>
-                    <p className="text-3xl font-bold text-red-600 mb-2">$2,500</p>
-                    <p className="text-gray-600 text-sm">Phải thuê cả container dù chỉ có 5m³ hàng</p>
+                    <h3 className="font-bold text-gray-900 mb-3 text-lg">Thuê nguyên container</h3>
+                    <div className="bg-red-50 p-4 rounded-xl mb-4">
+                      <p className="text-4xl font-black text-red-600 mb-1">$2,500</p>
+                      <p className="text-red-500 text-sm font-medium">Chi phí cao</p>
+                    </div>
+                    <p className="text-gray-600 text-sm leading-relaxed">Phải thuê cả container dù chỉ có 5m³ hàng</p>
                   </div>
                   
                   <div className="flex items-center justify-center">
                     <div className="text-center">
-                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      <div className="relative w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg animate-pulse">
+                        <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                       </div>
-                      <p className="font-bold text-green-600">TIẾT KIỆM</p>
-                      <p className="text-4xl font-bold text-green-600">40%</p>
+                      <div className="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-2 rounded-full font-bold text-sm mb-2 shadow-lg">
+                        TIẾT KIỆM
+                      </div>
+                      <p className="text-5xl font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">40%</p>
                     </div>
                   </div>
                   
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl">🚛</span>
+                  <div className="text-center group">
+                    <div className="relative w-24 h-24 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                      <span className="text-3xl">🚛</span>
+                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">✓</span>
+                      </div>
                     </div>
-                    <h3 className="font-bold text-gray-900 mb-2">Gom hàng lẻ TBS</h3>
-                    <p className="text-3xl font-bold text-green-600 mb-2">$1,500</p>
-                    <p className="text-gray-600 text-sm">Chỉ trả cho không gian thực tế sử dụng</p>
+                    <h3 className="font-bold text-gray-900 mb-3 text-lg">Gom hàng lẻ TBS</h3>
+                    <div className="bg-green-50 p-4 rounded-xl mb-4">
+                      <p className="text-4xl font-black text-green-600 mb-1">$1,500</p>
+                      <p className="text-green-500 text-sm font-medium">Tiết kiệm 40%</p>
+                    </div>
+                    <p className="text-gray-600 text-sm leading-relaxed">Chỉ trả cho không gian thực tế sử dụng</p>
                   </div>
                 </div>
                 
-                <div className="mt-8 p-6 bg-yellow-50 rounded-xl">
-                  <h4 className="font-bold text-gray-900 mb-3">💡 Lợi ích đặc biệt:</h4>
+                <div className="mt-8 p-6 bg-gradient-to-r from-amber-50 via-orange-50 to-yellow-50 rounded-2xl border border-amber-200">
+                  <h4 className="font-bold text-gray-900 mb-4 text-lg flex items-center">
+                    <span className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center mr-3">
+                      💡
+                    </span>
+                    Lợi ích đặc biệt
+                  </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span>
-                      <span className="text-gray-700">Không cần tồn kho lớn tại VN</span>
+                    <div className="flex items-start group hover:bg-white/50 p-3 rounded-lg transition-all duration-200">
+                      <div className="w-6 h-6 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                        <span className="text-white text-xs font-bold">✓</span>
+                      </div>
+                      <span className="text-gray-700 font-medium">Không cần tồn kho lớn tại VN</span>
                     </div>
-                    <div className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span>
-                      <span className="text-gray-700">Giảm rủi ro hàng ứ đọng</span>
+                    <div className="flex items-start group hover:bg-white/50 p-3 rounded-lg transition-all duration-200">
+                      <div className="w-6 h-6 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                        <span className="text-white text-xs font-bold">✓</span>
+                      </div>
+                      <span className="text-gray-700 font-medium">Giảm rủi ro hàng ứ đọng</span>
                     </div>
-                    <div className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span>
-                      <span className="text-gray-700">Tối ưu cho đơn hàng nhỏ</span>
+                    <div className="flex items-start group hover:bg-white/50 p-3 rounded-lg transition-all duration-200">
+                      <div className="w-6 h-6 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                        <span className="text-white text-xs font-bold">✓</span>
+                      </div>
+                      <span className="text-gray-700 font-medium">Tối ưu cho đơn hàng nhỏ</span>
                     </div>
-                    <div className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span>
-                      <span className="text-gray-700">Không bị ép mua dư</span>
+                    <div className="flex items-start group hover:bg-white/50 p-3 rounded-lg transition-all duration-200">
+                      <div className="w-6 h-6 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                        <span className="text-white text-xs font-bold">✓</span>
+                      </div>
+                      <span className="text-gray-700 font-medium">Không bị ép mua dư</span>
                     </div>
                   </div>
                 </div>
