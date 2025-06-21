@@ -10,10 +10,11 @@ Landing page được thiết kế theo concept chuyển đổi cao cho dịch v
 
 ## 🎯 Thống kê hiệu suất
 
-- **Page Size:** 2.54 kB
+- **Page Size:** 2.89 kB (+0.35kB after premium enhancements)
 - **First Load JS:** 102 kB  
 - **Performance:** Tối ưu cho Core Web Vitals
 - **SEO Score:** Đầy đủ metadata, Open Graph tags
+- **Conversion Elements:** 3 premium trust signals added
 
 ## 🏗️ Cấu trúc Landing Page
 
@@ -57,6 +58,29 @@ Landing page được thiết kế theo concept chuyển đổi cao cho dịch v
 ### 8. Mini Footer
 - Contact info, Zalo link, policy links
 
+## 💎 Premium Conversion Elements
+
+### 1. Case Study Section (After Social Proof)
+- **Real Before/After:** Company X tax case study
+- **Concrete Numbers:** 120M penalty → 38M proper tax = 68% savings
+- **Visual Impact:** Red/green before/after boxes + gradient savings highlight
+- **Social Proof:** "Best decision ever!" - Company X Director
+- **Location:** Between Social Proof Stats and Benefits
+
+### 2. Real Media Section (In Benefits)
+- **15-Second Video:** Behind-the-scenes container loading footage
+- **No Stock Promise:** "100% real footage - not staged"
+- **Interactive Elements:** Play button overlay + duration badge
+- **Process Checklist:** What customers see in video
+- **Trust Signal:** Real photos, not generic stock images
+
+### 3. Response Time Insurance (In Form)
+- **Specific Guarantee:** 15-minute callback during work hours
+- **Measurable Penalty:** 10% service discount if late
+- **Discount Code:** FAST15 (automatically provided)
+- **Work Hours:** 8:00-17:30 (Mon-Fri) clearly stated
+- **Appeal:** Perfect for demanding customers who want concrete commitments
+
 ## 🔧 Components
 
 ### Chính
@@ -69,6 +93,9 @@ Landing page được thiết kế theo concept chuyển đổi cao cho dịch v
 
 ### Data
 - `src/data/landing-data.json` - All page content (easy A/B testing)
+  - `caseStudy` - Before/after company case study data
+  - `mediaContent` - Video player and real photos
+  - `responseGuarantee` - 15-minute callback insurance details
 
 ## 📊 Analytics & Tracking
 
@@ -211,6 +238,9 @@ Variables trong `page.tsx`:
 - [x] Above-fold CTA (Hero)
 - [x] Social proof early (stats)  
 - [x] Trust signals (testimonials, guarantees)
+- [x] **NEW: Real case study (68% savings proof)**
+- [x] **NEW: Behind-the-scenes video (authentic footage)**
+- [x] **NEW: Response time insurance (measurable commitment)**
 - [x] Clear value proposition
 - [x] Friction-less form (minimal fields)
 - [x] Mobile call button
