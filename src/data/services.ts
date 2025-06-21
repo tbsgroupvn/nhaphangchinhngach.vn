@@ -19,28 +19,33 @@ export const services: Service[] = [
     title: 'Nhập khẩu chính ngạch',
     slug: 'nhap-khau-chinh-ngach',
     icon: '🚢',
-    description: 'Dịch vụ nhập khẩu chính ngạch toàn diện, đảm bảo tuân thủ pháp luật Việt Nam và quốc tế.',
-    shortDescription: 'Nhập khẩu hàng hóa an toàn, hợp pháp từ các quốc gia',
+    description: 'Dịch vụ nhập khẩu chính ngạch chuyên nghiệp, đảm bảo 100% tuân thủ pháp luật. TBS GROUP cam kết khai báo đúng, hoàn thuế chính xác, tư vấn miễn phí lần đầu.',
+    shortDescription: 'Nhập khẩu hàng hóa an toàn, hợp pháp với cam kết 100% khai báo đúng',
     benefits: [
-      'Đảm bảo 100% tuân thủ pháp luật',
-      'Tiết kiệm chi phí nhập khẩu',
-      'Thời gian thông quan nhanh chóng',
-      'Hỗ trợ giấy phép nhập khẩu'
+      '🏛️ Bảo vệ pháp lý toàn diện - Tránh mọi rủi ro vi phạm pháp luật, đảm bảo doanh nghiệp hoạt động an toàn',
+      '🧾 Xuất VAT đầy đủ - Được cấp hóa đơn VAT hợp lệ để khấu trừ thuế và báo cáo tài chính',
+      '💰 Chi phí ổn định, minh bạch - Không có phát sinh bất ngờ, dễ dàng lập kế hoạch tài chính',
+      '🎯 Tư vấn chuyên sâu - Đội ngũ chuyên gia 8+ năm kinh nghiệm hỗ trợ tối ưu hóa chi phí'
     ],
     process: [
-      'Tư vấn thủ tục nhập khẩu',
-      'Chuẩn bị hồ sơ và giấy tờ',
-      'Khai báo hải quan',
-      'Thông quan và giao hàng'
+      'Tư vấn & phân tích rủi ro: Đánh giá chi tiết hàng hóa, tư vấn mã HS chính xác, dự báo thuế suất và các yêu cầu pháp lý',
+      'Chuẩn bị hồ sơ & kiểm tra hàng: Lập đầy đủ chứng từ, kiểm tra chất lượng hàng hóa tại nguồn, đảm bảo tuân thủ tiêu chuẩn',
+      'Khai báo hải quan & giám sát: Thực hiện khai báo chính xác, phối hợp kiểm tra hải quan, xử lý các vướng mắc',
+      'Thông quan & giao hàng tận nơi: Hoàn thành thủ tục nhanh chóng, vận chuyển an toàn đến địa chỉ khách hàng'
     ],
     commitment: [
-      'Cam kết tuân thủ 100% quy định pháp luật',
-      'Bảo mật thông tin khách hàng',
-      'Hỗ trợ 24/7 trong quá trình nhập khẩu',
-      'Hoàn tiền nếu không đạt cam kết'
+      '✅ Cam kết khai báo đúng 100% - Không có sai sót trong thủ tục, tránh mọi rủi ro pháp lý',
+      '💸 Hoàn thuế chính xác - Đảm bảo hoàn trả đúng số thuế theo quy định, không thất thoát',
+      '🆓 Tư vấn miễn phí lần đầu - Phân tích chi tiết không tính phí để khách hàng đưa ra quyết định',
+      '⏱️ Hỗ trợ 24/7 - Đội ngũ chuyên gia sẵn sàng giải đáp mọi thắc mắc bất cứ lúc nào'
     ],
-    features: ['Nhập khẩu từ Trung Quốc', 'Nhập khẩu từ các nước khác', 'Xử lý giấy phép đặc biệt', 'Tư vấn mã HS'],
-    ctaText: 'Tư vấn nhập khẩu ngay',
+    features: [
+      '📊 Dự báo thuế suất chính xác - Công cụ tính toán hiện đại giúp dự báo chi phí nhập khẩu chính xác',
+      '🔍 Tư vấn mã HS chuyên sâu - Xác định mã HS đúng để tối ưu thuế suất và thủ tục',
+      '🔒 Bảo mật thông tin tuyệt đối - Cam kết không tiết lộ thông tin khách hàng và nhà cung cấp',
+      '📋 Báo cáo chi tiết minh bạch - Cung cấp báo cáo đầy đủ về chi phí, thuế, và tiến độ thực hiện'
+    ],
+    ctaText: 'Tư vấn nhập khẩu miễn phí',
     category: 'import'
   },
   {
