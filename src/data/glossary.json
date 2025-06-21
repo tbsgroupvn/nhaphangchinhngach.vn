@@ -1,0 +1,257 @@
+[
+  {
+    "term": "HS Code",
+    "english": "Harmonized System Code",
+    "description": "Hệ thống mã số phân loại hàng hóa quốc tế được sử dụng để xác định thuế suất và các quy định nhập khẩu. Mã HS gồm 6-10 chữ số, quyết định mức thuế phải nộp."
+  },
+  {
+    "term": "C/O",
+    "english": "Certificate of Origin",
+    "description": "Giấy chứng nhận xuất xứ hàng hóa, xác nhận nơi sản xuất hoặc chế biến hàng hóa. Được sử dụng để hưởng ưu đãi thuế quan theo các hiệp định thương mại."
+  },
+  {
+    "term": "Bill of Lading (B/L)",
+    "english": "Bill of Lading",
+    "description": "Vận đơn đường biển, là chứng từ pháp lý xác nhận việc nhận hàng để vận chuyển. Đồng thời là chứng từ sở hữu hàng hóa và hợp đồng vận chuyển."
+  },
+  {
+    "term": "FOB",
+    "english": "Free On Board",
+    "description": "Điều kiện giao hàng theo Incoterms, người bán chịu trách nhiệm đến khi hàng qua thành tàu tại cảng xuất khẩu. Người mua chịu chi phí vận chuyển và rủi ro từ đó."
+  },
+  {
+    "term": "CNF/CFR",
+    "english": "Cost and Freight",
+    "description": "Điều kiện giao hàng bao gồm giá hàng và cước phí vận chuyển đến cảng đích. Người bán trả cước phí nhưng rủi ro chuyển cho người mua khi hàng qua thành tàu."
+  },
+  {
+    "term": "CIF",
+    "english": "Cost, Insurance and Freight",
+    "description": "Điều kiện giao hàng bao gồm giá hàng, bảo hiểm và cước phí vận chuyển đến cảng đích. Người bán phải mua bảo hiểm cho hàng hóa trong quá trình vận chuyển."
+  },
+  {
+    "term": "VAT",
+    "english": "Value Added Tax",
+    "description": "Thuế giá trị gia tăng được tính trên hàng nhập khẩu. Tại Việt Nam, VAT nhập khẩu thường là 0%, 5% hoặc 10% tùy theo loại hàng hóa."
+  },
+  {
+    "term": "Demurrage",
+    "english": "Demurrage",
+    "description": "Phí lưu container/hàng hóa quá thời gian miễn phí tại cảng hoặc depot. Thường tính theo ngày và tăng dần theo thời gian lưu kho."
+  },
+  {
+    "term": "Manifest",
+    "english": "Cargo Manifest",
+    "description": "Bản kê khai hàng hóa trên phương tiện vận chuyển, liệt kê chi tiết tất cả lô hàng, trọng lượng, người gửi và người nhận."
+  },
+  {
+    "term": "Incoterms",
+    "english": "International Commercial Terms",
+    "description": "Bộ quy tắc quốc tế quy định trách nhiệm, chi phí và rủi ro giữa người mua và bán trong thương mại quốc tế. Phiên bản mới nhất là Incoterms 2020."
+  },
+  {
+    "term": "AWB",
+    "english": "Air Waybill",
+    "description": "Vận đơn hàng không, chứng từ vận chuyển cho hàng gửi bằng máy bay. Không phải là chứng từ sở hữu như Bill of Lading."
+  },
+  {
+    "term": "Form E",
+    "english": "ASEAN Form E",
+    "description": "Giấy chứng nhận xuất xứ ASEAN, cho phép hàng hóa hưởng ưu đãi thuế quan khi thương mại giữa các nước ASEAN theo AFTA."
+  },
+  {
+    "term": "AEO",
+    "english": "Authorized Economic Operator",
+    "description": "Doanh nghiệp được ủy quyền kinh tế, được hải quan công nhận là đáng tin cậy trong chuỗi cung ứng toàn cầu và được hưởng các ưu đãi thủ tục."
+  },
+  {
+    "term": "VGM",
+    "english": "Verified Gross Mass",
+    "description": "Khối lượng tổng xác minh của container, bắt buộc phải khai báo chính xác trước khi container được xếp lên tàu theo quy định SOLAS."
+  },
+  {
+    "term": "LCL",
+    "english": "Less than Container Load",
+    "description": "Hàng lẻ không đủ một container, được gom chung với hàng của người khác trong cùng một container. Thường dùng cho lô hàng nhỏ."
+  },
+  {
+    "term": "FCL",
+    "english": "Full Container Load",
+    "description": "Thuê nguyên container để vận chuyển hàng của một khách hàng. Thường kinh tế hơn cho lô hàng lớn và bảo mật hơn."
+  },
+  {
+    "term": "EXW",
+    "english": "Ex Works",
+    "description": "Điều kiện giao hàng tại nhà máy/kho người bán. Người mua chịu toàn bộ chi phí và rủi ro từ khi nhận hàng."
+  },
+  {
+    "term": "DDP",
+    "english": "Delivered Duty Paid",
+    "description": "Giao hàng đã đóng thuế, người bán chịu toàn bộ chi phí và rủi ro đến tận nơi người mua, bao gồm cả thuế nhập khẩu."
+  },
+  {
+    "term": "Customs Clearance",
+    "english": "Customs Clearance",
+    "description": "Thủ tục thông quan hải quan, quá trình khai báo và xử lý hồ sơ để được phép nhập khẩu hoặc xuất khẩu hàng hóa."
+  },
+  {
+    "term": "Duty",
+    "english": "Import Duty",
+    "description": "Thuế nhập khẩu được tính trên giá trị hàng hóa nhập khẩu. Mức thuế phụ thuộc vào mã HS và nguồn gốc hàng hóa."
+  },
+  {
+    "term": "Freight Forwarder",
+    "english": "Freight Forwarder",
+    "description": "Đại lý vận tải quốc tế, tổ chức trung gian cung cấp dịch vụ logistics và thông quan cho khách hàng xuất nhập khẩu."
+  },
+  {
+    "term": "Commercial Invoice",
+    "english": "Commercial Invoice",
+    "description": "Hóa đơn thương mại, chứng từ quan trọng nhất trong thương mại quốc tế, ghi rõ thông tin hàng hóa, giá cả và điều kiện giao hàng."
+  },
+  {
+    "term": "Packing List",
+    "english": "Packing List",
+    "description": "Danh sách đóng gói chi tiết, mô tả cách đóng gói hàng hóa, số lượng kiện, trọng lượng từng kiện và tổng trọng lượng."
+  },
+  {
+    "term": "TEU",
+    "english": "Twenty-foot Equivalent Unit",
+    "description": "Đơn vị tính container 20 feet tiêu chuẩn, được dùng để đo lường năng lực cảng và tàu container. Container 40 feet = 2 TEU."
+  },
+  {
+    "term": "CFS",
+    "english": "Container Freight Station",
+    "description": "Trạm hàng container, nơi tập kết, gom hàng lẻ (LCL) từ nhiều người gửi để đóng vào container, hoặc tách hàng ra khỏi container."
+  },
+  {
+    "term": "CY",
+    "english": "Container Yard",
+    "description": "Bãi container, nơi lưu giữ container rỗng và đầy. Khách hàng FCL thường nhận/trả container tại CY."
+  },
+  {
+    "term": "D/O",
+    "english": "Delivery Order",
+    "description": "Lệnh giao hàng, chứng từ cho phép nhận hàng tại cảng/kho. Thường được cấp sau khi hoàn thành thủ tục thông quan."
+  },
+  {
+    "term": "D/R",
+    "english": "Dock Receipt",
+    "description": "Biên lai nhận hàng tại bến, xác nhận hàng hóa đã được giao tại cảng để chuẩn bị xếp lên tàu."
+  },
+  {
+    "term": "ETD",
+    "english": "Estimated Time of Departure",
+    "description": "Thời gian khởi hành dự kiến của tàu/máy bay. Thông tin quan trọng để lên kế hoạch logistics."
+  },
+  {
+    "term": "ETA",
+    "english": "Estimated Time of Arrival",
+    "description": "Thời gian đến dự kiến của tàu/máy bay tại cảng/sân bay đích. Giúp chuẩn bị thủ tục thông quan."
+  },
+  {
+    "term": "B2B",
+    "english": "Business to Business",
+    "description": "Thương mại giữa các doanh nghiệp, phân biệt với B2C (Business to Consumer). Ảnh hưởng đến thủ tục và thuế nhập khẩu."
+  },
+  {
+    "term": "Documentary Credit",
+    "english": "Letter of Credit (L/C)",
+    "description": "Thư tín dụng, phương thức thanh toán quốc tế an toàn qua ngân hàng. Ngân hàng cam kết thanh toán khi có đủ chứng từ đúng yêu cầu."
+  },
+  {
+    "term": "ECUS",
+    "english": "Electronic Customs",
+    "description": "Hệ thống hải quan điện tử, cho phép khai báo và xử lý thủ tục hải quan trực tuyến, tiết kiệm thời gian và chi phí."
+  },
+  {
+    "term": "Phân luồng",
+    "english": "Channel Selection",
+    "description": "Hệ thống phân loại hàng hóa của hải quan: luồng xanh (không kiểm tra), luồng vàng (kiểm tra hồ sơ), luồng đỏ (kiểm tra thực tế)."
+  },
+  {
+    "term": "Tờ khai hải quan",
+    "english": "Customs Declaration",
+    "description": "Bộ hồ sơ khai báo hàng hóa với hải quan, bao gồm thông tin chi tiết về hàng hóa, giá trị, thuế suất và chứng từ liên quan."
+  },
+  {
+    "term": "Thuế chống bán phá giá",
+    "english": "Anti-dumping Duty",
+    "description": "Thuế bổ sung áp dụng khi hàng nhập khẩu được bán dưới giá công bằng, nhằm bảo vệ sản xuất trong nước."
+  },
+  {
+    "term": "Thuế tự vệ",
+    "english": "Safeguard Duty",
+    "description": "Thuế tạm thời áp dụng khi hàng nhập khẩu tăng đột biến gây thiệt hại nghiêm trọng cho ngành sản xuất trong nước."
+  },
+  {
+    "term": "ATIGA",
+    "english": "ASEAN Trade in Goods Agreement",
+    "description": "Hiệp định thương mại hàng hóa ASEAN, quy định về ưu đãi thuế quan và quy tắc xuất xứ cho hàng hóa thương mại trong khu vực."
+  },
+  {
+    "term": "FTA",
+    "english": "Free Trade Agreement",
+    "description": "Hiệp định thương mại tự do giữa các quốc gia/vùng lãnh thổ, quy định việc giảm hoặc loại bỏ thuế quan và rào cản thương mại."
+  },
+  {
+    "term": "Transit",
+    "english": "Transit",
+    "description": "Vận chuyển quá cảnh, hàng hóa đi qua lãnh thổ một nước để đến điểm đích ở nước khác mà không nhập khẩu vào nước quá cảnh."
+  },
+  {
+    "term": "Bonded Warehouse",
+    "english": "Bonded Warehouse",
+    "description": "Kho bảo thuế, nơi lưu trữ hàng hóa nhập khẩu mà chưa đóng thuế. Chỉ đóng thuế khi hàng ra khỏi kho để tiêu thụ nội địa."
+  },
+  {
+    "term": "Entry Summary",
+    "english": "Entry Summary",
+    "description": "Bản tóm tắt tờ khai, thông báo sơ bộ về hàng hóa nhập khẩu gửi trước cho hải quan để chuẩn bị thủ tục thông quan."
+  },
+  {
+    "term": "Quarantine",
+    "english": "Quarantine",
+    "description": "Kiểm dịch, thủ tục kiểm tra y tế, thực vật hoặc động vật để đảm bảo hàng hóa không mang mầm bệnh có hại."
+  },
+  {
+    "term": "Certificate of Quality",
+    "english": "Certificate of Quality",
+    "description": "Giấy chứng nhận chất lượng, xác nhận hàng hóa đạt tiêu chuẩn chất lượng theo yêu cầu của nước nhập khẩu."
+  },
+  {
+    "term": "FDA",
+    "english": "Food and Drug Administration",
+    "description": "Cơ quan quản lý thực phẩm và dược phẩm của Mỹ. Hàng thực phẩm, dược phẩm nhập khẩu vào Mỹ cần được FDA phê duyệt."
+  },
+  {
+    "term": "GSP",
+    "english": "Generalized System of Preferences",
+    "description": "Hệ thống ưu đãi tổng quát, ưu đãi thuế quan mà các nước phát triển dành cho hàng hóa từ các nước đang phát triển."
+  },
+  {
+    "term": "MFN",
+    "english": "Most Favored Nation",
+    "description": "Đối xử quốc gia ưu đãi nhất, nguyên tắc không phân biệt đối xử trong thương mại quốc tế theo WTO."
+  },
+  {
+    "term": "SITC",
+    "english": "Standard International Trade Classification",
+    "description": "Hệ thống phân loại thương mại quốc tế tiêu chuẩn, được sử dụng để thống kê thương mại quốc tế."
+  },
+  {
+    "term": "Consolidation",
+    "english": "Cargo Consolidation",
+    "description": "Dịch vụ gom hàng lẻ từ nhiều người gửi khác nhau để vận chuyển chung trong một container, giúp giảm chi phí."
+  },
+  {
+    "term": "Deconsolidation",
+    "english": "Cargo Deconsolidation",
+    "description": "Quá trình tách hàng lẻ (LCL) ra khỏi container và phân phối cho từng người nhận khác nhau."
+  },
+  {
+    "term": "Dangerous Goods",
+    "english": "Dangerous Goods",
+    "description": "Hàng nguy hiểm theo phân loại IMDG, ADR, IATA, cần các thủ tục đặc biệt về đóng gói, ghi nhãn và vận chuyển."
+  }
+] 

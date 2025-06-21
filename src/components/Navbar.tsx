@@ -282,6 +282,25 @@ export default function Navbar() {
                             </p>
                           </div>
                         </Link>
+
+                        <Link
+                          href="/tu-dien-thuat-ngu"
+                          className="flex items-center p-4 rounded-xl hover:bg-primary-50 hover:text-primary-700 transition-all duration-300 group hover:scale-[1.02] min-h-[72px] cursor-pointer"
+                        >
+                          <div className="flex-shrink-0 mr-4">
+                            <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center group-hover:bg-amber-200 transition-colors duration-300 group-hover:scale-110">
+                              <span className="text-xl group-hover:animate-bounce">📖</span>
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="text-base font-semibold text-gray-900 group-hover:text-primary-700 transition-colors duration-300">
+                              Từ điển thuật ngữ
+                            </h4>
+                            <p className="text-sm text-gray-600 mt-1 group-hover:text-primary-600 transition-colors duration-300">
+                              Thuật ngữ hải quan & XNK
+                            </p>
+                          </div>
+                        </Link>
                       </div>
                       
                       {/* View All News */}
@@ -449,6 +468,14 @@ export default function Navbar() {
                 >
                   <span className="mr-3 text-lg">📚</span>
                   Kiến thức - Cẩm nang XNK
+                </Link>
+                <Link 
+                  href="/tu-dien-thuat-ngu" 
+                  className="flex items-center px-5 py-4 text-sm text-gray-600 hover:text-primary-600 transition-colors rounded-xl hover:bg-primary-50 font-medium min-h-[52px]"
+                  onClick={closeMenu}
+                >
+                  <span className="mr-3 text-lg">📖</span>
+                  Từ điển thuật ngữ
                 </Link>
               </div>
               
