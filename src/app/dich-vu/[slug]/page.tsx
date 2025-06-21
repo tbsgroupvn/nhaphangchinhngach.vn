@@ -151,7 +151,7 @@ export default function ServiceDetailPage({ params }: Props) {
                     </div>
                     <div className={`lg:w-1/2 ${index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}>
                       <div className="relative">
-                        <img 
+                        <Image 
                           src={[
                             'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop',
                             'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop',
@@ -159,6 +159,8 @@ export default function ServiceDetailPage({ params }: Props) {
                             'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=600&h=400&fit=crop'
                           ][index]} 
                           alt={`Quy trình bước ${index + 1}`}
+                          width={600}
+                          height={400}
                           className="w-full h-64 object-cover rounded-2xl shadow-lg"
                         />
                         <div className="absolute top-4 right-4 bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-bold">
@@ -1594,7 +1596,7 @@ export default function ServiceDetailPage({ params }: Props) {
                     </div>
                     <h3 className="font-bold text-lg text-gray-900 mb-2">Mất tiền cọc</h3>
                     <p className="text-sm text-gray-600">
-                      Nhà máy "ma", giấy tờ giả<br/>
+                      Nhà máy &quot;ma&quot;, giấy tờ giả<br/>
                       Không thể đòi lại tiền
                     </p>
                   </div>
@@ -1653,7 +1655,7 @@ export default function ServiceDetailPage({ params }: Props) {
                     <div className="bg-red-50 p-4 rounded-xl mb-4">
                       <h5 className="font-bold text-red-800 mb-2">Phát hiện kịp thời:</h5>
                       <ul className="text-sm text-red-700 space-y-1">
-                        <li>❌ "Nhà máy" chỉ là văn phòng cho thuê</li>
+                        <li>❌ &quot;Nhà máy&quot; chỉ là văn phòng cho thuê</li>
                         <li>❌ Giấy phép kinh doanh đã hết hạn</li>
                         <li>❌ Không có dây chuyền sản xuất thực tế</li>
                         <li>✅ Tránh mất 200 triệu đồng tiền cọc</li>
@@ -1928,7 +1930,7 @@ export default function ServiceDetailPage({ params }: Props) {
                           📥 Cẩm nang phòng tránh lừa đảo khi nhập hàng TQ
                         </a>
                         <a href="#" className="block text-red-600 hover:text-red-800 font-medium hover:underline">
-                          📥 10 dấu hiệu nhận biết nhà máy "ma"
+                          📥 10 dấu hiệu nhận biết nhà máy &quot;ma&quot;
                         </a>
                         <a href="#" className="block text-red-600 hover:text-red-800 font-medium hover:underline">
                           📥 Checklist kiểm tra nhà cung cấp tự làm
@@ -1998,9 +2000,11 @@ export default function ServiceDetailPage({ params }: Props) {
               {/* Warehouse Images Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                 <div className="relative group overflow-hidden rounded-2xl shadow-lg">
-                  <img 
+                  <Image 
                     src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=400&fit=crop" 
                     alt="Nhân viên đóng gói chuyên nghiệp"
+                    width={600}
+                    height={400}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
@@ -2012,9 +2016,11 @@ export default function ServiceDetailPage({ params }: Props) {
                 </div>
 
                 <div className="relative group overflow-hidden rounded-2xl shadow-lg">
-                  <img 
+                  <Image 
                     src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop" 
                     alt="Container và logistics"
+                    width={600}
+                    height={400}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
@@ -2026,9 +2032,11 @@ export default function ServiceDetailPage({ params }: Props) {
                 </div>
 
                 <div className="relative group overflow-hidden rounded-2xl shadow-lg">
-                  <img 
+                  <Image 
                     src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=400&fit=crop" 
                     alt="Kho bãi hiện đại"
+                    width={600}
+                    height={400}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
@@ -2496,10 +2504,10 @@ export default function ServiceDetailPage({ params }: Props) {
                     <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mr-3">
                       <span className="text-white font-bold">🔴</span>
                     </div>
-                    <h3 className="text-xl font-bold text-red-300">Chuyên xử lý lô hàng "màu đỏ"</h3>
+                    <h3 className="text-xl font-bold text-red-300">Chuyên xử lý lô hàng &quot;màu đỏ&quot;</h3>
                   </div>
                   <p className="text-red-200 leading-relaxed">
-                    <strong>Tư vấn "lối thoát" cho lô hàng màu đỏ:</strong> Đội ngũ cựu cán bộ hải quan với kinh nghiệm thực chiến 15+ năm, 
+                    <strong>Tư vấn &quot;lối thoát&quot; cho lô hàng màu đỏ:</strong> Đội ngũ cựu cán bộ hải quan với kinh nghiệm thực chiến 15+ năm, 
                     đã giúp hàng trăm khách hàng xử lý thành công các case khó: trị giá tính thuế, tự vệ thương mại, kiểm tra chuyên ngành...
                   </p>
                 </div>
