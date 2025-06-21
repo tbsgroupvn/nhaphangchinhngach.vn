@@ -14,8 +14,8 @@ export default function Navbar() {
   const pathname = usePathname()
   
   // Add timeout refs for hover delays
-  const serviceTimeoutRef = useRef<number>()
-  const newsTimeoutRef = useRef<number>()
+  const serviceTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const newsTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
 
   useEffect(() => {
     const handleScroll = () => {
