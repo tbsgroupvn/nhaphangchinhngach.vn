@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import Image from 'next/image'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import BackToTop from '@/components/BackToTop'
@@ -349,9 +350,11 @@ export default function ServiceDetailPage({ params }: Props) {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="bg-white p-8 rounded-2xl shadow-lg">
                   <div className="flex items-start mb-6">
-                    <img 
+                    <Image 
                       src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" 
                       alt="Anh Minh - CEO"
+                      width={48}
+                      height={48}
                       className="w-12 h-12 rounded-full object-cover mr-4"
                     />
                     <div>
@@ -360,9 +363,9 @@ export default function ServiceDetailPage({ params }: Props) {
                     </div>
                   </div>
                   <p className="text-gray-700 italic mb-4">
-                    "Trước khi hợp tác với TBS GROUP, chúng tôi đã gặp nhiều khó khăn với việc nhập khẩu nguyên liệu từ Trung Quốc. 
+                    &ldquo;Trước khi hợp tác với TBS GROUP, chúng tôi đã gặp nhiều khó khăn với việc nhập khẩu nguyên liệu từ Trung Quốc. 
                     Nhờ có TBS GROUP tư vấn và hỗ trợ thủ tục, chúng tôi đã tiết kiệm được 30% chi phí và thời gian thông quan 
-                    nhanh hơn 50%. Đặc biệt, việc được xuất hóa đơn VAT đầy đủ giúp công ty chúng tôi khấu trừ thuế một cách hợp pháp."
+                    nhanh hơn 50%. Đặc biệt, việc được xuất hóa đơn VAT đầy đủ giúp công ty chúng tôi khấu trừ thuế một cách hợp pháp.&rdquo;
                   </p>
                   <div className="flex text-yellow-400">
                     {[...Array(5)].map((_, i) => (
@@ -375,9 +378,11 @@ export default function ServiceDetailPage({ params }: Props) {
 
                 <div className="bg-white p-8 rounded-2xl shadow-lg">
                   <div className="flex items-start mb-6">
-                    <img 
+                    <Image 
                       src="https://images.unsplash.com/photo-1494790108755-2616b612b169?w=60&h=60&fit=crop&crop=face" 
                       alt="Chị Lan - Giám đốc"
+                      width={48}
+                      height={48}
                       className="w-12 h-12 rounded-full object-cover mr-4"
                     />
                     <div>
@@ -386,10 +391,10 @@ export default function ServiceDetailPage({ params }: Props) {
                     </div>
                   </div>
                   <p className="text-gray-700 italic mb-4">
-                    "Là một doanh nghiệp mới trong lĩnh vực nhập khẩu, chúng tôi rất lo lắng về các thủ tục pháp lý. 
+                    &ldquo;Là một doanh nghiệp mới trong lĩnh vực nhập khẩu, chúng tôi rất lo lắng về các thủ tục pháp lý. 
                     TBS GROUP đã tư vấn rất chi tiết và đồng hành cùng chúng tôi trong suốt quá trình. 
-                    Điều ấn tượng nhất là cam kết 'khai báo đúng 100%' và thực sự họ đã làm được điều đó. 
-                    Chúng tôi hoàn toàn yên tâm về mặt pháp lý khi hợp tác với TBS GROUP."
+                    Điều ấn tượng nhất là cam kết &lsquo;khai báo đúng 100%&rsquo; và thực sự họ đã làm được điều đó. 
+                    Chúng tôi hoàn toàn yên tâm về mặt pháp lý khi hợp tác với TBS GROUP.&rdquo;
                   </p>
                   <div className="flex text-yellow-400">
                     {[...Array(5)].map((_, i) => (
@@ -422,9 +427,11 @@ export default function ServiceDetailPage({ params }: Props) {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 <div className="bg-white p-6 rounded-2xl shadow-lg">
                   <div className="flex items-start mb-4">
-                    <img 
+                    <Image 
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" 
                       alt="Anh Tuấn - Chủ shop"
+                      width={48}
+                      height={48}
                       className="w-12 h-12 rounded-full object-cover mr-4"
                     />
                     <div>
@@ -433,8 +440,8 @@ export default function ServiceDetailPage({ params }: Props) {
                     </div>
                   </div>
                   <p className="text-gray-700 italic mb-4">
-                    "Lô hàng lẻ đầu tiên của tôi về đúng hạn, tiết kiệm được 30% phí so với trước, 
-                    cảm ơn TBS! Đặc biệt là được xem video đóng kiện, tôi yên tâm 100%."
+                    &ldquo;Lô hàng lẻ đầu tiên của tôi về đúng hạn, tiết kiệm được 30% phí so với trước, 
+                    cảm ơn TBS! Đặc biệt là được xem video đóng kiện, tôi yên tâm 100%.&rdquo;
                   </p>
                   <div className="flex text-yellow-400">
                     {[...Array(5)].map((_, i) => (
@@ -447,9 +454,11 @@ export default function ServiceDetailPage({ params }: Props) {
 
                 <div className="bg-white p-6 rounded-2xl shadow-lg">
                   <div className="flex items-start mb-4">
-                    <img 
+                    <Image 
                       src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face" 
                       alt="Chị Hằng - Quản lý"
+                      width={48}
+                      height={48}
                       className="w-12 h-12 rounded-full object-cover mr-4"
                     />
                     <div>
@@ -458,8 +467,8 @@ export default function ServiceDetailPage({ params }: Props) {
                     </div>
                   </div>
                   <p className="text-gray-700 italic mb-4">
-                    "Shop nhỏ như tôi không đủ tiền thuê nguyên container. 
-                    Nhờ TBS gom hàng lẻ, giờ nhập được đều đặn mà chi phí hợp lý. Ảnh thực tế rất chi tiết!"
+                    &ldquo;Shop nhỏ như tôi không đủ tiền thuê nguyên container. 
+                    Nhờ TBS gom hàng lẻ, giờ nhập được đều đặn mà chi phí hợp lý. Ảnh thực tế rất chi tiết!&rdquo;
                   </p>
                   <div className="flex text-yellow-400">
                     {[...Array(5)].map((_, i) => (
@@ -478,9 +487,11 @@ export default function ServiceDetailPage({ params }: Props) {
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="relative">
-                    <img 
+                    <Image 
                       src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=400&h=250&fit=crop" 
                       alt="Nhân viên đóng kiện"
+                      width={400}
+                      height={250}
                       className="w-full h-48 object-cover rounded-xl"
                     />
                     <div className="absolute bottom-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
@@ -488,9 +499,11 @@ export default function ServiceDetailPage({ params }: Props) {
                     </div>
                   </div>
                   <div className="relative">
-                    <img 
+                    <Image 
                       src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=400&h=250&fit=crop" 
                       alt="Container thực tế"
+                      width={400}
+                      height={250}
                       className="w-full h-48 object-cover rounded-xl"
                     />
                     <div className="absolute bottom-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
@@ -498,9 +511,11 @@ export default function ServiceDetailPage({ params }: Props) {
                     </div>
                   </div>
                   <div className="relative">
-                    <img 
+                    <Image 
                       src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=250&fit=crop" 
                       alt="Kho tại Trung Quốc"
+                      width={400}
+                      height={250}
                       className="w-full h-48 object-cover rounded-xl"
                     />
                     <div className="absolute bottom-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
@@ -509,7 +524,7 @@ export default function ServiceDetailPage({ params }: Props) {
                   </div>
                 </div>
                 <p className="text-center text-gray-600 mt-4 italic">
-                  "Khách hàng luôn nhận được video/ảnh minh chứng quá trình đóng kiện hàng hóa"
+                  &ldquo;Khách hàng luôn nhận được video/ảnh minh chứng quá trình đóng kiện hàng hóa&rdquo;
                 </p>
               </div>
             </div>
