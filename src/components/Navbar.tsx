@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
@@ -12,6 +12,10 @@ export default function Navbar() {
   const [isServiceDropdownOpen, setIsServiceDropdownOpen] = useState(false)
   const [isNewsDropdownOpen, setIsNewsDropdownOpen] = useState(false)
   const pathname = usePathname()
+  
+  // Add timeout refs for hover delays
+  const serviceTimeoutRef = useRef<number>()
+  const newsTimeoutRef = useRef<number>()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +25,14 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Clean up timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (serviceTimeoutRef.current) clearTimeout(serviceTimeoutRef.current)
+      if (newsTimeoutRef.current) clearTimeout(newsTimeoutRef.current)
+    }
+  }, [])
+
   const isActive = (path: string) => {
     if (path === '/' && pathname === '/') return 'text-primary-600 bg-primary-50'
     if (path !== '/' && pathname.startsWith(path)) return 'text-primary-600 bg-primary-50'
@@ -28,6 +40,29 @@ export default function Navbar() {
   }
 
   const closeMenu = () => setIsMenuOpen(false)
+
+  // Improved hover handlers with delays
+  const handleServiceMouseEnter = () => {
+    if (serviceTimeoutRef.current) clearTimeout(serviceTimeoutRef.current)
+    setIsServiceDropdownOpen(true)
+  }
+
+  const handleServiceMouseLeave = () => {
+    serviceTimeoutRef.current = setTimeout(() => {
+      setIsServiceDropdownOpen(false)
+    }, 150) // 150ms delay before closing
+  }
+
+  const handleNewsMouseEnter = () => {
+    if (newsTimeoutRef.current) clearTimeout(newsTimeoutRef.current)
+    setIsNewsDropdownOpen(true)
+  }
+
+  const handleNewsMouseLeave = () => {
+    newsTimeoutRef.current = setTimeout(() => {
+      setIsNewsDropdownOpen(false)
+    }, 150) // 150ms delay before closing
+  }
 
   return (
     <>
@@ -95,7 +130,7 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center space-x-2">
               <Link 
                 href="/" 
-                className={`flex items-center transition-all duration-300 px-3 py-2 rounded-lg ${isActive('/')} hover:scale-105 group`}
+                className={`flex items-center transition-all duration-300 px-4 py-3 rounded-lg ${isActive('/')} hover:scale-105 group`}
               >
                 <svg className="w-4 h-4 mr-1 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -105,7 +140,7 @@ export default function Navbar() {
 
               <Link 
                 href="/gioi-thieu" 
-                className={`flex items-center transition-all duration-300 px-3 py-2 rounded-lg ${isActive('/gioi-thieu')} hover:scale-105 group`}
+                className={`flex items-center transition-all duration-300 px-4 py-3 rounded-lg ${isActive('/gioi-thieu')} hover:scale-105 group`}
               >
                 <svg className="w-4 h-4 mr-1 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -113,15 +148,15 @@ export default function Navbar() {
               Giới thiệu
             </Link>
 
-              {/* Services Dropdown */}
+              {/* Services Dropdown - Improved UX */}
               <div 
                 className="relative"
-                onMouseEnter={() => setIsServiceDropdownOpen(true)}
-                onMouseLeave={() => setIsServiceDropdownOpen(false)}
+                onMouseEnter={handleServiceMouseEnter}
+                onMouseLeave={handleServiceMouseLeave}
               >
                 <Link 
                   href="/dich-vu" 
-                  className={`flex items-center transition-all duration-300 px-3 py-2 rounded-lg ${isActive('/dich-vu')} hover:scale-105 group`}
+                  className={`flex items-center transition-all duration-300 px-4 py-3 rounded-lg ${isActive('/dich-vu')} hover:scale-105 group`}
                 >
                   <svg className="w-4 h-4 mr-1 group-hover:animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
@@ -132,19 +167,24 @@ export default function Navbar() {
                   </svg>
             </Link>
                 
+                {/* Invisible bridge to connect menu to dropdown */}
+                {isServiceDropdownOpen && (
+                  <div className="absolute top-full left-0 w-full h-2 bg-transparent" />
+                )}
+                
                 {/* Dropdown Menu */}
                 <ServiceDropdown isOpen={isServiceDropdownOpen} />
               </div>
 
-              {/* News Dropdown */}
+              {/* News Dropdown - Improved UX */}
               <div 
                 className="relative"
-                onMouseEnter={() => setIsNewsDropdownOpen(true)}
-                onMouseLeave={() => setIsNewsDropdownOpen(false)}
+                onMouseEnter={handleNewsMouseEnter}
+                onMouseLeave={handleNewsMouseLeave}
               >
                 <Link 
                   href="/tin-tuc" 
-                  className={`flex items-center transition-all duration-300 px-3 py-2 rounded-lg ${isActive('/tin-tuc')} hover:scale-105 group`}
+                  className={`flex items-center transition-all duration-300 px-4 py-3 rounded-lg ${isActive('/tin-tuc')} hover:scale-105 group`}
                 >
                   <svg className="w-4 h-4 mr-1 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
@@ -155,11 +195,16 @@ export default function Navbar() {
                   </svg>
                 </Link>
                 
+                {/* Invisible bridge to connect menu to dropdown */}
+                {isNewsDropdownOpen && (
+                  <div className="absolute top-full left-0 w-full h-2 bg-transparent" />
+                )}
+                
                 {/* News Dropdown Menu */}
                 {isNewsDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-3 w-96 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 animate-in slide-in-from-top-5 duration-300">
-                    <div className="p-3">
-                      <div className="space-y-1">
+                  <div className="absolute top-full left-0 mt-1 w-96 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 animate-in slide-in-from-top-5 duration-300">
+                    <div className="p-4">
+                      <div className="space-y-2">
 
                         <Link
                           href="/tin-tuc/nganh"
@@ -200,18 +245,18 @@ export default function Navbar() {
                             </div>
                           </Link>
                           
-                          {/* Sub-menu for Tin nội bộ */}
-                          <div className="ml-8 mt-2 space-y-1 border-l-2 border-gray-100 pl-4">
+                          {/* Sub-menu for Tin nội bộ - Improved spacing */}
+                          <div className="ml-8 mt-2 space-y-2 border-l-2 border-gray-100 pl-4">
                             <Link
                               href="/tin-tuc/noi-bo/hoat-dong-cong-ty"
-                              className="flex items-center p-3 rounded-xl hover:bg-teal-50 hover:text-teal-700 transition-all duration-300 group min-h-[48px] cursor-pointer"
+                              className="flex items-center p-3 rounded-xl hover:bg-teal-50 hover:text-teal-700 transition-all duration-300 group min-h-[52px] cursor-pointer"
                             >
                               <span className="text-lg mr-3 group-hover:animate-bounce">🎯</span>
                               <span className="text-sm font-medium">Hoạt động công ty</span>
                             </Link>
                             <Link
                               href="/tin-tuc/noi-bo/tuyen-dung"
-                              className="flex items-center p-3 rounded-xl hover:bg-purple-50 hover:text-purple-700 transition-all duration-300 group min-h-[48px] cursor-pointer"
+                              className="flex items-center p-3 rounded-xl hover:bg-purple-50 hover:text-purple-700 transition-all duration-300 group min-h-[52px] cursor-pointer"
                             >
                               <span className="text-lg mr-3 group-hover:animate-bounce">👥</span>
                               <span className="text-sm font-medium">Tuyển dụng</span>
@@ -243,7 +288,7 @@ export default function Navbar() {
                       <div className="mt-4 pt-4 border-t border-gray-100">
                         <Link
                           href="/tin-tuc"
-                          className="flex items-center justify-center w-full px-4 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all duration-300 group hover:scale-[1.02] min-h-[48px]"
+                          className="flex items-center justify-center w-full px-4 py-4 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all duration-300 group hover:scale-[1.02] min-h-[52px]"
                         >
                           <svg className="w-5 h-5 mr-3 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
@@ -263,7 +308,7 @@ export default function Navbar() {
 
               <Link 
                 href="/lien-he" 
-                className={`flex items-center transition-all duration-300 px-3 py-2 rounded-lg ${isActive('/lien-he')} hover:scale-105 group`}
+                className={`flex items-center transition-all duration-300 px-4 py-3 rounded-lg ${isActive('/lien-he')} hover:scale-105 group`}
               >
                 <svg className="w-4 h-4 mr-1 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -365,7 +410,7 @@ export default function Navbar() {
 
                 <Link 
                   href="/tin-tuc/nganh" 
-                  className="flex items-center px-5 py-3 text-sm text-gray-600 hover:text-primary-600 transition-colors rounded-xl hover:bg-primary-50 font-medium min-h-[48px]"
+                  className="flex items-center px-5 py-4 text-sm text-gray-600 hover:text-primary-600 transition-colors rounded-xl hover:bg-primary-50 font-medium min-h-[52px]"
                   onClick={closeMenu}
                 >
                   <span className="mr-3 text-lg">📈</span>
@@ -373,16 +418,16 @@ export default function Navbar() {
                 </Link>
                 <Link 
                   href="/tin-tuc/noi-bo" 
-                  className="flex items-center px-5 py-3 text-sm text-gray-600 hover:text-primary-600 transition-colors rounded-xl hover:bg-primary-50 font-medium min-h-[48px]"
+                  className="flex items-center px-5 py-4 text-sm text-gray-600 hover:text-primary-600 transition-colors rounded-xl hover:bg-primary-50 font-medium min-h-[52px]"
                   onClick={closeMenu}
                 >
                   <span className="mr-3 text-lg">🏢</span>
                   Tin nội bộ
                 </Link>
-                <div className="ml-6 space-y-1">
+                <div className="ml-6 space-y-2">
                   <Link 
                     href="/tin-tuc/noi-bo/hoat-dong-cong-ty" 
-                    className="flex items-center px-4 py-3 text-sm text-gray-500 hover:text-primary-600 transition-colors rounded-xl hover:bg-primary-50 min-h-[44px]"
+                    className="flex items-center px-4 py-3 text-sm text-gray-500 hover:text-primary-600 transition-colors rounded-xl hover:bg-primary-50 min-h-[48px]"
                     onClick={closeMenu}
                   >
                     <span className="mr-3 text-base">🎯</span>
@@ -390,7 +435,7 @@ export default function Navbar() {
                   </Link>
                   <Link 
                     href="/tin-tuc/noi-bo/tuyen-dung" 
-                    className="flex items-center px-4 py-3 text-sm text-gray-500 hover:text-primary-600 transition-colors rounded-xl hover:bg-primary-50 min-h-[44px]"
+                    className="flex items-center px-4 py-3 text-sm text-gray-500 hover:text-primary-600 transition-colors rounded-xl hover:bg-primary-50 min-h-[48px]"
                     onClick={closeMenu}
                   >
                     <span className="mr-3 text-base">👥</span>
@@ -399,7 +444,7 @@ export default function Navbar() {
                 </div>
                 <Link 
                   href="/tin-tuc/cam-nang-xnk" 
-                  className="flex items-center px-5 py-3 text-sm text-gray-600 hover:text-primary-600 transition-colors rounded-xl hover:bg-primary-50 font-medium min-h-[48px]"
+                  className="flex items-center px-5 py-4 text-sm text-gray-600 hover:text-primary-600 transition-colors rounded-xl hover:bg-primary-50 font-medium min-h-[52px]"
                   onClick={closeMenu}
                 >
                   <span className="mr-3 text-lg">📚</span>
