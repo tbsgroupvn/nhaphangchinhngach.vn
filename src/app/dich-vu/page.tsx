@@ -40,60 +40,105 @@ export default function ServicesPage() {
     <main className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-br from-primary-50 via-white to-primary-100 relative overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-primary-600 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-10 right-10 w-24 h-24 bg-primary-400 rounded-full animate-bounce"></div>
+      {/* Hero Banner Section */}
+      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`
+          }}
+        ></div>
+
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-32 h-32 bg-sky-400 rounded-full animate-pulse"></div>
+          <div className="absolute bottom-32 right-32 w-24 h-24 bg-slate-300 rounded-full animate-bounce"></div>
+          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-sky-300 rounded-full animate-ping"></div>
+          <div className="absolute bottom-20 left-1/3 w-20 h-20 bg-slate-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
-        
-        <div className="container-max text-center relative z-10">
-          <div className="max-w-4xl mx-auto">
-            {/* Slogan tập trung lợi ích khách hàng */}
-            <div className="inline-block px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full text-sm font-semibold mb-6 shadow-lg hover:shadow-xl transition-all duration-300">
-              💰 Tiết kiệm 30% chi phí • ⚡ Nhanh hơn 50% thời gian • 🛡️ An toàn 100%
+
+        {/* Content */}
+        <div className="container-max relative z-10 text-center text-white">
+          <div className="max-w-5xl mx-auto">
+            {/* Badge */}
+            <div className="inline-flex items-center px-6 py-3 bg-sky-500/90 backdrop-blur-sm rounded-full text-white font-semibold mb-8 shadow-xl hover:bg-sky-600/90 transition-all duration-300">
+              <span className="text-xl mr-2">🚢</span>
+              Dịch vụ logistics chuyên nghiệp từ Trung Quốc
             </div>
-            
-            <h1 className="text-responsive-4xl font-bold text-gray-900 mb-6 fade-in">
-              Dịch vụ TBS GROUP
+
+            {/* Main Title */}
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+              <span className="block">Dịch vụ</span>
+              <span className="block bg-gradient-to-r from-sky-400 to-slate-200 bg-clip-text text-transparent">
+                TBS GROUP
+              </span>
             </h1>
-            
-            <div className="bg-gradient-to-r from-primary-600 to-blue-600 text-white p-6 rounded-2xl mb-8 shadow-xl">
-              <h2 className="text-2xl font-bold mb-2">
-                &quot;Chúng tôi không chỉ vận chuyển hàng hóa, mà bảo vệ toàn bộ lợi ích của bạn&quot;
+
+            {/* Subtitle */}
+            <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 leading-relaxed">
+              <strong>11 dịch vụ chuyên nghiệp</strong> giúp doanh nghiệp nhập khẩu từ Trung Quốc 
+              <span className="text-sky-300"> hiệu quả, an toàn và tiết kiệm chi phí</span>
+            </p>
+
+            {/* Value Proposition */}
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 mb-10 border border-white/20">
+              <h2 className="text-2xl font-bold mb-3 text-sky-300">
+                "Chúng tôi không chỉ vận chuyển hàng hóa, mà bảo vệ toàn bộ lợi ích của bạn"
               </h2>
-              <p className="text-primary-100 text-lg">
+              <p className="text-lg text-gray-200">
                 Từ khâu tìm nhà cung cấp đến khi hàng về tay - TBS chịu trách nhiệm hoàn toàn
               </p>
             </div>
-            
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed slide-in-left">
-              <strong>11 dịch vụ chuyên nghiệp</strong> giúp doanh nghiệp nhập khẩu từ Trung Quốc hiệu quả, an toàn và tiết kiệm chi phí
-            </p>
+
+            {/* Benefits */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="text-3xl mb-3">💰</div>
+                <h3 className="font-bold text-lg mb-2">Tiết kiệm 30% chi phí</h3>
+                <p className="text-sm text-gray-300">So với nhập khẩu truyền thống</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="text-3xl mb-3">⚡</div>
+                <h3 className="font-bold text-lg mb-2">Nhanh hơn 50% thời gian</h3>
+                <p className="text-sm text-gray-300">Quy trình tối ưu hóa</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="text-3xl mb-3">🛡️</div>
+                <h3 className="font-bold text-lg mb-2">An toàn 100%</h3>
+                <p className="text-sm text-gray-300">Bảo hiểm toàn diện</p>
+              </div>
+            </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
                 href="tel:+84976005335" 
-                className="btn-primary text-lg px-8 py-4 group"
+                className="inline-flex items-center justify-center px-8 py-4 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl text-lg group"
               >
-                <svg className="w-5 h-5 mr-2 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 mr-2 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 Hotline: 0976 005 335
               </a>
               <Link 
                 href="/lien-he" 
-                className="btn-secondary text-lg px-8 py-4 group"
+                className="inline-flex items-center justify-center px-8 py-4 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-bold rounded-full border border-white/40 transition-all duration-300 transform hover:scale-105 text-lg group"
               >
-                <svg className="w-5 h-5 mr-2 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 mr-2 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
                 Tư vấn miễn phí
               </Link>
             </div>
           </div>
+        </div>
+
+        {/* Scroll Down Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
         </div>
       </section>
 

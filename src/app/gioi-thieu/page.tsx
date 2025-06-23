@@ -20,7 +20,7 @@ export default function AboutPage() {
       
       {/* Hero Section with Company Image */}
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/90 to-primary-600/70 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-sky-600/70 z-10"></div>
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -38,7 +38,7 @@ export default function AboutPage() {
           <div className="animate-fade-in-up animation-delay-400">
             <Link 
               href="#about" 
-              className="inline-flex items-center px-8 py-4 bg-white text-primary-600 rounded-full hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg"
+              className="inline-flex items-center px-8 py-4 bg-white text-sky-600 rounded-full hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg"
             >
               <span className="font-semibold">Tìm hiểu thêm</span>
               <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,8 +59,8 @@ export default function AboutPage() {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                <div className="text-5xl lg:text-6xl font-bold text-primary-600 mb-3">
+              <div className="bg-gradient-to-br from-sky-50 to-sky-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <div className="text-5xl lg:text-6xl font-bold text-sky-600 mb-3">
                   <AnimatedCounter end={8} suffix="+" />
                 </div>
                 <div className="text-gray-700 font-medium">Năm kinh nghiệm</div>
@@ -69,8 +69,8 @@ export default function AboutPage() {
             </div>
             
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                <div className="text-5xl lg:text-6xl font-bold text-green-600 mb-3">
+              <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <div className="text-5xl lg:text-6xl font-bold text-slate-600 mb-3">
                   <AnimatedCounter end={8000} suffix="+" />
                 </div>
                 <div className="text-gray-700 font-medium">Khách hàng</div>
@@ -79,8 +79,8 @@ export default function AboutPage() {
             </div>
             
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                <div className="text-5xl lg:text-6xl font-bold text-blue-600 mb-3">
+              <div className="bg-gradient-to-br from-sky-50 to-sky-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <div className="text-5xl lg:text-6xl font-bold text-sky-600 mb-3">
                   <AnimatedCounter end={200} suffix="K+" />
                 </div>
                 <div className="text-gray-700 font-medium">Đơn hàng</div>
@@ -89,8 +89,8 @@ export default function AboutPage() {
             </div>
             
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                <div className="text-5xl lg:text-6xl font-bold text-orange-600 mb-3">
+              <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <div className="text-5xl lg:text-6xl font-bold text-slate-600 mb-3">
                   <AnimatedCounter end={24} suffix="/7" />
                 </div>
                 <div className="text-gray-700 font-medium">Hỗ trợ</div>
@@ -145,14 +145,14 @@ export default function AboutPage() {
               <div className="relative">
                 <div className="rounded-2xl overflow-hidden shadow-2xl">
                   <Image
-                    src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=1026&q=80"
-                    alt="TBS GROUP Office"
+                    src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                    alt="TBS GROUP - Đội ngũ logistics chuyên nghiệp"
                     width={600}
                     height={400}
                     className="w-full h-auto"
                   />
                 </div>
-                <div className="absolute -bottom-6 -left-6 bg-primary-600 text-white p-6 rounded-xl shadow-xl">
+                <div className="absolute -bottom-6 -left-6 bg-sky-600 text-white p-6 rounded-xl shadow-xl">
                   <div className="text-2xl font-bold">
                     <AnimatedCounter end={8} suffix="+" />
                   </div>
@@ -290,8 +290,191 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Company Scale & Infrastructure */}
+      <section className="section-padding bg-white">
+        <div className="container-max">
+          <div className="text-center mb-12">
+            <h2 className="text-responsive-4xl font-bold text-gray-900 mb-4">
+              Quy mô & Cơ sở hạ tầng
+            </h2>
+            <p className="text-responsive-xl text-gray-600 max-w-3xl mx-auto">
+              Với hệ thống kho bãi, đội xe vận chuyển và mạng lưới đối tác rộng khắp, 
+              TBS GROUP tự tin đáp ứng mọi nhu cầu logistics của khách hàng
+            </p>
+          </div>
+
+          {/* Infrastructure Gallery */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            {/* Main Image - Warehouse */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
+              <div className="aspect-[4/3] bg-gradient-to-br from-blue-600 to-blue-800 relative">
+                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <div className="text-8xl mb-4 opacity-80">🏭</div>
+                    <h3 className="text-2xl font-bold mb-2">Kho bãi hiện đại</h3>
+                    <p className="text-lg opacity-90">Diện tích 50,000m² tại các cảng chính</p>
+                  </div>
+                </div>
+                <div className="absolute top-4 left-4">
+                  <span className="inline-block px-3 py-1 bg-green-500 text-white text-sm font-semibold rounded-full">
+                    Cơ sở hạ tầng
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Transport Fleet */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
+              <div className="aspect-[4/3] bg-gradient-to-br from-green-600 to-green-800 relative">
+                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <div className="text-8xl mb-4 opacity-80">🚛</div>
+                    <h3 className="text-2xl font-bold mb-2">Đội xe chuyên dụng</h3>
+                    <p className="text-lg opacity-90">200+ xe container, tải trọng 5-40 tấn</p>
+                  </div>
+                </div>
+                <div className="absolute top-4 left-4">
+                  <span className="inline-block px-3 py-1 bg-blue-500 text-white text-sm font-semibold rounded-full">
+                    Vận chuyển
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Capability Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div className="bg-gradient-to-br from-sky-50 to-sky-100 rounded-xl p-6 text-center group hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-sky-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-3xl text-white">⚓</span>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Cảng biển</h3>
+              <p className="text-sm text-gray-600 mb-3">Văn phòng tại 8 cảng chính VN-TQ</p>
+              <div className="text-2xl font-bold text-sky-600">8+</div>
+              <div className="text-xs text-gray-500">Cảng hoạt động</div>
+            </div>
+
+            <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-6 text-center group hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-slate-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-3xl text-white">📦</span>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Container</h3>
+              <p className="text-sm text-gray-600 mb-3">Xử lý mọi loại container TEU</p>
+              <div className="text-2xl font-bold text-slate-600">5000+</div>
+              <div className="text-xs text-gray-500">Container/tháng</div>
+            </div>
+
+            <div className="bg-gradient-to-br from-sky-50 to-sky-100 rounded-xl p-6 text-center group hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-sky-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-3xl text-white">👥</span>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Nhân sự</h3>
+              <p className="text-sm text-gray-600 mb-3">Đội ngũ chuyên nghiệp kinh nghiệm</p>
+              <div className="text-2xl font-bold text-sky-600">150+</div>
+              <div className="text-xs text-gray-500">Nhân viên</div>
+            </div>
+
+            <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-6 text-center group hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-slate-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-3xl text-white">🏢</span>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Chi nhánh</h3>
+              <p className="text-sm text-gray-600 mb-3">Mạng lưới phủ sóng toàn quốc</p>
+              <div className="text-2xl font-bold text-slate-600">12</div>
+              <div className="text-xs text-gray-500">Tỉnh thành</div>
+            </div>
+          </div>
+
+          {/* Logistics Processes */}
+          <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Quy trình logistics chuyên nghiệp</h3>
+              <p className="text-gray-600">Từ gom hàng tại nguồn đến giao hàng tận nơi</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="text-center group">
+                <div className="relative mb-4">
+                  <div className="w-20 h-20 bg-sky-500 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                    <span className="text-3xl text-white">🏭</span>
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-sky-500 rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">1</span>
+                  </div>
+                </div>
+                <h4 className="font-semibold text-gray-900 mb-2">Gom hàng tại nguồn</h4>
+                <p className="text-sm text-gray-600">Chiết Giang, Hà Bắc - trung tâm sản xuất lớn</p>
+              </div>
+
+              <div className="text-center group">
+                <div className="relative mb-4">
+                  <div className="w-20 h-20 bg-slate-500 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                    <span className="text-3xl text-white">📋</span>
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-slate-500 rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">2</span>
+                  </div>
+                </div>
+                <h4 className="font-semibold text-gray-900 mb-2">Kiểm tra chất lượng</h4>
+                <p className="text-sm text-gray-600">QC nghiêm ngặt, chụp ảnh xác nhận</p>
+              </div>
+
+              <div className="text-center group">
+                <div className="relative mb-4">
+                  <div className="w-20 h-20 bg-sky-500 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                    <span className="text-3xl text-white">🚢</span>
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-sky-500 rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">3</span>
+                  </div>
+                </div>
+                <h4 className="font-semibold text-gray-900 mb-2">Vận chuyển quốc tế</h4>
+                <p className="text-sm text-gray-600">Đường biển, đường bộ an toàn</p>
+              </div>
+
+              <div className="text-center group">
+                <div className="relative mb-4">
+                  <div className="w-20 h-20 bg-slate-500 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                    <span className="text-3xl text-white">🏠</span>
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-slate-500 rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">4</span>
+                  </div>
+                </div>
+                <h4 className="font-semibold text-gray-900 mb-2">Giao hàng tận nơi</h4>
+                <p className="text-sm text-gray-600">Đóng gói an toàn, giao đúng hẹn</p>
+              </div>
+            </div>
+
+            {/* Success Stats */}
+            <div className="mt-8 pt-8 border-t border-gray-200">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-sky-600 mb-1">99.8%</div>
+                  <div className="text-sm text-gray-600">Tỷ lệ giao hàng thành công</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-slate-600 mb-1">7-15</div>
+                  <div className="text-sm text-gray-600">Ngày vận chuyển trung bình</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-sky-600 mb-1">24/7</div>
+                  <div className="text-sm text-gray-600">Theo dõi hành trình</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-slate-600 mb-1">100%</div>
+                  <div className="text-sm text-gray-600">Bảo hiểm hàng hóa</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Values Section */}
-      <section className="section-padding bg-gradient-to-br from-gray-50 to-primary-50">
+      <section className="section-padding bg-gradient-to-br from-gray-50 to-sky-50">
         <div className="container-max">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Giá trị cốt lõi</h2>
@@ -300,7 +483,7 @@ export default function AboutPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white rounded-2xl p-8 text-center hover:shadow-xl transition-all duration-300 group hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-20 h-20 bg-gradient-to-br from-sky-100 to-sky-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <span className="text-3xl">🤝</span>
               </div>
               <h3 className="text-2xl font-semibold mb-4 text-gray-900">Uy tín</h3>
@@ -310,7 +493,7 @@ export default function AboutPage() {
             </div>
             
             <div className="bg-white rounded-2xl p-8 text-center hover:shadow-xl transition-all duration-300 group hover:-translate-y-2">
-              <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-20 h-20 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <span className="text-3xl">⚡</span>
               </div>
               <h3 className="text-2xl font-semibold mb-4 text-gray-900">Chuyên nghiệp</h3>

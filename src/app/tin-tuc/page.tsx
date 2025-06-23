@@ -190,41 +190,105 @@ export default function NewsPage() {
     <main className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-primary-50 via-white to-primary-100 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-primary-600 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-10 right-10 w-24 h-24 bg-primary-400 rounded-full animate-bounce"></div>
+      {/* Hero Banner Section */}
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`
+          }}
+        ></div>
+
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-32 h-32 bg-sky-400 rounded-full animate-pulse"></div>
+          <div className="absolute bottom-32 right-32 w-24 h-24 bg-slate-300 rounded-full animate-bounce"></div>
+          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-sky-300 rounded-full animate-ping"></div>
+          <div className="absolute bottom-20 left-1/3 w-20 h-20 bg-slate-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
-        
-        <div className="container-max text-center relative z-10">
-          <div className="max-w-4xl mx-auto">
-            <div className="inline-block p-4 bg-white rounded-2xl shadow-xl mb-6 hover:shadow-2xl transition-shadow duration-300">
-              <span className="text-5xl">📰</span>
+
+        {/* Content */}
+        <div className="container-max relative z-10 text-center text-white">
+          <div className="max-w-5xl mx-auto">
+            {/* Badge */}
+            <div className="inline-flex items-center px-6 py-3 bg-sky-500/90 backdrop-blur-sm rounded-full text-white font-semibold mb-8 shadow-xl hover:bg-sky-600/90 transition-all duration-300">
+              <span className="text-xl mr-2">📰</span>
+              Trung tâm thông tin xuất nhập khẩu
             </div>
-            <h1 className="text-responsive-4xl font-bold text-gray-900 mb-6 fade-in">
-              Tin tức TBS GROUP
-          </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed slide-in-left">
-              Cập nhật những <strong>thông tin mới nhất</strong> về thị trường xuất nhập khẩu, hoạt động công ty và cơ hội nghề nghiệp
+
+            {/* Main Title */}
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+              <span className="block">Tin tức</span>
+              <span className="block bg-gradient-to-r from-sky-400 to-slate-200 bg-clip-text text-transparent">
+                TBS GROUP
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 leading-relaxed">
+              Cập nhật những <span className="text-sky-300 font-semibold">thông tin mới nhất</span> về thị trường xuất nhập khẩu, 
+              hoạt động công ty và cơ hội nghề nghiệp
             </p>
-            
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
-              {newsCategories.map((category, index) => (
-                <div key={index} className="stat-card group hover:scale-110 transition-all duration-300" style={{ animationDelay: `${index * 100}ms` }}>
-                  <div className="text-3xl mb-2 group-hover:animate-bounce">{category.icon}</div>
-                  <div className="text-white font-semibold">{category.title}</div>
-                  <div className="text-white/80 text-sm">{category.count}</div>
-                </div>
-              ))}
+
+            {/* News Categories Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="text-3xl mb-3">💼</div>
+                <h3 className="font-bold text-lg mb-2">20+</h3>
+                <p className="text-sm text-gray-300">Câu chuyện khách hàng</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="text-3xl mb-3">📈</div>
+                <h3 className="font-bold text-lg mb-2">25+</h3>
+                <p className="text-sm text-gray-300">Tin tức ngành</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="text-3xl mb-3">🏢</div>
+                <h3 className="font-bold text-lg mb-2">30+</h3>
+                <p className="text-sm text-gray-300">Tin nội bộ</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="text-3xl mb-3">📚</div>
+                <h3 className="font-bold text-lg mb-2">200+</h3>
+                <p className="text-sm text-gray-300">Tài liệu cẩm nang</p>
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link 
+                href="#news-categories" 
+                className="inline-flex items-center justify-center px-8 py-4 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl text-lg group"
+              >
+                <svg className="w-6 h-6 mr-2 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15" />
+                </svg>
+                Khám phá tin tức
+              </Link>
+              <Link 
+                href="/tin-tuc/cam-nang-xnk" 
+                className="inline-flex items-center justify-center px-8 py-4 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-bold rounded-full border border-white/40 transition-all duration-300 transform hover:scale-105 text-lg group"
+              >
+                <svg className="w-6 h-6 mr-2 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.168 18.477 18.582 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                Cẩm nang XNK
+              </Link>
             </div>
           </div>
+        </div>
+
+        {/* Scroll Down Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
         </div>
       </section>
 
       {/* News Categories */}
-      <section className="section-padding bg-white">
+      <section id="news-categories" className="section-padding bg-white">
         <div className="container-max">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">

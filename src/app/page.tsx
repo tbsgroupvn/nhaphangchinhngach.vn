@@ -15,208 +15,210 @@ export default function Home() {
     <main className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="hero-padding bg-gradient-to-br from-primary-50 to-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div className="absolute top-10 right-10 sm:top-20 sm:right-20 w-32 h-32 sm:w-64 sm:h-64 bg-primary-200 rounded-full opacity-10 blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 sm:bottom-20 sm:left-20 w-24 h-24 sm:w-48 sm:h-48 bg-blue-200 rounded-full opacity-10 blur-3xl"></div>
-        
-        <div className="container-max relative z-10">
-          <div className="text-center">
-            <div className="flex items-center justify-center mb-6 sm:mb-8">
-              <div className="relative group cursor-pointer">
-                {/* Animated background glow */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-400 via-blue-500 to-purple-500 rounded-full blur-lg opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-pulse"></div>
-                
-                {/* Rotating border */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-500 via-blue-500 to-purple-500 p-1 animate-spin-slow group-hover:animate-spin">
-                  <div className="bg-white rounded-full w-full h-full"></div>
-                </div>
-                
-                {/* Logo */}
-                <Image
-                  src="/images/tbs-logo.png"
-                  alt="TBS GROUP Logo"
-                  width={120}
-                  height={120}
-                  className="relative w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 group-hover:scale-110 transition-all duration-500 rounded-2xl shadow-2xl p-2 bg-white"
-                  priority
-                />
-                
-                {/* Floating particles */}
-                <div className="absolute -top-2 -right-2 w-3 h-3 bg-primary-400 rounded-full animate-bounce opacity-60"></div>
-                <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-blue-400 rounded-full animate-bounce delay-300 opacity-60"></div>
-                <div className="absolute top-1/2 -right-3 w-2 h-2 bg-purple-400 rounded-full animate-ping opacity-40"></div>
-              </div>
-            </div>
-            
-            <h1 className="text-responsive-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
-              TBS GROUP
-            </h1>
-            <h2 className="text-responsive-3xl text-primary-600 mb-6 sm:mb-8 leading-tight">
-              Dịch vụ nhập hàng Trung Quốc chính ngạch uy tín
-            </h2>
-            <p className="text-responsive-xl text-gray-600 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed">
-              Chuyên cung cấp dịch vụ nhập khẩu hàng hóa từ Trung Quốc với đầy đủ hóa đơn, 
-              hợp đồng chính ngạch. Cam kết minh bạch, bảo vệ quyền lợi tối đa cho khách hàng.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-8 sm:mb-12">
-              <Link href="/lien-he" className="btn-primary">
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-                Tư vấn miễn phí
-              </Link>
-              <Link href="/dich-vu" className="btn-secondary">
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-                Xem bảng giá
-              </Link>
-            </div>
-
-            {/* Brand Trust Indicators */}
-            <div className="flex items-center justify-center gap-6 sm:gap-8 mb-12 sm:mb-16">
-              <div className="flex items-center text-gray-600 text-sm sm:text-base">
-                <span className="text-2xl mr-2 animate-bounce">🏆</span>
-                <span className="font-medium">8+ năm uy tín</span>
-              </div>
-              <div className="h-6 w-px bg-gray-300"></div>
-              <div className="flex items-center text-gray-600 text-sm sm:text-base">
-                <span className="text-2xl mr-2 animate-pulse">🛡️</span>
-                <span className="font-medium">100% chính ngạch</span>
-              </div>
-              <div className="h-6 w-px bg-gray-300"></div>
-              <div className="flex items-center text-gray-600 text-sm sm:text-base">
-                <span className="text-2xl mr-2 animate-bounce delay-100">⭐</span>
-                <span className="font-medium">8000+ khách hàng</span>
-              </div>
-            </div>
-          </div>
+      {/* Hero Banner */}
+      <section className="relative h-[70vh] min-h-[600px] overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"
+          }}
+        >
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 text-center group hover:scale-105 hover:shadow-xl transition-all duration-300 cursor-pointer">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-2xl sm:text-3xl text-white">📅</span>
+          {/* Additional gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-900/80 via-transparent to-secondary-900/80"></div>
+        </div>
+
+        {/* Content Overlay */}
+        <div className="relative z-10 h-full flex items-center">
+          <div className="container-max">
+            <div className="max-w-4xl">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                <span className="block">Logistics</span>
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-primary-400">
+                  Chuyên nghiệp
+                </span>
+              </h1>
+              <p className="text-xl md:text-2xl text-primary-100 mb-8 max-w-2xl">
+                Dịch vụ nhập khẩu từ Trung Quốc uy tín, nhanh chóng và an toàn. 
+                Đối tác tin cậy cho doanh nghiệp của bạn.
+              </p>
+              
+              {/* Quick stats */}
+              <div className="flex flex-wrap gap-8 mb-8">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-300">8</div>
+                  <div className="text-sm text-primary-200">Năm kinh nghiệm</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-300">500+</div>
+                  <div className="text-sm text-primary-200">Container/năm</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-300">95%</div>
+                  <div className="text-sm text-primary-200">Hài lòng</div>
+                </div>
               </div>
-              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-primary-600 transition-colors duration-300">8+</div>
-              <div className="text-sm sm:text-base text-gray-600 font-medium">Năm kinh nghiệm</div>
-            </div>
-            
-            <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 text-center group hover:scale-105 hover:shadow-xl transition-all duration-300 cursor-pointer">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-2xl sm:text-3xl text-white">👥</span>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link 
+                  href="/lien-he" 
+                  className="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg inline-flex items-center justify-center"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  Tư vấn miễn phí
+                </Link>
+                <Link 
+                  href="/dich-vu" 
+                  className="border-2 border-white text-white hover:bg-white hover:text-secondary-800 font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                  Xem dịch vụ
+                </Link>
               </div>
-              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-primary-600 transition-colors duration-300">8000+</div>
-              <div className="text-sm sm:text-base text-gray-600 font-medium">Khách hàng tin tưởng</div>
-            </div>
-            
-            <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 text-center group hover:scale-105 hover:shadow-xl transition-all duration-300 cursor-pointer">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-2xl sm:text-3xl text-white">📋</span>
-              </div>
-              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-primary-600 transition-colors duration-300">200K+</div>
-              <div className="text-sm sm:text-base text-gray-600 font-medium">Đơn nhập khẩu chính ngạch</div>
-            </div>
-            
-            <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 text-center group hover:scale-105 hover:shadow-xl transition-all duration-300 cursor-pointer">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-2xl sm:text-3xl text-white">🕒</span>
-              </div>
-              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:text-primary-600 transition-colors duration-300">24/7</div>
-              <div className="text-sm sm:text-base text-gray-600 font-medium">Hỗ trợ khách hàng</div>
             </div>
           </div>
         </div>
+
+        {/* Bottom gradient */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
       </section>
 
-      {/* Services Overview */}
+      {/* Services Overview - 11 Dịch vụ */}
       <section className="section-padding bg-gray-50">
         <div className="container-max">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-responsive-4xl font-bold text-gray-900 mb-4">
-              Dịch vụ chính
+              11 Dịch vụ chuyên nghiệp
             </h2>
             <p className="text-responsive-xl text-gray-600">
               Giải pháp nhập khẩu toàn diện cho doanh nghiệp và cá nhân
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
-            {/* Nhập khẩu chính ngạch */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6">
+            {/* 1. Nhập khẩu chính ngạch */}
             <Link href="/dich-vu/nhap-khau-chinh-ngach" className="group">
-              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-primary-200">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-sky-200">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sky-500 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-2xl sm:text-3xl text-white">🚢</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">Nhập khẩu chính ngạch</h3>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">Nhập khẩu chính ngạch</h3>
               </div>
             </Link>
 
-            {/* Gom hàng lẻ */}
+            {/* 2. Gom hàng lẻ */}
             <Link href="/dich-vu/gom-hang-le-ghep-container" className="group">
-              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-green-200">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-sky-200">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sky-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-2xl sm:text-3xl text-white">📦</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-semibold text-gray-900 group-hover:text-green-600 transition-colors">Gom hàng lẻ</h3>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">Gom hàng lẻ</h3>
               </div>
             </Link>
 
-            {/* Vận chuyển quốc tế */}
+            {/* 3. Vận chuyển quốc tế */}
             <Link href="/dich-vu/van-chuyen-quoc-te" className="group">
-              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-purple-200">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-2xl sm:text-3xl text-white">🚛</span>
+              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-sky-200">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sky-700 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-2xl sm:text-3xl text-white">🌍</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">Vận chuyển quốc tế</h3>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">Vận chuyển quốc tế</h3>
               </div>
             </Link>
 
-            {/* Ủy thác XNK */}
+            {/* 4. Ủy thác XNK */}
             <Link href="/dich-vu/uy-thac-xuat-nhap-khau" className="group">
-              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-orange-200">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-sky-200">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-2xl sm:text-3xl text-white">📄</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">Ủy thác XNK</h3>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">Ủy thác XNK</h3>
               </div>
             </Link>
 
-            {/* Tư vấn pháp lý */}
+            {/* 5. Tư vấn pháp lý */}
             <Link href="/dich-vu/tu-van-phap-ly-thue-xnk" className="group">
-              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-indigo-200">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-sky-200">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-700 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-2xl sm:text-3xl text-white">⚖️</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">Tư vấn pháp lý</h3>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">Tư vấn pháp lý</h3>
               </div>
             </Link>
 
-            {/* Thông quan */}
+            {/* 6. Kiểm tra nhà cung cấp */}
+            <Link href="/dich-vu/kiem-tra-nha-cung-cap" className="group">
+              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-sky-200">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sky-500 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-2xl sm:text-3xl text-white">🔍</span>
+                </div>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">Kiểm tra NCC</h3>
+              </div>
+            </Link>
+
+            {/* 7. Thanh toán hộ */}
+            <Link href="/dich-vu/thanh-toan-ho-trung-quoc" className="group">
+              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-sky-200">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-500 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-2xl sm:text-3xl text-white">💰</span>
+                </div>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">Thanh toán hộ</h3>
+              </div>
+            </Link>
+
+            {/* 8. Thông quan */}
             <Link href="/dich-vu/thong-quan-chung-tu" className="group">
-              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-red-200">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-sky-200">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sky-800 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-2xl sm:text-3xl text-white">📋</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-semibold text-gray-900 group-hover:text-red-600 transition-colors">Thông quan</h3>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">Thông quan</h3>
               </div>
             </Link>
-          </div>
 
-          {/* View All Services Button */}
-          <div className="text-center mt-8 sm:mt-12">
-            <Link href="/dich-vu" className="btn-primary inline-flex items-center">
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-              Xem tất cả dịch vụ
+            {/* 9. Đóng gói & bảo hiểm */}
+            <Link href="/dich-vu/dong-goi-bao-hiem-hang" className="group">
+              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-sky-200">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-2xl sm:text-3xl text-white">📦</span>
+                </div>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">Đóng gói & bảo hiểm</h3>
+              </div>
+            </Link>
+
+            {/* 10. Kho bãi */}
+            <Link href="/dich-vu/kho-bai-trung-viet" className="group">
+              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-sky-200">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sky-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-2xl sm:text-3xl text-white">🏭</span>
+                </div>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">Kho bãi TQ-VN</h3>
+              </div>
+            </Link>
+
+            {/* 11. Cảnh báo rủi ro */}
+            <Link href="/dich-vu/canh-bao-rui-ro-xnk" className="group">
+              <div className="bg-white rounded-2xl p-4 sm:p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-sky-200">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-700 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-2xl sm:text-3xl text-white">⚠️</span>
+                </div>
+                <h3 className="text-sm sm:text-base font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">Cảnh báo rủi ro</h3>
+              </div>
             </Link>
           </div>
         </div>
       </section>
+
+
+
+
 
       {/* Process Steps */}
       <ProcessSteps />
