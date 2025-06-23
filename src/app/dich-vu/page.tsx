@@ -84,7 +84,7 @@ export default function ServicesPage() {
             {/* Value Proposition */}
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 mb-10 border border-white/20">
               <h2 className="text-2xl font-bold mb-3 text-sky-300">
-                "Chúng tôi không chỉ vận chuyển hàng hóa, mà bảo vệ toàn bộ lợi ích của bạn"
+                &ldquo;Chúng tôi không chỉ vận chuyển hàng hóa, mà bảo vệ toàn bộ lợi ích của bạn&rdquo;
               </h2>
               <p className="text-lg text-gray-200">
                 Từ khâu tìm nhà cung cấp đến khi hàng về tay - TBS chịu trách nhiệm hoàn toàn
