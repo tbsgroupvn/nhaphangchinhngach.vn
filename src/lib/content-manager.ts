@@ -52,10 +52,39 @@ export class ContentManager {
   private dataDir = path.join(process.cwd(), 'src/data')
   private isProduction = process.env.NODE_ENV === 'production' || process.env.NETLIFY === 'true'
   private isReadOnly = this.isProduction // Production environments are typically read-only
+  
+  // Cache for production to avoid repeated file reads
+  private cache: Map<string, any> = new Map()
+  private cacheTimeout = 5 * 60 * 1000 // 5 minutes cache in production
 
   // Check if write operations are allowed
   private canWrite(): boolean {
     return !this.isReadOnly
+  }
+
+  // Get cached data or fetch new data
+  private async getCachedData<T>(key: string, fetcher: () => Promise<T>): Promise<T> {
+    if (this.isProduction && this.cache.has(key)) {
+      const cached = this.cache.get(key)
+      if (cached && Date.now() - cached.timestamp < this.cacheTimeout) {
+        return cached.data
+      }
+    }
+
+    try {
+      const data = await fetcher()
+      if (this.isProduction) {
+        this.cache.set(key, { data, timestamp: Date.now() })
+      }
+      return data
+    } catch (error) {
+      console.error(`Error fetching ${key}:`, error)
+      // Return empty fallback in production to avoid blocking
+      if (this.isProduction) {
+        return [] as T
+      }
+      throw error
+    }
   }
 
   // Get environment info
@@ -71,21 +100,47 @@ export class ContentManager {
 
   // SERVICES MANAGEMENT
   async getServices(): Promise<ServiceData[]> {
-    try {
-      const servicesPath = path.join(this.dataDir, 'services.ts')
-      const content = await fs.readFile(servicesPath, 'utf-8')
-      
-      // Extract services array from TypeScript file
-      const servicesMatch = content.match(/export const services: Service\[\] = (\[[\s\S]*?\]);/)
-      if (servicesMatch) {
-        // This would need proper parsing in real implementation
-        return JSON.parse(servicesMatch[1].replace(/'/g, '"'))
+    return this.getCachedData('services', async () => {
+      try {
+        const servicesPath = path.join(this.dataDir, 'services.ts')
+        const content = await fs.readFile(servicesPath, 'utf-8')
+        
+        // Extract services array from TypeScript file
+        const servicesMatch = content.match(/export const services: Service\[\] = (\[[\s\S]*?\]);/)
+        if (servicesMatch) {
+          // This would need proper parsing in real implementation
+          return JSON.parse(servicesMatch[1].replace(/'/g, '"'))
+        }
+        return []
+      } catch (error) {
+        console.error('Error reading services:', error)
+        // Return fallback services in production
+        if (this.isProduction) {
+          return this.getFallbackServices()
+        }
+        return []
       }
-      return []
-    } catch (error) {
-      console.error('Error reading services:', error)
-      return []
-    }
+    })
+  }
+
+  // Fallback services for production
+  private getFallbackServices(): ServiceData[] {
+    return [
+      {
+        id: 'nhap-khau-chinh-ngach',
+        title: 'Nhập khẩu chính ngạch',
+        slug: 'nhap-khau-chinh-ngach',
+        icon: '🚢',
+        description: 'Dịch vụ nhập khẩu chính ngạch chuyên nghiệp',
+        shortDescription: 'Dịch vụ nhập khẩu chính ngạch',
+        benefits: ['Hợp pháp', 'An toàn', 'Nhanh chóng'],
+        process: ['Tư vấn', 'Thực hiện', 'Giao hàng'],
+        commitment: ['Uy tín', 'Chất lượng', 'Tiến độ'],
+        features: ['Chuyên nghiệp', 'Hiệu quả'],
+        ctaText: 'Tư vấn ngay',
+        category: 'import' as const
+      }
+    ]
   }
 
   async updateService(id: string, serviceData: Partial<ServiceData>): Promise<void> {
@@ -94,6 +149,9 @@ export class ContentManager {
     }
 
     try {
+      // Clear cache when updating
+      this.cache.delete('services')
+      
       // Update TypeScript data file
       await this.updateServicesTypeScript(id, serviceData)
       

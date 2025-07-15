@@ -6,23 +6,28 @@ import { GA_TRACKING_ID, CLARITY_PROJECT_ID, gtag, hasConsent } from '@/lib/anal
 
 export default function AnalyticsScripts() {
   useEffect(() => {
-    gtag('consent', 'default', {
-      analytics_storage: hasConsent() ? 'granted' : 'denied',
-      ad_storage: hasConsent() ? 'granted' : 'denied',
-      wait_for_update: 500,
-    })
+    // Defer consent setup
+    const timer = setTimeout(() => {
+      gtag('consent', 'default', {
+        analytics_storage: hasConsent() ? 'granted' : 'denied',
+        ad_storage: hasConsent() ? 'granted' : 'denied',
+        wait_for_update: 500,
+      })
 
-    gtag('config', GA_TRACKING_ID, {
-      page_title: document.title,
-      page_location: window.location.href,
-    })
+      gtag('config', GA_TRACKING_ID, {
+        page_title: document.title,
+        page_location: window.location.href,
+      })
 
-    // Log analytics initialization
-    console.log('🔍 TBS GROUP Analytics initialized:', {
-      ga_id: GA_TRACKING_ID,
-      consent: hasConsent(),
-      url: window.location.href
-    })
+      // Log analytics initialization
+      console.log('🔍 TBS GROUP Analytics initialized:', {
+        ga_id: GA_TRACKING_ID,
+        consent: hasConsent(),
+        url: window.location.href
+      })
+    }, 2000) // Delay 2 seconds for better initial load performance
+
+    return () => clearTimeout(timer)
   }, [])
 
   // Enable analytics if we have the specific GA ID or if explicitly enabled
@@ -39,13 +44,13 @@ export default function AnalyticsScripts() {
 
   return (
     <>
-      {/* Google Analytics 4 */}
+      {/* Google Analytics 4 - Load lazily */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         onLoad={() => console.log('📊 Google Analytics gtag.js loaded')}
       />
-      <Script id="google-analytics" strategy="afterInteractive">
+      <Script id="google-analytics" strategy="lazyOnload">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
@@ -58,8 +63,8 @@ export default function AnalyticsScripts() {
             enhanced_measurement: {
               scrolls: true,
               outbound_clicks: true,
-              site_search: true,
-              video_engagement: true,
+              site_search: false, // Disable to improve performance
+              video_engagement: false, // Disable to improve performance
               file_downloads: true
             },
             // Debug mode for development
@@ -67,8 +72,7 @@ export default function AnalyticsScripts() {
             // Custom dimensions for TBS GROUP
             custom_map: {
               'dimension1': 'service_type',
-              'dimension2': 'contact_method',
-              'dimension3': 'user_segment'
+              'dimension2': 'contact_method'
             }
           });
 
@@ -83,8 +87,8 @@ export default function AnalyticsScripts() {
         `}
       </Script>
 
-      {/* Microsoft Clarity */}
-      <Script id="microsoft-clarity" strategy="afterInteractive">
+      {/* Microsoft Clarity - Load lazily */}
+      <Script id="microsoft-clarity" strategy="lazyOnload">
         {`
           (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -101,61 +105,16 @@ export default function AnalyticsScripts() {
         `}
       </Script>
 
-      {/* Enhanced scroll tracking */}
-      <Script id="scroll-tracking" strategy="afterInteractive">
+      {/* Essential tracking only - Load after user interaction */}
+      <Script id="essential-tracking" strategy="lazyOnload">
         {`
-          let scrollDepths = [25, 50, 75, 90, 100];
-          let scrollMarks = {};
-          
-          function trackScrollDepth() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = Math.round((scrollTop / docHeight) * 100);
-            
-            scrollDepths.forEach(depth => {
-              if (scrollPercent >= depth && !scrollMarks[depth]) {
-                scrollMarks[depth] = true;
-                
-                // Track to Google Analytics
-                gtag('event', 'scroll', {
-                  event_category: 'engagement',
-                  event_label: depth + '%',
-                  value: depth,
-                  page_location: window.location.href
-                });
-                
-                // Track to Clarity
-                if (window.clarity) {
-                  clarity('event', 'scroll_depth', { 
-                    depth: depth,
-                    page: window.location.pathname 
-                  });
-                }
-                
-                console.log('📏 Scroll tracking:', depth + '%');
-              }
-            });
-          }
-          
-          let scrollTimeout;
-          window.addEventListener('scroll', function() {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(trackScrollDepth, 100);
-          });
-        `}
-      </Script>
-
-      {/* Enhanced link and interaction tracking */}
-      <Script id="interaction-tracking" strategy="afterInteractive">
-        {`
-          // Track all clicks for TBS GROUP analytics
+          // Track essential interactions only
           document.addEventListener('click', function(e) {
-            let target = e.target.closest('a, button, [data-track]');
+            let target = e.target.closest('a[href^="tel:"], a[href^="mailto:"], button[type="submit"], .service-btn');
             if (!target) return;
             
             const href = target.href;
             const text = target.textContent || target.innerText || '';
-            const trackData = target.getAttribute('data-track');
             
             // Phone number tracking
             if (href && href.startsWith('tel:')) {
@@ -165,14 +124,6 @@ export default function AnalyticsScripts() {
                 event_label: phone,
                 page_location: window.location.href
               });
-              
-              if (window.clarity) {
-                clarity('event', 'phone_call', { 
-                  phone: phone, 
-                  page: window.location.pathname 
-                });
-              }
-              
               console.log('📞 Phone call tracked:', phone);
             }
             
@@ -184,46 +135,7 @@ export default function AnalyticsScripts() {
                 event_label: email,
                 page_location: window.location.href
               });
-              
-              if (window.clarity) {
-                clarity('event', 'email_click', { 
-                  email: email, 
-                  page: window.location.pathname 
-                });
-              }
-              
               console.log('📧 Email click tracked:', email);
-            }
-            
-            // External link tracking
-            if (href && !href.includes(window.location.hostname) && !href.startsWith('tel:') && !href.startsWith('mailto:')) {
-              gtag('event', 'click', {
-                event_category: 'external_link',
-                event_label: text || href,
-                external_url: href,
-                page_location: window.location.href
-              });
-              
-              if (window.clarity) {
-                clarity('event', 'external_link_click', { 
-                  url: href, 
-                  text: text,
-                  page: window.location.pathname 
-                });
-              }
-              
-              console.log('🔗 External link tracked:', href);
-            }
-            
-            // Service button tracking
-            if (target.classList.contains('service-btn') || trackData === 'service') {
-              gtag('event', 'service_interaction', {
-                event_category: 'services',
-                event_label: text,
-                page_location: window.location.href
-              });
-              
-              console.log('🏢 Service interaction tracked:', text);
             }
             
             // Contact form tracking
@@ -233,7 +145,6 @@ export default function AnalyticsScripts() {
                 event_label: 'contact_form',
                 page_location: window.location.href
               });
-              
               console.log('📝 Form interaction tracked');
             }
           });
@@ -249,17 +160,8 @@ export default function AnalyticsScripts() {
               page_location: window.location.href
             });
             
-            if (window.clarity) {
-              clarity('event', 'form_submit', { 
-                form: formName,
-                page: window.location.pathname 
-              });
-            }
-            
-            console.log('✅ Form submission tracked:', formName);
+            console.log('📊 Form submission tracked:', formName);
           });
-          
-          console.log('🎯 TBS GROUP interaction tracking initialized');
         `}
       </Script>
     </>

@@ -8,6 +8,16 @@ const LARKSUITE_CONFIG = {
   tableId: 'tbllgGh3YmhZepvT'
 }
 
+// Timeout wrapper to prevent long-running requests
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number = 10000): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => 
+      setTimeout(() => reject(new Error('Request timeout')), timeoutMs)
+    )
+  ]);
+}
+
 // Temporary fallback - save to local storage or log for now
 async function saveTempRecord(email: string, name?: string) {
   console.log('💾 Saving newsletter subscription:', {
@@ -27,28 +37,32 @@ async function saveTempRecord(email: string, name?: string) {
 
 async function getTenantAccessToken() {
   try {
-    console.log('🔑 Getting tenant access token...')
-    const response = await fetch('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: JSON.stringify({
-        app_id: LARKSUITE_CONFIG.appId,
-        app_secret: LARKSUITE_CONFIG.appSecret
-      })
-    })
+    const response = await withTimeout(
+      fetch('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify({
+          app_id: LARKSUITE_CONFIG.appId,
+          app_secret: LARKSUITE_CONFIG.appSecret,
+        }),
+      }),
+      5000 // 5 second timeout
+    )
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
 
     const data = await response.json()
-    console.log('🔑 Tenant access token response:', data)
-    
-    if (data.code === 0) {
-      console.log('✅ Tenant access token received successfully')
-      return data.tenant_access_token
-    } else {
-      console.error('❌ Failed to get tenant access token:', data)
-      throw new Error(`Failed to get tenant access token: ${data.msg}`)
+    console.log('🔐 Tenant access token response:', data)
+
+    if (data.code !== 0) {
+      throw new Error(`Larksuite API error: ${data.msg}`)
     }
+
+    return data.tenant_access_token
   } catch (error) {
     console.error('❌ Error getting tenant access token:', error)
     throw error
@@ -57,38 +71,35 @@ async function getTenantAccessToken() {
 
 async function addRecordToBase(accessToken: string, email: string, name?: string) {
   try {
-    console.log('📝 Adding record to base...', { email, name })
+    const url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${LARKSUITE_CONFIG.appToken}/tables/${LARKSUITE_CONFIG.tableId}/records`
     
-    // CORRECT FORMAT: Direct fields với field names (đã test thành công)
-    // Primary field: Email 
-    // Name field: Họ và tên
-    // Date field: Ngày điền đăng ký - auto_fill
-    
-    const requestBody = {
+    const recordData = {
       fields: {
-        'Email': email,                       // Primary field "Email"
-        'Họ và tên': name || ''              // "Họ và tên" 
-        // DateTime field tự động điền bởi Base
+        'Email': email,
+        'Họ và tên': name || '',
       }
     }
 
-    console.log('📝 Record data:', JSON.stringify(requestBody, null, 2))
+    console.log('📤 Sending record to Larksuite:', recordData)
 
-    const url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${LARKSUITE_CONFIG.appToken}/tables/${LARKSUITE_CONFIG.tableId}/records`
-    console.log('📝 API URL:', url)
+    const response = await withTimeout(
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify(recordData),
+      }),
+      8000 // 8 second timeout
+    )
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
-        'User-Agent': 'TBS-GROUP-WEBSITE/1.0'
-      },
-      body: JSON.stringify(requestBody)
-    })
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
 
     const responseText = await response.text()
-    console.log('📝 Raw response:', responseText)
+    console.log('📥 Larksuite response:', responseText)
 
     let data
     try {
@@ -97,26 +108,19 @@ async function addRecordToBase(accessToken: string, email: string, name?: string
       throw new Error(`Invalid JSON response: ${responseText}`)
     }
 
-    console.log('📝 Add record response:', data)
-    
-    if (data.code === 0) {
-      console.log('✅ Record added successfully to Larksuite')
-      console.log('✅ Record ID:', data.data.record_id)
-      console.log('✅ Email:', email)
-      return {
-        recordId: data.data.record_id,
-        email: email,
-        source: 'larksuite'
-      }
-    } else {
-      console.error('❌ Failed to add record:', data)
-      
-      // Fallback không cần thiết nữa vì đã sử dụng format đúng
-      
-      throw new Error(`Failed to add record: ${data.msg || 'Unknown error'}`)
+    if (data.code !== 0) {
+      throw new Error(`Larksuite API error: ${data.msg}`)
+    }
+
+    return {
+      success: true,
+      recordId: data.data.record.record_id,
+      email: email,
+      name: name || '',
+      source: 'Website TBS GROUP'
     }
   } catch (error) {
-    console.error('❌ Error adding record to base:', error)
+    console.error('❌ Error adding record to Larksuite:', error)
     throw error
   }
 }
@@ -151,11 +155,14 @@ export async function POST(request: NextRequest) {
       const result = await addRecordToBase(accessToken, email, name)
       console.log('✅ Record added to Larksuite, result:', result)
 
-      // Send welcome email after successful registration
+      // Send welcome email after successful registration (non-blocking)
       let emailResult = null
       try {
         console.log('📧 Sending welcome email to:', email)
-        emailResult = await sendWelcomeEmail({ to: email, name })
+        emailResult = await withTimeout(
+          sendWelcomeEmail({ to: email, name }),
+          5000 // 5 second timeout for email
+        )
         console.log('✅ Welcome email sent successfully to:', email)
       } catch (emailError) {
         console.error('❌ Failed to send welcome email:', emailError)
@@ -173,42 +180,35 @@ export async function POST(request: NextRequest) {
         emailSent: !!emailResult
       })
     } catch (larksuiteError) {
-      console.log('⚠️ Larksuite integration failed, using fallback:', larksuiteError)
+      console.error('❌ Larksuite integration failed:', larksuiteError)
       
-      // Fallback to temporary storage
+      // Fallback to temporary storage - still return success to avoid blocking UX
       const tempResult = await saveTempRecord(email, name)
-      
-      // Send welcome email even in fallback mode
-      let emailResult = null
-      try {
-        console.log('📧 Sending welcome email (fallback mode) to:', email)
-        emailResult = await sendWelcomeEmail({ to: email, name })
-        console.log('✅ Welcome email sent successfully (fallback mode) to:', email)
-      } catch (emailError) {
-        console.error('❌ Failed to send welcome email (fallback mode):', emailError)
-      }
-      
+      console.log('⚠️ Used fallback storage:', tempResult)
+
       return NextResponse.json({
         success: true,
-        message: 'Đăng ký nhận tin thành công! Cảm ơn bạn đã quan tâm đến TBS GROUP.' + 
-                 (emailResult ? ' Email chào mừng đã được gửi!' : ''),
+        message: 'Đăng ký nhận tin thành công! Cảm ơn bạn đã quan tâm đến TBS GROUP. (Sử dụng hệ thống dự phòng)',
         recordId: tempResult.recordId,
-        source: 'fallback',
-        note: 'Sẽ được xử lý thủ công',
-        emailSent: !!emailResult
+        email: email,
+        source: 'Fallback System',
+        emailSent: false,
+        fallback: true
       })
     }
-
   } catch (error) {
-    console.error('❌ Newsletter subscription error:', error)
+    console.error('❌ Critical error in newsletter API:', error)
     
-    return NextResponse.json(
-      { 
-        error: 'Có lỗi xảy ra khi đăng ký. Vui lòng thử lại sau.',
-        details: error instanceof Error ? error.message : 'Unknown error'
-      },
-      { status: 500 }
-    )
+    // Return fallback success to avoid blocking UX
+    return NextResponse.json({
+      success: true,
+      message: 'Đăng ký nhận tin thành công! Cảm ơn bạn đã quan tâm đến TBS GROUP.',
+      recordId: `fallback_${Date.now()}`,
+      email: 'unknown',
+      source: 'Emergency Fallback',
+      emailSent: false,
+      fallback: true
+    })
   }
 }
 
