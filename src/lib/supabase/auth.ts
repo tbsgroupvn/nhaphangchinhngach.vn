@@ -27,18 +27,20 @@ export async function authenticateUser(
     const { username, password } = credentials
 
     // Get user from database
-    const { data: user, error } = await supabaseAdmin
+    const { data, error } = await supabaseAdmin
       .from('users')
       .select('*')
       .eq('username', username)
       .single()
 
-    if (error || !user) {
+    if (error || !data) {
       return {
         success: false,
         error: 'Tên đăng nhập hoặc mật khẩu không đúng',
       }
     }
+
+    const user = data as User
 
     // Check if account is locked
     if (user.locked_until && new Date(user.locked_until) > new Date()) {
@@ -110,17 +112,17 @@ export async function authenticateUser(
  */
 export async function getUserById(userId: string): Promise<User | null> {
   try {
-    const { data: user, error } = await supabaseAdmin
+    const { data, error } = await supabaseAdmin
       .from('users')
       .select('*')
       .eq('id', userId)
       .single()
 
-    if (error || !user) {
+    if (error || !data) {
       return null
     }
 
-    return user
+    return data as User
   } catch (error) {
     console.error('Get user error:', error)
     return null
@@ -142,7 +144,7 @@ export async function createUser(userData: {
     const password_hash = await bcrypt.hash(userData.password, 10)
 
     // Create user
-    const { data: user, error } = await supabaseAdmin
+    const { data, error } = await supabaseAdmin
       .from('users')
       .insert({
         username: userData.username,
@@ -165,7 +167,7 @@ export async function createUser(userData: {
 
     return {
       success: true,
-      user,
+      user: data as User,
     }
   } catch (error) {
     console.error('Create user error:', error)
