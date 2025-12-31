@@ -34,7 +34,7 @@ export default function TestPage() {
           <div className="bg-gray-50 border border-gray-200 rounded p-4">
             <h2 className="font-bold text-gray-900 mb-2">If /cms-login still shows 404:</h2>
             <ol className="list-decimal list-inside space-y-2 text-gray-700">
-              <li>Make sure you're accessing <code className="bg-gray-100 px-2 py-1 rounded">/cms-login</code> (no trailing slash)</li>
+              <li>Make sure you&apos;re accessing <code className="bg-gray-100 px-2 py-1 rounded">/cms-login</code> (no trailing slash)</li>
               <li>Clear your browser cache (Ctrl+Shift+R or Cmd+Shift+R)</li>
               <li>Try incognito/private mode</li>
               <li>Check Netlify deploy logs for errors</li>
