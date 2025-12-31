@@ -54,7 +54,7 @@ export async function GET(
     return NextResponse.json({
       success: true,
       post: {
-        ...post,
+        ...(post as any),
         views: ((post as any).views || 0) + 1, // Return updated view count
       },
     });
