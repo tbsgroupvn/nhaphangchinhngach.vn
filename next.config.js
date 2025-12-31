@@ -1,10 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Standalone output for Netlify
-  output: 'standalone',
-
+  // NO output mode - let @netlify/plugin-nextjs handle deployment
   // Remove static export to support API routes
-  // trailingSlash: false, // REMOVED - Was causing redirect loop with Netlify
   images: {
     unoptimized: true
   },
