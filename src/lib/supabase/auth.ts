@@ -64,16 +64,25 @@ export async function authenticateUser(
     if (!passwordMatch) {
       // Increment login attempts
       const newAttempts = user.login_attempts + 1
-      const updates: any = { login_attempts: newAttempts }
 
       // Lock account after 5 failed attempts
       if (newAttempts >= 5) {
         const lockUntil = new Date()
         lockUntil.setMinutes(lockUntil.getMinutes() + 30) // Lock for 30 minutes
-        updates.locked_until = lockUntil.toISOString()
-      }
 
-      await supabaseAdmin.from('users').update(updates).eq('id', user.id)
+        await (supabaseAdmin as any)
+          .from('users')
+          .update({
+            login_attempts: newAttempts,
+            locked_until: lockUntil.toISOString(),
+          })
+          .eq('id', user.id)
+      } else {
+        await (supabaseAdmin as any)
+          .from('users')
+          .update({ login_attempts: newAttempts })
+          .eq('id', user.id)
+      }
 
       return {
         success: false,
@@ -82,7 +91,7 @@ export async function authenticateUser(
     }
 
     // Reset login attempts and update last login
-    await supabaseAdmin
+    await (supabaseAdmin as any)
       .from('users')
       .update({
         login_attempts: 0,
@@ -144,7 +153,7 @@ export async function createUser(userData: {
     const password_hash = await bcrypt.hash(userData.password, 10)
 
     // Create user
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await (supabaseAdmin as any)
       .from('users')
       .insert({
         username: userData.username,
@@ -188,7 +197,7 @@ export async function updatePassword(
   try {
     const password_hash = await bcrypt.hash(newPassword, 10)
 
-    const { error } = await supabaseAdmin
+    const { error } = await (supabaseAdmin as any)
       .from('users')
       .update({ password_hash })
       .eq('id', userId)
@@ -206,13 +215,13 @@ export async function updatePassword(
 export async function logActivity(
   userId: string,
   action: string,
-  details?: any
+  details?: Record<string, unknown>
 ): Promise<void> {
   try {
-    await supabaseAdmin.from('user_activities').insert({
+    await (supabaseAdmin as any).from('user_activities').insert({
       user_id: userId,
       action,
-      details,
+      details: details || null,
     })
   } catch (error) {
     console.error('Log activity error:', error)
