@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Standalone output for Netlify deployment
+  output: 'standalone',
+
   // Remove static export to support API routes
   // trailingSlash: false, // REMOVED - Was causing redirect loop with Netlify
   images: {
