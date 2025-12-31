@@ -93,7 +93,7 @@ export default function CMSLoginPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, username: e.target.value })
                   }
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-900 bg-white placeholder-gray-400"
                   placeholder="Nhập tên đăng nhập"
                   autoComplete="username"
                 />
@@ -120,7 +120,7 @@ export default function CMSLoginPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-900 bg-white placeholder-gray-400"
                   placeholder="Nhập mật khẩu"
                   autoComplete="current-password"
                 />
