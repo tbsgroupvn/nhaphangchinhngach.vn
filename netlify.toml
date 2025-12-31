@@ -1,7 +1,8 @@
 # Netlify Build Configuration for Next.js
 [build]
   command = "npm ci && npm run build"
-  publish = ".next"
+  # publish directory is handled by @netlify/plugin-nextjs automatically
+  # DO NOT set publish = ".next" as it breaks App Router
 
 # Netlify Next.js plugin
 [[plugins]]
