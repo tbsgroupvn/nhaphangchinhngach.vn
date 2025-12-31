@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { 
   FaHome, FaServicestack, FaNewspaper, FaBriefcase, 
   FaComments, FaFileAlt, FaImage, FaBell, FaCog, 
@@ -17,6 +17,16 @@ interface AdminLayoutProps {
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/cms-logout', { method: 'POST' });
+      router.push('/cms-login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
 
   const navigation = [
     {
@@ -216,7 +226,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <span>Hồ sơ cá nhân</span>
             </Link>
             
-            <button className="flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors w-full text-left">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors w-full text-left"
+            >
               <FaSignOutAlt className="text-xs" />
               <span>Đăng xuất</span>
             </button>
