@@ -48,14 +48,14 @@ export async function GET(
     // Increment view count (using admin client to bypass RLS)
     await (supabaseAdmin as any)
       .from('posts')
-      .update({ views: (post.views || 0) + 1 })
-      .eq('id', post.id);
+      .update({ views: ((post as any).views || 0) + 1 })
+      .eq('id', (post as any).id);
 
     return NextResponse.json({
       success: true,
       post: {
         ...post,
-        views: (post.views || 0) + 1, // Return updated view count
+        views: ((post as any).views || 0) + 1, // Return updated view count
       },
     });
 
