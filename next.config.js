@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // NO output mode - let @netlify/plugin-nextjs handle deployment
-  // Remove static export to support API routes
   images: {
     unoptimized: true
   },
