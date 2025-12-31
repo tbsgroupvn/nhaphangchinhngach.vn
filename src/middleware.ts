@@ -56,8 +56,20 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // If already logged in and trying to access login page, redirect to dashboard
+  if (pathname === '/cms-login') {
+    const token = request.cookies.get('cms_token')?.value || request.cookies.get('auth-token')?.value;
+    if (token) {
+      const payload = await verifyAuth(token);
+      if (payload) {
+        return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+      }
+    }
+    return NextResponse.next();
+  }
+
   // Check if the path requires protection
-  const isProtectedPath = protectedPaths.some(path => pathname.startsWith(path));
+  const isProtectedPath = pathname.startsWith('/admin');
   const isAdminOnlyPath = adminOnlyPaths.some(path => pathname.startsWith(path));
   const isSuperAdminOnlyPath = superAdminOnlyPaths.some(path => pathname.startsWith(path));
 
@@ -65,12 +77,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Get token from cookies
-  const token = request.cookies.get('auth-token')?.value;
+  // Get token from cookies (try both old and new token names for compatibility)
+  const token = request.cookies.get('cms_token')?.value || request.cookies.get('auth-token')?.value;
 
   if (!token) {
     // Redirect to login if no token
-    const loginUrl = new URL('/admin', request.url);
+    const loginUrl = new URL('/cms-login', request.url);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -79,11 +91,12 @@ export async function middleware(request: NextRequest) {
   
   if (!payload) {
     // Redirect to login if invalid token
-    const loginUrl = new URL('/admin', request.url);
+    const loginUrl = new URL('/cms-login', request.url);
     const response = NextResponse.redirect(loginUrl);
-    
-    // Clear invalid token
+
+    // Clear invalid tokens
     response.cookies.delete('auth-token');
+    response.cookies.delete('cms_token');
     return response;
   }
 
@@ -123,15 +136,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/admin/dashboard/:path*',
-    '/admin/posts/:path*',
-    '/admin/services/:path*',
-    '/admin/media/:path*',
-    '/admin/users/:path*',
-    '/admin/roles/:path*',
-    '/admin/settings/:path*',
-    '/admin/analytics/:path*',
-    '/admin/ai-assistant/:path*',
-    '/admin/help/:path*'
+    '/admin/:path*',
+    '/cms-login'
   ],
 }; 
