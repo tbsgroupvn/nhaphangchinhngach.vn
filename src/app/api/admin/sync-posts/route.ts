@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
           status: frontmatter.status === 'published' ? 'published' : 'draft',
           published_at: frontmatter.date ? new Date(frontmatter.date).toISOString() : null,
           views: frontmatter.views || 0,
-          author_id: adminUser.id,
+          author_id: (adminUser as any).id,
           seo_title: frontmatter.title || null,
           seo_description: frontmatter.description || null,
           seo_keywords: frontmatter.tags || [],
