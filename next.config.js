@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Remove static export to support API routes
-  trailingSlash: true,
+  // trailingSlash: false, // REMOVED - Was causing redirect loop with Netlify
   images: {
     unoptimized: true
   },
