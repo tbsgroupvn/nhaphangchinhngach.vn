@@ -3,27 +3,25 @@
   command = "npm ci && npm run build"
   publish = ".next"
 
-# Netlify Next.js plugin
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
-# Environment variables
-[context.production.environment]
-  NODE_ENV = "production"
-  NEXT_PUBLIC_GA_ID = "G-HQYS776HWJ"
-  NEXT_PUBLIC_ENABLE_ANALYTICS = "true"
-  # Netlify build specific variables
-  SKIP_ENV_VALIDATION = "true"
-  NODE_OPTIONS = "--max-old-space-size=4096"
-
 # Build environment
 [build.environment]
   NODE_VERSION = "18"
   NEXT_RUNTIME = "nodejs18.x"
   NPM_FLAGS = "--production=false"
   NODE_OPTIONS = "--max-old-space-size=4096"
-  # Secrets scanning configuration - omit certain paths
   SECRETS_SCAN_OMIT_PATHS = "content/,public/admin/config.yml,.next/"
+
+# Netlify Next.js plugin - locked to v4 for stability
+[[plugins]]
+  package = "@netlify/plugin-nextjs@4.41.3"
+
+# Environment variables
+[context.production.environment]
+  NODE_ENV = "production"
+  NEXT_PUBLIC_GA_ID = "G-HQYS776HWJ"
+  NEXT_PUBLIC_ENABLE_ANALYTICS = "true"
+  SKIP_ENV_VALIDATION = "true"
+  NODE_OPTIONS = "--max-old-space-size=4096"
 
 # Functions configuration
 [functions]
