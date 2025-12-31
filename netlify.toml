@@ -69,6 +69,17 @@
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
     Access-Control-Allow-Headers = "Content-Type, Authorization"
 
+# Redirects for CMS Login
+[[redirects]]
+  from = "/cms-login/"
+  to = "/cms-login"
+  status = 301
+
+[[redirects]]
+  from = "/login"
+  to = "/cms-login"
+  status = 301
+
 # Redirects for CMS
 [[redirects]]
   from = "/admin"
