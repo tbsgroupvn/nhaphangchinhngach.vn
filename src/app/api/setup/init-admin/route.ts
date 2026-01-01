@@ -22,9 +22,9 @@ export async function POST(request: NextRequest) {
         success: true,
         message: 'Admin user already exists',
         user: {
-          username: existingUser.username,
-          email: existingUser.email,
-          role: existingUser.role,
+          username: (existingUser as any).username,
+          email: (existingUser as any).email,
+          role: (existingUser as any).role,
         },
       });
     }
@@ -65,10 +65,10 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'Admin user created successfully',
       user: {
-        id: newUser.id,
-        username: newUser.username,
-        email: newUser.email,
-        role: newUser.role,
+        id: (newUser as any).id,
+        username: (newUser as any).username,
+        email: (newUser as any).email,
+        role: (newUser as any).role,
       },
       credentials: {
         username: 'admin',
