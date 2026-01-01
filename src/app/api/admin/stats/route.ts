@@ -52,7 +52,7 @@ async function getStatsFromSupabase() {
   ])
 
   // Filter posts - with proper type handling
-  const posts = (allPosts || []) as Array<{ status: string; category?: string; [key: string]: any }>
+  const posts = (allPosts || []) as Array<{ title: string; status: string; category?: string; createdAt?: string; created_at?: string; [key: string]: any }>
   const publishedPosts = posts.filter(p => p.status === 'published')
   const draftPosts = posts.filter(p => p.status === 'draft')
 

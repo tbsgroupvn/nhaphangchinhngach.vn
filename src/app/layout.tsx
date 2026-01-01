@@ -1,12 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import ZaloQR from '@/components/ZaloQR'
 import MiniChatbot from '@/components/MiniChatbot'
 import AnalyticsScripts from '@/components/AnalyticsScripts'
 import React, { Suspense } from 'react'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://nhaphangchinhngach.vn'),
@@ -65,7 +62,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://clarity.ms" />
       </head>
-      <body className={inter.className}>
+      <body className="font-sans">
         {children}
         
         {/* Analytics Scripts */}
