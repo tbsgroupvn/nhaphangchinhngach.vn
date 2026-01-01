@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { 
+import {
   FaPlus, FaEdit, FaTrash, FaTags, FaPercentage, FaCalculator,
   FaSave, FaChartLine, FaDownload, FaUpload, FaSearch, FaCopy
 } from 'react-icons/fa'
@@ -31,66 +31,50 @@ interface DiscountTier {
 }
 
 export default function ServicesPricingPage() {
-  const [pricingRules, setPricingRules] = useState<PricingRule[]>([
-    {
-      id: '1',
-      name: 'Nhập khẩu chính ngạch - Tiêu chuẩn',
-      serviceId: 'service_1',
-      serviceName: 'Dịch vụ nhập khẩu chính ngạch từ Trung Quốc',
-      basePrice: 50000,
-      currency: 'VND',
-      unit: 'kg',
-      minOrder: 10,
-      maxOrder: 1000,
-      discountTiers: [
-        { minQuantity: 100, maxQuantity: 500, discountPercent: 5, discountType: 'percentage' },
-        { minQuantity: 500, maxQuantity: 1000, discountPercent: 10, discountType: 'percentage' }
-      ],
-      isActive: true,
-      createdAt: '2024-12-01',
-      updatedAt: '2024-12-20'
-    },
-    {
-      id: '2',
-      name: 'Vận chuyển biển - FCL',
-      serviceId: 'service_2',
-      serviceName: 'Vận chuyển hàng hóa đường biển',
-      basePrice: 2500,
-      currency: 'USD',
-      unit: 'container',
-      minOrder: 1,
-      maxOrder: 10,
-      discountTiers: [
-        { minQuantity: 3, maxQuantity: 5, discountPercent: 3, discountType: 'percentage' },
-        { minQuantity: 5, maxQuantity: 10, discountPercent: 7, discountType: 'percentage' }
-      ],
-      isActive: true,
-      createdAt: '2024-12-01',
-      updatedAt: '2024-12-18'
-    },
-    {
-      id: '3',
-      name: 'Gom hàng lẻ - LCL',
-      serviceId: 'service_3',
-      serviceName: 'Gom hàng lẻ ghép container',
-      basePrice: 25000,
-      currency: 'VND',
-      unit: 'kg',
-      minOrder: 5,
-      maxOrder: 500,
-      discountTiers: [
-        { minQuantity: 50, maxQuantity: 200, discountPercent: 3, discountType: 'percentage' },
-        { minQuantity: 200, maxQuantity: 500, discountPercent: 8, discountType: 'percentage' }
-      ],
-      isActive: false,
-      createdAt: '2024-11-15',
-      updatedAt: '2024-12-15'
-    }
-  ])
+  const [pricingRules, setPricingRules] = useState<PricingRule[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [editingRule, setEditingRule] = useState<PricingRule | null>(null);
 
-  const [searchQuery, setSearchQuery] = useState('')
-  const [showCreateModal, setShowCreateModal] = useState(false)
-  const [editingRule, setEditingRule] = useState<PricingRule | null>(null)
+  // Fetch pricing data from services API
+  useEffect(() => {
+    const fetchPricing = async () => {
+      try {
+        const response = await fetch('/api/admin/content/services');
+        const data = await response.json();
+
+        if (data.success && data.data) {
+          // Map services to pricing rules
+          const mappedRules = data.data.map((service: any) => ({
+            id: service.id,
+            name: service.title,
+            serviceId: service.id,
+            serviceName: service.title,
+            basePrice: service.price_from || 50000,
+            currency: 'VND' as const,
+            unit: 'kg' as const,
+            minOrder: 10,
+            maxOrder: 1000,
+            discountTiers: [
+              { minQuantity: 100, maxQuantity: 500, discountPercent: 5, discountType: 'percentage' as const },
+              { minQuantity: 500, maxQuantity: 1000, discountPercent: 10, discountType: 'percentage' as const }
+            ],
+            isActive: service.status === 'active',
+            createdAt: service.created_at ? new Date(service.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+            updatedAt: service.updated_at ? new Date(service.updated_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]
+          }));
+          setPricingRules(mappedRules);
+        }
+      } catch (error) {
+        console.error('Error fetching pricing:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPricing();
+  }, []);
 
   const formatPrice = (price: number, currency: string) => {
     if (currency === 'VND') {
@@ -110,7 +94,7 @@ export default function ServicesPricingPage() {
     return units[unit as keyof typeof units] || unit
   }
 
-  const filteredRules = pricingRules.filter(rule => 
+  const filteredRules = pricingRules.filter(rule =>
     rule.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     rule.serviceName.toLowerCase().includes(searchQuery.toLowerCase())
   )
@@ -119,7 +103,24 @@ export default function ServicesPricingPage() {
     total: pricingRules.length,
     active: pricingRules.filter(r => r.isActive).length,
     inactive: pricingRules.filter(r => !r.isActive).length,
-    avgDiscount: pricingRules.reduce((sum, r) => sum + (r.discountTiers[0]?.discountPercent || 0), 0) / pricingRules.length
+    avgDiscount: pricingRules.length > 0
+      ? pricingRules.reduce((sum, r) => sum + (r.discountTiers[0]?.discountPercent || 0), 0) / pricingRules.length
+      : 0
+  }
+
+  if (loading) {
+    return (
+      <div className="p-6">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-20 bg-gray-200 rounded"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -132,18 +133,18 @@ export default function ServicesPricingPage() {
             Thiết lập giá cả và chính sách ưu đãi cho các dịch vụ logistics
           </p>
         </div>
-        
+
         <div className="mt-4 lg:mt-0 flex gap-3">
           <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 flex items-center gap-2">
             <FaUpload />
             Import bảng giá
           </button>
-          
+
           <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 flex items-center gap-2">
             <FaDownload />
             Xuất Excel
           </button>
-          
+
           <button
             onClick={() => setShowCreateModal(true)}
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-medium rounded-lg hover:from-red-700 hover:to-red-800 transition-all shadow-lg hover:shadow-xl"
@@ -235,7 +236,7 @@ export default function ServicesPricingPage() {
                 <th className="text-left p-4 font-medium text-gray-900">Thao tác</th>
               </tr>
             </thead>
-            
+
             <tbody>
               {filteredRules.map(rule => (
                 <tr key={rule.id} className="border-b border-gray-100 hover:bg-gray-50">
@@ -245,28 +246,28 @@ export default function ServicesPricingPage() {
                       <p className="text-sm text-gray-500">Cập nhật: {rule.updatedAt}</p>
                     </div>
                   </td>
-                  
+
                   <td className="p-4">
                     <p className="text-sm text-gray-600">{rule.serviceName}</p>
                   </td>
-                  
+
                   <td className="p-4">
                     <span className="font-medium text-gray-900">
                       {formatPrice(rule.basePrice, rule.currency)}
                     </span>
                   </td>
-                  
+
                   <td className="p-4">
                     <span className="text-sm text-gray-600">{getUnitLabel(rule.unit)}</span>
                   </td>
-                  
+
                   <td className="p-4">
                     <div className="text-sm text-gray-600">
                       <div>Tối thiểu: {rule.minOrder}</div>
                       <div>Tối đa: {rule.maxOrder}</div>
                     </div>
                   </td>
-                  
+
                   <td className="p-4">
                     <div className="space-y-1">
                       {rule.discountTiers.slice(0, 2).map((tier, index) => (
@@ -283,7 +284,7 @@ export default function ServicesPricingPage() {
                       )}
                     </div>
                   </td>
-                  
+
                   <td className="p-4">
                     {rule.isActive ? (
                       <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">
@@ -295,7 +296,7 @@ export default function ServicesPricingPage() {
                       </span>
                     )}
                   </td>
-                  
+
                   <td className="p-4">
                     <div className="flex items-center gap-2">
                       <button
@@ -310,7 +311,7 @@ export default function ServicesPricingPage() {
                       >
                         <FaCopy />
                       </button>
-                      
+
                       <button
                         onClick={() => setEditingRule(rule)}
                         className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded"
@@ -318,25 +319,25 @@ export default function ServicesPricingPage() {
                       >
                         <FaEdit />
                       </button>
-                      
+
                       <button
                         onClick={() => {
-                          setPricingRules(prev => 
-                            prev.map(r => 
+                          setPricingRules(prev =>
+                            prev.map(r =>
                               r.id === rule.id ? { ...r, isActive: !r.isActive } : r
                             )
                           )
                         }}
                         className={`p-2 rounded ${
-                          rule.isActive 
-                            ? 'text-red-600 hover:bg-red-50' 
+                          rule.isActive
+                            ? 'text-red-600 hover:bg-red-50'
                             : 'text-green-600 hover:bg-green-50'
                         }`}
                         title={rule.isActive ? 'Tạm dừng' : 'Kích hoạt'}
                       >
                         {rule.isActive ? <FaPercentage /> : <FaChartLine />}
                       </button>
-                      
+
                       <button
                         onClick={() => {
                           if (confirm('Bạn có chắc muốn xóa bảng giá này?')) {
@@ -403,4 +404,4 @@ export default function ServicesPricingPage() {
       </div>
     </div>
   )
-} 
+}

@@ -40,112 +40,42 @@ export default function PostsPage() {
   const [itemsPerPage] = useState(12);
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
 
-  // Mock data - Replace with real API calls
+  // Fetch posts from Supabase via API
   useEffect(() => {
-    setTimeout(() => {
-      setPosts([
-        {
-          id: '1',
-          title: 'Thuế suất nhập khẩu mới 2024 - Những thay đổi quan trọng',
-          slug: 'thue-suat-nhap-khau-moi-2024',
-          category: 'tin-tuc-nganh',
-          status: 'published',
-          views: 2156,
-          createdAt: '2024-12-15',
-          updatedAt: '2024-12-20',
-          publishedAt: '2024-12-20',
-          author: 'Admin TBS',
-          image: '/images/news1.jpg',
-          excerpt: 'Tổng cục Hải quan vừa công bố biểu thuế nhập khẩu ưu đãi đặc biệt năm 2024...',
-          featured: true,
-          tags: ['thuế', 'hải quan', 'chính sách'],
-          readTime: 5
-        },
-        {
-          id: '2',
-          title: 'Cẩm nang xuất nhập khẩu cho người mới bắt đầu',
-          slug: 'cam-nang-xuat-nhap-khau-cho-nguoi-moi',
-          category: 'cam-nang-xnk',
-          status: 'published',
-          views: 1890,
-          createdAt: '2024-12-10',
-          updatedAt: '2024-12-18',
-          publishedAt: '2024-12-18',
-          author: 'Chuyên gia TBS',
-          image: '/images/guide1.jpg',
-          excerpt: 'Hướng dẫn chi tiết từ A-Z về quy trình xuất nhập khẩu dành cho người mới...',
-          featured: true,
-          tags: ['hướng dẫn', 'thủ tục', 'beginner'],
-          readTime: 8
-        },
-        {
-          id: '3',
-          title: 'TBS GROUP mở rộng dịch vụ vận chuyển đường sắt',
-          slug: 'tbs-group-mo-rong-van-chuyen-duong-sat',
-          category: 'tin-noi-bo',
-          status: 'published',
-          views: 1432,
-          createdAt: '2024-12-08',
-          updatedAt: '2024-12-16',
-          publishedAt: '2024-12-16',
-          author: 'PR Team',
-          image: '/images/internal1.jpg',
-          excerpt: 'Công ty chính thức mở tuyến vận chuyển đường sắt từ Trung Quốc về Việt Nam...',
-          featured: false,
-          tags: ['công ty', 'mở rộng', 'đường sắt'],
-          readTime: 4
-        },
-        {
-          id: '4',
-          title: 'Câu chuyện thành công: Nhập khẩu 1000 tấn thép từ Trung Quốc',
-          slug: 'cau-chuyen-thanh-cong-nhap-khau-thep',
-          category: 'cau-chuyen-khach-hang',
-          status: 'review',
-          views: 856,
-          createdAt: '2024-12-05',
-          updatedAt: '2024-12-14',
-          author: 'Content Team',
-          image: '/images/story1.jpg',
-          excerpt: 'Chia sẻ từ khách hàng về việc nhập khẩu thép với số lượng lớn thông qua TBS...',
-          featured: false,
-          tags: ['khách hàng', 'thép', 'thành công'],
-          readTime: 6
-        },
-        {
-          id: '5',
-          title: 'Hội thảo "Xu hướng logistics 2025" - Đăng ký tham gia',
-          slug: 'hoi-thao-xu-huong-logistics-2025',
-          category: 'hoat-dong-cong-ty',
-          status: 'draft',
-          views: 0,
-          createdAt: '2024-12-01',
-          updatedAt: '2024-12-12',
-          author: 'Marketing Team',
-          excerpt: 'TBS GROUP tổ chức hội thảo về xu hướng phát triển ngành logistics...',
-          featured: false,
-          tags: ['sự kiện', 'logistics', 'hội thảo'],
-          readTime: 3
-        },
-        {
-          id: '6',
-          title: 'Tuyển dụng 10 nhân viên logistics kinh nghiệm',
-          slug: 'tuyen-dung-nhan-vien-logistics',
-          category: 'tuyen-dung',
-          status: 'published',
-          views: 1205,
-          createdAt: '2024-11-28',
-          updatedAt: '2024-12-10',
-          publishedAt: '2024-12-10',
-          author: 'HR Team',
-          image: '/images/recruitment1.jpg',
-          excerpt: 'Cơ hội nghề nghiệp tại TBS GROUP với mức lương hấp dẫn và phúc lợi đầy đủ...',
-          featured: false,
-          tags: ['tuyển dụng', 'logistics', 'việc làm'],
-          readTime: 4
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/admin/content/posts');
+        const data = await response.json();
+
+        if (data.success && data.data) {
+          // Map Supabase data to Post interface
+          const mappedPosts = data.data.map((post: any) => ({
+            id: post.id,
+            title: post.title,
+            slug: post.slug,
+            category: post.category || 'general',
+            status: post.status || 'draft',
+            views: post.views || 0,
+            createdAt: post.created_at ? new Date(post.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+            updatedAt: post.updated_at ? new Date(post.updated_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+            publishedAt: post.published_at ? new Date(post.published_at).toISOString().split('T')[0] : undefined,
+            author: 'Admin TBS',
+            image: post.featured_image || undefined,
+            excerpt: post.excerpt || '',
+            featured: false,
+            tags: post.tags || [],
+            readTime: Math.ceil((post.content?.length || 500) / 200) // Estimate 200 chars per minute
+          }));
+          setPosts(mappedPosts);
         }
-      ]);
-      setLoading(false);
-    }, 1200);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   const categories = [

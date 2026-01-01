@@ -26,47 +26,36 @@ export default function ServicesPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    setTimeout(() => {
-      setServices([
-        {
-          id: '1',
-          title: 'Dich vu nhap khau chinh ngach tu Trung Quoc',
-          category: 'nhap-khau-chinh-ngach',
-          status: 'active',
-          views: 2840,
-          createdAt: '2024-01-15',
-          updatedAt: '2024-12-20',
-          author: 'Admin TBS',
-          price: 'Tu 50.000d/kg',
-          featured: true
-        },
-        {
-          id: '2',
-          title: 'Van chuyen hang hoa duong bien',
-          category: 'van-chuyen-duong-bien',
-          status: 'active',
-          views: 1925,
-          createdAt: '2024-02-10',
-          updatedAt: '2024-12-18',
-          author: 'Editor Logistics',
-          price: 'Lien he bao gia',
-          featured: false
-        },
-        {
-          id: '3',
-          title: 'Gom hang le ghep container',
-          category: 'gom-hang-le',
-          status: 'draft',
-          views: 756,
-          createdAt: '2024-03-05',
-          updatedAt: '2024-12-15',
-          author: 'Editor Logistics',
-          price: 'Tu 25.000d/kg',
-          featured: true
+    // Fetch services from Supabase via API
+    const fetchServices = async () => {
+      try {
+        const response = await fetch('/api/admin/content/services');
+        const data = await response.json();
+
+        if (data.success && data.data) {
+          // Map Supabase data to Service interface
+          const mappedServices = data.data.map((service: any) => ({
+            id: service.id,
+            title: service.title,
+            category: service.slug || 'general',
+            status: service.status || 'active',
+            views: service.views || 0,
+            createdAt: service.created_at ? new Date(service.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+            updatedAt: service.updated_at ? new Date(service.updated_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+            author: 'Admin TBS',
+            price: service.price_text || 'Liên hệ báo giá',
+            featured: service.order_index <= 3
+          }));
+          setServices(mappedServices);
         }
-      ]);
-      setLoading(false);
-    }, 1000);
+      } catch (error) {
+        console.error('Error fetching services:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
   }, []);
 
   const getStatusBadge = (status: Service['status']) => {
