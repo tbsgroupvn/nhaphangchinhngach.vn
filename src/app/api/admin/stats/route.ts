@@ -1,61 +1,37 @@
 import { NextResponse } from 'next/server'
 import { contentManager } from '../../../../lib/content-manager'
+import {
+  serviceService,
+  postService,
+  customerStoryService,
+  jobService,
+  isSupabaseConfigured
+} from '../../../../lib/supabase/database-service'
 import fs from 'fs/promises'
 import path from 'path'
 
 export async function GET() {
   try {
-    // Get real statistics from content files
-    const [services, posts, customerStories, jobs, pages] = await Promise.all([
-      contentManager.getServices(),
-      contentManager.getPosts(),
-      contentManager.getCustomerStories(),
-      contentManager.getJobs(),
-      getStaticPages()
-    ])
+    // Check if Supabase is configured
+    const useSupabase = isSupabaseConfigured()
 
-    // Calculate real statistics
-    const stats = {
-      // Content counts
-      totalServices: services.length,
-      totalPosts: posts.length,
-      publishedPosts: posts.filter(p => p.status === 'published').length,
-      draftPosts: posts.filter(p => p.status === 'draft').length,
-      totalCustomerStories: customerStories.length,
-      totalJobs: jobs.length,
-      totalPages: pages.length,
-      totalContent: services.length + posts.length + customerStories.length + jobs.length + pages.length,
-      
-      // Content by category
-      contentByCategory: {
-        services: services.length,
-        news: posts.filter(p => p.category?.includes('tin-tuc')).length,
-        guides: posts.filter(p => p.category?.includes('cam-nang')).length,
-        customerStories: customerStories.length,
-        jobs: jobs.length,
-        pages: pages.length
-      },
+    let stats
 
-      // Recent activity (last 7 days)
-      recentActivity: getRecentActivity([...posts, ...customerStories, ...jobs]),
-      
-      // Popular content (based on content type and recency)
-      popularContent: getPopularContent(services, posts, customerStories),
-      
-      // Website health
-      websiteHealth: {
-        totalFiles: services.length + posts.length + customerStories.length + jobs.length + pages.length,
-        lastUpdated: new Date().toISOString(),
-        contentStatus: 'healthy'
-      }
+    if (useSupabase) {
+      // Get data from Supabase
+      stats = await getStatsFromSupabase()
+    } else {
+      // Fallback to markdown files
+      stats = await getStatsFromMarkdown()
     }
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       data: stats,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      source: useSupabase ? 'supabase' : 'markdown'
     })
-    
+
   } catch (error) {
     console.error('Error fetching real stats:', error)
     return NextResponse.json(
@@ -63,6 +39,109 @@ export async function GET() {
       { status: 500 }
     )
   }
+}
+
+async function getStatsFromSupabase() {
+  // Get all content from Supabase
+  const [services, allPosts, customerStories, jobs, pages] = await Promise.all([
+    serviceService.getAll(),
+    postService.getAll(),
+    customerStoryService.getAll(),
+    jobService.getAll(),
+    getStaticPages()
+  ])
+
+  // Filter posts
+  const posts = allPosts || []
+  const publishedPosts = posts.filter(p => p.status === 'published')
+  const draftPosts = posts.filter(p => p.status === 'draft')
+
+  // Calculate statistics
+  const stats = {
+    // Content counts
+    totalServices: services?.length || 0,
+    totalPosts: posts.length,
+    publishedPosts: publishedPosts.length,
+    draftPosts: draftPosts.length,
+    totalCustomerStories: customerStories?.length || 0,
+    totalJobs: jobs?.length || 0,
+    totalPages: pages.length,
+    totalContent: (services?.length || 0) + posts.length + (customerStories?.length || 0) + (jobs?.length || 0) + pages.length,
+
+    // Content by category
+    contentByCategory: {
+      services: services?.length || 0,
+      news: posts.filter(p => p.category?.includes('tin-tuc')).length,
+      guides: posts.filter(p => p.category?.includes('cam-nang')).length,
+      customerStories: customerStories?.length || 0,
+      jobs: jobs?.length || 0,
+      pages: pages.length
+    },
+
+    // Recent activity (last 7 days) - using real data
+    recentActivity: getRecentActivity([...posts, ...(customerStories || []), ...(jobs || [])]),
+
+    // Popular content - using real view counts from Supabase
+    popularContent: getPopularContent(services || [], posts, customerStories || []),
+
+    // Website health
+    websiteHealth: {
+      totalFiles: (services?.length || 0) + posts.length + (customerStories?.length || 0) + (jobs?.length || 0) + pages.length,
+      lastUpdated: new Date().toISOString(),
+      contentStatus: 'healthy'
+    }
+  }
+
+  return stats
+}
+
+async function getStatsFromMarkdown() {
+  // Original implementation - get from markdown files
+  const [services, posts, customerStories, jobs, pages] = await Promise.all([
+    contentManager.getServices(),
+    contentManager.getPosts(),
+    contentManager.getCustomerStories(),
+    contentManager.getJobs(),
+    getStaticPages()
+  ])
+
+  // Calculate real statistics
+  const stats = {
+    // Content counts
+    totalServices: services.length,
+    totalPosts: posts.length,
+    publishedPosts: posts.filter(p => p.status === 'published').length,
+    draftPosts: posts.filter(p => p.status === 'draft').length,
+    totalCustomerStories: customerStories.length,
+    totalJobs: jobs.length,
+    totalPages: pages.length,
+    totalContent: services.length + posts.length + customerStories.length + jobs.length + pages.length,
+
+    // Content by category
+    contentByCategory: {
+      services: services.length,
+      news: posts.filter(p => p.category?.includes('tin-tuc')).length,
+      guides: posts.filter(p => p.category?.includes('cam-nang')).length,
+      customerStories: customerStories.length,
+      jobs: jobs.length,
+      pages: pages.length
+    },
+
+    // Recent activity (last 7 days)
+    recentActivity: getRecentActivity([...posts, ...customerStories, ...jobs]),
+
+    // Popular content (based on content type and recency)
+    popularContent: getPopularContent(services, posts, customerStories),
+
+    // Website health
+    websiteHealth: {
+      totalFiles: services.length + posts.length + customerStories.length + jobs.length + pages.length,
+      lastUpdated: new Date().toISOString(),
+      contentStatus: 'healthy'
+    }
+  }
+
+  return stats
 }
 
 async function getStaticPages() {
@@ -79,36 +158,63 @@ async function getStaticPages() {
   }
 }
 
-function getRecentActivity(allContent: Array<{createdAt: string, title: string, category?: string}>) {
+function getRecentActivity(allContent: Array<{createdAt?: string, created_at?: string, title: string, category?: string}>) {
   const sevenDaysAgo = new Date()
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
-  
+
   return allContent
-    .filter(item => new Date(item.createdAt) >= sevenDaysAgo)
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .filter(item => {
+      const itemDate = item.createdAt || item.created_at
+      return itemDate && new Date(itemDate) >= sevenDaysAgo
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.createdAt || a.created_at || 0).getTime()
+      const dateB = new Date(b.createdAt || b.created_at || 0).getTime()
+      return dateB - dateA
+    })
     .slice(0, 5)
     .map(item => ({
       title: item.title,
-      date: item.createdAt,
+      date: item.createdAt || item.created_at || new Date().toISOString(),
       type: item.category || 'content'
     }))
 }
 
 function getPopularContent(services: any[], posts: any[], stories: any[]) {
   const allContent = [
-    ...services.map(s => ({ ...s, type: 'service', popularity: 10 })),
-    ...posts.map(p => ({ ...p, type: 'post', popularity: 8 })),
-    ...stories.map(s => ({ ...s, type: 'story', popularity: 6 }))
+    ...services.map(s => ({
+      ...s,
+      type: 'service',
+      views: s.views || 0,
+      priority: 10
+    })),
+    ...posts.map(p => ({
+      ...p,
+      type: 'post',
+      views: p.views || 0,
+      priority: 8
+    })),
+    ...stories.map(s => ({
+      ...s,
+      type: 'story',
+      views: s.views || 0,
+      priority: 6
+    }))
   ]
-  
-  // Sort by recency and type priority
+
+  // Sort by views first, then by priority
   return allContent
-    .sort((a, b) => b.popularity - a.popularity)
+    .sort((a, b) => {
+      if (b.views !== a.views) {
+        return b.views - a.views
+      }
+      return b.priority - a.priority
+    })
     .slice(0, 5)
     .map(item => ({
       title: item.title,
       type: item.type,
       slug: item.slug,
-      views: Math.floor(Math.random() * 1000) + 500 // Placeholder until real analytics
+      views: item.views
     }))
-} 
+}

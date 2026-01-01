@@ -16,6 +16,7 @@
     "sitemap": "next build && next start",
     "lighthouse": "lighthouse http://localhost:3000 --output-path=./lighthouse-report.html --output=html",
     "test:analytics": "node scripts/test-analytics.js",
+    "migrate:supabase": "ts-node scripts/migrate-to-supabase.ts",
     "netlify:dev": "netlify dev",
     "netlify:build": "netlify build"
   },
@@ -55,8 +56,11 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/nodemailer": "^6.4.17",
     "@types/react-dropzone": "^5.1.0",
-    "netlify-cli": "^17.0.0"
+    "dotenv": "^16.4.5",
+    "netlify-cli": "^17.0.0",
+    "ts-node": "^10.9.2"
   }
 }
