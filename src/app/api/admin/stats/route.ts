@@ -52,14 +52,14 @@ async function getStatsFromSupabase() {
   ])
 
   // Filter posts - with proper type handling
-  const posts = (allPosts || []) as Array<{ status: string; category?: string; [key: string]: any }>
+  const posts = (allPosts || []) as Array<{ title: string; status: string; category?: string; createdAt?: string; created_at?: string; slug: string; views?: number; [key: string]: any }>
   const publishedPosts = posts.filter(p => p.status === 'published')
   const draftPosts = posts.filter(p => p.status === 'draft')
 
   // Type assertions for other content types
   const typedServices = (services || []) as Array<{ title: string; slug: string; views?: number; [key: string]: any }>
-  const typedCustomerStories = (customerStories || []) as Array<{ title: string; slug: string; status?: string; createdAt?: string; created_at?: string; [key: string]: any }>
-  const typedJobs = (jobs || []) as Array<{ title: string; createdAt?: string; created_at?: string; [key: string]: any }>
+  const typedCustomerStories = (customerStories || []) as Array<{ title: string; slug: string; status?: string; createdAt?: string; created_at?: string; views?: number; [key: string]: any }>
+  const typedJobs = (jobs || []) as Array<{ title: string; createdAt?: string; created_at?: string; category?: string; [key: string]: any }>
 
   // Calculate statistics
   const stats = {

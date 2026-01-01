@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
                        request.headers.get('x-real-ip') ||
                        'unknown'
     const user_agent = request.headers.get('user-agent') || 'unknown'
-    const referrer = request.headers.get('referer') || request.headers.get('referrer') || null
+    const referrer = request.headers.get('referer') || request.headers.get('referrer') || undefined
 
     // Generate visitor ID (in production, you might want to use cookies or a more sophisticated method)
     const visitor_id = request.cookies.get('visitor_id')?.value ||
