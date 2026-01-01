@@ -51,42 +51,47 @@ async function getStatsFromSupabase() {
     getStaticPages()
   ])
 
-  // Filter posts
-  const posts = allPosts || []
+  // Filter posts - with proper type handling
+  const posts = (allPosts || []) as Array<{ status: string; category?: string; [key: string]: any }>
   const publishedPosts = posts.filter(p => p.status === 'published')
   const draftPosts = posts.filter(p => p.status === 'draft')
+
+  // Type assertions for other content types
+  const typedServices = (services || []) as Array<{ title: string; slug: string; views?: number; [key: string]: any }>
+  const typedCustomerStories = (customerStories || []) as Array<{ title: string; slug: string; status?: string; createdAt?: string; created_at?: string; [key: string]: any }>
+  const typedJobs = (jobs || []) as Array<{ title: string; createdAt?: string; created_at?: string; [key: string]: any }>
 
   // Calculate statistics
   const stats = {
     // Content counts
-    totalServices: services?.length || 0,
+    totalServices: typedServices.length,
     totalPosts: posts.length,
     publishedPosts: publishedPosts.length,
     draftPosts: draftPosts.length,
-    totalCustomerStories: customerStories?.length || 0,
-    totalJobs: jobs?.length || 0,
+    totalCustomerStories: typedCustomerStories.length,
+    totalJobs: typedJobs.length,
     totalPages: pages.length,
-    totalContent: (services?.length || 0) + posts.length + (customerStories?.length || 0) + (jobs?.length || 0) + pages.length,
+    totalContent: typedServices.length + posts.length + typedCustomerStories.length + typedJobs.length + pages.length,
 
     // Content by category
     contentByCategory: {
-      services: services?.length || 0,
+      services: typedServices.length,
       news: posts.filter(p => p.category?.includes('tin-tuc')).length,
       guides: posts.filter(p => p.category?.includes('cam-nang')).length,
-      customerStories: customerStories?.length || 0,
-      jobs: jobs?.length || 0,
+      customerStories: typedCustomerStories.length,
+      jobs: typedJobs.length,
       pages: pages.length
     },
 
     // Recent activity (last 7 days) - using real data
-    recentActivity: getRecentActivity([...posts, ...(customerStories || []), ...(jobs || [])]),
+    recentActivity: getRecentActivity([...posts, ...typedCustomerStories, ...typedJobs]),
 
     // Popular content - using real view counts from Supabase
-    popularContent: getPopularContent(services || [], posts, customerStories || []),
+    popularContent: getPopularContent(typedServices, posts, typedCustomerStories),
 
     // Website health
     websiteHealth: {
-      totalFiles: (services?.length || 0) + posts.length + (customerStories?.length || 0) + (jobs?.length || 0) + pages.length,
+      totalFiles: typedServices.length + posts.length + typedCustomerStories.length + typedJobs.length + pages.length,
       lastUpdated: new Date().toISOString(),
       contentStatus: 'healthy'
     }
