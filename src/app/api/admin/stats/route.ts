@@ -42,76 +42,95 @@ export async function GET() {
 }
 
 async function getStatsFromSupabase() {
-  // Get all content from Supabase
-  const [services, allPosts, customerStories, jobs, pages] = await Promise.all([
-    serviceService.getAll(),
-    postService.getAll(),
-    customerStoryService.getAll(),
-    jobService.getAll(),
-    getStaticPages()
-  ])
+  try {
+    // Get all content from Supabase with error handling
+    const [services, allPosts, customerStories, jobs, pages] = await Promise.all([
+      serviceService.getAll().catch(() => []),
+      postService.getAll().catch(() => []),
+      customerStoryService.getAll().catch(() => []),
+      jobService.getAll().catch(() => []),
+      getStaticPages()
+    ])
 
-  // Filter posts - with proper type handling
-  const posts = (allPosts || []) as Array<{ title: string; status: string; category?: string; createdAt?: string; created_at?: string; [key: string]: any }>
-  const publishedPosts = posts.filter(p => p.status === 'published')
-  const draftPosts = posts.filter(p => p.status === 'draft')
+    // Filter posts - with proper type handling
+    const posts = (allPosts || []) as Array<{ title: string; status: string; category?: string; createdAt?: string; created_at?: string; [key: string]: any }>
+    const publishedPosts = posts.filter(p => p.status === 'published')
+    const draftPosts = posts.filter(p => p.status === 'draft')
 
-  // Type assertions for other content types
-  const typedServices = (services || []) as Array<{ title: string; slug: string; views?: number; [key: string]: any }>
-  const typedCustomerStories = (customerStories || []) as Array<{ title: string; slug: string; status?: string; createdAt?: string; created_at?: string; [key: string]: any }>
-  const typedJobs = (jobs || []) as Array<{ title: string; createdAt?: string; created_at?: string; [key: string]: any }>
+    // Type assertions for other content types
+    const typedServices = (services || []) as Array<{ title: string; slug: string; views?: number; [key: string]: any }>
+    const typedCustomerStories = (customerStories || []) as Array<{ title: string; slug: string; status?: string; createdAt?: string; created_at?: string; [key: string]: any }>
+    const typedJobs = (jobs || []) as Array<{ title: string; createdAt?: string; created_at?: string; [key: string]: any }>
 
-  // Calculate statistics
-  const stats = {
-    // Content counts
-    totalServices: typedServices.length,
-    totalPosts: posts.length,
-    publishedPosts: publishedPosts.length,
-    draftPosts: draftPosts.length,
-    totalCustomerStories: typedCustomerStories.length,
-    totalJobs: typedJobs.length,
-    totalPages: pages.length,
-    totalContent: typedServices.length + posts.length + typedCustomerStories.length + typedJobs.length + pages.length,
+    // Calculate statistics
+    const stats = {
+      // Content counts
+      totalServices: typedServices.length,
+      totalPosts: posts.length,
+      publishedPosts: publishedPosts.length,
+      draftPosts: draftPosts.length,
+      totalCustomerStories: typedCustomerStories.length,
+      totalJobs: typedJobs.length,
+      totalPages: pages.length,
+      totalContent: typedServices.length + posts.length + typedCustomerStories.length + typedJobs.length + pages.length,
 
-    // Content by category
-    contentByCategory: {
-      services: typedServices.length,
-      news: posts.filter(p => p.category?.includes('tin-tuc')).length,
-      guides: posts.filter(p => p.category?.includes('cam-nang')).length,
-      customerStories: typedCustomerStories.length,
-      jobs: typedJobs.length,
-      pages: pages.length
-    },
+      // Content by category
+      contentByCategory: {
+        services: typedServices.length,
+        news: posts.filter(p => p.category?.includes('tin-tuc')).length,
+        guides: posts.filter(p => p.category?.includes('cam-nang')).length,
+        customerStories: typedCustomerStories.length,
+        jobs: typedJobs.length,
+        pages: pages.length
+      },
 
-    // Recent activity (last 7 days) - using real data
-    recentActivity: getRecentActivity([...posts, ...typedCustomerStories, ...typedJobs]),
+      // Recent activity (last 7 days) - using real data
+      recentActivity: getRecentActivity([...posts, ...typedCustomerStories, ...typedJobs]),
 
-    // Popular content - using real view counts from Supabase
-    popularContent: getPopularContent(typedServices, posts, typedCustomerStories),
+      // Popular content - using real view counts from Supabase
+      popularContent: getPopularContent(typedServices, posts, typedCustomerStories),
 
-    // Website health
-    websiteHealth: {
-      totalFiles: typedServices.length + posts.length + typedCustomerStories.length + typedJobs.length + pages.length,
-      lastUpdated: new Date().toISOString(),
-      contentStatus: 'healthy'
+      // Website health
+      websiteHealth: {
+        totalFiles: typedServices.length + posts.length + typedCustomerStories.length + typedJobs.length + pages.length,
+        lastUpdated: new Date().toISOString(),
+        contentStatus: 'healthy'
+      }
+    }
+
+    return stats
+  } catch (error) {
+    console.error('Error in getStatsFromSupabase:', error)
+    return {
+      totalServices: 0,
+      totalPosts: 0,
+      publishedPosts: 0,
+      draftPosts: 0,
+      totalCustomerStories: 0,
+      totalJobs: 0,
+      totalPages: 0,
+      totalContent: 0,
+      contentByCategory: { services: 0, news: 0, guides: 0, customerStories: 0, jobs: 0, pages: 0 },
+      recentActivity: [],
+      popularContent: [],
+      websiteHealth: { totalFiles: 0, lastUpdated: new Date().toISOString(), contentStatus: 'error' }
     }
   }
-
-  return stats
 }
 
 async function getStatsFromMarkdown() {
-  // Original implementation - get from markdown files
-  const [services, posts, customerStories, jobs, pages] = await Promise.all([
-    contentManager.getServices(),
-    contentManager.getPosts(),
-    contentManager.getCustomerStories(),
-    contentManager.getJobs(),
-    getStaticPages()
-  ])
+  try {
+    // Original implementation - get from markdown files
+    const [services, posts, customerStories, jobs, pages] = await Promise.all([
+      contentManager.getServices().catch(() => []),
+      contentManager.getPosts().catch(() => []),
+      contentManager.getCustomerStories().catch(() => []),
+      contentManager.getJobs().catch(() => []),
+      getStaticPages()
+    ])
 
-  // Calculate real statistics
-  const stats = {
+    // Calculate real statistics
+    const stats = {
     // Content counts
     totalServices: services.length,
     totalPosts: posts.length,
@@ -146,7 +165,24 @@ async function getStatsFromMarkdown() {
     }
   }
 
-  return stats
+    return stats
+  } catch (error) {
+    console.error('Error in getStatsFromMarkdown:', error)
+    return {
+      totalServices: 0,
+      totalPosts: 0,
+      publishedPosts: 0,
+      draftPosts: 0,
+      totalCustomerStories: 0,
+      totalJobs: 0,
+      totalPages: 0,
+      totalContent: 0,
+      contentByCategory: { services: 0, news: 0, guides: 0, customerStories: 0, jobs: 0, pages: 0 },
+      recentActivity: [],
+      popularContent: [],
+      websiteHealth: { totalFiles: 0, lastUpdated: new Date().toISOString(), contentStatus: 'error' }
+    }
+  }
 }
 
 async function getStaticPages() {
