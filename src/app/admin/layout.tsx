@@ -16,6 +16,7 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [expandedMenus, setExpandedMenus] = useState<string[]>(['Quản lý bài viết']); // Default expand posts section
   const pathname = usePathname();
   const router = useRouter();
 
@@ -26,6 +27,14 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     } catch (error) {
       console.error('Logout error:', error);
     }
+  };
+
+  const toggleMenu = (menuName: string) => {
+    setExpandedMenus(prev =>
+      prev.includes(menuName)
+        ? prev.filter(item => item !== menuName)
+        : [...prev, menuName]
+    );
   };
 
   const navigation = [
@@ -126,8 +135,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
       {/* Sidebar */}
       <aside className={`
-        fixed inset-y-0 left-0 z-50 w-80 bg-white shadow-xl border-r border-gray-200 
+        fixed inset-y-0 left-0 z-50 w-80 bg-white shadow-xl border-r border-gray-200
         transform transition-transform duration-300 ease-in-out lg:translate-x-0
+        flex flex-col
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         {/* Logo Header */}
@@ -177,27 +187,44 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 ) : (
                   // Navigation group with children
                   <div className="space-y-1">
-                    <div className="flex items-center gap-3 px-3 py-3 text-sm font-semibold text-gray-900">
-                      <item.icon className="text-lg text-gray-600" />
-                      <span>{item.name}</span>
-                    </div>
-                    <div className="ml-6 space-y-1">
-                      {item.children?.map((child, childIndex) => (
-                        <Link
-                          key={childIndex}
-                          href={child.href}
-                          className={`
-                            block px-3 py-2 rounded-lg text-sm transition-all
-                            ${isActive(child.href)
-                              ? 'bg-red-50 text-red-700 font-medium border-l-2 border-red-600'
-                              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                            }
-                          `}
-                        >
-                          {child.name}
-                        </Link>
-                      ))}
-                    </div>
+                    <button
+                      onClick={() => toggleMenu(item.name)}
+                      className="w-full flex items-center justify-between px-3 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <item.icon className="text-lg text-gray-600" />
+                        <span>{item.name}</span>
+                      </div>
+                      <svg
+                        className={`w-4 h-4 transition-transform ${
+                          expandedMenus.includes(item.name) ? 'rotate-90' : ''
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                    {expandedMenus.includes(item.name) && (
+                      <div className="ml-6 space-y-1">
+                        {item.children?.map((child, childIndex) => (
+                          <Link
+                            key={childIndex}
+                            href={child.href}
+                            className={`
+                              block px-3 py-2 rounded-lg text-sm transition-all
+                              ${isActive(child.href)
+                                ? 'bg-red-50 text-red-700 font-medium border-l-2 border-red-600'
+                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                              }
+                            `}
+                          >
+                            {child.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
