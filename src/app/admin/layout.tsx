@@ -70,31 +70,22 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       name: 'Quản lý tài nguyên',
       icon: FaImage,
       children: [
-        { name: 'Thư viện ảnh', href: '/admin/media/images' },
-        { name: 'Banner & Slide', href: '/admin/media/banners' },
-        { name: 'Tài liệu mẫu', href: '/admin/media/documents' },
-        { name: 'Video', href: '/admin/media/videos' },
-        { name: 'Google Drive', href: '/admin/media/drive' }
+        { name: 'Thư viện media', href: '/admin/media' },
+        { name: 'Tải lên tệp', href: '/admin/media?tab=upload' }
       ]
     },
     {
       name: 'Popup & Thông báo',
       icon: FaBell,
       children: [
-        { name: 'Danh sách popup', href: '/admin/popups' },
-        { name: 'Tạo popup mới', href: '/admin/popups/create' },
-        { name: 'Lịch hiển thị', href: '/admin/popups/schedule' },
-        { name: 'Thống kê hiệu quả', href: '/admin/popups/analytics' }
+        { name: 'Quản lý popup', href: '/admin/popups' }
       ]
     },
     {
       name: 'Chính sách',
       icon: FaFileAlt,
       children: [
-        { name: 'Điều khoản sử dụng', href: '/admin/policies/terms' },
-        { name: 'Chính sách bảo mật', href: '/admin/policies/privacy' },
-        { name: 'Chính sách vận chuyển', href: '/admin/policies/shipping' },
-        { name: 'Chính sách đổi trả', href: '/admin/policies/return' }
+        { name: 'Quản lý chính sách', href: '/admin/policies' }
       ]
     },
     {
@@ -112,8 +103,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       icon: FaShieldAlt,
       children: [
         { name: 'Quản lý tài khoản', href: '/admin/users' },
-        { name: 'Nhóm quyền', href: '/admin/roles' },
-        { name: 'Lịch sử hoạt động', href: '/admin/activity-log' }
+        { name: 'Nhóm quyền', href: '/admin/roles' }
       ]
     }
   ];

@@ -148,25 +148,43 @@ export default function CreatePostPage() {
       // Validate required fields
       if (!form.title || !form.content || !form.category) {
         alert('Vui lòng điền đầy đủ thông tin bắt buộc');
+        setLoading(false);
         return;
       }
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
       const postData = {
-        ...form,
+        title: form.title,
+        slug: form.slug,
+        content: form.content,
+        category: form.category,
         status,
-        publishAt: status === 'published' ? new Date().toISOString() : form.publishAt
+        excerpt: form.excerpt,
+        tags: form.tags
       };
 
       console.log('Saving post:', postData);
-      
+
+      const response = await fetch('/api/admin/content/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Failed to save post');
+      }
+
+      alert('Đã lưu bài viết thành công!');
+
       // Redirect back to posts list
       router.push('/admin/posts');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Save error:', error);
-      alert('Có lỗi xảy ra khi lưu bài viết');
+      alert(error.message || 'Có lỗi xảy ra khi lưu bài viết');
     } finally {
       setLoading(false);
     }
