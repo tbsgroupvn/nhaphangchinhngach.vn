@@ -41,12 +41,17 @@ export async function GET(
     }
 
     // Increment view count (async, don't wait)
-    supabaseAdmin
-      .from('posts')
-      .update({ views: (post.views || 0) + 1 })
-      .eq('id', post.id)
-      .then(() => {})
-      .catch(() => {});
+    void (async () => {
+      try {
+        await supabaseAdmin
+          .from('posts')
+          // @ts-ignore - Supabase type inference issue
+          .update({ views: ((post as any).views || 0) + 1 })
+          .eq('id', (post as any).id);
+      } catch (e) {
+        // Ignore errors
+      }
+    })();
 
     return NextResponse.json(
       {

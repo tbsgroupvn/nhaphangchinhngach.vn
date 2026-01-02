@@ -81,15 +81,17 @@ export async function logAudit(params: AuditLogParams): Promise<void> {
     const userAgent = request ? getUserAgent(request) : null;
 
     // Insert audit log
-    const { error } = await supabaseAdmin.from('audit_logs').insert({
-      actor_id: userId,
-      actor_email: actorEmail,
-      action,
-      table_name: tableName,
-      record_id: recordId,
-      diff: diff ? JSON.parse(JSON.stringify(diff)) : null,
-      ip_address: ipAddress,
-      user_agent: userAgent,
+    const { error } = await supabaseAdmin.from('audit_logs')
+      // @ts-ignore - Supabase type inference issue
+      .insert({
+        actor_id: userId,
+        actor_email: actorEmail,
+        action,
+        table_name: tableName,
+        record_id: recordId,
+        diff: diff ? JSON.parse(JSON.stringify(diff)) : null,
+        ip_address: ipAddress,
+        user_agent: userAgent,
     });
 
     if (error) {
@@ -335,7 +337,7 @@ function getChanges(before: any, after: any): Record<string, any> {
     ...Object.keys(after || {}),
   ]);
 
-  for (const key of keys) {
+  for (const key of Array.from(keys)) {
     if (before[key] !== after[key]) {
       changes[key] = {
         from: before[key],

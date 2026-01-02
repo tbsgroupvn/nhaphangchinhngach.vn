@@ -78,13 +78,18 @@ export async function GET(request: NextRequest) {
 
     // Increment view count for each post (async, don't wait)
     if (posts && posts.length > 0) {
-      posts.forEach(post => {
-        supabaseAdmin
-          .from('posts')
-          .update({ views: (post.views || 0) + 1 })
-          .eq('id', post.id)
-          .then(() => {})
-          .catch(() => {});
+      posts.forEach((post: any) => {
+        void (async () => {
+          try {
+            await supabaseAdmin
+              .from('posts')
+              // @ts-ignore - Supabase type inference issue
+              .update({ views: (post.views || 0) + 1 })
+              .eq('id', post.id);
+          } catch (e) {
+            // Ignore errors
+          }
+        })();
       });
     }
 

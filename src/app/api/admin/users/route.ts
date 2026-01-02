@@ -133,6 +133,7 @@ export async function POST(request: NextRequest) {
     if (fullName || phone) {
       await supabaseAdmin
         .from('users_profile')
+        // @ts-ignore - Supabase type inference issue
         .update({
           full_name: fullName || '',
           phone: phone || '',
@@ -150,11 +151,13 @@ export async function POST(request: NextRequest) {
         .single();
 
       if (role) {
-        await supabaseAdmin.from('user_roles').insert({
-          user_id: newUserId,
-          role_id: role.id,
-          assigned_by: auth.user!.id,
-        });
+        await supabaseAdmin.from('user_roles')
+          // @ts-ignore - Supabase type inference issue
+          .insert({
+            user_id: newUserId,
+            role_id: (role as any).id,
+            assigned_by: auth.user!.id,
+          });
       }
     }
 
@@ -224,9 +227,9 @@ export async function PUT(request: NextRequest) {
     if (status !== undefined) updateData.status = status;
     if (avatarUrl !== undefined) updateData.avatar_url = avatarUrl;
 
-    // @ts-ignore - Supabase type inference issue
     const { data: updatedUser, error } = await supabaseAdmin
       .from('users_profile')
+      // @ts-ignore - Supabase type inference issue
       .update(updateData as any)
       .eq('id', id)
       .select()
