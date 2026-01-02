@@ -23,11 +23,11 @@ export async function GET(request: NextRequest) {
     const groupedByModule: Record<string, any[]> = {};
 
     permissions.forEach((perm) => {
-      const module = perm.module || 'other';
-      if (!groupedByModule[module]) {
-        groupedByModule[module] = [];
+      const moduleName = perm.module || 'other';
+      if (!groupedByModule[moduleName]) {
+        groupedByModule[moduleName] = [];
       }
-      groupedByModule[module].push(perm);
+      groupedByModule[moduleName].push(perm);
     });
 
     return NextResponse.json({
