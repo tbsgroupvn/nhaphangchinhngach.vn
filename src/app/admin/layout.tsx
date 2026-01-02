@@ -101,11 +101,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       name: 'Cài đặt website',
       icon: FaCog,
       children: [
-        { name: 'Thông tin chung', href: '/admin/settings/general' },
-        { name: 'Logo & Branding', href: '/admin/settings/branding' },
-        { name: 'Liên hệ & Map', href: '/admin/settings/contact' },
-        { name: 'Mạng xã hội', href: '/admin/settings/social' },
-        { name: 'SEO & Analytics', href: '/admin/settings/seo' }
+        { name: 'Thông tin chung', href: '/admin/settings?tab=general' },
+        { name: 'Logo & Giao diện', href: '/admin/settings?tab=appearance' },
+        { name: 'Mạng xã hội', href: '/admin/settings?tab=social' },
+        { name: 'SEO & Analytics', href: '/admin/settings?tab=seo' }
       ]
     },
     {
