@@ -152,10 +152,13 @@ function SettingsContent() {
   const [saved, setSaved] = useState(false);
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isProduction, setIsProduction] = useState(false);
 
   // Load settings from API on mount
   useEffect(() => {
     fetchSettings();
+    // Check if in production
+    setIsProduction(window.location.hostname.includes('nhaphangchinhngach.vn'));
   }, []);
 
   // Set active tab from query params
@@ -171,6 +174,15 @@ function SettingsContent() {
     setError(null);
     try {
       const response = await fetch('/api/admin/content/settings');
+
+      // Check if response is JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        console.error('Non-JSON response when fetching settings:', text.substring(0, 200));
+        throw new Error('Server trả về lỗi khi tải cài đặt');
+      }
+
       const result = await response.json();
 
       if (result.success && result.data) {
@@ -251,6 +263,8 @@ function SettingsContent() {
         }
       };
 
+      console.log('Sending settings update:', siteSettings);
+
       const response = await fetch('/api/admin/content/settings', {
         method: 'PUT',
         headers: {
@@ -259,10 +273,19 @@ function SettingsContent() {
         body: JSON.stringify(siteSettings),
       });
 
+      // Check if response is JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        console.error('Non-JSON response:', text.substring(0, 200));
+        throw new Error('Server trả về lỗi. Vui lòng kiểm tra console để biết chi tiết.');
+      }
+
       const result = await response.json();
+      console.log('Save response:', result);
 
       if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Failed to save settings');
+        throw new Error(result.error || result.details || 'Failed to save settings');
       }
 
       setSaved(true);
@@ -322,6 +345,22 @@ function SettingsContent() {
         <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-2">
           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
           <span className="text-blue-800">Đang tải cài đặt...</span>
+        </div>
+      )}
+
+      {/* Production Warning */}
+      {isProduction && (
+        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <div className="flex items-start gap-2">
+            <FaExclamationTriangle className="text-yellow-600 mt-0.5" />
+            <div>
+              <p className="text-yellow-800 font-medium">Môi trường Production - Chế độ chỉ đọc</p>
+              <p className="text-yellow-700 text-sm mt-1">
+                Bạn có thể xem cài đặt nhưng không thể lưu thay đổi trực tiếp.
+                Để cập nhật settings, vui lòng chỉnh sửa file <code className="bg-yellow-100 px-1 rounded">content/settings/general.json</code> và push lên GitHub.
+              </p>
+            </div>
+          </div>
         </div>
       )}
 
