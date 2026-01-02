@@ -89,7 +89,7 @@ export async function PUT(
     }
 
     // Check slug uniqueness if changed
-    if (body.slug && body.slug !== currentService.slug) {
+    if (body.slug && body.slug !== (currentService as any).slug) {
     // @ts-ignore - Supabase type inference issue
       const { data: existing } = await supabaseAdmin
         .from('services')
@@ -204,8 +204,8 @@ export async function DELETE(
 
     // Soft delete
     const { error: deleteError } = await supabaseAdmin
-      // @ts-ignore - Supabase type inference issue
       .from('services')
+      // @ts-ignore - Supabase type inference issue
       .update({ deleted_at: new Date().toISOString() })
       .eq('id', id);
 

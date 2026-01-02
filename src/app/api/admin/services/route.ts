@@ -69,8 +69,8 @@ export async function GET(request: NextRequest) {
 
     const statusCounts = {
       total: count || 0,
-      active: stats?.filter(s => s.status === 'active').length || 0,
-      inactive: stats?.filter(s => s.status === 'inactive').length || 0,
+      active: (stats as any)?.filter((s: any) => s.status === 'active').length || 0,
+      inactive: (stats as any)?.filter((s: any) => s.status === 'inactive').length || 0,
     };
 
     return NextResponse.json({
@@ -184,7 +184,7 @@ export async function POST(request: NextRequest) {
       userId: auth.user!.id,
       action: 'create_service',
       tableName: 'services',
-      recordId: newService.id,
+      recordId: (newService as any).id,
       diff: { created: newService },
       request,
     });
