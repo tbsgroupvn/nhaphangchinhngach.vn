@@ -149,19 +149,39 @@ export default function CreateServicePage() {
         return
       }
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      
       const serviceData = {
-        ...form,
-        status,
-        createdAt: new Date().toISOString()
+        id: Date.now().toString(),
+        title: form.title,
+        slug: form.slug,
+        icon: form.icon,
+        description: form.description,
+        shortDescription: form.description.substring(0, 150),
+        benefits: form.content.split('\n').filter(line => line.trim().startsWith('-')).map(line => line.replace(/^-\s*/, '')),
+        process: [form.content],
+        commitment: [],
+        features: form.tags,
+        ctaText: form.priceFrom || 'Liên hệ báo giá',
+        category: form.category === 'nhap-khau-chinh-ngach' ? 'import' :
+                  form.category === 'van-chuyen-duong-bo' || form.category === 'van-chuyen-duong-bien' ? 'logistics' :
+                  form.category === 'tu-van-phap-ly' ? 'consulting' : 'support'
       }
 
-      console.log('Saving service:', serviceData)
-      
-      // Redirect back to services list
-      router.push('/admin/services')
+      const response = await fetch('/api/admin/content/services', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(serviceData)
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        alert('Dịch vụ đã được tạo thành công!')
+        router.push('/admin/services')
+      } else {
+        alert(`Lỗi: ${result.error || 'Không thể tạo dịch vụ'}`)
+      }
     } catch (error) {
       console.error('Save error:', error)
       alert('Có lỗi xảy ra khi lưu dịch vụ')
