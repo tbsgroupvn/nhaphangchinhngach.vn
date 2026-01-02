@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
-import { 
+import { useSearchParams, useRouter } from 'next/navigation';
+import {
   FaSave, FaCog, FaGlobe, FaShare, FaShieldAlt, FaEnvelope,
   FaSearch, FaPalette, FaBell, FaDatabase, FaCode, FaUsers,
   FaImage, FaPhone, FaMapMarkerAlt, FaFacebook, FaInstagram,
@@ -76,7 +77,9 @@ interface Settings {
   };
 }
 
-export default function SettingsPage() {
+function SettingsContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [settings, setSettings] = useState<Settings>({
     general: {
       siteName: 'TBS GROUP - Nhập hàng chính ngạch',
@@ -154,6 +157,14 @@ export default function SettingsPage() {
   useEffect(() => {
     fetchSettings();
   }, []);
+
+  // Set active tab from query params
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab && ['general', 'seo', 'social', 'email', 'security', 'appearance', 'notifications'].includes(tab)) {
+      setActiveTab(tab as keyof Settings);
+    }
+  }, [searchParams]);
 
   const fetchSettings = async () => {
     setInitialLoading(true);
@@ -273,6 +284,11 @@ export default function SettingsPage() {
     }
   };
 
+  const handleTabChange = (tab: keyof Settings) => {
+    setActiveTab(tab);
+    router.push(`/admin/settings?tab=${tab}`);
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-6">
       {/* Header */}
@@ -339,7 +355,7 @@ export default function SettingsPage() {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as keyof Settings)}
+                onClick={() => handleTabChange(tab.id as keyof Settings)}
                 className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 whitespace-nowrap ${
                   activeTab === tab.id
                     ? 'border-red-500 text-red-600 bg-red-50'
@@ -822,4 +838,21 @@ export default function SettingsPage() {
       </div>
     </div>
   );
-} 
+}
+
+export default function SettingsPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-6xl mx-auto p-6">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Đang tải cài đặt...</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <SettingsContent />
+    </Suspense>
+  );
+}
