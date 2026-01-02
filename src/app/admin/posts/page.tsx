@@ -40,113 +40,98 @@ export default function PostsPage() {
   const [itemsPerPage] = useState(12);
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
 
-  // Mock data - Replace with real API calls
+  // Load posts from API
   useEffect(() => {
-    setTimeout(() => {
-      setPosts([
-        {
-          id: '1',
-          title: 'Thuế suất nhập khẩu mới 2024 - Những thay đổi quan trọng',
-          slug: 'thue-suat-nhap-khau-moi-2024',
-          category: 'tin-tuc-nganh',
-          status: 'published',
-          views: 2156,
-          createdAt: '2024-12-15',
-          updatedAt: '2024-12-20',
-          publishedAt: '2024-12-20',
-          author: 'Admin TBS',
-          image: '/images/news1.jpg',
-          excerpt: 'Tổng cục Hải quan vừa công bố biểu thuế nhập khẩu ưu đãi đặc biệt năm 2024...',
-          featured: true,
-          tags: ['thuế', 'hải quan', 'chính sách'],
-          readTime: 5
-        },
-        {
-          id: '2',
-          title: 'Cẩm nang xuất nhập khẩu cho người mới bắt đầu',
-          slug: 'cam-nang-xuat-nhap-khau-cho-nguoi-moi',
-          category: 'cam-nang-xnk',
-          status: 'published',
-          views: 1890,
-          createdAt: '2024-12-10',
-          updatedAt: '2024-12-18',
-          publishedAt: '2024-12-18',
-          author: 'Chuyên gia TBS',
-          image: '/images/guide1.jpg',
-          excerpt: 'Hướng dẫn chi tiết từ A-Z về quy trình xuất nhập khẩu dành cho người mới...',
-          featured: true,
-          tags: ['hướng dẫn', 'thủ tục', 'beginner'],
-          readTime: 8
-        },
-        {
-          id: '3',
-          title: 'TBS GROUP mở rộng dịch vụ vận chuyển đường sắt',
-          slug: 'tbs-group-mo-rong-van-chuyen-duong-sat',
-          category: 'tin-noi-bo',
-          status: 'published',
-          views: 1432,
-          createdAt: '2024-12-08',
-          updatedAt: '2024-12-16',
-          publishedAt: '2024-12-16',
-          author: 'PR Team',
-          image: '/images/internal1.jpg',
-          excerpt: 'Công ty chính thức mở tuyến vận chuyển đường sắt từ Trung Quốc về Việt Nam...',
-          featured: false,
-          tags: ['công ty', 'mở rộng', 'đường sắt'],
-          readTime: 4
-        },
-        {
-          id: '4',
-          title: 'Câu chuyện thành công: Nhập khẩu 1000 tấn thép từ Trung Quốc',
-          slug: 'cau-chuyen-thanh-cong-nhap-khau-thep',
-          category: 'cau-chuyen-khach-hang',
-          status: 'review',
-          views: 856,
-          createdAt: '2024-12-05',
-          updatedAt: '2024-12-14',
-          author: 'Content Team',
-          image: '/images/story1.jpg',
-          excerpt: 'Chia sẻ từ khách hàng về việc nhập khẩu thép với số lượng lớn thông qua TBS...',
-          featured: false,
-          tags: ['khách hàng', 'thép', 'thành công'],
-          readTime: 6
-        },
-        {
-          id: '5',
-          title: 'Hội thảo "Xu hướng logistics 2025" - Đăng ký tham gia',
-          slug: 'hoi-thao-xu-huong-logistics-2025',
-          category: 'hoat-dong-cong-ty',
-          status: 'draft',
-          views: 0,
-          createdAt: '2024-12-01',
-          updatedAt: '2024-12-12',
-          author: 'Marketing Team',
-          excerpt: 'TBS GROUP tổ chức hội thảo về xu hướng phát triển ngành logistics...',
-          featured: false,
-          tags: ['sự kiện', 'logistics', 'hội thảo'],
-          readTime: 3
-        },
-        {
-          id: '6',
-          title: 'Tuyển dụng 10 nhân viên logistics kinh nghiệm',
-          slug: 'tuyen-dung-nhan-vien-logistics',
-          category: 'tuyen-dung',
-          status: 'published',
-          views: 1205,
-          createdAt: '2024-11-28',
-          updatedAt: '2024-12-10',
-          publishedAt: '2024-12-10',
-          author: 'HR Team',
-          image: '/images/recruitment1.jpg',
-          excerpt: 'Cơ hội nghề nghiệp tại TBS GROUP với mức lương hấp dẫn và phúc lợi đầy đủ...',
-          featured: false,
-          tags: ['tuyển dụng', 'logistics', 'việc làm'],
-          readTime: 4
-        }
-      ]);
+    fetchPosts();
+  }, [categoryFilter]);
+
+  const fetchPosts = async () => {
+    setLoading(true);
+    try {
+      const url = categoryFilter && categoryFilter !== 'all'
+        ? `/api/admin/content/posts?category=${categoryFilter}`
+        : '/api/admin/content/posts';
+
+      const response = await fetch(url);
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        // Map content files to Post interface
+        const mappedPosts: Post[] = result.data.map((item: any) => ({
+          id: item.id,
+          title: item.title || item.frontmatter?.title || 'Untitled',
+          slug: item.slug || item.frontmatter?.slug || item.id,
+          category: item.category || item.frontmatter?.category || 'uncategorized',
+          status: item.status || item.frontmatter?.status || 'draft',
+          views: item.frontmatter?.views || 0,
+          createdAt: item.createdAt || item.frontmatter?.date || new Date().toISOString(),
+          updatedAt: item.updatedAt || item.frontmatter?.updated || new Date().toISOString(),
+          publishedAt: item.frontmatter?.date,
+          author: item.frontmatter?.author || 'Admin',
+          image: item.frontmatter?.image || '',
+          excerpt: item.frontmatter?.description || item.content?.substring(0, 150) || '',
+          featured: item.frontmatter?.featured || false,
+          tags: item.frontmatter?.tags || [],
+          readTime: Math.ceil((item.content?.length || 0) / 1000)
+        }));
+        setPosts(mappedPosts);
+      }
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      alert('Không thể tải danh sách bài viết');
+    } finally {
       setLoading(false);
-    }, 1200);
-  }, []);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Bạn có chắc muốn xóa bài viết này?')) return;
+
+    try {
+      const response = await fetch(`/api/admin/content/posts?id=${id}`, {
+        method: 'DELETE',
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Đã xóa bài viết thành công');
+        fetchPosts(); // Reload posts
+      } else {
+        throw new Error(result.error);
+      }
+    } catch (error: any) {
+      console.error('Error deleting post:', error);
+      alert(error.message || 'Không thể xóa bài viết');
+    }
+  };
+
+  const toggleFeatured = async (id: string, currentFeatured: boolean) => {
+    try {
+      const response = await fetch('/api/admin/content/posts', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, frontmatter: { featured: !currentFeatured } })
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        fetchPosts();
+      }
+    } catch (error) {
+      console.error('Error toggling featured:', error);
+    }
+  };
+
+  // Sort handler
+  const handleSort = (field: keyof Post) => {
+    if (sortField === field) {
+      setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('desc');
+    }
+  };
 
   const categories = [
     { value: 'all', label: 'Tất cả danh mục', icon: '📁' },
@@ -195,15 +180,6 @@ export default function PostsPage() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedPosts = filteredPosts.slice(startIndex, startIndex + itemsPerPage);
 
-  const handleSort = (field: keyof Post) => {
-    if (sortField === field) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(field);
-      setSortDirection('asc');
-    }
-  };
-
   const handleStatusToggle = (id: string) => {
     setPosts(prev => prev.map(post => 
       post.id === id 
@@ -216,27 +192,43 @@ export default function PostsPage() {
     ));
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('Bạn có chắc chắn muốn xóa bài viết này?')) {
-      setPosts(prev => prev.filter(post => post.id !== id));
-    }
-  };
-
-  const handleBulkAction = (action: 'publish' | 'draft' | 'delete') => {
+  const handleBulkAction = async (action: 'publish' | 'draft' | 'delete') => {
     if (selectedPosts.length === 0) return;
-    
+
     if (action === 'delete') {
-      if (confirm(`Bạn có chắc muốn xóa ${selectedPosts.length} bài viết đã chọn?`)) {
-        setPosts(prev => prev.filter(post => !selectedPosts.includes(post.id)));
+      if (!confirm(`Bạn có chắc muốn xóa ${selectedPosts.length} bài viết đã chọn?`)) return;
+
+      try {
+        // Delete each post
+        await Promise.all(
+          selectedPosts.map(id =>
+            fetch(`/api/admin/content/posts?id=${id}`, { method: 'DELETE' })
+          )
+        );
         setSelectedPosts([]);
+        fetchPosts(); // Reload after bulk delete
+      } catch (error) {
+        console.error('Error in bulk delete:', error);
+        alert('Có lỗi khi xóa bài viết');
       }
     } else {
-      setPosts(prev => prev.map(post => 
-        selectedPosts.includes(post.id) 
-          ? { ...post, status: action as 'published' | 'draft' }
-          : post
-      ));
-      setSelectedPosts([]);
+      // Bulk publish/draft
+      try {
+        await Promise.all(
+          selectedPosts.map(id =>
+            fetch('/api/admin/content/posts', {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id, frontmatter: { status: action } })
+            })
+          )
+        );
+        setSelectedPosts([]);
+        fetchPosts(); // Reload after bulk action
+      } catch (error) {
+        console.error('Error in bulk action:', error);
+        alert('Có lỗi khi cập nhật bài viết');
+      }
     }
   };
 
