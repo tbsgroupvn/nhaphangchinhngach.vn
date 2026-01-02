@@ -1,412 +1,328 @@
-import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { jwtVerify } from 'jose';
+/**
+ * API Route: /api/admin/users
+ * Manage users
+ */
 
-// Mock users database - replace with real database
-let users = [
-  {
-    id: '1',
-    username: 'admin_tbs',
-    email: 'admin@tbsgroup.vn',
-    fullName: 'Admin TBS GROUP',
-    phone: '0123456789',
-    avatar: '/images/avatar-admin.jpg',
-    role: 'super_admin',
-    status: 'active',
-    lastLogin: '2024-12-20T10:30:00',
-    createdAt: '2024-01-01',
-    createdBy: 'System',
-    permissions: ['*'],
-    loginAttempts: 0,
-    emailVerified: true,
-    twoFactorEnabled: true
-  },
-  {
-    id: '2',
-    username: 'editor_logistics',
-    email: 'editor@tbsgroup.vn',
-    fullName: 'Nguyễn Văn Logistics',
-    phone: '0987654321',
-    role: 'editor',
-    status: 'active',
-    lastLogin: '2024-12-19T16:45:00',
-    createdAt: '2024-03-15',
-    createdBy: 'admin_tbs',
-    permissions: ['posts.create', 'posts.edit', 'services.edit', 'media.upload'],
-    loginAttempts: 0,
-    emailVerified: true,
-    twoFactorEnabled: false
-  },
-  {
-    id: '3',
-    username: 'viewer_intern',
-    email: 'intern@tbsgroup.vn',
-    fullName: 'Trần Thị Thực tập',
-    role: 'viewer',
-    status: 'inactive',
-    lastLogin: '2024-12-10T09:15:00',
-    createdAt: '2024-11-01',
-    createdBy: 'editor_logistics',
-    permissions: ['dashboard.view', 'posts.view', 'services.view'],
-    loginAttempts: 2,
-    emailVerified: false,
-    twoFactorEnabled: false
-  }
-];
+import { NextRequest, NextResponse } from 'next/server';
+import { withAnyPermission, withPermission } from '@/lib/middleware/auth';
+import { supabaseAdmin } from '@/lib/supabase/server';
+import { getUserPermissions, getUserRoles } from '@/lib/supabase/rbac';
+import { logUserCreated, logUserUpdated, logUserDeleted } from '@/lib/audit';
 
-const roles = [
-  {
-    id: 'super_admin',
-    name: 'super_admin',
-    displayName: 'Super Admin',
-    description: 'Toàn quyền hệ thống, không thể bị hạn chế',
-    permissions: ['*'],
-    userCount: 1,
-    color: 'text-red-600 bg-red-100'
-  },
-  {
-    id: 'admin',
-    name: 'admin',
-    displayName: 'Administrator',
-    description: 'Quản trị viên, có thể quản lý hầu hết tính năng',
-    permissions: ['users.manage', 'content.manage', 'settings.manage', 'analytics.view'],
-    userCount: 2,
-    color: 'text-purple-600 bg-purple-100'
-  },
-  {
-    id: 'editor',
-    name: 'editor',
-    displayName: 'Editor',
-    description: 'Biên tập viên, quản lý nội dung và media',
-    permissions: ['posts.manage', 'services.manage', 'media.manage', 'analytics.view'],
-    userCount: 5,
-    color: 'text-blue-600 bg-blue-100'
-  },
-  {
-    id: 'viewer',
-    name: 'viewer',
-    displayName: 'Viewer',
-    description: 'Chỉ xem, không được chỉnh sửa',
-    permissions: ['dashboard.view', 'posts.view', 'services.view'],
-    userCount: 3,
-    color: 'text-gray-600 bg-gray-100'
-  }
-];
+// =====================================================
+// GET /api/admin/users
+// Get all users with their roles and permissions
+// =====================================================
+export async function GET(request: NextRequest) {
+  // Users can view if they have either permission
+  const auth = await withAnyPermission(request, ['users.view', 'users.manage']);
+  if (auth.error) return auth.error;
 
-// Verify JWT token
-async function verifyAuth(token: string) {
   try {
-    const secret = new TextEncoder().encode(
-      process.env.JWT_SECRET || 'tbs-group-secret-key-2024'
+    // Get all users from users_profile
+    // @ts-ignore - Supabase type inference issue
+    const { data: users, error } = await supabaseAdmin
+      .from('users_profile')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Get users error:', error);
+      return NextResponse.json(
+        { success: false, error: error.message },
+        { status: 500 }
+      );
+    }
+
+    // Enrich with roles and permissions
+    const enrichedUsers = await Promise.all(
+      (users || []).map(async (user: any) => {
+        const roles = await getUserRoles(user.id);
+        const permissions = await getUserPermissions(user.id);
+
+        return {
+          id: user.id,
+          email: user.email,
+          fullName: user.full_name,
+          phone: user.phone,
+          avatar: user.avatar_url,
+          status: user.status,
+          lastLogin: user.last_login_at,
+          lastLoginIp: user.last_login_ip,
+          createdAt: user.created_at,
+          updatedAt: user.updated_at,
+          roles: roles.map((r) => r.role_code),
+          permissions,
+        };
+      })
     );
-    
-    const { payload } = await jwtVerify(token, secret);
-    return payload;
-  } catch (error) {
-    return null;
-  }
-}
 
-// Check if user has permission
-function hasPermission(userPermissions: string[], requiredPermission: string) {
-  if (userPermissions.includes('*')) return true;
-  if (userPermissions.includes('users.manage')) return true;
-  return userPermissions.includes(requiredPermission);
-}
-
-// GET /api/admin/users - Get all users
-export async function GET(request: Request) {
-  try {
-    const cookieStore = cookies();
-    const token = cookieStore.get('auth-token')?.value;
-
-    if (!token) {
-      return NextResponse.json(
-        { success: false, message: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const payload = await verifyAuth(token);
-    if (!payload) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid token' },
-        { status: 401 }
-      );
-    }
-
-    const userPermissions = payload.permissions as string[];
-    if (!hasPermission(userPermissions, 'users.view')) {
-      return NextResponse.json(
-        { success: false, message: 'Insufficient permissions' },
-        { status: 403 }
-      );
-    }
-
-    // Remove sensitive data
-    const safeUsers = users.map(user => {
-      const { ...safeUser } = user;
-      return safeUser;
-    });
+    // Get statistics
+    const stats = {
+      total: enrichedUsers.length,
+      active: enrichedUsers.filter((u) => u.status === 'active').length,
+      inactive: enrichedUsers.filter((u) => u.status === 'inactive').length,
+      banned: enrichedUsers.filter((u) => u.status === 'banned').length,
+      recentLogins: enrichedUsers.filter((u) => {
+        if (!u.lastLogin) return false;
+        const loginDate = new Date(u.lastLogin);
+        const weekAgo = new Date();
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        return loginDate > weekAgo;
+      }).length,
+    };
 
     return NextResponse.json({
       success: true,
       data: {
-        users: safeUsers,
-        roles,
-        stats: {
-          total: users.length,
-          active: users.filter(u => u.status === 'active').length,
-          admins: users.filter(u => ['super_admin', 'admin'].includes(u.role)).length,
-          recentLogins: users.filter(u => {
-            if (!u.lastLogin) return false;
-            const loginDate = new Date(u.lastLogin);
-            const weekAgo = new Date();
-            weekAgo.setDate(weekAgo.getDate() - 7);
-            return loginDate > weekAgo;
-          }).length
-        }
-      }
+        users: enrichedUsers,
+        stats,
+      },
     });
-
-  } catch (error) {
-    console.error('GET users error:', error);
+  } catch (error: any) {
+    console.error('GET users failed:', error);
     return NextResponse.json(
-      { success: false, message: 'Internal server error' },
+      { success: false, error: error.message || 'Internal server error' },
       { status: 500 }
     );
   }
 }
 
-// POST /api/admin/users - Create new user
-export async function POST(request: Request) {
+// =====================================================
+// POST /api/admin/users
+// Create new user (via Supabase Auth)
+// =====================================================
+export async function POST(request: NextRequest) {
+  const auth = await withPermission(request, 'users.manage');
+  if (auth.error) return auth.error;
+
   try {
-    const cookieStore = cookies();
-    const token = cookieStore.get('auth-token')?.value;
+    const body = await request.json();
+    const { email, password, fullName, phone, roleCode } = body;
 
-    if (!token) {
+    // Validation
+    if (!email || !password) {
       return NextResponse.json(
-        { success: false, message: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const payload = await verifyAuth(token);
-    if (!payload) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid token' },
-        { status: 401 }
-      );
-    }
-
-    const userPermissions = payload.permissions as string[];
-    if (!hasPermission(userPermissions, 'users.create')) {
-      return NextResponse.json(
-        { success: false, message: 'Insufficient permissions' },
-        { status: 403 }
-      );
-    }
-
-    const { username, email, fullName, phone, role, password } = await request.json();
-
-    // Validate required fields
-    if (!username || !email || !fullName || !password) {
-      return NextResponse.json(
-        { success: false, message: 'Missing required fields' },
+        { success: false, error: 'Email and password are required' },
         { status: 400 }
       );
     }
 
-    // Check if username or email already exists
-    const existingUser = users.find(u => u.username === username || u.email === email);
-    if (existingUser) {
+    // Create user in Supabase Auth
+    const { data: authData, error: authError } =
+      await supabaseAdmin.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+        user_metadata: {
+          full_name: fullName || '',
+        },
+      });
+
+    if (authError) {
+      console.error('Create auth user error:', authError);
       return NextResponse.json(
-        { success: false, message: 'Username or email already exists' },
-        { status: 409 }
+        { success: false, error: authError.message },
+        { status: 500 }
       );
     }
 
-    // Get role permissions
-    const roleInfo = roles.find(r => r.name === role);
-    if (!roleInfo) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid role' },
-        { status: 400 }
-      );
+    const newUserId = authData.user.id;
+
+    // Update profile with additional info
+    if (fullName || phone) {
+      await supabaseAdmin
+        .from('users_profile')
+        .update({
+          full_name: fullName || '',
+          phone: phone || '',
+        })
+        .eq('id', newUserId);
     }
 
-    // Create new user
-    const newUser = {
-      id: Date.now().toString(),
-      username,
-      email,
-      fullName,
-      phone: phone || '',
-      role,
-      status: 'active' as const,
-      lastLogin: '',
-      createdAt: new Date().toISOString().split('T')[0],
-      createdBy: payload.username as string,
-      permissions: roleInfo.permissions,
-      loginAttempts: 0,
-      emailVerified: false,
-      twoFactorEnabled: false
-    };
+    // Assign role if provided
+    if (roleCode) {
+    // @ts-ignore - Supabase type inference issue
+      const { data: role } = await supabaseAdmin
+        .from('roles')
+        .select('id')
+        .eq('code', roleCode)
+        .single();
 
-    users.push(newUser);
+      if (role) {
+        await supabaseAdmin.from('user_roles').insert({
+          user_id: newUserId,
+          role_id: role.id,
+          assigned_by: auth.user!.id,
+        });
+      }
+    }
 
-    // Return user without sensitive data
-    const { ...safeUser } = newUser;
+    // Audit log
+    await logUserCreated(
+      auth.user!.id,
+      newUserId,
+      {
+        email,
+        full_name: fullName,
+        phone,
+        role_code: roleCode,
+      },
+      request
+    );
 
     return NextResponse.json({
       success: true,
+      data: {
+        id: newUserId,
+        email,
+        fullName,
+        phone,
+      },
       message: 'User created successfully',
-      data: safeUser
     });
-
-  } catch (error) {
-    console.error('POST users error:', error);
+  } catch (error: any) {
+    console.error('POST users failed:', error);
     return NextResponse.json(
-      { success: false, message: 'Internal server error' },
+      { success: false, error: error.message || 'Internal server error' },
       { status: 500 }
     );
   }
 }
 
-// PUT /api/admin/users - Update user
-export async function PUT(request: Request) {
+// =====================================================
+// PUT /api/admin/users
+// Update user
+// =====================================================
+export async function PUT(request: NextRequest) {
+  const auth = await withPermission(request, 'users.manage');
+  if (auth.error) return auth.error;
+
   try {
-    const cookieStore = cookies();
-    const token = cookieStore.get('auth-token')?.value;
-
-    if (!token) {
-      return NextResponse.json(
-        { success: false, message: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const payload = await verifyAuth(token);
-    if (!payload) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid token' },
-        { status: 401 }
-      );
-    }
-
-    const userPermissions = payload.permissions as string[];
-    if (!hasPermission(userPermissions, 'users.edit')) {
-      return NextResponse.json(
-        { success: false, message: 'Insufficient permissions' },
-        { status: 403 }
-      );
-    }
-
-    const { id, ...updateData } = await request.json();
+    const body = await request.json();
+    const { id, fullName, phone, status, avatarUrl } = body;
 
     if (!id) {
       return NextResponse.json(
-        { success: false, message: 'User ID is required' },
+        { success: false, error: 'User ID is required' },
         { status: 400 }
       );
     }
 
-    const userIndex = users.findIndex(u => u.id === id);
-    if (userIndex === -1) {
+    // Get current user data
+    // @ts-ignore - Supabase type inference issue
+    const { data: currentUser } = await supabaseAdmin
+      .from('users_profile')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    // Update profile
+    const updateData: any = {};
+    if (fullName !== undefined) updateData.full_name = fullName;
+    if (phone !== undefined) updateData.phone = phone;
+    if (status !== undefined) updateData.status = status;
+    if (avatarUrl !== undefined) updateData.avatar_url = avatarUrl;
+
+    // @ts-ignore - Supabase type inference issue
+    const { data: updatedUser, error } = await supabaseAdmin
+      .from('users_profile')
+      .update(updateData as any)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Update user error:', error);
       return NextResponse.json(
-        { success: false, message: 'User not found' },
-        { status: 404 }
+        { success: false, error: error.message },
+        { status: 500 }
       );
     }
 
-    // Update user
-    users[userIndex] = { ...users[userIndex], ...updateData };
-
-    const { ...safeUser } = users[userIndex];
+    // Audit log
+    await logUserUpdated(
+      auth.user!.id,
+      id,
+      currentUser,
+      updatedUser,
+      request
+    );
 
     return NextResponse.json({
       success: true,
+      data: updatedUser,
       message: 'User updated successfully',
-      data: safeUser
     });
-
-  } catch (error) {
-    console.error('PUT users error:', error);
+  } catch (error: any) {
+    console.error('PUT users failed:', error);
     return NextResponse.json(
-      { success: false, message: 'Internal server error' },
+      { success: false, error: error.message || 'Internal server error' },
       { status: 500 }
     );
   }
 }
 
-// DELETE /api/admin/users - Delete user
-export async function DELETE(request: Request) {
+// =====================================================
+// DELETE /api/admin/users
+// Delete user
+// =====================================================
+export async function DELETE(request: NextRequest) {
+  const auth = await withPermission(request, 'users.manage');
+  if (auth.error) return auth.error;
+
   try {
-    const cookieStore = cookies();
-    const token = cookieStore.get('auth-token')?.value;
-
-    if (!token) {
-      return NextResponse.json(
-        { success: false, message: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const payload = await verifyAuth(token);
-    if (!payload) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid token' },
-        { status: 401 }
-      );
-    }
-
-    const userPermissions = payload.permissions as string[];
-    if (!hasPermission(userPermissions, 'users.delete')) {
-      return NextResponse.json(
-        { success: false, message: 'Insufficient permissions' },
-        { status: 403 }
-      );
-    }
-
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('id');
 
     if (!userId) {
       return NextResponse.json(
-        { success: false, message: 'User ID is required' },
+        { success: false, error: 'User ID is required' },
         { status: 400 }
       );
     }
 
-    const userIndex = users.findIndex(u => u.id === userId);
-    if (userIndex === -1) {
+    // Prevent self-deletion
+    if (userId === auth.user!.id) {
       return NextResponse.json(
-        { success: false, message: 'User not found' },
-        { status: 404 }
-      );
-    }
-
-    // Prevent deleting super admin
-    if (users[userIndex].role === 'super_admin') {
-      return NextResponse.json(
-        { success: false, message: 'Cannot delete super admin' },
+        { success: false, error: 'Cannot delete yourself' },
         { status: 403 }
       );
     }
 
-    // Delete user
-    users.splice(userIndex, 1);
+    // Get user data before deletion
+    // @ts-ignore - Supabase type inference issue
+    const { data: userData } = await supabaseAdmin
+      .from('users_profile')
+      .select('*')
+      .eq('id', userId)
+      .single();
+
+    // Delete from Supabase Auth (cascade will delete profile)
+    const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(
+      userId
+    );
+
+    if (authError) {
+      console.error('Delete auth user error:', authError);
+      return NextResponse.json(
+        { success: false, error: authError.message },
+        { status: 500 }
+      );
+    }
+
+    // Audit log
+    await logUserDeleted(auth.user!.id, userId, userData, request);
 
     return NextResponse.json({
       success: true,
-      message: 'User deleted successfully'
+      message: 'User deleted successfully',
     });
-
-  } catch (error) {
-    console.error('DELETE users error:', error);
+  } catch (error: any) {
+    console.error('DELETE users failed:', error);
     return NextResponse.json(
-      { success: false, message: 'Internal server error' },
+      { success: false, error: error.message || 'Internal server error' },
       { status: 500 }
     );
   }
-} 
+}
