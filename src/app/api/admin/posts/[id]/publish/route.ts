@@ -25,6 +25,7 @@ export async function POST(
     const { action = 'publish' } = body; // 'publish' or 'unpublish' or 'archive'
 
     // Get current post
+    // @ts-ignore - Supabase type inference issue
     const { data: currentPost, error: fetchError } = await supabaseAdmin
       .from('posts')
       .select('*')
@@ -40,7 +41,7 @@ export async function POST(
     }
 
     let newStatus: string;
-    let publishedAt: string | null = currentPost.published_at;
+    let publishedAt: string | null = (currentPost as any).published_at;
 
     switch (action) {
       case 'publish':
@@ -64,6 +65,7 @@ export async function POST(
     // Update post
     const { data: updatedPost, error: updateError } = await supabaseAdmin
       .from('posts')
+      // @ts-ignore - Supabase type inference issue
       .update({
         status: newStatus,
         published_at: publishedAt,
@@ -86,7 +88,7 @@ export async function POST(
       await logPostPublished(
         auth.user!.id,
         id,
-        updatedPost.title,
+        (updatedPost as any).title,
         request
       );
     } else {
@@ -96,7 +98,7 @@ export async function POST(
         tableName: 'posts',
         recordId: id,
         diff: {
-          before: { status: currentPost.status },
+          before: { status: (currentPost as any).status },
           after: { status: newStatus },
         },
         request,

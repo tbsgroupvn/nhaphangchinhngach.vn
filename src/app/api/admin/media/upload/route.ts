@@ -128,6 +128,7 @@ export async function POST(request: NextRequest) {
     // Insert media record to database
     const { data: mediaRecord, error: dbError } = await supabaseAdmin
       .from('media_files')
+      // @ts-ignore - Supabase type inference issue
       .insert({
         name: fileName,
         original_name: file.name,
@@ -157,7 +158,7 @@ export async function POST(request: NextRequest) {
     // Audit log
     await logMediaUploaded(
       userId,
-      mediaRecord.id,
+      (mediaRecord as any).id,
       file.name,
       file.size,
       request

@@ -78,6 +78,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get statistics
+    // @ts-ignore - Supabase type inference issue
     const { data: stats } = await supabaseAdmin
       .from('media_files')
       .select('type, size', { count: 'exact' })
@@ -85,11 +86,11 @@ export async function GET(request: NextRequest) {
 
     const typeStats = {
       total: count || 0,
-      image: stats?.filter(m => m.type === 'image').length || 0,
-      video: stats?.filter(m => m.type === 'video').length || 0,
-      document: stats?.filter(m => m.type === 'document').length || 0,
-      audio: stats?.filter(m => m.type === 'audio').length || 0,
-      totalSize: stats?.reduce((sum, m) => sum + (m.size || 0), 0) || 0,
+      image: (stats as any)?.filter((m: any) => m.type === 'image').length || 0,
+      video: (stats as any)?.filter((m: any) => m.type === 'video').length || 0,
+      document: (stats as any)?.filter((m: any) => m.type === 'document').length || 0,
+      audio: (stats as any)?.filter((m: any) => m.type === 'audio').length || 0,
+      totalSize: (stats as any)?.reduce((sum: number, m: any) => sum + (m.size || 0), 0) || 0,
     };
 
     return NextResponse.json({

@@ -22,6 +22,7 @@ export async function GET(
   try {
     const { id } = params;
 
+    // @ts-ignore - Supabase type inference issue
     const { data: post, error } = await supabaseAdmin
       .from('posts')
       .select(`
@@ -72,6 +73,7 @@ export async function PUT(
     const body = await request.json();
 
     // Get current post
+    // @ts-ignore - Supabase type inference issue
     const { data: currentPost, error: fetchError } = await supabaseAdmin
       .from('posts')
       .select('*')
@@ -87,7 +89,8 @@ export async function PUT(
     }
 
     // Check slug uniqueness if changed
-    if (body.slug && body.slug !== currentPost.slug) {
+    if (body.slug && body.slug !== (currentPost as any).slug) {
+      // @ts-ignore - Supabase type inference issue
       const { data: existing } = await supabaseAdmin
         .from('posts')
         .select('id')
@@ -122,9 +125,9 @@ export async function PUT(
 
     // Don't allow direct status change (use publish endpoint)
     // But allow draft → published if explicitly requested
-    if (body.status !== undefined && body.status !== currentPost.status) {
+    if (body.status !== undefined && body.status !== (currentPost as any).status) {
       updateData.status = body.status;
-      if (body.status === 'published' && !currentPost.published_at) {
+      if (body.status === 'published' && !(currentPost as any).published_at) {
         updateData.published_at = new Date().toISOString();
       }
     }
@@ -132,6 +135,7 @@ export async function PUT(
     // Update post
     const { data: updatedPost, error: updateError } = await supabaseAdmin
       .from('posts')
+      // @ts-ignore - Supabase type inference issue
       .update(updateData as any)
       .eq('id', id)
       .select()
@@ -187,6 +191,7 @@ export async function DELETE(
     const { id } = params;
 
     // Get post before deletion
+    // @ts-ignore - Supabase type inference issue
     const { data: post, error: fetchError } = await supabaseAdmin
       .from('posts')
       .select('*')
@@ -204,6 +209,7 @@ export async function DELETE(
     // Soft delete
     const { error: deleteError } = await supabaseAdmin
       .from('posts')
+      // @ts-ignore - Supabase type inference issue
       .update({ deleted_at: new Date().toISOString() })
       .eq('id', id);
 

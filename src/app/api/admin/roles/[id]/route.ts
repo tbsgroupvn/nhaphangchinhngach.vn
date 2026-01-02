@@ -25,6 +25,7 @@ export async function PUT(
     const { name, description, permissionIds } = body;
 
     // Get current role
+    // @ts-ignore - Supabase type inference issue
     const { data: currentRole, error: fetchError } = await supabaseAdmin
       .from('roles')
       .select('*')
@@ -39,7 +40,7 @@ export async function PUT(
     }
 
     // Prevent editing system roles code
-    if (currentRole.is_system && body.code && body.code !== currentRole.code) {
+    if ((currentRole as any).is_system && body.code && body.code !== (currentRole as any).code) {
       return NextResponse.json(
         { success: false, error: 'Cannot change system role code' },
         { status: 403 }
@@ -49,9 +50,10 @@ export async function PUT(
     // Update role
     const { data: updatedRole, error: updateError } = await supabaseAdmin
       .from('roles')
+      // @ts-ignore - Supabase type inference issue
       .update({
-        name: name || currentRole.name,
-        description: description !== undefined ? description : currentRole.description,
+        name: name || (currentRole as any).name,
+        description: description !== undefined ? description : (currentRole as any).description,
       })
       .eq('id', id)
       .select()
@@ -123,6 +125,7 @@ export async function DELETE(
     const { id } = params;
 
     // Get role
+    // @ts-ignore - Supabase type inference issue
     const { data: role, error: fetchError } = await supabaseAdmin
       .from('roles')
       .select('*')
@@ -137,7 +140,7 @@ export async function DELETE(
     }
 
     // Prevent deleting system roles
-    if (role.is_system) {
+    if ((role as any).is_system) {
       return NextResponse.json(
         { success: false, error: 'Cannot delete system role' },
         { status: 403 }

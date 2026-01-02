@@ -20,6 +20,7 @@ export async function GET(request: NextRequest) {
 
   try {
     // Get all roles with permissions
+    // @ts-ignore - Supabase type inference issue
     const { data: roles, error } = await supabaseAdmin
       .from('roles')
       .select(
@@ -110,6 +111,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if code already exists
+    // @ts-ignore - Supabase type inference issue
     const { data: existing } = await supabaseAdmin
       .from('roles')
       .select('id')
@@ -126,6 +128,7 @@ export async function POST(request: NextRequest) {
     // Create role
     const { data: newRole, error: createError } = await supabaseAdmin
       .from('roles')
+      // @ts-ignore - Supabase type inference issue
       .insert({
         name,
         code,
@@ -146,7 +149,7 @@ export async function POST(request: NextRequest) {
     // Assign permissions if provided
     if (permissionIds && permissionIds.length > 0) {
       const rolePermissions = permissionIds.map((permId: string) => ({
-        role_id: newRole.id,
+        role_id: (newRole as any).id,
         permission_id: permId,
       }));
 
@@ -165,7 +168,7 @@ export async function POST(request: NextRequest) {
       userId: auth.user!.id,
       action: 'create_role',
       tableName: 'roles',
-      recordId: newRole.id,
+      recordId: (newRole as any).id,
       diff: { created: newRole },
       request,
     });

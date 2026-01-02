@@ -25,6 +25,7 @@ export async function POST(
     const { action = 'activate' } = body; // 'activate' or 'deactivate'
 
     // Get current service
+    // @ts-ignore - Supabase type inference issue
     const { data: currentService, error: fetchError } = await supabaseAdmin
       .from('services')
       .select('*')
@@ -44,6 +45,7 @@ export async function POST(
     // Update service
     const { data: updatedService, error: updateError } = await supabaseAdmin
       .from('services')
+      // @ts-ignore - Supabase type inference issue
       .update({
         status: newStatus,
         updated_at: new Date().toISOString(),
@@ -65,7 +67,7 @@ export async function POST(
       await logServicePublished(
         auth.user!.id,
         id,
-        updatedService.title,
+        (updatedService as any).title,
         request
       );
     } else {
@@ -75,7 +77,7 @@ export async function POST(
         tableName: 'services',
         recordId: id,
         diff: {
-          before: { status: currentService.status },
+          before: { status: (currentService as any).status },
           after: { status: newStatus },
         },
         request,

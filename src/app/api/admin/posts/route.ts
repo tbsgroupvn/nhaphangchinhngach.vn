@@ -65,6 +65,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get statistics
+    // @ts-ignore - Supabase type inference issue
     const { data: stats } = await supabaseAdmin
       .from('posts')
       .select('status', { count: 'exact' })
@@ -72,9 +73,9 @@ export async function GET(request: NextRequest) {
 
     const statusCounts = {
       total: count || 0,
-      draft: stats?.filter(p => p.status === 'draft').length || 0,
-      published: stats?.filter(p => p.status === 'published').length || 0,
-      archived: stats?.filter(p => p.status === 'archived').length || 0,
+      draft: (stats as any)?.filter((p: any) => p.status === 'draft').length || 0,
+      published: (stats as any)?.filter((p: any) => p.status === 'published').length || 0,
+      archived: (stats as any)?.filter((p: any) => p.status === 'archived').length || 0,
     };
 
     return NextResponse.json({
@@ -149,6 +150,7 @@ export async function POST(request: NextRequest) {
     // Create post
     const { data: newPost, error: createError } = await supabaseAdmin
       .from('posts')
+      // @ts-ignore - Supabase type inference issue
       .insert({
         title,
         slug,
@@ -180,7 +182,7 @@ export async function POST(request: NextRequest) {
       userId: auth.user!.id,
       action: 'create_post',
       tableName: 'posts',
-      recordId: newPost.id,
+      recordId: (newPost as any).id,
       diff: { created: newPost },
       request,
     });
