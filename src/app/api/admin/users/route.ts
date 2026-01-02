@@ -223,7 +223,7 @@ export async function PUT(request: NextRequest) {
 
     const { data: updatedUser, error } = await supabaseAdmin
       .from('users_profile')
-      .update(updateData)
+      .update(updateData as any)
       .eq('id', id)
       .select()
       .single();

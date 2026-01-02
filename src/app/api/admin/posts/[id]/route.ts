@@ -132,7 +132,7 @@ export async function PUT(
     // Update post
     const { data: updatedPost, error: updateError } = await supabaseAdmin
       .from('posts')
-      .update(updateData)
+      .update(updateData as any)
       .eq('id', id)
       .select()
       .single();

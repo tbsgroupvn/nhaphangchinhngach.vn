@@ -127,7 +127,7 @@ export async function PUT(
     // Update service
     const { data: updatedService, error: updateError } = await supabaseAdmin
       .from('services')
-      .update(updateData)
+      .update(updateData as any)
       .eq('id', id)
       .select()
       .single();

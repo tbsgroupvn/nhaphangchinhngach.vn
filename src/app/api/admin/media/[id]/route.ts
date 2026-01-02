@@ -99,7 +99,7 @@ export async function PUT(
     // Update media
     const { data: updatedMedia, error: updateError } = await supabaseAdmin
       .from('media_files')
-      .update(updateData)
+      .update(updateData as any)
       .eq('id', id)
       .select()
       .single();
