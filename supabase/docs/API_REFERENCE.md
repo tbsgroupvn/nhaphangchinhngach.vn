@@ -1,0 +1,872 @@
+# Supabase API Reference
+
+Complete guide for interacting with the TBS Group CMS database from your Next.js application.
+
+---
+
+## Table of Contents
+
+1. [Authentication](#authentication)
+2. [Posts](#posts)
+3. [Services](#services)
+4. [Users](#users)
+5. [Media Files](#media-files)
+6. [Analytics](#analytics)
+7. [Contact & Newsletter](#contact--newsletter)
+8. [Advanced Queries](#advanced-queries)
+
+---
+
+## Setup
+
+### Initialize Supabase Client
+
+```typescript
+// lib/supabase/client.ts
+import { createClient } from '@supabase/supabase-js';
+import type { Database } from './types';
+
+// For client-side (public access)
+export const supabase = createClient<Database>(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
+// For server-side (admin access, bypasses RLS)
+export const supabaseAdmin = createClient<Database>(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  }
+);
+```
+
+---
+
+## Authentication
+
+### Login User
+
+```typescript
+async function loginUser(username: string, password: string) {
+  // First, get user from database
+  const { data: user, error: userError } = await supabaseAdmin
+    .from('users')
+    .select('*')
+    .eq('username', username)
+    .eq('status', 'active')
+    .is('deleted_at', null)
+    .single();
+
+  if (userError || !user) {
+    return { error: 'Invalid credentials' };
+  }
+
+  // Verify password (using bcryptjs)
+  const bcrypt = require('bcryptjs');
+  const isValid = await bcrypt.compare(password, user.password_hash);
+
+  if (!isValid) {
+    // Handle failed login attempt
+    await supabaseAdmin.rpc('handle_login_attempt', {
+      user_username: username,
+      success: false,
+      client_ip: getClientIp()
+    });
+    return { error: 'Invalid credentials' };
+  }
+
+  // Handle successful login
+  await supabaseAdmin.rpc('handle_login_attempt', {
+    user_username: username,
+    success: true,
+    client_ip: getClientIp()
+  });
+
+  // Create JWT token (using jose)
+  const jwt = await new jose.SignJWT({
+    sub: user.id,
+    role: user.role,
+    email: user.email
+  })
+    .setProtectedHeader({ alg: 'HS256' })
+    .setExpirationTime('7d')
+    .sign(new TextEncoder().encode(process.env.SUPABASE_JWT_SECRET));
+
+  // Create session record
+  await supabaseAdmin
+    .from('user_sessions')
+    .insert({
+      user_id: user.id,
+      session_token: jwt,
+      ip_address: getClientIp(),
+      user_agent: getUserAgent(),
+      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+    });
+
+  return { user, token: jwt };
+}
+```
+
+### Get Current User
+
+```typescript
+async function getCurrentUser(token: string) {
+  // Verify JWT
+  const secret = new TextEncoder().encode(process.env.SUPABASE_JWT_SECRET);
+  const { payload } = await jose.jwtVerify(token, secret);
+
+  // Get user from database
+  const { data: user } = await supabaseAdmin
+    .from('users')
+    .select('*')
+    .eq('id', payload.sub)
+    .eq('status', 'active')
+    .is('deleted_at', null)
+    .single();
+
+  return user;
+}
+```
+
+### Logout User
+
+```typescript
+async function logoutUser(sessionToken: string) {
+  await supabaseAdmin
+    .from('user_sessions')
+    .update({ is_active: false })
+    .eq('session_token', sessionToken);
+}
+```
+
+---
+
+## Posts
+
+### Get Published Posts
+
+```typescript
+// Get all published posts (public access)
+async function getPublishedPosts(options?: {
+  category?: string;
+  limit?: number;
+  offset?: number;
+}) {
+  let query = supabase
+    .from('posts')
+    .select('*, author:users(id, full_name, avatar_url)')
+    .eq('status', 'published')
+    .is('deleted_at', null)
+    .order('published_at', { ascending: false });
+
+  if (options?.category) {
+    query = query.eq('category', options.category);
+  }
+
+  if (options?.limit) {
+    query = query.limit(options.limit);
+  }
+
+  if (options?.offset) {
+    query = query.range(options.offset, options.offset + (options.limit || 10) - 1);
+  }
+
+  const { data, error } = await query;
+  return { data, error };
+}
+```
+
+### Get Post by Slug
+
+```typescript
+async function getPostBySlug(slug: string) {
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*, author:users(id, full_name, avatar_url)')
+    .eq('slug', slug)
+    .eq('status', 'published')
+    .is('deleted_at', null)
+    .single();
+
+  // Increment view count
+  if (data) {
+    await supabaseAdmin.rpc('increment_views', {
+      table_name: 'posts',
+      record_id: data.id
+    });
+  }
+
+  return { data, error };
+}
+```
+
+### Create Post (Admin)
+
+```typescript
+async function createPost(post: {
+  title: string;
+  content: string;
+  excerpt?: string;
+  category?: string;
+  tags?: string[];
+  status?: 'draft' | 'published';
+  featured_image?: string;
+  author_id: string;
+}) {
+  const { data, error } = await supabaseAdmin
+    .from('posts')
+    .insert({
+      ...post,
+      // Slug will be auto-generated by trigger
+    })
+    .select()
+    .single();
+
+  return { data, error };
+}
+```
+
+### Update Post (Admin)
+
+```typescript
+async function updatePost(id: string, updates: Partial<Post>) {
+  const { data, error } = await supabaseAdmin
+    .from('posts')
+    .update(updates)
+    .eq('id', id)
+    .select()
+    .single();
+
+  return { data, error };
+}
+```
+
+### Delete Post (Soft Delete)
+
+```typescript
+async function deletePost(id: string) {
+  const { error } = await supabaseAdmin.rpc('soft_delete', {
+    table_name: 'posts',
+    record_id: id
+  });
+
+  return { error };
+}
+```
+
+### Search Posts
+
+```typescript
+async function searchPosts(query: string, limit = 20) {
+  const { data, error } = await supabaseAdmin.rpc('search_content', {
+    search_query: query,
+    content_types: ['posts'],
+    limit_count: limit
+  });
+
+  return { data, error };
+}
+```
+
+### Get Related Posts
+
+```typescript
+async function getRelatedPosts(postId: string, limit = 5) {
+  const { data, error } = await supabaseAdmin.rpc('get_related_posts', {
+    post_id: postId,
+    limit_count: limit
+  });
+
+  return { data, error };
+}
+```
+
+---
+
+## Services
+
+### Get Active Services
+
+```typescript
+async function getActiveServices() {
+  const { data, error } = await supabase
+    .from('services')
+    .select('*')
+    .eq('status', 'active')
+    .is('deleted_at', null)
+    .order('order_index', { ascending: true });
+
+  return { data, error };
+}
+```
+
+### Get Service by Slug
+
+```typescript
+async function getServiceBySlug(slug: string) {
+  const { data, error } = await supabase
+    .from('services')
+    .select('*')
+    .eq('slug', slug)
+    .eq('status', 'active')
+    .is('deleted_at', null)
+    .single();
+
+  return { data, error };
+}
+```
+
+### Create Service (Admin)
+
+```typescript
+async function createService(service: {
+  title: string;
+  description: string;
+  content: string;
+  icon?: string;
+  features?: any[];
+  price_text?: string;
+  order_index?: number;
+}) {
+  const { data, error } = await supabaseAdmin
+    .from('services')
+    .insert(service)
+    .select()
+    .single();
+
+  return { data, error };
+}
+```
+
+### Reorder Services (Admin)
+
+```typescript
+async function reorderServices(serviceIds: string[]) {
+  // Update order_index for each service
+  const updates = serviceIds.map((id, index) =>
+    supabaseAdmin
+      .from('services')
+      .update({ order_index: index })
+      .eq('id', id)
+  );
+
+  await Promise.all(updates);
+}
+```
+
+---
+
+## Users
+
+### Get All Users (Admin)
+
+```typescript
+async function getAllUsers() {
+  const { data, error } = await supabaseAdmin
+    .from('users')
+    .select('id, username, email, full_name, role, status, created_at')
+    .is('deleted_at', null)
+    .order('created_at', { ascending: false });
+
+  return { data, error };
+}
+```
+
+### Create User (Admin)
+
+```typescript
+async function createUser(user: {
+  username: string;
+  email: string;
+  full_name: string;
+  password: string;
+  role: 'super_admin' | 'admin' | 'editor' | 'viewer';
+}) {
+  const bcrypt = require('bcryptjs');
+  const password_hash = await bcrypt.hash(user.password, 10);
+
+  const { data, error } = await supabaseAdmin
+    .from('users')
+    .insert({
+      username: user.username,
+      email: user.email,
+      full_name: user.full_name,
+      password_hash,
+      role: user.role,
+      status: 'active'
+    })
+    .select()
+    .single();
+
+  return { data, error };
+}
+```
+
+### Update User Role (Admin)
+
+```typescript
+async function updateUserRole(userId: string, role: string) {
+  const { data, error } = await supabaseAdmin
+    .from('users')
+    .update({ role })
+    .eq('id', userId)
+    .select()
+    .single();
+
+  return { data, error };
+}
+```
+
+### Reset User Password
+
+```typescript
+async function resetUserPassword(userId: string, newPassword: string) {
+  const bcrypt = require('bcryptjs');
+  const password_hash = await bcrypt.hash(newPassword, 10);
+
+  const { error } = await supabaseAdmin
+    .from('users')
+    .update({
+      password_hash,
+      login_attempts: 0,
+      locked_until: null
+    })
+    .eq('id', userId);
+
+  return { error };
+}
+```
+
+---
+
+## Media Files
+
+### Upload File
+
+```typescript
+async function uploadFile(file: File, userId: string, folderId?: string) {
+  // Upload to storage
+  const fileName = `${userId}/${Date.now()}-${file.name}`;
+  const { data: uploadData, error: uploadError } = await supabaseAdmin
+    .storage
+    .from('media')
+    .upload(fileName, file);
+
+  if (uploadError) return { error: uploadError };
+
+  // Get public URL
+  const { data: urlData } = supabaseAdmin
+    .storage
+    .from('media')
+    .getPublicUrl(fileName);
+
+  // Save metadata to database
+  const { data, error } = await supabaseAdmin
+    .from('media_files')
+    .insert({
+      name: file.name,
+      original_name: file.name,
+      type: getFileType(file.type),
+      mime_type: file.type,
+      url: urlData.publicUrl,
+      size: file.size,
+      folder_id: folderId,
+      user_id: userId
+    })
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+function getFileType(mimeType: string): 'image' | 'video' | 'document' | 'audio' {
+  if (mimeType.startsWith('image/')) return 'image';
+  if (mimeType.startsWith('video/')) return 'video';
+  if (mimeType.startsWith('audio/')) return 'audio';
+  return 'document';
+}
+```
+
+### Get Media Files
+
+```typescript
+async function getMediaFiles(options?: {
+  folderId?: string;
+  type?: string;
+  limit?: number;
+}) {
+  let query = supabaseAdmin
+    .from('media_files')
+    .select('*')
+    .is('deleted_at', null)
+    .order('uploaded_at', { ascending: false });
+
+  if (options?.folderId) {
+    query = query.eq('folder_id', options.folderId);
+  }
+
+  if (options?.type) {
+    query = query.eq('type', options.type);
+  }
+
+  if (options?.limit) {
+    query = query.limit(options.limit);
+  }
+
+  const { data, error } = await query;
+  return { data, error };
+}
+```
+
+### Create Folder
+
+```typescript
+async function createFolder(name: string, parentId?: string, userId?: string) {
+  const { data, error } = await supabaseAdmin
+    .from('folders')
+    .insert({
+      name,
+      parent_id: parentId,
+      user_id: userId
+    })
+    .select()
+    .single();
+
+  return { data, error };
+}
+```
+
+---
+
+## Analytics
+
+### Track Page View
+
+```typescript
+async function trackPageView(data: {
+  page_path: string;
+  page_title?: string;
+  content_type?: string;
+  content_id?: string;
+  visitor_id: string;
+  session_id: string;
+}) {
+  const { error } = await supabase
+    .from('page_views')
+    .insert({
+      ...data,
+      ip_address: getClientIp(),
+      user_agent: getUserAgent(),
+      device_type: getDeviceType(),
+      browser: getBrowser(),
+      os: getOS()
+    });
+
+  return { error };
+}
+```
+
+### Get Page Statistics
+
+```typescript
+async function getPageStats(startDate: Date, endDate: Date) {
+  const { data, error } = await supabaseAdmin.rpc('get_page_stats', {
+    start_date: startDate.toISOString(),
+    end_date: endDate.toISOString()
+  });
+
+  return { data, error };
+}
+```
+
+### Get Popular Content
+
+```typescript
+async function getPopularContent(
+  contentType: 'posts' | 'services',
+  days = 7,
+  limit = 10
+) {
+  const { data, error } = await supabaseAdmin.rpc('get_popular_content', {
+    content_type: contentType,
+    days,
+    limit_count: limit
+  });
+
+  return { data, error };
+}
+```
+
+### Get Content Statistics
+
+```typescript
+async function getContentStats() {
+  const { data, error } = await supabaseAdmin
+    .from('content_stats')
+    .select('*');
+
+  return { data, error };
+}
+```
+
+---
+
+## Contact & Newsletter
+
+### Submit Contact Form
+
+```typescript
+async function submitContactForm(data: {
+  full_name: string;
+  email?: string;
+  phone: string;
+  company?: string;
+  industry?: string;
+  service?: string;
+  product_details?: string;
+  message?: string;
+}) {
+  const { data: submission, error } = await supabase
+    .from('contact_submissions')
+    .insert({
+      ...data,
+      status: 'new',
+      ip_address: getClientIp(),
+      user_agent: getUserAgent()
+    })
+    .select()
+    .single();
+
+  return { data: submission, error };
+}
+```
+
+### Subscribe to Newsletter
+
+```typescript
+async function subscribeToNewsletter(email: string, fullName?: string) {
+  // Generate tokens
+  const confirmationToken = generateToken();
+  const unsubscribeToken = generateToken();
+
+  const { data, error } = await supabase
+    .from('newsletter_subscribers')
+    .insert({
+      email,
+      full_name: fullName,
+      confirmation_token: confirmationToken,
+      unsubscribe_token: unsubscribeToken,
+      source: 'website',
+      ip_address: getClientIp(),
+      user_agent: getUserAgent()
+    })
+    .select()
+    .single();
+
+  // Send confirmation email
+  if (data) {
+    await sendConfirmationEmail(email, confirmationToken);
+  }
+
+  return { data, error };
+}
+```
+
+### Confirm Newsletter Subscription
+
+```typescript
+async function confirmSubscription(token: string) {
+  const { data, error } = await supabase
+    .from('newsletter_subscribers')
+    .update({
+      confirmed: true,
+      confirmed_at: new Date().toISOString(),
+      confirmation_token: null
+    })
+    .eq('confirmation_token', token)
+    .select()
+    .single();
+
+  return { data, error };
+}
+```
+
+---
+
+## Advanced Queries
+
+### Complex Filtering
+
+```typescript
+async function getPostsWithFilters(filters: {
+  category?: string;
+  tags?: string[];
+  status?: string;
+  author_id?: string;
+  search?: string;
+  date_from?: Date;
+  date_to?: Date;
+}) {
+  let query = supabaseAdmin
+    .from('posts')
+    .select('*, author:users(id, full_name, avatar_url)')
+    .is('deleted_at', null);
+
+  if (filters.category) {
+    query = query.eq('category', filters.category);
+  }
+
+  if (filters.tags && filters.tags.length > 0) {
+    query = query.contains('tags', filters.tags);
+  }
+
+  if (filters.status) {
+    query = query.eq('status', filters.status);
+  }
+
+  if (filters.author_id) {
+    query = query.eq('author_id', filters.author_id);
+  }
+
+  if (filters.search) {
+    query = query.or(`title.ilike.%${filters.search}%,content.ilike.%${filters.search}%`);
+  }
+
+  if (filters.date_from) {
+    query = query.gte('created_at', filters.date_from.toISOString());
+  }
+
+  if (filters.date_to) {
+    query = query.lte('created_at', filters.date_to.toISOString());
+  }
+
+  const { data, error } = await query
+    .order('created_at', { ascending: false });
+
+  return { data, error };
+}
+```
+
+### Pagination
+
+```typescript
+async function getPaginatedPosts(page = 1, pageSize = 10) {
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize - 1;
+
+  // Get total count
+  const { count } = await supabase
+    .from('posts')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'published')
+    .is('deleted_at', null);
+
+  // Get paginated data
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*, author:users(id, full_name, avatar_url)')
+    .eq('status', 'published')
+    .is('deleted_at', null)
+    .order('published_at', { ascending: false })
+    .range(start, end);
+
+  return {
+    data,
+    error,
+    pagination: {
+      page,
+      pageSize,
+      total: count || 0,
+      totalPages: Math.ceil((count || 0) / pageSize)
+    }
+  };
+}
+```
+
+### Batch Operations
+
+```typescript
+async function batchUpdatePosts(postIds: string[], updates: Partial<Post>) {
+  const { data, error } = await supabaseAdmin
+    .from('posts')
+    .update(updates)
+    .in('id', postIds)
+    .select();
+
+  return { data, error };
+}
+```
+
+### Real-time Subscriptions
+
+```typescript
+// Subscribe to new posts
+const subscription = supabase
+  .channel('posts_channel')
+  .on(
+    'postgres_changes',
+    {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'posts',
+      filter: 'status=eq.published'
+    },
+    (payload) => {
+      console.log('New post published:', payload.new);
+    }
+  )
+  .subscribe();
+
+// Unsubscribe when done
+subscription.unsubscribe();
+```
+
+---
+
+## Best Practices
+
+1. **Use the Right Client**
+   - Use `supabase` (anon key) for public access
+   - Use `supabaseAdmin` (service role) for admin operations
+
+2. **Error Handling**
+   ```typescript
+   const { data, error } = await supabase.from('posts').select('*');
+   if (error) {
+     console.error('Database error:', error);
+     // Handle error appropriately
+   }
+   ```
+
+3. **Type Safety**
+   ```typescript
+   import type { Database } from '@/lib/supabase/types';
+   type Post = Database['public']['Tables']['posts']['Row'];
+   ```
+
+4. **Caching**
+   ```typescript
+   // Next.js App Router
+   export const revalidate = 3600; // Revalidate every hour
+
+   async function getPosts() {
+     const { data } = await supabase.from('posts').select('*');
+     return data;
+   }
+   ```
+
+5. **Security**
+   - Never expose service role key to client
+   - Validate user input before database operations
+   - Use prepared statements (Supabase does this automatically)
+   - Rely on RLS policies for access control
+
+---
+
+**Last Updated:** January 2, 2026
+**Version:** 1.0.0
