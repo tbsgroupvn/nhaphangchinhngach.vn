@@ -145,8 +145,58 @@ export default function SettingsPage() {
 
   const [activeTab, setActiveTab] = useState<keyof Settings>('general');
   const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [saved, setSaved] = useState(false);
   const [unsavedChanges, setUnsavedChanges] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Load settings from API on mount
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
+  const fetchSettings = async () => {
+    setInitialLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/admin/content/settings');
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        // Map SiteSettings to Settings interface
+        const siteSettings = result.data;
+        setSettings(prev => ({
+          ...prev,
+          general: {
+            ...prev.general,
+            siteName: siteSettings.siteName || prev.general.siteName,
+            siteDescription: siteSettings.siteDescription || prev.general.siteDescription,
+            logo: siteSettings.logo || prev.general.logo,
+            favicon: siteSettings.favicon || prev.general.favicon,
+          },
+          seo: {
+            ...prev.seo,
+            metaTitle: siteSettings.seo?.metaTitle || prev.seo.metaTitle,
+            metaDescription: siteSettings.seo?.metaDescription || prev.seo.metaDescription,
+            metaKeywords: Array.isArray(siteSettings.seo?.keywords)
+              ? siteSettings.seo.keywords.join(', ')
+              : prev.seo.metaKeywords,
+            ogImage: siteSettings.seo?.ogImage || prev.seo.ogImage,
+          },
+          appearance: {
+            ...prev.appearance,
+            primaryColor: siteSettings.primaryColor || prev.appearance.primaryColor,
+            secondaryColor: siteSettings.secondaryColor || prev.appearance.secondaryColor,
+          }
+        }));
+      }
+    } catch (error) {
+      console.error('Error fetching settings:', error);
+      setError('Không thể tải cài đặt. Sử dụng giá trị mặc định.');
+    } finally {
+      setInitialLoading(false);
+    }
+  };
 
   const tabs = [
     { id: 'general', label: 'Tổng quan', icon: FaCog },
@@ -171,20 +221,46 @@ export default function SettingsPage() {
 
   const handleSave = async () => {
     setLoading(true);
+    setError(null);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Here you would typically send data to your API
-      console.log('Saving settings:', settings);
-      
+      // Map Settings to SiteSettings format for API
+      const siteSettings = {
+        siteName: settings.general.siteName,
+        siteDescription: settings.general.siteDescription,
+        siteUrl: 'https://nhaphangchinhngach.vn', // Keep existing or from settings
+        logo: settings.general.logo,
+        favicon: settings.general.favicon,
+        primaryColor: settings.appearance.primaryColor,
+        secondaryColor: settings.appearance.secondaryColor,
+        seo: {
+          metaTitle: settings.seo.metaTitle,
+          metaDescription: settings.seo.metaDescription,
+          keywords: settings.seo.metaKeywords.split(',').map(k => k.trim()).filter(k => k),
+          ogImage: settings.seo.ogImage,
+        }
+      };
+
+      const response = await fetch('/api/admin/content/settings', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(siteSettings),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Failed to save settings');
+      }
+
       setSaved(true);
       setUnsavedChanges(false);
-      
+
       setTimeout(() => setSaved(false), 3000);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving settings:', error);
-      alert('Có lỗi xảy ra khi lưu cài đặt');
+      setError(error.message || 'Có lỗi xảy ra khi lưu cài đặt');
     } finally {
       setLoading(false);
     }
@@ -225,6 +301,22 @@ export default function SettingsPage() {
         </div>
       </div>
 
+      {/* Loading State */}
+      {initialLoading && (
+        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-2">
+          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+          <span className="text-blue-800">Đang tải cài đặt...</span>
+        </div>
+      )}
+
+      {/* Error Status */}
+      {error && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
+          <FaTimesCircle className="text-red-600" />
+          <span className="text-red-800">{error}</span>
+        </div>
+      )}
+
       {/* Save Status */}
       {saved && (
         <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
@@ -233,7 +325,7 @@ export default function SettingsPage() {
         </div>
       )}
 
-      {unsavedChanges && (
+      {unsavedChanges && !error && (
         <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg flex items-center gap-2">
           <FaExclamationTriangle className="text-yellow-600" />
           <span className="text-yellow-800">Có thay đổi chưa được lưu</span>
