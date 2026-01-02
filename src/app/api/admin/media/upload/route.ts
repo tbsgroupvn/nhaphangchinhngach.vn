@@ -8,13 +8,6 @@ import { withPermission } from '@/lib/middleware/auth';
 import { supabaseAdmin } from '@/lib/supabase/server';
 import { logMediaUploaded } from '@/lib/audit';
 
-// Disable body parser for file upload
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 // =====================================================
 // POST /api/admin/media/upload
 // Upload file to Supabase Storage
