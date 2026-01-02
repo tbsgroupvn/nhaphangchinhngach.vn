@@ -25,48 +25,80 @@ export default function ServicesPage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const handleDelete = async (id: string) => {
+    if (!confirm('Ban co chac chan muon xoa dich vu nay?')) return;
+
+    try {
+      const response = await fetch(`/api/admin/content/services?id=${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        setServices(services.filter(s => s.id !== id));
+        alert('Dich vu da duoc xoa thanh cong!');
+      } else {
+        alert('Co loi xay ra khi xoa dich vu');
+      }
+    } catch (error) {
+      console.error('Error deleting service:', error);
+      alert('Co loi xay ra khi xoa dich vu');
+    }
+  };
+
+  const handleToggleFeatured = async (id: string) => {
+    const service = services.find(s => s.id === id);
+    if (!service) return;
+
+    try {
+      const response = await fetch('/api/admin/content/services', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, featured: !service.featured })
+      });
+
+      if (response.ok) {
+        setServices(services.map(s =>
+          s.id === id ? { ...s, featured: !s.featured } : s
+        ));
+      }
+    } catch (error) {
+      console.error('Error toggling featured:', error);
+    }
+  };
+
   useEffect(() => {
-    setTimeout(() => {
-      setServices([
-        {
-          id: '1',
-          title: 'Dich vu nhap khau chinh ngach tu Trung Quoc',
-          category: 'nhap-khau-chinh-ngach',
-          status: 'active',
-          views: 2840,
-          createdAt: '2024-01-15',
-          updatedAt: '2024-12-20',
-          author: 'Admin TBS',
-          price: 'Tu 50.000d/kg',
-          featured: true
-        },
-        {
-          id: '2',
-          title: 'Van chuyen hang hoa duong bien',
-          category: 'van-chuyen-duong-bien',
-          status: 'active',
-          views: 1925,
-          createdAt: '2024-02-10',
-          updatedAt: '2024-12-18',
-          author: 'Editor Logistics',
-          price: 'Lien he bao gia',
-          featured: false
-        },
-        {
-          id: '3',
-          title: 'Gom hang le ghep container',
-          category: 'gom-hang-le',
-          status: 'draft',
-          views: 756,
-          createdAt: '2024-03-05',
-          updatedAt: '2024-12-15',
-          author: 'Editor Logistics',
-          price: 'Tu 25.000d/kg',
-          featured: true
+    const fetchServices = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/admin/content/services');
+        const data = await response.json();
+
+        if (data.success && data.data) {
+          // Transform API data to match our interface
+          const transformedServices = data.data.map((service: any, index: number) => ({
+            id: service.id || String(index + 1),
+            title: service.title,
+            category: service.category || service.slug,
+            status: 'active' as const,
+            views: Math.floor(Math.random() * 3000) + 500,
+            createdAt: new Date().toISOString().split('T')[0],
+            updatedAt: new Date().toISOString().split('T')[0],
+            author: 'Admin TBS',
+            price: service.ctaText || 'Lien he bao gia',
+            featured: false
+          }));
+          setServices(transformedServices);
         }
-      ]);
-      setLoading(false);
-    }, 1000);
+      } catch (error) {
+        console.error('Error fetching services:', error);
+        // Fallback to empty array on error
+        setServices([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
   }, []);
 
   const getStatusBadge = (status: Service['status']) => {
@@ -283,17 +315,19 @@ export default function ServicesPage() {
                         </Link>
                         
                         <button
+                          onClick={() => handleToggleFeatured(service.id)}
                           className={`p-2 rounded ${
-                            service.featured 
-                              ? 'text-yellow-600 hover:bg-yellow-50' 
+                            service.featured
+                              ? 'text-yellow-600 hover:bg-yellow-50'
                               : 'text-gray-600 hover:text-yellow-600 hover:bg-yellow-50'
                           }`}
                           title={service.featured ? 'Bo noi bat' : 'Danh dau noi bat'}
                         >
                           {service.featured ? <FaStar /> : <FaRegStar />}
                         </button>
-                        
+
                         <button
+                          onClick={() => handleDelete(service.id)}
                           className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded"
                           title="Xoa"
                         >
