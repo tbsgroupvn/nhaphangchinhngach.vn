@@ -201,4 +201,53 @@ export const revokeConsent = () => {
       ad_storage: 'denied'
     })
   }
-} 
+}
+
+// Industry Atlas: chỉ gửi nhóm độ dài, ID trong allowlist và số lượng —
+// không bao giờ gửi từ khóa gốc, model, tiêu đề, nội dung clipboard hay URL query.
+const industryIdPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+const industryPlacements = ['hub', 'category', 'detail', 'no_result'] as const
+export type IndustryPlacement = (typeof industryPlacements)[number]
+
+function safeIndustryId(value: string) {
+  return industryIdPattern.test(value) && value.length <= 120 ? value : ''
+}
+function safeCount(value: number) {
+  return Number.isFinite(value) ? Math.max(0, Math.min(10000, Math.round(value))) : 0
+}
+function industryEvent(name: string, params: Record<string, string | number>) {
+  if (typeof window === 'undefined' || !hasConsent()) return
+  gtag('event', name, params)
+}
+export function queryLengthBucket(query: string) {
+  const length = query.trim().length
+  if (length === 0) return '0'
+  if (length <= 3) return '1-3'
+  if (length <= 10) return '4-10'
+  if (length <= 30) return '11-30'
+  return '31+'
+}
+export const trackIndustrySearch = (lengthBucket: string, resultCount: number) =>
+  industryEvent('industry_search', {
+    length_bucket: ['0', '1-3', '4-10', '11-30', '31+'].includes(lengthBucket)
+      ? lengthBucket
+      : '0',
+    result_count: safeCount(resultCount),
+  })
+export const trackIndustryFilter = (filterIds: string[], resultCount: number) =>
+  industryEvent('industry_filter_apply', {
+    filter_ids: filterIds.map(safeIndustryId).filter(Boolean).slice(0, 20).join(','),
+    result_count: safeCount(resultCount),
+  })
+export const trackIndustryOpen = (industryId: string, placement: IndustryPlacement) => {
+  const id = safeIndustryId(industryId)
+  if (!id) return
+  industryEvent('industry_open', {
+    industry_id: id,
+    placement: industryPlacements.includes(placement) ? placement : 'hub',
+  })
+}
+export const trackIndustryBriefCopy = (industryId: string) => {
+  const id = safeIndustryId(industryId)
+  if (id) industryEvent('brief_copy', { industry_id: id })
+}

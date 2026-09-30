@@ -8,6 +8,7 @@ node_modules/
 
 # testing
 /coverage
+/artifacts/
 
 # next.js
 .next/
@@ -69,6 +70,8 @@ Thumbs.db
 *.tgz
 
 # Runtime data
+.data/
+studio-backups/
 pids/
 *.pid
 *.seed
@@ -109,4 +112,4 @@ test-new-fields.js
 .vercel
 
 # netlify
-.netlify/ 
+.netlify/

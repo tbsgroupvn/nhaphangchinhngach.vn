@@ -1,0 +1,2364 @@
+[
+  {
+    "slug": "home",
+    "path": "/",
+    "title": "TBS GROUP",
+    "summary": "Từ nguồn hàng đến bàn giao. Một đầu mối phối hợp,\n phương án rõ ràng cho từng lô hàng.",
+    "image": "/images/marketing/containers.webp",
+    "seoTitle": "TBS GROUP | Nhập khẩu chính ngạch Trung Quốc - Việt Nam",
+    "seoDescription": "Từ nguồn hàng đến bàn giao. Một đầu mối phối hợp, phương án rõ ràng cho từng lô hàng.",
+    "fields": [
+      {
+        "key": "copy-2",
+        "label": "Mô tả ảnh 2",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Hình ảnh thương hiệu TBS GROUP trên container tại bãi hàng, minh họa logistics"
+      },
+      {
+        "key": "copy-3",
+        "label": "Đoạn văn 3",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": " KẾT NỐI GIAO THƯƠNG TRUNG QUỐC - VIỆT NAM"
+      },
+      {
+        "key": "copy-6",
+        "label": "Nhãn 6",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Nhập khẩu chính ngạch."
+      },
+      {
+        "key": "copy-7",
+        "label": "Nhãn 7",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Đồng hành cùng doanh nghiệp."
+      },
+      {
+        "key": "copy-10",
+        "label": "Liên kết 10",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#giai-phap"
+      },
+      {
+        "key": "copy-11",
+        "label": "Nhãn 11",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Khám phá giải pháp"
+      },
+      {
+        "key": "copy-12",
+        "label": "Nhãn 12",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "CHINA"
+      },
+      {
+        "key": "copy-13",
+        "label": "Nhãn 13",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "VIETNAM"
+      },
+      {
+        "key": "copy-14",
+        "label": "Nhãn 14",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Hình ảnh minh họa thương hiệu"
+      },
+      {
+        "key": "copy-15",
+        "label": "Đoạn văn 15",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Rõ phương án"
+      },
+      {
+        "key": "copy-16",
+        "label": "Nhãn 16",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Phù hợp từng loại hàng"
+      },
+      {
+        "key": "copy-17",
+        "label": "Đoạn văn 17",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Rõ chi phí"
+      },
+      {
+        "key": "copy-18",
+        "label": "Nhãn 18",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Thống nhất phạm vi từ đầu"
+      },
+      {
+        "key": "copy-19",
+        "label": "Đoạn văn 19",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Rõ trách nhiệm"
+      },
+      {
+        "key": "copy-20",
+        "label": "Nhãn 20",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Phối hợp xuyên suốt hành trình"
+      },
+      {
+        "key": "copy-21",
+        "label": "Liên kết 21",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "/gioi-thieu/"
+      },
+      {
+        "key": "copy-22",
+        "label": "Nhãn 22",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Tìm hiểu TBS"
+      },
+      {
+        "key": "copy-23",
+        "label": "Đoạn văn 23",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "01 / GIẢI PHÁP CỦA TBS"
+      },
+      {
+        "key": "copy-24",
+        "label": "Tiêu đề 24",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Đi cùng lô hàng."
+      },
+      {
+        "key": "copy-25",
+        "label": "Tiêu đề 25",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Hiểu việc kinh doanh."
+      },
+      {
+        "key": "copy-26",
+        "label": "Đoạn văn 26",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Dù anh chị cần một công đoạn hay phương án nhập khẩu tổng thể, TBS bắt đầu từ đúng nhu cầu."
+      },
+      {
+        "key": "copy-27",
+        "label": "Liên kết 27",
+        "group": "Phần nội dung 1",
+        "kind": "link",
+        "value": "/dich-vu/"
+      },
+      {
+        "key": "copy-28",
+        "label": "Nhãn 28",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Tất cả dịch vụ"
+      },
+      {
+        "key": "copy-29",
+        "label": "Nhãn 29",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Chi tiết dịch vụ"
+      },
+      {
+        "key": "copy-30",
+        "label": "Ảnh 30",
+        "group": "Phần nội dung 2",
+        "kind": "image",
+        "value": "/images/marketing/transport.webp"
+      },
+      {
+        "key": "copy-31",
+        "label": "Mô tả ảnh 31",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Tàu container vận chuyển hàng hóa trên biển, ảnh minh họa"
+      },
+      {
+        "key": "copy-32",
+        "label": "Nhãn 32",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "TRUNG QUỐC ↔ VIỆT NAM"
+      },
+      {
+        "key": "copy-33",
+        "label": "Nhãn 33",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Hình ảnh minh họa logistics"
+      },
+      {
+        "key": "copy-34",
+        "label": "Đoạn văn 34",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "02 / CÁCH TBS ĐỒNG HÀNH"
+      },
+      {
+        "key": "copy-35",
+        "label": "Tiêu đề 35",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Chắc từng bước."
+      },
+      {
+        "key": "copy-36",
+        "label": "Tiêu đề 36",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Rõ từng đầu việc."
+      },
+      {
+        "key": "copy-37",
+        "label": "Đoạn văn 37",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Một hành trình nhập khẩu tốt bắt đầu bằng việc hiểu đúng lô hàng."
+      },
+      {
+        "key": "copy-38",
+        "label": "Nhãn 38",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Tiếp nhận đủ thông tin"
+      },
+      {
+        "key": "copy-39",
+        "label": "Đoạn văn 39",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Loại hàng, nhà cung cấp, số lượng và điểm giao."
+      },
+      {
+        "key": "copy-40",
+        "label": "Nhãn 40",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Thống nhất trước khi triển khai"
+      },
+      {
+        "key": "copy-41",
+        "label": "Đoạn văn 41",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Phạm vi công việc, chi phí dự kiến và điều kiện áp dụng."
+      },
+      {
+        "key": "copy-42",
+        "label": "Nhãn 42",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Cùng theo dõi đến bàn giao"
+      },
+      {
+        "key": "copy-43",
+        "label": "Đoạn văn 43",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Đối chiếu hàng hóa và chứng từ theo thỏa thuận."
+      },
+      {
+        "key": "copy-44",
+        "label": "Liên kết 44",
+        "group": "Phần nội dung 2",
+        "kind": "link",
+        "value": "/quy-trinh/"
+      },
+      {
+        "key": "copy-45",
+        "label": "Nhãn 45",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Quy trình phối hợp"
+      },
+      {
+        "key": "copy-46",
+        "label": "Đoạn văn 46",
+        "group": "Phần nội dung 3",
+        "kind": "text",
+        "value": "03 / THEO NGÀNH HÀNG"
+      },
+      {
+        "key": "copy-47",
+        "label": "Tiêu đề 47",
+        "group": "Phần nội dung 3",
+        "kind": "text",
+        "value": "Mỗi loại hàng."
+      },
+      {
+        "key": "copy-48",
+        "label": "Tiêu đề 48",
+        "group": "Phần nội dung 3",
+        "kind": "text",
+        "value": "Một cách tiếp cận."
+      },
+      {
+        "key": "copy-49",
+        "label": "Liên kết 49",
+        "group": "Phần nội dung 3",
+        "kind": "link",
+        "value": "/nganh-hang/"
+      },
+      {
+        "key": "copy-50",
+        "label": "Nhãn 50",
+        "group": "Phần nội dung 3",
+        "kind": "text",
+        "value": "Khám phá ngành hàng"
+      },
+      {
+        "key": "copy-51",
+        "label": "Đoạn văn 51",
+        "group": "Phần nội dung 4",
+        "kind": "text",
+        "value": "04 / CHI PHÍ & CHỨNG TỪ"
+      },
+      {
+        "key": "copy-52",
+        "label": "Tiêu đề 52",
+        "group": "Phần nội dung 4",
+        "kind": "text",
+        "value": "Rõ trước khi đi."
+      },
+      {
+        "key": "copy-53",
+        "label": "Tiêu đề 53",
+        "group": "Phần nội dung 4",
+        "kind": "text",
+        "value": "An tâm khi nhận."
+      },
+      {
+        "key": "copy-54",
+        "label": "Đoạn văn 54",
+        "group": "Phần nội dung 4",
+        "kind": "text",
+        "value": "Không có một mức giá chung cho mọi lô hàng. Có những thông tin cần làm rõ để báo giá sát nhu cầu."
+      },
+      {
+        "key": "copy-55",
+        "label": "Liên kết 55",
+        "group": "Phần nội dung 4",
+        "kind": "link",
+        "value": "/chi-phi-chung-tu/"
+      },
+      {
+        "key": "copy-56",
+        "label": "Nhãn 56",
+        "group": "Phần nội dung 4",
+        "kind": "text",
+        "value": "Tìm hiểu chi phí & chứng từ"
+      },
+      {
+        "key": "copy-57",
+        "label": "Đoạn văn 57",
+        "group": "Phần nội dung 4",
+        "kind": "text",
+        "value": "CẦN LÀM RÕ CÙNG TBS"
+      },
+      {
+        "key": "copy-58",
+        "label": "Nội dung 58",
+        "group": "Phần nội dung 4",
+        "kind": "text",
+        "value": "Thông tin & đặc tính hàng hóa"
+      },
+      {
+        "key": "copy-59",
+        "label": "Nội dung 59",
+        "group": "Phần nội dung 4",
+        "kind": "text",
+        "value": "Điểm nhận, điểm giao & cách vận chuyển"
+      },
+      {
+        "key": "copy-60",
+        "label": "Nội dung 60",
+        "group": "Phần nội dung 4",
+        "kind": "text",
+        "value": "Hạng mục đã bao gồm và chưa bao gồm"
+      },
+      {
+        "key": "copy-61",
+        "label": "Nội dung 61",
+        "group": "Phần nội dung 4",
+        "kind": "text",
+        "value": "Chứng từ & trách nhiệm của mỗi bên"
+      },
+      {
+        "key": "copy-62",
+        "label": "Liên kết 62",
+        "group": "Phần nội dung 4",
+        "kind": "link",
+        "value": "/kien-thuc/chuan-bi-thong-tin-lo-hang/"
+      },
+      {
+        "key": "copy-63",
+        "label": "Nhãn 63",
+        "group": "Phần nội dung 4",
+        "kind": "text",
+        "value": "Chuẩn bị thông tin lô hàng"
+      },
+      {
+        "key": "copy-64",
+        "label": "Đoạn văn 64",
+        "group": "Phần nội dung 5",
+        "kind": "text",
+        "value": "05 / GÓC NHẬP KHẨU"
+      },
+      {
+        "key": "copy-65",
+        "label": "Tiêu đề 65",
+        "group": "Phần nội dung 5",
+        "kind": "text",
+        "value": "Hiểu rõ hơn."
+      },
+      {
+        "key": "copy-66",
+        "label": "Tiêu đề 66",
+        "group": "Phần nội dung 5",
+        "kind": "text",
+        "value": "Quyết định tốt hơn."
+      },
+      {
+        "key": "copy-67",
+        "label": "Liên kết 67",
+        "group": "Phần nội dung 5",
+        "kind": "link",
+        "value": "/kien-thuc/"
+      },
+      {
+        "key": "copy-68",
+        "label": "Nhãn 68",
+        "group": "Phần nội dung 5",
+        "kind": "text",
+        "value": "Thư viện kiến thức"
+      },
+      {
+        "key": "copy-69",
+        "label": "Nhãn 69",
+        "group": "Phần nội dung 5",
+        "kind": "text",
+        "value": "Đọc hướng dẫn"
+      }
+    ]
+  },
+  {
+    "slug": "about",
+    "path": "/gioi-thieu",
+    "title": "TBS GROUP",
+    "summary": "Rõ phương án. Rõ chi phí. Rõ trách nhiệm. Cùng doanh nghiệp làm rõ từng phần việc trong hành trình nhập hàng từ Trung Quốc.",
+    "image": "/images/marketing/containers.webp",
+    "seoTitle": "Về TBS GROUP",
+    "seoDescription": "Dịch vụ nhập hàng Trung Quốc của TBS GROUP: phạm vi rõ ràng, chi phí theo phương án và trách nhiệm được thống nhất.",
+    "fields": [
+      {
+        "key": "copy-1",
+        "label": "Nhãn đầu mục 1",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Về TBS"
+      },
+      {
+        "key": "copy-2",
+        "label": "Tiêu đề mục 2",
+        "group": "Bắt đầu bằng việc hiểu đúng nhu cầu",
+        "kind": "text",
+        "value": "Bắt đầu bằng việc hiểu đúng nhu cầu"
+      },
+      {
+        "key": "copy-3",
+        "label": "Đoạn văn 3",
+        "group": "Bắt đầu bằng việc hiểu đúng nhu cầu",
+        "kind": "longtext",
+        "value": "TBS GROUP giới thiệu các dịch vụ phối hợp nhập hàng từ Trung Quốc: tìm nguồn, kiểm tra thông tin nhà cung cấp, gom hàng và kiểm đếm, vận chuyển, ủy thác nhập khẩu, hỗ trợ hồ sơ. Doanh nghiệp có thể trao đổi một phần việc cụ thể hoặc cùng xem xét phương án cho cả lô hàng."
+      },
+      {
+        "key": "copy-4",
+        "label": "Đoạn văn 4",
+        "group": "Bắt đầu bằng việc hiểu đúng nhu cầu",
+        "kind": "longtext",
+        "value": "Mỗi cuộc trao đổi cần đi từ sản phẩm thực tế và nhu cầu của doanh nghiệp. Điều đã được xác nhận, điều còn thiếu và việc cần kiểm tra phải được phân biệt rõ trước khi chốt phương án."
+      },
+      {
+        "key": "copy-5",
+        "label": "Tiêu đề mục 5",
+        "group": "Ba điều cần rõ khi hợp tác",
+        "kind": "text",
+        "value": "Ba điều cần rõ khi hợp tác"
+      },
+      {
+        "key": "copy-6",
+        "label": "Tiêu đề 6",
+        "group": "Ba điều cần rõ khi hợp tác",
+        "kind": "text",
+        "value": "Rõ phương án"
+      },
+      {
+        "key": "copy-7",
+        "label": "Đoạn văn 7",
+        "group": "Ba điều cần rõ khi hợp tác",
+        "kind": "longtext",
+        "value": "Ai giao dịch với nhà cung cấp, ai phụ trách từng khâu và hàng được bàn giao ở đâu. Phạm vi trực tiếp thực hiện và phần việc phối hợp cần có trong thỏa thuận."
+      },
+      {
+        "key": "copy-8",
+        "label": "Tiêu đề 8",
+        "group": "Ba điều cần rõ khi hợp tác",
+        "kind": "text",
+        "value": "Rõ chi phí"
+      },
+      {
+        "key": "copy-9",
+        "label": "Đoạn văn 9",
+        "group": "Ba điều cần rõ khi hợp tác",
+        "kind": "longtext",
+        "value": "Báo giá gắn với đầu vào, đơn vị tính, điều kiện áp dụng và thời hạn. Các khoản dự kiến, chưa bao gồm hoặc cần xác minh được nhận diện để cùng đối chiếu."
+      },
+      {
+        "key": "copy-10",
+        "label": "Tiêu đề 10",
+        "group": "Ba điều cần rõ khi hợp tác",
+        "kind": "text",
+        "value": "Rõ trách nhiệm"
+      },
+      {
+        "key": "copy-11",
+        "label": "Đoạn văn 11",
+        "group": "Ba điều cần rõ khi hợp tác",
+        "kind": "longtext",
+        "value": "Thống nhất người phụ trách, đầu mối phê duyệt và cách xử lý thay đổi. Khi bàn giao, đối chiếu công việc với hồ sơ và các nội dung đã được chấp thuận."
+      },
+      {
+        "key": "copy-12",
+        "label": "Tiêu đề mục 12",
+        "group": "Một đầu vào rõ để trao đổi hiệu quả",
+        "kind": "text",
+        "value": "Một đầu vào rõ để trao đổi hiệu quả"
+      },
+      {
+        "key": "copy-13",
+        "label": "Đoạn văn 13",
+        "group": "Một đầu vào rõ để trao đổi hiệu quả",
+        "kind": "longtext",
+        "value": "Anh/chị có thể bắt đầu bằng ảnh sản phẩm, số lượng, nhà cung cấp và địa điểm nhận, giao. Phần việc cần hỗ trợ và nhu cầu hồ sơ giúp TBS xác định đúng nội dung cần kiểm tra tiếp."
+      },
+      {
+        "key": "copy-14",
+        "label": "Liên kết 14",
+        "group": "Một đầu vào rõ để trao đổi hiệu quả",
+        "kind": "link",
+        "value": "/nang-luc-van-hanh"
+      },
+      {
+        "key": "copy-15",
+        "label": "Nhãn 15",
+        "group": "Một đầu vào rõ để trao đổi hiệu quả",
+        "kind": "text",
+        "value": "Cách tổ chức và phối hợp công việc"
+      },
+      {
+        "key": "copy-16",
+        "label": "Nội dung 16",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Định hướng phục vụ"
+      },
+      {
+        "key": "copy-17",
+        "label": "Liên kết 17",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#dinh-huong"
+      },
+      {
+        "key": "copy-18",
+        "label": "Nội dung 18",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Nguyên tắc hợp tác"
+      },
+      {
+        "key": "copy-19",
+        "label": "Liên kết 19",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#hop-tac"
+      },
+      {
+        "key": "copy-20",
+        "label": "Nội dung 20",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Bắt đầu trao đổi"
+      },
+      {
+        "key": "copy-21",
+        "label": "Liên kết 21",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#bat-dau"
+      }
+    ]
+  },
+  {
+    "slug": "operations",
+    "path": "/nang-luc-van-hanh",
+    "title": "Từng lô hàng có phạm vi và đầu mối rõ ràng",
+    "summary": "Những nội dung cần thống nhất để theo dõi công việc từ tiếp nhận thông tin đến giao nhận và đối chiếu hồ sơ.",
+    "image": "/images/marketing/transport.webp",
+    "seoTitle": "Năng lực vận hành và phối hợp",
+    "seoDescription": "Cách phối hợp theo lô: tiếp nhận thông tin, phân công công việc, ghi nhận giao nhận và đối chiếu hồ sơ.",
+    "fields": [
+      {
+        "key": "copy-1",
+        "label": "Nhãn đầu mục 1",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Vận hành & phối hợp"
+      },
+      {
+        "key": "copy-2",
+        "label": "Tiêu đề mục 2",
+        "group": "Tiếp nhận và nhận diện theo lô",
+        "kind": "text",
+        "value": "Tiếp nhận và nhận diện theo lô"
+      },
+      {
+        "key": "copy-3",
+        "label": "Đoạn văn 3",
+        "group": "Tiếp nhận và nhận diện theo lô",
+        "kind": "longtext",
+        "value": "Mã lô hàng, danh sách sản phẩm và đầu mối liên hệ tạo cơ sở cho các bước tiếp theo. Thông tin từ khách hàng và nhà cung cấp cần được đối chiếu để tránh dùng khác phiên bản về số lượng, model hoặc đóng gói."
+      },
+      {
+        "key": "copy-4",
+        "label": "Nội dung 4",
+        "group": "Tiếp nhận và nhận diện theo lô",
+        "kind": "text",
+        "value": "Đầu vào: danh mục hàng, nơi nhận và giao, tiến độ mong muốn, nhu cầu hồ sơ."
+      },
+      {
+        "key": "copy-5",
+        "label": "Nội dung 5",
+        "group": "Tiếp nhận và nhận diện theo lô",
+        "kind": "text",
+        "value": "Đầu ra cần xác nhận: phạm vi trao đổi, dữ liệu còn thiếu và người bổ sung."
+      },
+      {
+        "key": "copy-6",
+        "label": "Nội dung 6",
+        "group": "Tiếp nhận và nhận diện theo lô",
+        "kind": "text",
+        "value": "Điểm kiểm soát: phân biệt dữ liệu thực tế với dự kiến trước khi lập phương án."
+      },
+      {
+        "key": "copy-7",
+        "label": "Tiêu đề mục 7",
+        "group": "Phân công theo phần việc",
+        "kind": "text",
+        "value": "Phân công theo phần việc"
+      },
+      {
+        "key": "copy-8",
+        "label": "Đoạn văn 8",
+        "group": "Phân công theo phần việc",
+        "kind": "longtext",
+        "value": "Phương án cần chỉ rõ phần nào TBS thực hiện, phần nào khách hàng, nhà cung cấp hoặc đối tác đảm nhận. Không nên mặc định một đơn vị phụ trách tất cả chỉ vì báo giá được gửi từ một đầu mối."
+      },
+      {
+        "key": "copy-9",
+        "label": "Nội dung 9",
+        "group": "Phân công theo phần việc",
+        "kind": "text",
+        "value": "Tiếp nhận và tư vấn: tổng hợp nhu cầu, câu hỏi và mốc phản hồi."
+      },
+      {
+        "key": "copy-10",
+        "label": "Nội dung 10",
+        "group": "Phân công theo phần việc",
+        "kind": "text",
+        "value": "Kiểm tra chuyên môn: đối chiếu thông tin hàng và các điểm cần xác minh."
+      },
+      {
+        "key": "copy-11",
+        "label": "Nội dung 11",
+        "group": "Phân công theo phần việc",
+        "kind": "text",
+        "value": "Giao nhận: thống nhất kiện hàng, điểm bàn giao, phương án cân đo và hiện trạng."
+      },
+      {
+        "key": "copy-12",
+        "label": "Nội dung 12",
+        "group": "Phân công theo phần việc",
+        "kind": "text",
+        "value": "Đối chiếu: tập hợp kết quả công việc, hồ sơ và khoản thanh toán theo thỏa thuận."
+      },
+      {
+        "key": "copy-13",
+        "label": "Tiêu đề mục 13",
+        "group": "Giữ căn cứ để đối chiếu",
+        "kind": "text",
+        "value": "Giữ căn cứ để đối chiếu"
+      },
+      {
+        "key": "copy-14",
+        "label": "Đoạn văn 14",
+        "group": "Giữ căn cứ để đối chiếu",
+        "kind": "longtext",
+        "value": "Danh sách hàng, ảnh hiện trạng theo phạm vi, biên bản hoặc xác nhận giao nhận giúp các bên trao đổi trên cùng dữ liệu. Khi cần mở kiện, kiểm đếm hoặc đóng gói bổ sung, nội dung và giới hạn phải được thống nhất trước."
+      },
+      {
+        "key": "copy-15",
+        "label": "Đoạn văn 15",
+        "group": "Giữ căn cứ để đối chiếu",
+        "kind": "longtext",
+        "value": "Kiểm đếm chỉ phản ánh phần việc đã thực hiện. Việc đánh giá chất lượng, thử nghiệm chức năng hoặc chứng nhận sản phẩm cần được xem xét như phạm vi riêng."
+      },
+      {
+        "key": "copy-16",
+        "label": "Liên kết 16",
+        "group": "Giữ căn cứ để đối chiếu",
+        "kind": "link",
+        "value": "/dich-vu/gom-hang-kiem-dem"
+      },
+      {
+        "key": "copy-17",
+        "label": "Nhãn 17",
+        "group": "Giữ căn cứ để đối chiếu",
+        "kind": "text",
+        "value": "Phạm vi gom hàng và kiểm đếm"
+      },
+      {
+        "key": "copy-18",
+        "label": "Tiêu đề mục 18",
+        "group": "Cập nhật khi điều kiện thay đổi",
+        "kind": "text",
+        "value": "Cập nhật khi điều kiện thay đổi"
+      },
+      {
+        "key": "copy-19",
+        "label": "Đoạn văn 19",
+        "group": "Cập nhật khi điều kiện thay đổi",
+        "kind": "longtext",
+        "value": "Khi nhà cung cấp đổi ngày giao, số lượng, quy cách hoặc địa điểm, các bên cần xem xét tác động tới chi phí, hồ sơ và kế hoạch. Nội dung cập nhật được gửi đến đầu mối có quyền xác nhận trước khi thực hiện phần việc bị ảnh hưởng."
+      },
+      {
+        "key": "copy-20",
+        "label": "Liên kết 20",
+        "group": "Cập nhật khi điều kiện thay đổi",
+        "kind": "link",
+        "value": "/quy-trinh"
+      },
+      {
+        "key": "copy-21",
+        "label": "Nhãn 21",
+        "group": "Cập nhật khi điều kiện thay đổi",
+        "kind": "text",
+        "value": "Xem năm bước phối hợp"
+      },
+      {
+        "key": "copy-22",
+        "label": "Nội dung 22",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Tiếp nhận theo lô"
+      },
+      {
+        "key": "copy-23",
+        "label": "Liên kết 23",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#tiep-nhan"
+      },
+      {
+        "key": "copy-24",
+        "label": "Nội dung 24",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Phân công phần việc"
+      },
+      {
+        "key": "copy-25",
+        "label": "Liên kết 25",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#phan-cong"
+      },
+      {
+        "key": "copy-26",
+        "label": "Nội dung 26",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Căn cứ đối chiếu"
+      },
+      {
+        "key": "copy-27",
+        "label": "Liên kết 27",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#doi-chieu"
+      },
+      {
+        "key": "copy-28",
+        "label": "Nội dung 28",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Quản lý thay đổi"
+      },
+      {
+        "key": "copy-29",
+        "label": "Liên kết 29",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#thay-doi"
+      }
+    ]
+  },
+  {
+    "slug": "services",
+    "path": "/dich-vu",
+    "title": "Dịch vụ theo nhu cầu nhập hàng",
+    "summary": "Chọn phần việc doanh nghiệp cần phối hợp. Phạm vi thực hiện, chi phí và hồ sơ được xác nhận theo từng lô hàng.",
+    "image": "/images/marketing/containers.webp",
+    "seoTitle": "Dịch vụ nhập hàng Trung Quốc",
+    "seoDescription": "Sáu dịch vụ TBS: nhập khẩu, ủy thác, vận chuyển, gom hàng, tìm nguồn và hỗ trợ hồ sơ.",
+    "fields": [
+      {
+        "key": "copy-1",
+        "label": "Nhãn đầu mục 1",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Dịch vụ TBS"
+      },
+      {
+        "key": "copy-2",
+        "label": "Tiêu đề 2",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Từ nguồn hàng đến giao nhận."
+      },
+      {
+        "key": "copy-3",
+        "label": "Tiêu đề 3",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Chưa rõ cần dịch vụ nào?"
+      },
+      {
+        "key": "copy-4",
+        "label": "Đoạn văn 4",
+        "group": "Phần nội dung 2",
+        "kind": "longtext",
+        "value": "Bắt đầu bằng thông tin sản phẩm, nhà cung cấp và phần việc doanh nghiệp đã tự thực hiện. Các nhu cầu có thể kết hợp trong cùng phương án, nhưng từng hạng mục cần có đầu mối và điều kiện bàn giao rõ ràng."
+      },
+      {
+        "key": "copy-5",
+        "label": "Liên kết 5",
+        "group": "Phần nội dung 2",
+        "kind": "link",
+        "value": "/kien-thuc/chuan-bi-thong-tin-lo-hang"
+      },
+      {
+        "key": "copy-6",
+        "label": "Nhãn 6",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Chuẩn bị thông tin lô hàng"
+      }
+    ]
+  },
+  {
+    "slug": "industries",
+    "path": "/nganh-hang",
+    "title": "Bắt đầu từ đặc điểm sản phẩm",
+    "summary": "Ba nhóm thông tin để chuẩn bị trao đổi. Khả năng tiếp nhận và yêu cầu hồ sơ được kiểm tra theo từng sản phẩm cụ thể.",
+    "image": "",
+    "seoTitle": "Ngành hàng và thông tin cần chuẩn bị",
+    "seoDescription": "Chuẩn bị dữ liệu cho gia dụng không điện, nội thất và máy móc mới trước khi trao đổi phương án nhập hàng.",
+    "fields": [
+      {
+        "key": "copy-1",
+        "label": "Nhãn đầu mục 1",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Ngành hàng"
+      },
+      {
+        "key": "copy-2",
+        "label": "Tiêu đề 2",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Mỗi nhóm hàng, một cách chuẩn bị."
+      },
+      {
+        "key": "copy-3",
+        "label": "Nhãn 3",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Thông tin cần đối chiếu"
+      },
+      {
+        "key": "copy-4",
+        "label": "Tiêu đề 4",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Sản phẩm chưa nằm trong nhóm trên?"
+      },
+      {
+        "key": "copy-5",
+        "label": "Đoạn văn 5",
+        "group": "Phần nội dung 2",
+        "kind": "longtext",
+        "value": "Gửi ảnh, công dụng, vật liệu hoặc catalogue để trao đổi nhu cầu. Không nên tự áp dụng yêu cầu của một sản phẩm tương tự khi cấu tạo, mục đích sử dụng hoặc tình trạng hàng khác nhau."
+      },
+      {
+        "key": "copy-6",
+        "label": "Liên kết 6",
+        "group": "Phần nội dung 2",
+        "kind": "link",
+        "value": "/dich-vu/thu-tuc-hai-quan"
+      },
+      {
+        "key": "copy-7",
+        "label": "Nhãn 7",
+        "group": "Phần nội dung 2",
+        "kind": "text",
+        "value": "Chuẩn bị thông tin kỹ thuật và hồ sơ"
+      }
+    ]
+  },
+  {
+    "slug": "process",
+    "path": "/quy-trinh",
+    "title": "Từng bước có đầu vào và kết quả rõ ràng",
+    "summary": "Năm bước phối hợp để doanh nghiệp biết cần chuẩn bị gì, ai phụ trách và khi nào chuyển sang công việc tiếp theo.",
+    "image": "",
+    "seoTitle": "Quy trình phối hợp nhập hàng",
+    "seoDescription": "Năm bước nhập hàng từ tiếp nhận, kiểm tra phương án, thống nhất chi phí đến thực hiện và bàn giao.",
+    "fields": [
+      {
+        "key": "copy-1",
+        "label": "Nhãn đầu mục 1",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Quy trình"
+      },
+      {
+        "key": "copy-2",
+        "label": "Tiêu đề 2",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Doanh nghiệp chuẩn bị"
+      },
+      {
+        "key": "copy-3",
+        "label": "Tiêu đề 3",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Công việc phối hợp"
+      },
+      {
+        "key": "copy-4",
+        "label": "Tiêu đề 4",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Kết quả và điều kiện chuyển bước"
+      },
+      {
+        "key": "copy-5",
+        "label": "Tiêu đề mục 5",
+        "group": "Khi có thay đổi",
+        "kind": "text",
+        "value": "Khi có thay đổi"
+      },
+      {
+        "key": "copy-6",
+        "label": "Đoạn văn 6",
+        "group": "Khi có thay đổi",
+        "kind": "longtext",
+        "value": "Giữ mã lô hàng và gửi dữ liệu cập nhật cho cùng đầu mối. Nội dung cần xác nhận gồm việc thay đổi, lý do, ảnh hưởng chi phí và tiến độ, người phê duyệt. Mốc dự kiến được điều chỉnh khi điều kiện thực hiện thay đổi."
+      },
+      {
+        "key": "copy-7",
+        "label": "Liên kết 7",
+        "group": "Khi có thay đổi",
+        "kind": "link",
+        "value": "/chinh-sach/dich-vu"
+      },
+      {
+        "key": "copy-8",
+        "label": "Nhãn 8",
+        "group": "Khi có thay đổi",
+        "kind": "text",
+        "value": "Nguyên tắc thỏa thuận dịch vụ"
+      },
+      {
+        "key": "processSteps.0.title",
+        "label": "Tiêu đề · processSteps.0.title",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Tiếp nhận thông tin"
+      },
+      {
+        "key": "processSteps.0.input",
+        "label": "Đầu vào · processSteps.0.input",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Doanh nghiệp cung cấp sản phẩm, số lượng, điểm nhận và giao, nhu cầu hồ sơ."
+      },
+      {
+        "key": "processSteps.0.work",
+        "label": "Công việc · processSteps.0.work",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Đầu mối tiếp nhận tổng hợp nhu cầu và các phần việc doanh nghiệp đã tự thực hiện."
+      },
+      {
+        "key": "processSteps.0.output",
+        "label": "Kết quả · processSteps.0.output",
+        "group": "Năm bước phối hợp",
+        "kind": "longtext",
+        "value": "Danh sách dữ liệu đã có, còn thiếu và người bổ sung. Chuyển bước khi đủ đầu vào để kiểm tra phương án."
+      },
+      {
+        "key": "processSteps.1.title",
+        "label": "Tiêu đề · processSteps.1.title",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Kiểm tra phương án"
+      },
+      {
+        "key": "processSteps.1.input",
+        "label": "Đầu vào · processSteps.1.input",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Bổ sung catalogue, thông số và điều kiện giao dịch theo yêu cầu của trường hợp cụ thể."
+      },
+      {
+        "key": "processSteps.1.work",
+        "label": "Công việc · processSteps.1.work",
+        "group": "Năm bước phối hợp",
+        "kind": "longtext",
+        "value": "TBS phối hợp kiểm tra các điểm về hàng hóa, giao nhận và hồ sơ; phân biệt nội dung đã xác minh với nội dung còn mở."
+      },
+      {
+        "key": "processSteps.1.output",
+        "label": "Kết quả · processSteps.1.output",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Phạm vi có thể trao đổi, điều kiện áp dụng và điểm cần xác nhận trước khi lập báo giá."
+      },
+      {
+        "key": "processSteps.2.title",
+        "label": "Tiêu đề · processSteps.2.title",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Thống nhất phạm vi và chi phí"
+      },
+      {
+        "key": "processSteps.2.input",
+        "label": "Đầu vào · processSteps.2.input",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Doanh nghiệp xác nhận phương án, đầu mối có quyền phê duyệt và yêu cầu bàn giao."
+      },
+      {
+        "key": "processSteps.2.work",
+        "label": "Công việc · processSteps.2.work",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Các bên đối chiếu báo giá, việc đã gồm và chưa gồm, trách nhiệm, hiệu lực và điều kiện thanh toán."
+      },
+      {
+        "key": "processSteps.2.output",
+        "label": "Kết quả · processSteps.2.output",
+        "group": "Năm bước phối hợp",
+        "kind": "longtext",
+        "value": "Báo giá hoặc thỏa thuận được chấp thuận; hợp đồng theo phương án. Chỉ tổ chức công việc khi đáp ứng điều kiện đã thống nhất."
+      },
+      {
+        "key": "processSteps.3.title",
+        "label": "Tiêu đề · processSteps.3.title",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Tổ chức công việc theo lô"
+      },
+      {
+        "key": "processSteps.3.input",
+        "label": "Đầu vào · processSteps.3.input",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Nhà cung cấp và doanh nghiệp bàn giao hàng, dữ liệu và hồ sơ theo phân công."
+      },
+      {
+        "key": "processSteps.3.work",
+        "label": "Công việc · processSteps.3.work",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Các đầu mối thực hiện phần việc đã nhận; cập nhật các mốc và ghi nhận sai khác nếu có."
+      },
+      {
+        "key": "processSteps.3.output",
+        "label": "Kết quả · processSteps.3.output",
+        "group": "Năm bước phối hợp",
+        "kind": "longtext",
+        "value": "Kết quả công việc theo mốc. Mọi thay đổi ảnh hưởng phạm vi cần được đối chiếu và xác nhận theo thỏa thuận."
+      },
+      {
+        "key": "processSteps.4.title",
+        "label": "Tiêu đề · processSteps.4.title",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Bàn giao và đối chiếu"
+      },
+      {
+        "key": "processSteps.4.input",
+        "label": "Đầu vào · processSteps.4.input",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Bên nhận phối hợp kiểm tra tại điểm bàn giao và phản hồi nội dung cần làm rõ."
+      },
+      {
+        "key": "processSteps.4.work",
+        "label": "Công việc · processSteps.4.work",
+        "group": "Năm bước phối hợp",
+        "kind": "longtext",
+        "value": "Các bên đối chiếu hàng, công việc, hồ sơ và khoản thanh toán với phương án cùng các thay đổi đã duyệt."
+      },
+      {
+        "key": "processSteps.4.output",
+        "label": "Kết quả · processSteps.4.output",
+        "group": "Năm bước phối hợp",
+        "kind": "text",
+        "value": "Xác nhận bàn giao và danh sách nội dung còn cần xử lý nếu có, kèm đầu mối theo dõi."
+      }
+    ]
+  },
+  {
+    "slug": "costs",
+    "path": "/chi-phi-chung-tu",
+    "title": "Chi phí và chứng từ khi nhập hàng",
+    "summary": "Một báo giá có thể so sánh được khi cùng phạm vi công việc, cùng thông tin hàng hóa và cùng điều kiện giao nhận.",
+    "image": "",
+    "seoTitle": "Chi phí và chứng từ nhập hàng",
+    "seoDescription": "Đối chiếu nhóm chi phí, phạm vi báo giá, hiệu lực và bộ hồ sơ theo phương án giao dịch.",
+    "fields": [
+      {
+        "key": "copy-1",
+        "label": "Nhãn đầu mục 1",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Chi phí & chứng từ"
+      },
+      {
+        "key": "copy-2",
+        "label": "Tiêu đề mục 2",
+        "group": "Các nhóm chi phí cần đối chiếu",
+        "kind": "text",
+        "value": "Các nhóm chi phí cần đối chiếu"
+      },
+      {
+        "key": "copy-3",
+        "label": "Đoạn văn 3",
+        "group": "Các nhóm chi phí cần đối chiếu",
+        "kind": "longtext",
+        "value": "Không phải lô hàng nào cũng phát sinh mọi khoản dưới đây. Báo giá cụ thể cần nêu công việc đã bao gồm, chưa bao gồm và cơ sở tính; bảng này không phải bảng giá dịch vụ."
+      },
+      {
+        "key": "copy-4",
+        "label": "Nhãn 4",
+        "group": "Các nhóm chi phí cần đối chiếu",
+        "kind": "text",
+        "value": "Khung trao đổi về chi phí"
+      },
+      {
+        "key": "copy-5",
+        "label": "Nhãn 5",
+        "group": "Các nhóm chi phí cần đối chiếu",
+        "kind": "text",
+        "value": "Nhóm"
+      },
+      {
+        "key": "copy-6",
+        "label": "Nhãn 6",
+        "group": "Các nhóm chi phí cần đối chiếu",
+        "kind": "text",
+        "value": "Câu hỏi cần làm rõ"
+      },
+      {
+        "key": "copy-7",
+        "label": "Nhãn 7",
+        "group": "Các nhóm chi phí cần đối chiếu",
+        "kind": "text",
+        "value": "Căn cứ đối chiếu"
+      },
+      {
+        "key": "copy-8",
+        "label": "Tiêu đề mục 8",
+        "group": "Một báo giá rõ cần những gì?",
+        "kind": "text",
+        "value": "Một báo giá rõ cần những gì?"
+      },
+      {
+        "key": "copy-9",
+        "label": "Nội dung 9",
+        "group": "Một báo giá rõ cần những gì?",
+        "kind": "text",
+        "value": "Thông tin và phiên bản dữ liệu lô hàng được sử dụng."
+      },
+      {
+        "key": "copy-10",
+        "label": "Nội dung 10",
+        "group": "Một báo giá rõ cần những gì?",
+        "kind": "text",
+        "value": "Điểm nhận, điểm giao, phần việc và đơn vị thực hiện."
+      },
+      {
+        "key": "copy-11",
+        "label": "Nội dung 11",
+        "group": "Một báo giá rõ cần những gì?",
+        "kind": "text",
+        "value": "Đơn vị tính, đồng tiền, cách đối chiếu tỷ giá nếu có và mốc thanh toán."
+      },
+      {
+        "key": "copy-12",
+        "label": "Nội dung 12",
+        "group": "Một báo giá rõ cần những gì?",
+        "kind": "text",
+        "value": "Thời hạn áp dụng; điều kiện cần xác nhận lại khi hàng hoặc lịch thay đổi."
+      },
+      {
+        "key": "copy-13",
+        "label": "Nội dung 13",
+        "group": "Một báo giá rõ cần những gì?",
+        "kind": "text",
+        "value": "Danh mục khoản dự kiến, chưa bao gồm và người có quyền duyệt phát sinh."
+      },
+      {
+        "key": "copy-14",
+        "label": "Liên kết 14",
+        "group": "Một báo giá rõ cần những gì?",
+        "kind": "link",
+        "value": "/kien-thuc/doc-bao-gia-nhap-khau"
+      },
+      {
+        "key": "copy-15",
+        "label": "Nhãn 15",
+        "group": "Một báo giá rõ cần những gì?",
+        "kind": "text",
+        "value": "Hướng dẫn đọc và so sánh báo giá"
+      },
+      {
+        "key": "copy-16",
+        "label": "Tiêu đề mục 16",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Hồ sơ theo phương án giao dịch"
+      },
+      {
+        "key": "copy-17",
+        "label": "Tiêu đề 17",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Doanh nghiệp đứng tên nhập khẩu"
+      },
+      {
+        "key": "copy-18",
+        "label": "Đoạn văn 18",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "longtext",
+        "value": "Cần làm rõ hồ sơ do doanh nghiệp cung cấp, phần việc thuê hỗ trợ và trách nhiệm đối chiếu thông tin. Tên giấy tờ và bản bàn giao được xác nhận theo sản phẩm, giao dịch thực tế."
+      },
+      {
+        "key": "copy-19",
+        "label": "Tiêu đề 19",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Ủy thác nhập khẩu theo hợp đồng"
+      },
+      {
+        "key": "copy-20",
+        "label": "Đoạn văn 20",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "longtext",
+        "value": "Cần xác định vai trò của bên giao và nhận ủy thác, phần việc được giao, người duyệt thông tin và bộ hồ sơ đối chiếu. Không mặc định cơ chế thanh toán hoặc xuất hóa đơn giống nhau cho mọi trường hợp."
+      },
+      {
+        "key": "copy-21",
+        "label": "Tiêu đề 21",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Phân biệt với mua bán hàng trong nước"
+      },
+      {
+        "key": "copy-22",
+        "label": "Đoạn văn 22",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "longtext",
+        "value": "Mua hàng từ một bên bán trong nước sau nhập khẩu là một giao dịch khác. Không suy ra bộ chứng từ của giao dịch nhập khẩu được bàn giao nguyên bộ cho người mua trong nước. Khả năng cung cấp phương án này phải được trao đổi riêng, không mặc định nằm trong dịch vụ TBS giới thiệu."
+      },
+      {
+        "key": "copy-23",
+        "label": "Nhãn 23",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Khung xác nhận danh mục hồ sơ, không phải cam kết cấp chứng từ"
+      },
+      {
+        "key": "copy-24",
+        "label": "Nhãn 24",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Nhóm giấy tờ"
+      },
+      {
+        "key": "copy-25",
+        "label": "Nhãn 25",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Chủ thể cần làm rõ"
+      },
+      {
+        "key": "copy-26",
+        "label": "Nhãn 26",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Điều kiện / bản bàn giao"
+      },
+      {
+        "key": "copy-27",
+        "label": "Nhãn 27",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Hợp đồng, thỏa thuận dịch vụ hoặc ủy thác"
+      },
+      {
+        "key": "copy-28",
+        "label": "Nhãn 28",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Các bên tham gia đúng phương án giao dịch"
+      },
+      {
+        "key": "copy-29",
+        "label": "Nhãn 29",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Nội dung đã ký, phụ lục và thay đổi được chấp thuận"
+      },
+      {
+        "key": "copy-30",
+        "label": "Nhãn 30",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Hóa đơn thương mại, bảng kê đóng gói nếu áp dụng"
+      },
+      {
+        "key": "copy-31",
+        "label": "Nhãn 31",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Bên phát hành, bên mua và bên nhận theo giao dịch"
+      },
+      {
+        "key": "copy-32",
+        "label": "Nhãn 32",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Thông tin thống nhất với hàng; xác nhận ai cung cấp và ai nhận bản"
+      },
+      {
+        "key": "copy-33",
+        "label": "Nhãn 33",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Hồ sơ nhập khẩu và hồ sơ sản phẩm nếu áp dụng"
+      },
+      {
+        "key": "copy-34",
+        "label": "Nhãn 34",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Chủ thể đứng tên và đơn vị thực hiện"
+      },
+      {
+        "key": "copy-35",
+        "label": "Nhãn 35",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Kiểm tra yêu cầu theo mặt hàng; xác nhận phạm vi tiếp cận, bản bàn giao"
+      },
+      {
+        "key": "copy-36",
+        "label": "Nhãn 36",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Hóa đơn dịch vụ, đối chiếu thanh toán"
+      },
+      {
+        "key": "copy-37",
+        "label": "Nhãn 37",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Bên cung cấp và bên sử dụng dịch vụ"
+      },
+      {
+        "key": "copy-38",
+        "label": "Nhãn 38",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Theo phạm vi thực tế và thỏa thuận giao dịch"
+      },
+      {
+        "key": "copy-39",
+        "label": "Nhãn 39",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Xác nhận giao nhận, ảnh hiện trạng theo phạm vi"
+      },
+      {
+        "key": "copy-40",
+        "label": "Nhãn 40",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Bên giao, bên nhận và đầu mối đối chiếu"
+      },
+      {
+        "key": "copy-41",
+        "label": "Nhãn 41",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "text",
+        "value": "Mã lô, số kiện, thời điểm, hiện trạng và nội dung phản hồi"
+      },
+      {
+        "key": "copy-42",
+        "label": "Đoạn văn 42",
+        "group": "Hồ sơ theo phương án giao dịch",
+        "kind": "longtext",
+        "value": "Các giấy tờ về xuất xứ, chất lượng hoặc yêu cầu riêng của sản phẩm phải được kiểm tra điều kiện áp dụng. Website không cam kết cung cấp mọi loại chứng từ cho mọi lô hàng."
+      },
+      {
+        "key": "copy-43",
+        "label": "Tiêu đề mục 43",
+        "group": "Thống nhất trước khi phát sinh",
+        "kind": "text",
+        "value": "Thống nhất trước khi phát sinh"
+      },
+      {
+        "key": "copy-44",
+        "label": "Đoạn văn 44",
+        "group": "Thống nhất trước khi phát sinh",
+        "kind": "longtext",
+        "value": "Khi dữ liệu cân đo, đóng gói, điểm giao hoặc yêu cầu công việc thay đổi, đề nghị ghi lại ảnh hưởng và báo giá cập nhật. Đầu mối có quyền phê duyệt xác nhận theo thỏa thuận trước khi tổ chức phần việc mới."
+      },
+      {
+        "key": "copy-45",
+        "label": "Liên kết 45",
+        "group": "Thống nhất trước khi phát sinh",
+        "kind": "link",
+        "value": "/quy-trinh"
+      },
+      {
+        "key": "copy-46",
+        "label": "Nhãn 46",
+        "group": "Thống nhất trước khi phát sinh",
+        "kind": "text",
+        "value": "Quy trình phối hợp và bàn giao"
+      },
+      {
+        "key": "copy-47",
+        "label": "Nội dung 47",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Nhóm chi phí"
+      },
+      {
+        "key": "copy-48",
+        "label": "Liên kết 48",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#chi-phi"
+      },
+      {
+        "key": "copy-49",
+        "label": "Nội dung 49",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Cấu trúc báo giá"
+      },
+      {
+        "key": "copy-50",
+        "label": "Liên kết 50",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#bao-gia"
+      },
+      {
+        "key": "copy-51",
+        "label": "Nội dung 51",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Hồ sơ theo phương án"
+      },
+      {
+        "key": "copy-52",
+        "label": "Liên kết 52",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#chung-tu"
+      },
+      {
+        "key": "copy-53",
+        "label": "Nội dung 53",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Xác nhận phát sinh"
+      },
+      {
+        "key": "copy-54",
+        "label": "Liên kết 54",
+        "group": "Nội dung trang",
+        "kind": "link",
+        "value": "#phat-sinh"
+      },
+      {
+        "key": "costRows.0.0",
+        "label": "Nội dung · costRows.0.0",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Hàng hóa"
+      },
+      {
+        "key": "costRows.0.1",
+        "label": "Nội dung · costRows.0.1",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Giá hàng có nằm trong báo giá hay do doanh nghiệp giao dịch riêng?"
+      },
+      {
+        "key": "costRows.0.2",
+        "label": "Nội dung · costRows.0.2",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Giá của nhà cung cấp, số lượng và phạm vi mua hàng."
+      },
+      {
+        "key": "costRows.1.0",
+        "label": "Nội dung · costRows.1.0",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Tại Trung Quốc"
+      },
+      {
+        "key": "costRows.1.1",
+        "label": "Nội dung · costRows.1.1",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Thu gom, giao nội địa, kiểm đếm, lưu giữ hoặc đóng gói gồm những việc nào?"
+      },
+      {
+        "key": "costRows.1.2",
+        "label": "Nội dung · costRows.1.2",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Điểm nhận, đơn vị tính, vật tư và bên thanh toán."
+      },
+      {
+        "key": "costRows.2.0",
+        "label": "Nội dung · costRows.2.0",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Vận chuyển"
+      },
+      {
+        "key": "costRows.2.1",
+        "label": "Nội dung · costRows.2.1",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Điểm đầu và cuối ở đâu; cước tính theo dữ liệu nào?"
+      },
+      {
+        "key": "costRows.2.2",
+        "label": "Nội dung · costRows.2.2",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Khối lượng, thể tích, quy cách kiện, thời điểm thực hiện."
+      },
+      {
+        "key": "costRows.3.0",
+        "label": "Nội dung · costRows.3.0",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Hồ sơ và phối hợp chuyên môn"
+      },
+      {
+        "key": "costRows.3.1",
+        "label": "Nội dung · costRows.3.1",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Những phần việc nào được nhận; đơn vị nào thực hiện?"
+      },
+      {
+        "key": "costRows.3.2",
+        "label": "Nội dung · costRows.3.2",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Phạm vi công việc và dữ liệu cần kiểm tra thêm."
+      },
+      {
+        "key": "costRows.4.0",
+        "label": "Nội dung · costRows.4.0",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Thuế và nghĩa vụ liên quan"
+      },
+      {
+        "key": "costRows.4.1",
+        "label": "Nội dung · costRows.4.1",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Khoản nào đã kiểm tra, khoản nào còn dự kiến?"
+      },
+      {
+        "key": "costRows.4.2",
+        "label": "Nội dung · costRows.4.2",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Kết quả xác minh theo sản phẩm và phương án của lô hàng."
+      },
+      {
+        "key": "costRows.5.0",
+        "label": "Nội dung · costRows.5.0",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Tại Việt Nam"
+      },
+      {
+        "key": "costRows.5.1",
+        "label": "Nội dung · costRows.5.1",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Giao tới đâu; có nâng hạ, lưu kho hoặc hẹn giao không?"
+      },
+      {
+        "key": "costRows.5.2",
+        "label": "Nội dung · costRows.5.2",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Địa điểm thực tế và điều kiện bàn giao."
+      },
+      {
+        "key": "costRows.6.0",
+        "label": "Nội dung · costRows.6.0",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Dịch vụ TBS"
+      },
+      {
+        "key": "costRows.6.1",
+        "label": "Nội dung · costRows.6.1",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Phí gắn với những công việc cụ thể nào?"
+      },
+      {
+        "key": "costRows.6.2",
+        "label": "Nội dung · costRows.6.2",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Nội dung dịch vụ, cách tính và điều kiện áp dụng."
+      },
+      {
+        "key": "costRows.7.0",
+        "label": "Nội dung · costRows.7.0",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Phát sinh"
+      },
+      {
+        "key": "costRows.7.1",
+        "label": "Nội dung · costRows.7.1",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Tình huống nào cần xác nhận lại trước khi thực hiện?"
+      },
+      {
+        "key": "costRows.7.2",
+        "label": "Nội dung · costRows.7.2",
+        "group": "Bảng chi phí",
+        "kind": "text",
+        "value": "Lý do, bằng chứng, chi phí cập nhật và người duyệt."
+      }
+    ]
+  },
+  {
+    "slug": "knowledge",
+    "path": "/kien-thuc",
+    "title": "Chuẩn bị tốt hơn cho lần nhập hàng tiếp theo",
+    "summary": "Hướng dẫn thực tế để tập hợp thông tin và trao đổi rõ phạm vi trước khi chốt phương án.",
+    "image": "",
+    "seoTitle": "Kiến thức nhập hàng",
+    "seoDescription": "Hướng dẫn chuẩn bị thông tin lô hàng và đọc báo giá nhập khẩu để trao đổi rõ nhu cầu với TBS GROUP.",
+    "fields": [
+      {
+        "key": "copy-1",
+        "label": "Nhãn đầu mục 1",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Kiến thức"
+      }
+    ]
+  },
+  {
+    "slug": "faq",
+    "path": "/hoi-dap",
+    "title": "Những câu hỏi trước khi nhập hàng",
+    "summary": "Câu trả lời để bắt đầu trao đổi. Phương án và phạm vi thực hiện được xác nhận với đúng thông tin lô hàng.",
+    "image": "",
+    "seoTitle": "Hỏi đáp về dịch vụ nhập hàng",
+    "seoDescription": "Giải đáp thông tin cần chuẩn bị, phạm vi dịch vụ, báo giá, ủy thác và hồ sơ cho lô hàng.",
+    "fields": [
+      {
+        "key": "copy-1",
+        "label": "Nhãn đầu mục 1",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Hỏi đáp"
+      },
+      {
+        "key": "faqs.0.q",
+        "label": "Câu hỏi · faqs.0.q",
+        "group": "Câu hỏi thường gặp",
+        "kind": "text",
+        "value": "Tôi cần gửi gì để được tư vấn?"
+      },
+      {
+        "key": "faqs.0.a",
+        "label": "Trả lời · faqs.0.a",
+        "group": "Câu hỏi thường gặp",
+        "kind": "longtext",
+        "value": "Bắt đầu bằng ảnh hoặc đường dẫn sản phẩm, số lượng, điểm nhận tại Trung Quốc, điểm giao tại Việt Nam và nhu cầu hồ sơ. Nếu có, gửi thêm vật liệu, model, kích thước kiện và ngày sẵn hàng. Thông tin chưa chắc chắn nên ghi là dự kiến; người tiếp nhận sẽ trao đổi dữ liệu cần bổ sung theo mặt hàng."
+      },
+      {
+        "key": "faqs.0.href",
+        "label": "Liên kết · faqs.0.href",
+        "group": "Câu hỏi thường gặp",
+        "kind": "link",
+        "value": "/kien-thuc/chuan-bi-thong-tin-lo-hang"
+      },
+      {
+        "key": "faqs.1.q",
+        "label": "Câu hỏi · faqs.1.q",
+        "group": "Câu hỏi thường gặp",
+        "kind": "text",
+        "value": "Đã có nhà cung cấp thì TBS hỗ trợ gì?"
+      },
+      {
+        "key": "faqs.1.a",
+        "label": "Trả lời · faqs.1.a",
+        "group": "Câu hỏi thường gặp",
+        "kind": "longtext",
+        "value": "Anh/chị có thể trao đổi phần việc cần hỗ trợ như nhận hàng, kiểm đếm, vận chuyển và hồ sơ. Nêu rõ việc nhà cung cấp hoặc doanh nghiệp đã tự thực hiện. Phạm vi tiếp nhận, bên thực hiện và kết quả bàn giao được xác nhận theo lô sau bước kiểm tra đầu vào."
+      },
+      {
+        "key": "faqs.1.href",
+        "label": "Liên kết · faqs.1.href",
+        "group": "Câu hỏi thường gặp",
+        "kind": "link",
+        "value": "/dich-vu/nhap-khau-chinh-ngach"
+      },
+      {
+        "key": "faqs.2.q",
+        "label": "Câu hỏi · faqs.2.q",
+        "group": "Câu hỏi thường gặp",
+        "kind": "text",
+        "value": "Chưa có nhà cung cấp thì bắt đầu ra sao?"
+      },
+      {
+        "key": "faqs.2.a",
+        "label": "Trả lời · faqs.2.a",
+        "group": "Câu hỏi thường gặp",
+        "kind": "longtext",
+        "value": "Chuẩn bị tiêu chí sản phẩm, mẫu hoặc ảnh, quy mô đặt hàng và yêu cầu giao dịch. TBS trao đổi phạm vi tìm nguồn, đối chiếu thông tin và việc lấy mẫu nếu cần. Kết quả sàng lọc cần ghi rõ giới hạn kiểm tra, không thay thế tiêu chí nghiệm thu của đơn hàng."
+      },
+      {
+        "key": "faqs.2.href",
+        "label": "Liên kết · faqs.2.href",
+        "group": "Câu hỏi thường gặp",
+        "kind": "link",
+        "value": "/dich-vu/tim-nguon-kiem-tra-nha-cung-cap"
+      },
+      {
+        "key": "faqs.3.q",
+        "label": "Câu hỏi · faqs.3.q",
+        "group": "Câu hỏi thường gặp",
+        "kind": "text",
+        "value": "Chi phí được xác định trên cơ sở nào?"
+      },
+      {
+        "key": "faqs.3.a",
+        "label": "Trả lời · faqs.3.a",
+        "group": "Câu hỏi thường gặp",
+        "kind": "longtext",
+        "value": "Chi phí phụ thuộc hàng hóa, số lượng, đóng gói, điểm nhận và giao, phạm vi thuê dịch vụ và thời điểm thực hiện. Báo giá cần thể hiện công việc đã gồm, chưa gồm, đơn vị tính và điều kiện áp dụng. Khoản còn dự kiến cần được nhận diện để kiểm tra lại trước khi chốt."
+      },
+      {
+        "key": "faqs.3.href",
+        "label": "Liên kết · faqs.3.href",
+        "group": "Câu hỏi thường gặp",
+        "kind": "link",
+        "value": "/chi-phi-chung-tu"
+      },
+      {
+        "key": "faqs.4.q",
+        "label": "Câu hỏi · faqs.4.q",
+        "group": "Câu hỏi thường gặp",
+        "kind": "text",
+        "value": "Bao lâu nhận được phương án hoặc báo giá?"
+      },
+      {
+        "key": "faqs.4.a",
+        "label": "Trả lời · faqs.4.a",
+        "group": "Câu hỏi thường gặp",
+        "kind": "longtext",
+        "value": "Thời điểm phản hồi phụ thuộc mức độ đầy đủ của thông tin và các nội dung cần kiểm tra. Sau khi tiếp nhận, đề nghị đầu mối nêu phần còn thiếu, bước tiếp theo và mốc phản hồi phù hợp. Website không áp dụng một thời hạn báo giá cố định cho mọi sản phẩm."
+      },
+      {
+        "key": "faqs.4.href",
+        "label": "Liên kết · faqs.4.href",
+        "group": "Câu hỏi thường gặp",
+        "kind": "link",
+        "value": "/quy-trinh"
+      },
+      {
+        "key": "faqs.5.q",
+        "label": "Câu hỏi · faqs.5.q",
+        "group": "Câu hỏi thường gặp",
+        "kind": "text",
+        "value": "Khi nào dùng phương án ủy thác?"
+      },
+      {
+        "key": "faqs.5.a",
+        "label": "Trả lời · faqs.5.a",
+        "group": "Câu hỏi thường gặp",
+        "kind": "longtext",
+        "value": "Đây là phương án cần xem xét khi doanh nghiệp muốn giao phần việc nhập khẩu theo hợp đồng ủy thác. Việc lựa chọn cần dựa trên chủ thể giao dịch, sản phẩm, trách nhiệm và nhu cầu hồ sơ. Hãy trao đổi trường hợp cụ thể để làm rõ vai trò trước khi ký."
+      },
+      {
+        "key": "faqs.5.href",
+        "label": "Liên kết · faqs.5.href",
+        "group": "Câu hỏi thường gặp",
+        "kind": "link",
+        "value": "/dich-vu/uy-thac-nhap-khau"
+      },
+      {
+        "key": "faqs.6.q",
+        "label": "Câu hỏi · faqs.6.q",
+        "group": "Câu hỏi thường gặp",
+        "kind": "text",
+        "value": "Bộ chứng từ bàn giao gồm những gì?"
+      },
+      {
+        "key": "faqs.6.a",
+        "label": "Trả lời · faqs.6.a",
+        "group": "Câu hỏi thường gặp",
+        "kind": "longtext",
+        "value": "Danh mục phụ thuộc phương án giao dịch và lô hàng thực tế. Cần xác nhận tên giấy tờ, chủ thể đứng tên, bên cung cấp, dạng bản bàn giao và thời điểm nhận. Không có một danh sách giấy tờ mặc định áp dụng cho toàn bộ dịch vụ trên website."
+      },
+      {
+        "key": "faqs.6.href",
+        "label": "Liên kết · faqs.6.href",
+        "group": "Câu hỏi thường gặp",
+        "kind": "link",
+        "value": "/chi-phi-chung-tu#chung-tu"
+      },
+      {
+        "key": "faqs.7.q",
+        "label": "Câu hỏi · faqs.7.q",
+        "group": "Câu hỏi thường gặp",
+        "kind": "text",
+        "value": "Thay đổi hoặc phát sinh được xử lý thế nào?"
+      },
+      {
+        "key": "faqs.7.a",
+        "label": "Trả lời · faqs.7.a",
+        "group": "Câu hỏi thường gặp",
+        "kind": "longtext",
+        "value": "Gửi nội dung thay đổi cho đầu mối phụ trách cùng mã lô hàng và dữ liệu đối chiếu. Các bên xem xét ảnh hưởng đến công việc, hồ sơ, chi phí và tiến độ, sau đó xác nhận phương án cập nhật theo thỏa thuận. Người có quyền phê duyệt cần được chỉ định ngay từ đầu."
+      },
+      {
+        "key": "faqs.7.href",
+        "label": "Liên kết · faqs.7.href",
+        "group": "Câu hỏi thường gặp",
+        "kind": "link",
+        "value": "/chinh-sach/dich-vu"
+      }
+    ]
+  },
+  {
+    "slug": "contact",
+    "path": "/lien-he",
+    "title": "Trao đổi trực tiếp với TBS GROUP",
+    "summary": "Nêu nhu cầu và thông tin lô hàng để cùng xác định phần việc cần hỗ trợ, dữ liệu cần bổ sung và bước tiếp theo.",
+    "image": "",
+    "seoTitle": "Liên hệ TBS GROUP",
+    "seoDescription": "Trao đổi trực tiếp về lô hàng với TBS GROUP qua điện thoại 0976 005 335, Zalo hoặc email info@xuatnhapkhautbs.vn.",
+    "fields": [
+      {
+        "key": "copy-1",
+        "label": "Nhãn đầu mục 1",
+        "group": "Nội dung trang",
+        "kind": "text",
+        "value": "Liên hệ"
+      },
+      {
+        "key": "copy-2",
+        "label": "Tiêu đề mục 2",
+        "group": "Kênh liên hệ TBS",
+        "kind": "text",
+        "value": "Kênh liên hệ TBS"
+      },
+      {
+        "key": "copy-3",
+        "label": "Đoạn văn 3",
+        "group": "Kênh liên hệ TBS",
+        "kind": "text",
+        "value": "Điện thoại: "
+      },
+      {
+        "key": "copy-4",
+        "label": "Đoạn văn 4",
+        "group": "Kênh liên hệ TBS",
+        "kind": "longtext",
+        "value": "Khi trao đổi, cho biết sản phẩm, số lượng, nơi nhận tại Trung Quốc và nơi giao tại Việt Nam. Nếu đang theo dõi một lô hàng, nêu mã lô và đầu mối đã làm việc để thuận tiện đối chiếu."
+      },
+      {
+        "key": "copy-5",
+        "label": "Tiêu đề mục 5",
+        "group": "Thông tin hữu ích để bắt đầu",
+        "kind": "text",
+        "value": "Thông tin hữu ích để bắt đầu"
+      },
+      {
+        "key": "copy-6",
+        "label": "Tiêu đề 6",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Sau bước tiếp nhận"
+      },
+      {
+        "key": "copy-7",
+        "label": "Đoạn văn 7",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Hai bên làm rõ dữ liệu còn thiếu, phần việc cần kiểm tra và thời điểm phản hồi phù hợp với nhu cầu."
+      },
+      {
+        "key": "copy-8",
+        "label": "Tiêu đề 8",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Chia sẻ đúng thông tin"
+      },
+      {
+        "key": "copy-9",
+        "label": "Đoạn văn 9",
+        "group": "Phần nội dung 1",
+        "kind": "longtext",
+        "value": "Chỉ gửi dữ liệu cần thiết cho lô hàng. Không gửi mật khẩu, mã xác thực hoặc dữ liệu giao dịch của bên khác không liên quan."
+      },
+      {
+        "key": "copy-10",
+        "label": "Liên kết 10",
+        "group": "Phần nội dung 1",
+        "kind": "link",
+        "value": "/kien-thuc/chuan-bi-thong-tin-lo-hang"
+      },
+      {
+        "key": "copy-11",
+        "label": "Nhãn 11",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Hướng dẫn chuẩn bị lô hàng"
+      },
+      {
+        "key": "copy-12",
+        "label": "Liên kết 12",
+        "group": "Phần nội dung 1",
+        "kind": "link",
+        "value": "/quy-trinh"
+      },
+      {
+        "key": "copy-13",
+        "label": "Nhãn 13",
+        "group": "Phần nội dung 1",
+        "kind": "text",
+        "value": "Quy trình phối hợp"
+      },
+      {
+        "key": "preparation-brief",
+        "label": "Mẫu thông tin lô hàng",
+        "group": "Chuẩn bị trao đổi",
+        "kind": "longtext",
+        "value": "Tôi muốn trao đổi phương án nhập hàng với TBS GROUP.\nSản phẩm / đường dẫn / model:\nVật liệu, công dụng và thông số:\nSố lượng / số kiện / kích thước / khối lượng:\nNhà cung cấp và nơi nhận tại Trung Quốc:\nNơi giao tại Việt Nam:\nNgày sẵn hàng và thời điểm cần nhận:\nChủ thể giao dịch và nhu cầu hồ sơ:\nPhần việc cần TBS hỗ trợ:\nThông tin còn cần kiểm tra:"
+      }
+    ]
+  },
+  {
+    "slug": "policy-bao-mat",
+    "path": "/chinh-sach/bao-mat",
+    "title": "Thông tin về dữ liệu và quyền riêng tư",
+    "summary": "Cách sử dụng thông tin khi đọc nội dung website và chủ động liên hệ với TBS.",
+    "image": "",
+    "seoTitle": "Thông tin về dữ liệu và quyền riêng tư",
+    "seoDescription": "Cách sử dụng thông tin khi đọc nội dung website và chủ động liên hệ với TBS.",
+    "fields": [
+      {
+        "key": "sections.0.heading",
+        "label": "Tiêu đề mục · sections.0.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Đọc nội dung và tìm kiếm"
+      },
+      {
+        "key": "sections.0.body.0",
+        "label": "Nội dung · sections.0.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Các trang giới thiệu dịch vụ có thể đọc mà không cần đăng ký tài khoản. Website không có biểu mẫu xin số điện thoại hoặc đăng ký nhận tin trên các trang marketing này."
+      },
+      {
+        "key": "sections.0.body.1",
+        "label": "Nội dung · sections.0.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Từ khóa tìm kiếm và lựa chọn chủ đề xuất hiện trong địa chỉ trang kiến thức, có thể được lưu trong lịch sử trình duyệt và nhật ký truy cập của hạ tầng. Không nhập thông tin riêng tư hoặc dữ liệu lô hàng vào ô tìm kiếm."
+      },
+      {
+        "key": "sections.1.heading",
+        "label": "Tiêu đề mục · sections.1.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Khi chủ động liên hệ"
+      },
+      {
+        "key": "sections.1.body.0",
+        "label": "Nội dung · sections.1.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Liên kết điện thoại, email và Zalo mở ứng dụng hoặc dịch vụ tương ứng. Thông tin anh/chị gửi qua những kênh đó do anh/chị chủ động lựa chọn; mỗi nền tảng có cơ chế xử lý dữ liệu riêng."
+      },
+      {
+        "key": "sections.1.body.1",
+        "label": "Nội dung · sections.1.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Thông tin về sản phẩm, giao nhận và đầu mối liên hệ được dùng để trao đổi nhu cầu và phối hợp công việc được yêu cầu. Chỉ chia sẻ dữ liệu cần thiết; hồ sơ có dữ liệu của bên khác cần được kiểm tra quyền chia sẻ trước khi gửi."
+      },
+      {
+        "key": "sections.2.heading",
+        "label": "Tiêu đề mục · sections.2.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Nội dung sao chép và dữ liệu kỹ thuật"
+      },
+      {
+        "key": "sections.2.body.0",
+        "label": "Nội dung · sections.2.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Nút sao chép chỉ ghi mẫu văn bản chuẩn bị vào bộ nhớ tạm sau thao tác của người dùng. Chức năng này không đọc nội dung sẵn có trong bộ nhớ tạm và không gửi mẫu đã chỉnh sửa cho TBS."
+      },
+      {
+        "key": "sections.2.body.1",
+        "label": "Nội dung · sections.2.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Việc truy cập website có thể tạo dữ liệu kỹ thuật ở trình duyệt và hạ tầng phục vụ trang, như địa chỉ mạng, thời điểm, trang được yêu cầu và thông tin lỗi. Đây là dữ liệu khác với thông tin anh/chị chủ động gửi qua kênh liên hệ."
+      },
+      {
+        "key": "sections.3.heading",
+        "label": "Tiêu đề mục · sections.3.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Phạm vi chia sẻ khi thực hiện dịch vụ"
+      },
+      {
+        "key": "sections.3.body.0",
+        "label": "Nội dung · sections.3.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Khi một phương án cần phối hợp nhiều bên, phạm vi thông tin chuyển cho nhà cung cấp hoặc đơn vị thực hiện cần được xác định theo phần việc. Không nên gửi toàn bộ dữ liệu giao dịch nếu chỉ một phần cần thiết cho người tiếp nhận."
+      },
+      {
+        "key": "sections.3.body.1",
+        "label": "Nội dung · sections.3.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Yêu cầu giữ bí mật, quyền chia sẻ hồ sơ và điều kiện lưu giữ cần được thống nhất theo giao dịch. Trang này không đưa ra thời hạn lưu giữ hoặc cam kết bảo mật tuyệt đối cho mọi nền tảng liên lạc."
+      },
+      {
+        "key": "sections.4.heading",
+        "label": "Tiêu đề mục · sections.4.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Trao đổi về thông tin đã cung cấp"
+      },
+      {
+        "key": "sections.4.body.0",
+        "label": "Nội dung · sections.4.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Để yêu cầu kiểm tra, sửa hoặc trao đổi về việc sử dụng thông tin đã gửi cho TBS, liên hệ email hoặc điện thoại công khai bên dưới. Nêu kênh đã sử dụng, thời điểm và nội dung cần xử lý; tránh gửi thêm dữ liệu nhạy cảm không cần thiết."
+      },
+      {
+        "key": "sections.4.body.1",
+        "label": "Nội dung · sections.4.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Yêu cầu được xem xét theo hồ sơ thực tế và trách nhiệm liên quan của giao dịch. Nội dung ở đây mô tả phạm vi website và cách liên hệ, không thay thế thỏa thuận xử lý dữ liệu riêng nếu các bên có ký kết."
+      }
+    ]
+  },
+  {
+    "slug": "policy-dieu-khoan",
+    "path": "/chinh-sach/dieu-khoan",
+    "title": "Điều khoản sử dụng website",
+    "summary": "Phạm vi tham khảo của nội dung, liên kết và thông tin dịch vụ trên website TBS GROUP.",
+    "image": "",
+    "seoTitle": "Điều khoản sử dụng website",
+    "seoDescription": "Phạm vi tham khảo của nội dung, liên kết và thông tin dịch vụ trên website TBS GROUP.",
+    "fields": [
+      {
+        "key": "sections.0.heading",
+        "label": "Tiêu đề mục · sections.0.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Mục đích của nội dung"
+      },
+      {
+        "key": "sections.0.body.0",
+        "label": "Nội dung · sections.0.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Website giới thiệu dịch vụ và cung cấp hướng dẫn chuẩn bị thông tin trước khi trao đổi với TBS. Nội dung không phải báo giá ràng buộc, xác nhận nhận mọi loại hàng hoặc cam kết kết quả cho một lô hàng chưa được kiểm tra."
+      },
+      {
+        "key": "sections.0.body.1",
+        "label": "Nội dung · sections.0.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Các hướng dẫn về hồ sơ và chi phí là khung trao đổi. Việc áp dụng cần dựa trên sản phẩm, phương án giao dịch, dữ liệu và thời điểm thực hiện cụ thể."
+      },
+      {
+        "key": "sections.1.heading",
+        "label": "Tiêu đề mục · sections.1.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Xác nhận trước khi giao dịch"
+      },
+      {
+        "key": "sections.1.body.0",
+        "label": "Nội dung · sections.1.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Phạm vi công việc, đơn vị thực hiện, điều kiện thanh toán, thời gian dự kiến và trách nhiệm các bên cần được thể hiện trong báo giá hoặc thỏa thuận phù hợp. Chỉ việc đọc trang hoặc bấm liên hệ không tạo thành xác nhận đặt dịch vụ."
+      },
+      {
+        "key": "sections.1.body.1",
+        "label": "Nội dung · sections.1.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Khi nội dung trao đổi thay đổi, đề nghị đầu mối xác nhận phiên bản áp dụng. Nếu có điểm khác giữa thông tin giới thiệu và tài liệu của giao dịch, cần làm rõ trước khi triển khai."
+      },
+      {
+        "key": "sections.2.heading",
+        "label": "Tiêu đề mục · sections.2.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Sử dụng nội dung có trách nhiệm"
+      },
+      {
+        "key": "sections.2.body.0",
+        "label": "Nội dung · sections.2.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Có thể chia sẻ đường dẫn đến bài viết để cùng trao đổi nhu cầu. Khi trích dẫn, giữ nguyên ngữ cảnh và ghi nguồn, không biến nội dung hướng dẫn thành một cam kết thương mại của TBS."
+      },
+      {
+        "key": "sections.2.body.1",
+        "label": "Nội dung · sections.2.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Không sử dụng website để gửi dữ liệu trái phép, can thiệp hoạt động hoặc truy cập phần quản trị khi không có quyền. Việc sử dụng hình ảnh hay nội dung ngoài phạm vi tham khảo cần kiểm tra quyền sử dụng tương ứng."
+      },
+      {
+        "key": "sections.3.heading",
+        "label": "Tiêu đề mục · sections.3.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Liên kết và hình ảnh"
+      },
+      {
+        "key": "sections.3.body.0",
+        "label": "Nội dung · sections.3.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Các liên kết mở ứng dụng liên lạc hoặc website bên ngoài chịu điều kiện vận hành của bên cung cấp tương ứng. Kiểm tra đúng đầu mối trước khi gửi thông tin giao dịch."
+      },
+      {
+        "key": "sections.3.body.1",
+        "label": "Nội dung · sections.3.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Hình ảnh minh họa bối cảnh logistics không phải bằng chứng về quyền sở hữu kho, phương tiện, một khách hàng hay một lô hàng cụ thể của TBS. Không suy ra năng lực định lượng từ hình ảnh giới thiệu."
+      },
+      {
+        "key": "sections.4.heading",
+        "label": "Tiêu đề mục · sections.4.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Phản hồi về nội dung"
+      },
+      {
+        "key": "sections.4.body.0",
+        "label": "Nội dung · sections.4.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Khi phát hiện thông tin chưa rõ hoặc có dấu hiệu không còn phù hợp, gửi đường dẫn và nội dung cần kiểm tra đến đầu mối công khai. TBS có thể cập nhật nội dung giới thiệu; điều kiện của một giao dịch đã xác nhận cần được trao đổi theo tài liệu của giao dịch đó."
+      }
+    ]
+  },
+  {
+    "slug": "policy-dich-vu",
+    "path": "/chinh-sach/dich-vu",
+    "title": "Nguyên tắc thỏa thuận dịch vụ",
+    "summary": "Những nội dung cần xác nhận về phạm vi, chi phí, giao nhận và phản hồi cho từng lô hàng.",
+    "image": "",
+    "seoTitle": "Nguyên tắc thỏa thuận dịch vụ",
+    "seoDescription": "Những nội dung cần xác nhận về phạm vi, chi phí, giao nhận và phản hồi cho từng lô hàng.",
+    "fields": [
+      {
+        "key": "sections.0.heading",
+        "label": "Tiêu đề mục · sections.0.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Phạm vi được xác nhận theo lô"
+      },
+      {
+        "key": "sections.0.body.0",
+        "label": "Nội dung · sections.0.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Trước khi thực hiện, các bên cần xác định hàng hóa, chủ thể giao dịch, phần việc, đơn vị phụ trách và đầu ra bàn giao. Phần việc phối hợp với bên khác cần được ghi rõ."
+      },
+      {
+        "key": "sections.0.body.1",
+        "label": "Nội dung · sections.0.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Trang này là khung thông tin để trao đổi, không phải hợp đồng mẫu và không tự bổ sung quyền hoặc nghĩa vụ vào một thỏa thuận đã ký. Điều kiện áp dụng cần được đối chiếu với tài liệu của giao dịch."
+      },
+      {
+        "key": "sections.1.heading",
+        "label": "Tiêu đề mục · sections.1.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Đầu vào và thay đổi thông tin"
+      },
+      {
+        "key": "sections.1.body.0",
+        "label": "Nội dung · sections.1.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Doanh nghiệp và nhà cung cấp cần phối hợp cung cấp dữ liệu đúng với hàng thực tế. Khi đổi model, vật liệu, số lượng, đóng gói hoặc nơi giao, thông báo cho đầu mối phụ trách để kiểm tra tác động."
+      },
+      {
+        "key": "sections.1.body.1",
+        "label": "Nội dung · sections.1.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Nếu thông tin chưa đủ để xác định phương án, hai bên làm rõ nội dung cần bổ sung và điều kiện tiếp tục. Không mặc định dữ liệu của một lô trước áp dụng nguyên vẹn cho lô mới."
+      },
+      {
+        "key": "sections.2.heading",
+        "label": "Tiêu đề mục · sections.2.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Báo giá, thanh toán và phát sinh"
+      },
+      {
+        "key": "sections.2.body.0",
+        "label": "Nội dung · sections.2.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Báo giá cần nêu phần đã gồm, chưa gồm, cơ sở tính, hiệu lực và mốc thanh toán. Khoản còn dự kiến cần được xác nhận khi đủ dữ liệu."
+      },
+      {
+        "key": "sections.2.body.1",
+        "label": "Nội dung · sections.2.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Việc phát sinh cần có nội dung, lý do, căn cứ đối chiếu, chi phí và ảnh hưởng tiến độ nếu có. Người có quyền phê duyệt xác nhận theo thỏa thuận trước khi thực hiện phần việc mới."
+      },
+      {
+        "key": "sections.3.heading",
+        "label": "Tiêu đề mục · sections.3.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Giao nhận và hồ sơ"
+      },
+      {
+        "key": "sections.3.body.0",
+        "label": "Nội dung · sections.3.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Thống nhất địa điểm, người nhận, phạm vi kiểm tra và cách ghi nhận bàn giao. Khi thấy khác biệt về kiện hàng hoặc hiện trạng, ghi lại dữ liệu liên quan để đối chiếu với đầu mối phụ trách."
+      },
+      {
+        "key": "sections.3.body.1",
+        "label": "Nội dung · sections.3.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Danh mục hồ sơ, bên đứng tên, dạng bản bàn giao và thời điểm nhận được xác nhận theo phương án. Không áp dụng một danh sách chứng từ chung cho mọi mặt hàng và mọi hình thức giao dịch."
+      },
+      {
+        "key": "sections.4.heading",
+        "label": "Tiêu đề mục · sections.4.heading",
+        "group": "Nội dung chính sách",
+        "kind": "text",
+        "value": "Phản hồi, tổn thất và trách nhiệm"
+      },
+      {
+        "key": "sections.4.body.0",
+        "label": "Nội dung · sections.4.body.0",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Phản hồi cần có mã lô, nội dung sự việc, thời điểm và dữ liệu đối chiếu phù hợp. Cách xử lý, điều kiện và phạm vi trách nhiệm được xem xét theo thỏa thuận cùng hồ sơ thực tế."
+      },
+      {
+        "key": "sections.4.body.1",
+        "label": "Nội dung · sections.4.body.1",
+        "group": "Nội dung chính sách",
+        "kind": "longtext",
+        "value": "Trang này không đưa ra tỷ lệ bồi thường, thời hạn khiếu nại, mức bảo hiểm hay cam kết hoàn tiền mặc định. Những nội dung đó cần được làm rõ trong tài liệu dịch vụ liên quan trước khi giao dịch."
+      }
+    ]
+  }
+]

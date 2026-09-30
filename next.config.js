@@ -26,14 +26,21 @@ const nextConfig = {
   },
   
   experimental: {
+    serverComponentsExternalPackages: ['better-sqlite3', 'sharp'],
     optimizePackageImports: ['@heroicons/react']
   },
   
-  async rewrites() {
+  async redirects() {
     return [
       {
         source: '/admin/cms',
-        destination: '/admin/index.html'
+        destination: '/admin/',
+        permanent: false
+      },
+      {
+        source: '/admin/index.html',
+        destination: '/admin/',
+        permanent: false
       }
     ]
   },
@@ -45,7 +52,7 @@ const nextConfig = {
         headers: [
           {
             key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
+            value: 'DENY'
           }
         ]
       }
@@ -53,4 +60,4 @@ const nextConfig = {
   }
 }
 
-module.exports = nextConfig 
+module.exports = nextConfig

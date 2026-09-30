@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=20.19.0",
     "npm": ">=8.0.0"
   },
   "scripts": {
@@ -11,6 +11,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test:marketing": "playwright test",
+    "test:studio": "tsx --test tests/studio/*.test.ts",
+    "test:studio:browser": "playwright test -c playwright.studio.config.ts",
+    "studio:bootstrap": "node scripts/studio-bootstrap.mjs",
     "export": "next build",
     "analyze": "cross-env ANALYZE=true next build",
     "sitemap": "next build && next start",
@@ -26,19 +31,26 @@
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^3.3.2",
     "@netlify/plugin-nextjs": "^5.7.2",
+    "@playwright/test": "^1.62.1",
+    "@react-three/fiber": "^8.18.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/three": "^0.170.0",
     "autoprefixer": "^10.0.1",
+    "better-sqlite3": "12.4.1",
+    "cheerio": "1.1.2",
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
     "eslint": "^8",
-    "eslint-config-next": "14.2.16",
+    "eslint-config-next": "^14.2.35",
     "framer-motion": "^10.18.0",
     "googleapis": "^150.0.1",
     "gray-matter": "^4.0.3",
+    "gsap": "^3.15.0",
     "jose": "^6.0.11",
-    "next": "14.2.16",
+    "next": "^14.2.35",
+    "next-navigation-guard": "0.2.0",
     "nodemailer": "^7.0.3",
     "postcss": "^8",
     "react": "^18",
@@ -48,13 +60,17 @@
     "react-icons": "^5.3.0",
     "react-quill": "^2.0.0",
     "recharts": "^2.13.3",
+    "sharp": "0.35.4",
     "tailwindcss": "^3.4.1",
+    "three": "^0.170.0",
     "typescript": "^5",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "7.6.13",
     "@types/nodemailer": "^6.4.17",
     "@types/react-dropzone": "^5.1.0",
-    "netlify-cli": "^17.0.0"
+    "netlify-cli": "^17.0.0",
+    "tsx": "4.20.5"
   }
 }
